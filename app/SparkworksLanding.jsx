@@ -1,4 +1,3 @@
-"use client";
 import { useState, useEffect, useRef } from "react";
 
 // Brand colors
@@ -1036,6 +1035,19 @@ export default function SparkworksLanding() {
                 </button>
               )}
 
+              <FormField label="Interest Level">
+                <select
+                  style={{ ...inputStyle, cursor: "pointer" }}
+                  value={form.interest}
+                  onChange={(e) => setForm({ ...form, interest: e.target.value })}
+                >
+                  <option value="">Select...</option>
+                  <option value="interested-schedule">Interested — see schedule availability below</option>
+                  <option value="interested-timing">Interested, but the timing isn't right. Check back with me if you do this again.</option>
+                  <option value="not-interested">Not interested given competing activities and interests.</option>
+                </select>
+              </FormField>
+
               <FormField label="Schedule">
                 <div
                   style={{
@@ -1060,19 +1072,6 @@ export default function SparkworksLanding() {
                   Tap or drag to mark every slot that would work for your family.
                 </div>
                 <TimeGrid selected={form.schedule} onToggle={handleScheduleToggle} />
-              </FormField>
-
-              <FormField label="Interest Level">
-                <select
-                  style={{ ...inputStyle, cursor: "pointer" }}
-                  value={form.interest}
-                  onChange={(e) => setForm({ ...form, interest: e.target.value })}
-                >
-                  <option value="">Select...</option>
-                  <option value="interested-dates">Interested — dates work</option>
-                  <option value="interested-no-dates">Interested — no dates work</option>
-                  <option value="exploring">Just exploring</option>
-                </select>
               </FormField>
 
               <FormField label="How did you hear about us?">
@@ -1185,6 +1184,12 @@ export default function SparkworksLanding() {
 
       {/* Bottom accent */}
       <div style={{ height: 5, background: C.ember }} />
+
+      {/* Google Fonts */}
+      <link
+        href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;900&family=Instrument+Serif:ital@0;1&display=swap"
+        rel="stylesheet"
+      />
     </div>
   );
 }
