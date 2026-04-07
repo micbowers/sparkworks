@@ -1262,30 +1262,85 @@ export default function SparkworksLanding() {
             </>
           ) : (
             <div style={{ textAlign: "center", padding: "40px 0" }}>
-              <div style={{ fontSize: 48, marginBottom: 16 }}>⚡</div>
-              <div
-                style={{
-                  fontFamily: "'Barlow Condensed', 'Arial Narrow', sans-serif",
-                  fontWeight: 700,
-                  fontSize: 32,
-                  color: C.yellow,
-                  marginBottom: 12,
-                }}
-              >
-                You're in!
-              </div>
-              <div
-                style={{
-                  fontFamily: "'Instrument Serif', Georgia, serif",
-                  fontSize: 20,
-                  color: C.bone,
-                  lineHeight: 1.5,
-                }}
-              >
-                Thanks for registering interest in Sparkworks.
-                <br />
-                We'll be in touch within 48 hours with next steps.
-              </div>
+              {form.interest === "interested-schedule" ? (
+                <>
+                  <div style={{ fontSize: 48, marginBottom: 16 }}>⚡</div>
+                  <div
+                    style={{
+                      fontFamily: "'Barlow Condensed', 'Arial Narrow', sans-serif",
+                      fontWeight: 700,
+                      fontSize: 32,
+                      color: C.yellow,
+                      marginBottom: 12,
+                    }}
+                  >
+                    You're registered!
+                  </div>
+                  <div
+                    style={{
+                      fontFamily: "'Instrument Serif', Georgia, serif",
+                      fontSize: 20,
+                      color: C.bone,
+                      lineHeight: 1.5,
+                    }}
+                  >
+                    We'll be in touch shortly with the final
+                    <br />
+                    schedule and next steps.
+                  </div>
+                </>
+              ) : form.interest === "interested-timing" ? (
+                <>
+                  <div style={{ fontSize: 48, marginBottom: 16 }}>⚡</div>
+                  <div
+                    style={{
+                      fontFamily: "'Barlow Condensed', 'Arial Narrow', sans-serif",
+                      fontWeight: 700,
+                      fontSize: 28,
+                      color: C.yellow,
+                      marginBottom: 12,
+                    }}
+                  >
+                    Got it — we'll keep you in the loop.
+                  </div>
+                  <div
+                    style={{
+                      fontFamily: "'Instrument Serif', Georgia, serif",
+                      fontSize: 20,
+                      color: C.bone,
+                      lineHeight: 1.5,
+                    }}
+                  >
+                    When we run the next cohort,
+                    <br />
+                    you'll be the first to know.
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div
+                    style={{
+                      fontFamily: "'Barlow Condensed', 'Arial Narrow', sans-serif",
+                      fontWeight: 700,
+                      fontSize: 28,
+                      color: C.bone,
+                      marginBottom: 12,
+                    }}
+                  >
+                    Thanks for letting us know.
+                  </div>
+                  <div
+                    style={{
+                      fontFamily: "'Instrument Serif', Georgia, serif",
+                      fontSize: 18,
+                      color: C.muted,
+                      lineHeight: 1.5,
+                    }}
+                  >
+                    We appreciate the feedback.
+                  </div>
+                </>
+              )}
             </div>
           )}
         </Container>
