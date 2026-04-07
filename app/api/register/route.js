@@ -59,9 +59,9 @@ export async function POST(request) {
 
     if (data.interest) {
       const interestMap = {
-        "interested-dates": "Interested - dates work",
-        "interested-no-dates": "Interested - no dates work",
-        exploring: "Just exploring",
+        "interested-schedule": "Interested - see schedule below",
+        "interested-timing": "Interested but timing not right",
+        "not-interested": "Not interested given competing activities",
       };
       properties["Interest Level"] = {
         select: { name: interestMap[data.interest] || data.interest },
