@@ -487,10 +487,25 @@ export default function SparkworksLanding() {
   const [submitting, setSubmitting] = useState(false);
 
   const handleSubmit = async () => {
-    if (!form.parent1Name || !form.parent1Email || !form.children[0].name || !form.children[0].age) {
-      alert("Please fill in required fields: Parent 1 Name, Email, and at least one child's Name and Age.");
+    // Validate based on interest level
+    if (!form.interest) {
+      alert("Please select your interest level.");
       return;
     }
+    if (form.interest === "interested-schedule") {
+      if (!form.parent1Name || !form.parent1Email || !form.children[0].name || !form.children[0].age) {
+        alert("Please fill in required fields: Parent 1 Name, Email, and at least one child's Name and Age.");
+        return;
+      }
+    }
+    if (form.interest === "interested-timing") {
+      if (!form.parent1Name || !form.parent1Email) {
+        alert("Please fill in your name and email so we can reach out next time.");
+        return;
+      }
+    }
+    // "not-interested" requires nothing else
+
     setSubmitting(true);
     try {
       const res = await fetch("/api/register", {
@@ -830,299 +845,420 @@ export default function SparkworksLanding() {
           {!submitted ? (
             <>
               <Kicker>Register Interest</Kicker>
-              <div
-                style={{
+
+              {/* INTEREST LEVEL — the fork in the road */}
+              <div style={{
+                textAlign: "center",
+                marginBottom: 32,
+              }}>
+                <div style={{
                   fontFamily: "'Instrument Serif', Georgia, serif",
-                  fontSize: 17,
-                  color: C.muted,
-                  textAlign: "center",
-                  marginBottom: 32,
-                  fontStyle: "italic",
-                }}
-              >
-                Fill out the form below and we'll be in touch with next steps.
-              </div>
-
-              {/* Parent 1 — required */}
-              <div style={{
-                background: `${C.steel}`,
-                borderRadius: 10,
-                padding: "20px 20px 8px",
-                marginBottom: 16,
-                border: `1px solid rgba(242,239,232,0.08)`,
-              }}>
-                <div style={{
-                  fontFamily: "'Barlow Condensed', 'Arial Narrow', sans-serif",
-                  fontWeight: 700,
-                  fontSize: 16,
+                  fontSize: 18,
                   color: C.bone,
-                  marginBottom: 14,
-                  letterSpacing: 1,
+                  marginBottom: 20,
                 }}>
-                  PARENT / GUARDIAN 1 <span style={{ color: C.ember, fontSize: 13 }}>(required)</span>
+                  Are you interested in Sparkworks for your child?
                 </div>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-                  <FormField label="Name" required>
-                    <input
-                      style={inputStyle}
-                      value={form.parent1Name}
-                      onChange={(e) => setForm({ ...form, parent1Name: e.target.value })}
-                      placeholder="Full name"
-                    />
-                  </FormField>
-                  <FormField label="Email" required>
-                    <input
-                      style={inputStyle}
-                      type="email"
-                      value={form.parent1Email}
-                      onChange={(e) => setForm({ ...form, parent1Email: e.target.value })}
-                      placeholder="your@email.com"
-                    />
-                  </FormField>
+                <div style={{ display: "flex", flexDirection: "column", gap: 10, maxWidth: 520, margin: "0 auto" }}>
+                  {[
+                    { value: "interested-schedule", label: "Interested — show me schedule availability", color: C.teal },
+                    { value: "interested-timing", label: "Interested — but the timing isn't right", color: C.yellow },
+                    { value: "not-interested-schedule", label: "Not Interested — our schedule is full", color: C.muted },
+                    { value: "not-interested-topic", label: "Not Interested — this topic isn't for us", color: C.muted },
+                  ].map((opt) => (
+                    <button
+                      key={opt.value}
+                      onClick={() => setForm({ ...form, interest: opt.value })}
+                      style={{
+                        padding: "14px 20px",
+                        borderRadius: 10,
+                        border: form.interest === opt.value
+                          ? `2px solid ${opt.color}`
+                          : "2px solid rgba(242,239,232,0.12)",
+                        background: form.interest === opt.value
+                          ? `${opt.color}18`
+                          : "transparent",
+                        color: form.interest === opt.value ? opt.color : C.muted,
+                        fontFamily: "'Instrument Serif', Georgia, serif",
+                        fontSize: 16,
+                        cursor: "pointer",
+                        transition: "all 0.2s",
+                        textAlign: "left",
+                      }}
+                    >
+                      {opt.label}
+                    </button>
+                  ))}
                 </div>
-                <FormField label="Phone">
-                  <input
-                    style={inputStyle}
-                    value={form.parent1Phone}
-                    onChange={(e) => setForm({ ...form, parent1Phone: e.target.value })}
-                    placeholder="(optional)"
-                  />
-                </FormField>
               </div>
 
-              {/* Parent 2 — optional */}
-              <div style={{
-                background: `${C.steel}`,
-                borderRadius: 10,
-                padding: "20px 20px 8px",
-                marginBottom: 20,
-                border: `1px solid rgba(242,239,232,0.05)`,
-              }}>
-                <div style={{
-                  fontFamily: "'Barlow Condensed', 'Arial Narrow', sans-serif",
-                  fontWeight: 700,
-                  fontSize: 16,
-                  color: C.muted,
-                  marginBottom: 14,
-                  letterSpacing: 1,
-                }}>
-                  PARENT / GUARDIAN 2 <span style={{ fontSize: 13, fontWeight: 400 }}>(optional)</span>
-                </div>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-                  <FormField label="Name">
-                    <input
-                      style={inputStyle}
-                      value={form.parent2Name}
-                      onChange={(e) => setForm({ ...form, parent2Name: e.target.value })}
-                      placeholder="Full name"
+              {/* NOT INTERESTED (either variant) — quick submit, no fields required */}
+              {(form.interest === "not-interested-schedule" || form.interest === "not-interested-topic") && (
+                <div style={{ textAlign: "center", marginTop: 16 }}>
+                  <FormField label="Anything you'd like to share? (optional)">
+                    <textarea
+                      style={{ ...inputStyle, minHeight: 60, resize: "vertical" }}
+                      value={form.questions}
+                      onChange={(e) => setForm({ ...form, questions: e.target.value })}
+                      placeholder="We appreciate any feedback..."
                     />
                   </FormField>
-                  <FormField label="Email">
-                    <input
-                      style={inputStyle}
-                      type="email"
-                      value={form.parent2Email}
-                      onChange={(e) => setForm({ ...form, parent2Email: e.target.value })}
-                      placeholder="email@example.com"
-                    />
-                  </FormField>
-                </div>
-                <FormField label="Phone">
-                  <input
-                    style={inputStyle}
-                    value={form.parent2Phone}
-                    onChange={(e) => setForm({ ...form, parent2Phone: e.target.value })}
-                    placeholder="(optional)"
-                  />
-                </FormField>
-              </div>
-
-              {/* Children — up to 3 */}
-              <div style={{
-                fontFamily: "'Barlow Condensed', 'Arial Narrow', sans-serif",
-                fontWeight: 700,
-                fontSize: 16,
-                color: C.bone,
-                marginBottom: 14,
-                letterSpacing: 1,
-              }}>
-                CHILDREN
-              </div>
-
-              {form.children.map((child, idx) => (
-                <div key={idx} style={{
-                  background: `${C.steel}`,
-                  borderRadius: 10,
-                  padding: "16px 20px 4px",
-                  marginBottom: 12,
-                  border: `1px solid rgba(242,239,232,0.08)`,
-                  position: "relative",
-                }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
-                    <span style={{
+                  <button
+                    onClick={handleSubmit}
+                    disabled={submitting}
+                    style={{
+                      padding: "14px 40px",
+                      background: submitting ? C.muted : C.steel,
+                      border: `2px solid ${C.muted}`,
+                      borderRadius: 10,
                       fontFamily: "'Barlow Condensed', 'Arial Narrow', sans-serif",
-                      fontWeight: 600,
-                      fontSize: 14,
-                      color: C.muted,
-                    }}>
-                      Child {idx + 1} {idx === 0 && <span style={{ color: C.ember }}>(required)</span>}
-                    </span>
-                    {idx > 0 && (
-                      <button
-                        onClick={() => removeChild(idx)}
-                        style={{
-                          background: "none",
-                          border: "none",
-                          color: C.muted,
-                          cursor: "pointer",
-                          fontFamily: "'Barlow Condensed', 'Arial Narrow', sans-serif",
-                          fontSize: 13,
-                          padding: "2px 8px",
-                        }}
-                      >
-                        ✕ Remove
-                      </button>
-                    )}
-                  </div>
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-                    <FormField label="Name" required={idx === 0}>
-                      <input
-                        style={inputStyle}
-                        value={child.name}
-                        onChange={(e) => updateChild(idx, "name", e.target.value)}
-                        placeholder="Child's first name"
-                      />
-                    </FormField>
-                    <FormField label="Age" required={idx === 0}>
-                      <select
-                        style={{ ...inputStyle, cursor: "pointer" }}
-                        value={child.age}
-                        onChange={(e) => updateChild(idx, "age", e.target.value)}
-                      >
-                        <option value="">Select age</option>
-                        {[8, 9, 10, 11, 12].map((a) => (
-                          <option key={a} value={a}>
-                            {a} — {a <= 9 ? "Ember Track" : "Blaze Track"}
-                          </option>
-                        ))}
-                      </select>
-                    </FormField>
-                  </div>
+                      fontWeight: 700,
+                      fontSize: 20,
+                      color: C.bone,
+                      cursor: submitting ? "wait" : "pointer",
+                      marginTop: 8,
+                    }}
+                  >
+                    {submitting ? "Submitting..." : "Submit"}
+                  </button>
                 </div>
-              ))}
-
-              {form.children.length < 3 && (
-                <button
-                  onClick={addChild}
-                  style={{
-                    background: "none",
-                    border: `1px dashed rgba(242,239,232,0.2)`,
-                    borderRadius: 8,
-                    padding: "10px 20px",
-                    color: C.teal,
-                    fontFamily: "'Barlow Condensed', 'Arial Narrow', sans-serif",
-                    fontWeight: 600,
-                    fontSize: 15,
-                    cursor: "pointer",
-                    width: "100%",
-                    marginBottom: 20,
-                    transition: "border-color 0.2s",
-                  }}
-                  onMouseOver={(e) => e.target.style.borderColor = C.teal}
-                  onMouseOut={(e) => e.target.style.borderColor = "rgba(242,239,232,0.2)"}
-                >
-                  + Add another child
-                </button>
               )}
 
-              <FormField label="Interest Level">
-                <select
-                  style={{ ...inputStyle, cursor: "pointer" }}
-                  value={form.interest}
-                  onChange={(e) => setForm({ ...form, interest: e.target.value })}
-                >
-                  <option value="">Select...</option>
-                  <option value="interested-schedule">Interested — see schedule availability below</option>
-                  <option value="interested-timing">Interested, but the timing isn't right. Check back with me if you do this again.</option>
-                  <option value="not-interested">Not interested given competing activities and interests.</option>
-                </select>
-              </FormField>
-
-              <FormField label="Schedule">
-                <div
-                  style={{
+              {/* INTERESTED BUT TIMING NOT RIGHT — name + email only */}
+              {form.interest === "interested-timing" && (
+                <div style={{ marginTop: 16 }}>
+                  <div style={{
                     fontFamily: "'Instrument Serif', Georgia, serif",
                     fontSize: 15,
-                    color: C.bone,
-                    marginBottom: 6,
-                    lineHeight: 1.5,
-                  }}
-                >
-                  Classes start the week of April 13 and meet on the same day and time each week for 8 weeks.
-                </div>
-                <div
-                  style={{
-                    fontFamily: "'Instrument Serif', Georgia, serif",
-                    fontSize: 14,
                     color: C.muted,
-                    marginBottom: 14,
                     fontStyle: "italic",
-                  }}
-                >
-                  Tap or drag to mark every slot that would work for your family.
+                    textAlign: "center",
+                    marginBottom: 20,
+                  }}>
+                    Leave your info and we'll reach out when we run this again.
+                  </div>
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+                    <FormField label="Name" required>
+                      <input
+                        style={inputStyle}
+                        value={form.parent1Name}
+                        onChange={(e) => setForm({ ...form, parent1Name: e.target.value })}
+                        placeholder="Your name"
+                      />
+                    </FormField>
+                    <FormField label="Email" required>
+                      <input
+                        style={inputStyle}
+                        type="email"
+                        value={form.parent1Email}
+                        onChange={(e) => setForm({ ...form, parent1Email: e.target.value })}
+                        placeholder="your@email.com"
+                      />
+                    </FormField>
+                  </div>
+                  <FormField label="Anything you'd like to share? (optional)">
+                    <textarea
+                      style={{ ...inputStyle, minHeight: 60, resize: "vertical" }}
+                      value={form.questions}
+                      onChange={(e) => setForm({ ...form, questions: e.target.value })}
+                      placeholder="What would make this work for your family?"
+                    />
+                  </FormField>
+                  <button
+                    onClick={handleSubmit}
+                    disabled={submitting}
+                    style={{
+                      width: "100%",
+                      padding: "18px",
+                      background: submitting ? C.muted : C.teal,
+                      border: "none",
+                      borderRadius: 10,
+                      fontFamily: "'Barlow Condensed', 'Arial Narrow', sans-serif",
+                      fontWeight: 700,
+                      fontSize: 22,
+                      color: C.steel,
+                      cursor: submitting ? "wait" : "pointer",
+                      marginTop: 8,
+                      opacity: submitting ? 0.7 : 1,
+                    }}
+                  >
+                    {submitting ? "Submitting..." : "Submit"}
+                  </button>
                 </div>
-                <TimeGrid selected={form.schedule} onToggle={handleScheduleToggle} />
-              </FormField>
+              )}
 
-              <FormField label="How did you hear about us?">
-                <input
-                  style={inputStyle}
-                  value={form.heard}
-                  onChange={(e) => setForm({ ...form, heard: e.target.value })}
-                  placeholder="(optional)"
-                />
-              </FormField>
+              {/* FULLY INTERESTED — complete form */}
+              {form.interest === "interested-schedule" && (
+                <div style={{ marginTop: 16 }}>
+                  {/* Parent 1 — required */}
+                  <div style={{
+                    background: `${C.steel}`,
+                    borderRadius: 10,
+                    padding: "20px 20px 8px",
+                    marginBottom: 16,
+                    border: `1px solid rgba(242,239,232,0.08)`,
+                  }}>
+                    <div style={{
+                      fontFamily: "'Barlow Condensed', 'Arial Narrow', sans-serif",
+                      fontWeight: 700,
+                      fontSize: 16,
+                      color: C.bone,
+                      marginBottom: 14,
+                      letterSpacing: 1,
+                    }}>
+                      PARENT / GUARDIAN 1 <span style={{ color: C.ember, fontSize: 13 }}>(required)</span>
+                    </div>
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+                      <FormField label="Name" required>
+                        <input
+                          style={inputStyle}
+                          value={form.parent1Name}
+                          onChange={(e) => setForm({ ...form, parent1Name: e.target.value })}
+                          placeholder="Full name"
+                        />
+                      </FormField>
+                      <FormField label="Email" required>
+                        <input
+                          style={inputStyle}
+                          type="email"
+                          value={form.parent1Email}
+                          onChange={(e) => setForm({ ...form, parent1Email: e.target.value })}
+                          placeholder="your@email.com"
+                        />
+                      </FormField>
+                    </div>
+                    <FormField label="Phone">
+                      <input
+                        style={inputStyle}
+                        value={form.parent1Phone}
+                        onChange={(e) => setForm({ ...form, parent1Phone: e.target.value })}
+                        placeholder="(optional)"
+                      />
+                    </FormField>
+                  </div>
 
-              <FormField label="Questions or Comments">
-                <textarea
-                  style={{ ...inputStyle, minHeight: 80, resize: "vertical" }}
-                  value={form.questions}
-                  onChange={(e) => setForm({ ...form, questions: e.target.value })}
-                  placeholder="Anything you'd like to ask? (optional)"
-                />
-              </FormField>
+                  {/* Parent 2 — optional */}
+                  <div style={{
+                    background: `${C.steel}`,
+                    borderRadius: 10,
+                    padding: "20px 20px 8px",
+                    marginBottom: 20,
+                    border: `1px solid rgba(242,239,232,0.05)`,
+                  }}>
+                    <div style={{
+                      fontFamily: "'Barlow Condensed', 'Arial Narrow', sans-serif",
+                      fontWeight: 700,
+                      fontSize: 16,
+                      color: C.muted,
+                      marginBottom: 14,
+                      letterSpacing: 1,
+                    }}>
+                      PARENT / GUARDIAN 2 <span style={{ fontSize: 13, fontWeight: 400 }}>(optional)</span>
+                    </div>
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+                      <FormField label="Name">
+                        <input
+                          style={inputStyle}
+                          value={form.parent2Name}
+                          onChange={(e) => setForm({ ...form, parent2Name: e.target.value })}
+                          placeholder="Full name"
+                        />
+                      </FormField>
+                      <FormField label="Email">
+                        <input
+                          style={inputStyle}
+                          type="email"
+                          value={form.parent2Email}
+                          onChange={(e) => setForm({ ...form, parent2Email: e.target.value })}
+                          placeholder="email@example.com"
+                        />
+                      </FormField>
+                    </div>
+                    <FormField label="Phone">
+                      <input
+                        style={inputStyle}
+                        value={form.parent2Phone}
+                        onChange={(e) => setForm({ ...form, parent2Phone: e.target.value })}
+                        placeholder="(optional)"
+                      />
+                    </FormField>
+                  </div>
 
-              <button
-                onClick={handleSubmit}
-                disabled={submitting}
-                style={{
-                  width: "100%",
-                  padding: "18px",
-                  background: submitting ? C.muted : C.teal,
-                  border: "none",
-                  borderRadius: 10,
-                  fontFamily: "'Barlow Condensed', 'Arial Narrow', sans-serif",
-                  fontWeight: 700,
-                  fontSize: 22,
-                  color: C.steel,
-                  cursor: submitting ? "wait" : "pointer",
-                  marginTop: 8,
-                  transition: "transform 0.15s, box-shadow 0.15s, background 0.2s",
-                  opacity: submitting ? 0.7 : 1,
-                }}
-                onMouseOver={(e) => {
-                  if (!submitting) {
-                    e.target.style.transform = "translateY(-2px)";
-                    e.target.style.boxShadow = `0 6px 24px ${C.teal}44`;
-                  }
-                }}
-                onMouseOut={(e) => {
-                  e.target.style.transform = "translateY(0)";
-                  e.target.style.boxShadow = "none";
-                }}
-              >
-                {submitting ? "Submitting..." : "Register Interest"}
-              </button>
+                  {/* Children — up to 3 */}
+                  <div style={{
+                    fontFamily: "'Barlow Condensed', 'Arial Narrow', sans-serif",
+                    fontWeight: 700,
+                    fontSize: 16,
+                    color: C.bone,
+                    marginBottom: 14,
+                    letterSpacing: 1,
+                  }}>
+                    CHILDREN
+                  </div>
+
+                  {form.children.map((child, idx) => (
+                    <div key={idx} style={{
+                      background: `${C.steel}`,
+                      borderRadius: 10,
+                      padding: "16px 20px 4px",
+                      marginBottom: 12,
+                      border: `1px solid rgba(242,239,232,0.08)`,
+                      position: "relative",
+                    }}>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
+                        <span style={{
+                          fontFamily: "'Barlow Condensed', 'Arial Narrow', sans-serif",
+                          fontWeight: 600,
+                          fontSize: 14,
+                          color: C.muted,
+                        }}>
+                          Child {idx + 1} {idx === 0 && <span style={{ color: C.ember }}>(required)</span>}
+                        </span>
+                        {idx > 0 && (
+                          <button
+                            onClick={() => removeChild(idx)}
+                            style={{
+                              background: "none",
+                              border: "none",
+                              color: C.muted,
+                              cursor: "pointer",
+                              fontFamily: "'Barlow Condensed', 'Arial Narrow', sans-serif",
+                              fontSize: 13,
+                              padding: "2px 8px",
+                            }}
+                          >
+                            ✕ Remove
+                          </button>
+                        )}
+                      </div>
+                      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+                        <FormField label="Name" required={idx === 0}>
+                          <input
+                            style={inputStyle}
+                            value={child.name}
+                            onChange={(e) => updateChild(idx, "name", e.target.value)}
+                            placeholder="Child's first name"
+                          />
+                        </FormField>
+                        <FormField label="Age" required={idx === 0}>
+                          <select
+                            style={{ ...inputStyle, cursor: "pointer" }}
+                            value={child.age}
+                            onChange={(e) => updateChild(idx, "age", e.target.value)}
+                          >
+                            <option value="">Select age</option>
+                            {[8, 9, 10, 11, 12].map((a) => (
+                              <option key={a} value={a}>
+                                {a} — {a <= 9 ? "Ember Track" : "Blaze Track"}
+                              </option>
+                            ))}
+                          </select>
+                        </FormField>
+                      </div>
+                    </div>
+                  ))}
+
+                  {form.children.length < 3 && (
+                    <button
+                      onClick={addChild}
+                      style={{
+                        background: "none",
+                        border: `1px dashed rgba(242,239,232,0.2)`,
+                        borderRadius: 8,
+                        padding: "10px 20px",
+                        color: C.teal,
+                        fontFamily: "'Barlow Condensed', 'Arial Narrow', sans-serif",
+                        fontWeight: 600,
+                        fontSize: 15,
+                        cursor: "pointer",
+                        width: "100%",
+                        marginBottom: 20,
+                        transition: "border-color 0.2s",
+                      }}
+                      onMouseOver={(e) => e.target.style.borderColor = C.teal}
+                      onMouseOut={(e) => e.target.style.borderColor = "rgba(242,239,232,0.2)"}
+                    >
+                      + Add another child
+                    </button>
+                  )}
+
+                  <FormField label="Schedule">
+                    <div
+                      style={{
+                        fontFamily: "'Instrument Serif', Georgia, serif",
+                        fontSize: 15,
+                        color: C.bone,
+                        marginBottom: 6,
+                        lineHeight: 1.5,
+                      }}
+                    >
+                      Classes start the week of April 13 and meet on the same day and time each week for 8 weeks.
+                    </div>
+                    <div
+                      style={{
+                        fontFamily: "'Instrument Serif', Georgia, serif",
+                        fontSize: 14,
+                        color: C.muted,
+                        marginBottom: 14,
+                        fontStyle: "italic",
+                      }}
+                    >
+                      Tap or drag to mark every slot that would work for your family.
+                    </div>
+                    <TimeGrid selected={form.schedule} onToggle={handleScheduleToggle} />
+                  </FormField>
+
+                  <FormField label="How did you hear about us?">
+                    <input
+                      style={inputStyle}
+                      value={form.heard}
+                      onChange={(e) => setForm({ ...form, heard: e.target.value })}
+                      placeholder="(optional)"
+                    />
+                  </FormField>
+
+                  <FormField label="Questions or Comments">
+                    <textarea
+                      style={{ ...inputStyle, minHeight: 80, resize: "vertical" }}
+                      value={form.questions}
+                      onChange={(e) => setForm({ ...form, questions: e.target.value })}
+                      placeholder="Anything you'd like to ask? (optional)"
+                    />
+                  </FormField>
+
+                  <button
+                    onClick={handleSubmit}
+                    disabled={submitting}
+                    style={{
+                      width: "100%",
+                      padding: "18px",
+                      background: submitting ? C.muted : C.teal,
+                      border: "none",
+                      borderRadius: 10,
+                      fontFamily: "'Barlow Condensed', 'Arial Narrow', sans-serif",
+                      fontWeight: 700,
+                      fontSize: 22,
+                      color: C.steel,
+                      cursor: submitting ? "wait" : "pointer",
+                      marginTop: 8,
+                      transition: "transform 0.15s, box-shadow 0.15s, background 0.2s",
+                      opacity: submitting ? 0.7 : 1,
+                    }}
+                    onMouseOver={(e) => {
+                      if (!submitting) {
+                        e.target.style.transform = "translateY(-2px)";
+                        e.target.style.boxShadow = `0 6px 24px ${C.teal}44`;
+                      }
+                    }}
+                    onMouseOut={(e) => {
+                      e.target.style.transform = "translateY(0)";
+                      e.target.style.boxShadow = "none";
+                    }}
+                  >
+                    {submitting ? "Submitting..." : "Register Interest"}
+                  </button>
+                </div>
+              )}
             </>
           ) : (
             <div style={{ textAlign: "center", padding: "40px 0" }}>
