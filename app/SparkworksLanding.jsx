@@ -53,94 +53,6 @@ const Divider = ({ width = 80 }) => (
   />
 );
 
-// Registration deadline: Friday April 11, 2026 at 12:00 PM Pacific
-const DEADLINE = new Date("2026-04-11T12:00:00-07:00").getTime();
-
-const CountdownTimer = () => {
-  const [now, setNow] = useState(Date.now());
-  useEffect(() => {
-    const id = setInterval(() => setNow(Date.now()), 1000);
-    return () => clearInterval(id);
-  }, []);
-
-  const diff = DEADLINE - now;
-  if (diff <= 0) {
-    return (
-      <div style={{ textAlign: "center", margin: "20px 0" }}>
-        <div
-          style={{
-            fontFamily: "'Barlow Condensed', 'Arial Narrow', sans-serif",
-            fontWeight: 700,
-            fontSize: 18,
-            color: C.ember,
-            letterSpacing: 1,
-            textTransform: "uppercase",
-          }}
-        >
-          Registration is closed
-        </div>
-      </div>
-    );
-  }
-
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-  const minutes = Math.floor((diff / (1000 * 60)) % 60);
-  const seconds = Math.floor((diff / 1000) % 60);
-
-  const units = [];
-  if (days > 0) units.push({ value: days, label: "days" });
-  units.push({ value: hours, label: "hrs" });
-  units.push({ value: minutes, label: "min" });
-  units.push({ value: seconds, label: "sec" });
-
-  return (
-    <div style={{ textAlign: "center", margin: "20px 0" }}>
-      <div
-        style={{
-          fontFamily: "'Barlow Condensed', 'Arial Narrow', sans-serif",
-          fontWeight: 700,
-          fontSize: 13,
-          letterSpacing: 2,
-          textTransform: "uppercase",
-          color: C.ember,
-          marginBottom: 12,
-        }}
-      >
-        Registration closes Friday at noon
-      </div>
-      <div style={{ display: "flex", justifyContent: "center", gap: 12 }}>
-        {units.map(({ value, label }) => (
-          <div key={label} style={{ minWidth: 64 }}>
-            <div
-              style={{
-                fontFamily: "'Barlow Condensed', 'Arial Narrow', sans-serif",
-                fontWeight: 900,
-                fontSize: 36,
-                color: C.bone,
-                lineHeight: 1,
-              }}
-            >
-              {String(value).padStart(2, "0")}
-            </div>
-            <div
-              style={{
-                fontFamily: "'Instrument Serif', Georgia, serif",
-                fontSize: 13,
-                color: C.muted,
-                marginTop: 4,
-                fontStyle: "italic",
-              }}
-            >
-              {label}
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
-
 const DotTextDot = ({ text, color = C.teal, style = {} }) => (
   <div
     style={{
@@ -412,8 +324,8 @@ const inputStyle = {
   boxSizing: "border-box",
 };
 
-const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri"];
-const DAY_COLORS = { Mon: C.teal, Tue: C.blue, Wed: C.amber, Thu: C.purple, Fri: C.deepBlue };
+const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+const DAY_COLORS = { Mon: C.teal, Tue: C.blue, Wed: C.amber, Thu: C.purple, Fri: C.deepBlue, Sat: C.ember, Sun: C.yellow };
 const SLOTS = ["3:15", "3:30", "3:45", "4:00", "4:15", "4:30", "4:45", "5:00", "5:15", "5:30", "5:45", "6:00", "6:15", "6:30", "6:45"];
 const SLOT_ENDS = ["3:30", "3:45", "4:00", "4:15", "4:30", "4:45", "5:00", "5:15", "5:30", "5:45", "6:00", "6:15", "6:30", "6:45", "7:00"];
 
@@ -450,7 +362,7 @@ const TimeGrid = ({ selected, onToggle }) => {
       style={{ userSelect: "none", WebkitUserSelect: "none" }}
     >
       {/* Header row */}
-      <div style={{ display: "grid", gridTemplateColumns: "54px repeat(5, 1fr)", gap: 2, marginBottom: 2 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "54px repeat(7, 1fr)", gap: 2, marginBottom: 2 }}>
         <div />
         {DAYS.map((d) => (
           <div
@@ -472,7 +384,7 @@ const TimeGrid = ({ selected, onToggle }) => {
       {SLOTS.map((slot) => (
         <div
           key={slot}
-          style={{ display: "grid", gridTemplateColumns: "54px repeat(5, 1fr)", gap: 2, marginBottom: 2 }}
+          style={{ display: "grid", gridTemplateColumns: "54px repeat(7, 1fr)", gap: 2, marginBottom: 2 }}
         >
           <div
             style={{
@@ -863,7 +775,7 @@ export default function SparkworksLanding() {
               { label: "WHEN", value: "Starting week of April 13" },
               { label: "WHERE", value: "South Pasadena, CA" },
               { label: "FORMAT", value: "8 sessions · 60 min each" },
-              { label: "DEADLINE", value: "Friday, April 11 at noon" },
+              { label: "SIZE", value: "Max 6 students per track" },
             ].map(({ label, value }, i) => (
               <div key={i}>
                 <div
@@ -924,7 +836,6 @@ export default function SparkworksLanding() {
           >
             Founding rate — won't run like this again.
           </div>
-          <CountdownTimer />
         </Container>
       </Section>
 
