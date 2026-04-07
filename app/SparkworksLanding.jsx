@@ -324,24 +324,21 @@ const inputStyle = {
   boxSizing: "border-box",
 };
 
-const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const DAY_COLORS = { Mon: C.teal, Tue: C.blue, Wed: C.amber, Thu: C.purple, Fri: C.deepBlue, Sat: C.ember, Sun: C.yellow };
-const SLOTS = ["3:15", "3:30", "3:45", "4:00", "4:15", "4:30", "4:45", "5:00", "5:15", "5:30", "5:45", "6:00", "6:15", "6:30", "6:45"];
-const SLOT_ENDS = ["3:30", "3:45", "4:00", "4:15", "4:30", "4:45", "5:00", "5:15", "5:30", "5:45", "6:00", "6:15", "6:30", "6:45", "7:00"];
+const WEEKDAY_SLOTS = ["3:00", "3:15", "3:30", "3:45", "4:00", "4:15", "4:30", "4:45", "5:00", "5:15", "5:30", "5:45", "6:00", "6:15", "6:30", "6:45"];
+const WEEKEND_SLOTS = ["9:00", "9:15", "9:30", "9:45", "10:00", "10:15", "10:30", "10:45", "11:00", "11:15", "11:30", "11:45", "12:00", "12:15", "12:30", "12:45"];
+const WEEKDAY_DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri"];
+const WEEKEND_DAY_LIST = ["Sat", "Sun"];
 
-const TimeGrid = ({ selected, onToggle }) => {
-  const [dragging, setDragging] = useState(false);
-  const [dragMode, setDragMode] = useState(null); // 'add' or 'remove'
-
+const SubGrid = ({ days, slots, colCount, selected, onToggle, dragging, setDragging, dragMode, setDragMode }) => {
   const key = (day, slot) => `${day} ${slot}`;
   const isSelected = (day, slot) => selected.includes(key(day, slot));
 
   const handleStart = (day, slot) => {
-    const k = key(day, slot);
     const mode = isSelected(day, slot) ? "remove" : "add";
     setDragging(true);
     setDragMode(mode);
-    onToggle(k, mode);
+    onToggle(key(day, slot), mode);
   };
 
   const handleEnter = (day, slot) => {
@@ -349,22 +346,12 @@ const TimeGrid = ({ selected, onToggle }) => {
     onToggle(key(day, slot), dragMode);
   };
 
-  const handleEnd = () => {
-    setDragging(false);
-    setDragMode(null);
-  };
-
   return (
-    <div
-      onMouseUp={handleEnd}
-      onMouseLeave={handleEnd}
-      onTouchEnd={handleEnd}
-      style={{ userSelect: "none", WebkitUserSelect: "none" }}
-    >
-      {/* Header row */}
-      <div style={{ display: "grid", gridTemplateColumns: "54px repeat(7, 1fr)", gap: 2, marginBottom: 2 }}>
+    <div>
+      {/* Header */}
+      <div style={{ display: "grid", gridTemplateColumns: `54px repeat(${colCount}, 1fr)`, gap: 2, marginBottom: 2 }}>
         <div />
-        {DAYS.map((d) => (
+        {days.map((d) => (
           <div
             key={d}
             style={{
@@ -381,10 +368,10 @@ const TimeGrid = ({ selected, onToggle }) => {
         ))}
       </div>
       {/* Time rows */}
-      {SLOTS.map((slot) => (
+      {slots.map((slot) => (
         <div
           key={slot}
-          style={{ display: "grid", gridTemplateColumns: "54px repeat(7, 1fr)", gap: 2, marginBottom: 2 }}
+          style={{ display: "grid", gridTemplateColumns: `54px repeat(${colCount}, 1fr)`, gap: 2, marginBottom: 2 }}
         >
           <div
             style={{
@@ -399,7 +386,7 @@ const TimeGrid = ({ selected, onToggle }) => {
           >
             {slot}
           </div>
-          {DAYS.map((day) => {
+          {days.map((day) => {
             const sel = isSelected(day, slot);
             const col = DAY_COLORS[day];
             return (
@@ -430,6 +417,53 @@ const TimeGrid = ({ selected, onToggle }) => {
           })}
         </div>
       ))}
+    </div>
+  );
+};
+
+const TimeGrid = ({ selected, onToggle }) => {
+  const [dragging, setDragging] = useState(false);
+  const [dragMode, setDragMode] = useState(null);
+
+  const handleEnd = () => {
+    setDragging(false);
+    setDragMode(null);
+  };
+
+  const sharedProps = { selected, onToggle, dragging, setDragging, dragMode, setDragMode };
+
+  return (
+    <div
+      onMouseUp={handleEnd}
+      onMouseLeave={handleEnd}
+      onTouchEnd={handleEnd}
+      style={{ userSelect: "none", WebkitUserSelect: "none" }}
+    >
+      <div style={{
+        fontFamily: "'Barlow Condensed', 'Arial Narrow', sans-serif",
+        fontSize: 12,
+        fontWeight: 600,
+        color: C.muted,
+        textTransform: "uppercase",
+        letterSpacing: 1,
+        marginBottom: 6,
+      }}>
+        Weekdays — 3:00–7:00 PM
+      </div>
+      <SubGrid days={WEEKDAY_DAYS} slots={WEEKDAY_SLOTS} colCount={5} {...sharedProps} />
+      <div style={{
+        fontFamily: "'Barlow Condensed', 'Arial Narrow', sans-serif",
+        fontSize: 12,
+        fontWeight: 600,
+        color: C.muted,
+        textTransform: "uppercase",
+        letterSpacing: 1,
+        marginTop: 16,
+        marginBottom: 6,
+      }}>
+        Weekends — 9:00 AM–1:00 PM
+      </div>
+      <SubGrid days={WEEKEND_DAY_LIST} slots={WEEKEND_SLOTS} colCount={2} {...sharedProps} />
     </div>
   );
 };
