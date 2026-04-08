@@ -542,10 +542,14 @@ export default function SparkworksLanding() {
 
     setSubmitting(true);
     try {
+      // For "not interested" responses, use placeholder name so the entry is searchable in Notion
+      const payload = form.interest.startsWith("not-interested")
+        ? { ...form, parent1Name: "Anonymous Response" }
+        : form;
       const res = await fetch("/api/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify(payload),
       });
       if (res.ok) {
         setSubmitted(true);
