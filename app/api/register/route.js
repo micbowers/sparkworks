@@ -52,9 +52,22 @@ export async function POST(request) {
     });
 
     if (data.schedule && data.schedule.length > 0) {
-      properties["Schedule Availability"] = {
-        rich_text: [{ text: { content: data.schedule.join(", ") } }],
-      };
+      // Write schedule to all registered children's availability fields
+      const scheduleStr = data.schedule.join(", ");
+      const numChildren = Math.min(children.length, 3);
+      for (let i = 0; i < numChildren; i++) {
+        if (children[i] && children[i].name) {
+          properties[`Child ${i + 1} Schedule Availability`] = {
+            rich_text: [{ text: { content: scheduleStr } }],
+          };
+        }
+      }
+      // Always write to Child 1 if there's schedule data
+      if (!properties["Child 1 Schedule Availability"]) {
+        properties["Child 1 Schedule Availability"] = {
+          rich_text: [{ text: { content: scheduleStr } }],
+        };
+      }
     }
 
     if (data.interest) {
@@ -81,12 +94,16 @@ export async function POST(request) {
       };
     }
 
-    if (children[0] && children[0].age) {
-      const age = parseInt(children[0].age);
-      properties["Track"] = {
-        select: { name: age <= 9 ? "Ember (8-9)" : "Blaze (10-12)" },
-      };
-    }
+    // Assign track per child based on age
+    children.forEach((child, i) => {
+      if (child.age) {
+        const age = parseInt(child.age);
+        const num = i + 1;
+        properties[`Child ${num} Track`] = {
+          select: { name: age <= 9 ? "Ember (8-9)" : "Blaze (10-12)" },
+        };
+      }
+    });
 
     const response = await fetch("https://api.notion.com/v1/pages", {
       method: "POST",
