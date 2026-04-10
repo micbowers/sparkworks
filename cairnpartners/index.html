@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cairn Partners, LLC</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --stone: #3a4a4f;
+            --stone-light: #5a6e75;
+            --cream: #f8f6f1;
+            --warm-white: #fefdfb;
+            --sand: #e8e2d8;
+            --text: #2c3639;
+            --text-light: #6b7b80;
+            --accent: #8b6f4e;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: var(--cream);
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .page {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 80px 32px 120px;
+        }
+
+        .logo {
+            width: 220px;
+            margin-bottom: 56px;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards;
+        }
+
+        .hero {
+            margin-bottom: 64px;
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.15s forwards;
+        }
+
+        .hero h1 {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 1.75rem;
+            font-weight: 400;
+            color: var(--stone);
+            margin-bottom: 20px;
+            letter-spacing: -0.01em;
+        }
+
+        .hero p {
+            font-size: 1.05rem;
+            color: var(--text-light);
+            max-width: 580px;
+        }
+
+        .divider {
+            width: 48px;
+            height: 1px;
+            background: var(--sand);
+            margin: 48px 0;
+        }
+
+        section {
+            margin-bottom: 48px;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards;
+        }
+
+        section:nth-child(4) { animation-delay: 0.3s; }
+        section:nth-child(5) { animation-delay: 0.4s; }
+        section:nth-child(6) { animation-delay: 0.5s; }
+        section:nth-child(7) { animation-delay: 0.6s; }
+        section:nth-child(8) { animation-delay: 0.7s; }
+
+        section h2 {
+            font-size: 0.72rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--accent);
+            margin-bottom: 14px;
+        }
+
+        section p, section li {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            line-height: 1.75;
+        }
+
+        section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        section ul li {
+            padding-left: 16px;
+            position: relative;
+            margin-bottom: 4px;
+        }
+
+        section ul li::before {
+            content: '·';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px 32px;
+        }
+
+        .contact-grid .label {
+            font-size: 0.8rem;
+            color: var(--stone-light);
+            font-weight: 500;
+        }
+
+        .contact-grid .value {
+            font-size: 0.95rem;
+            color: var(--text);
+        }
+
+        .contact-grid .value a {
+            color: var(--stone);
+            text-decoration: none;
+            border-bottom: 1px solid var(--sand);
+            transition: border-color 0.2s;
+        }
+
+        .contact-grid .value a:hover {
+            border-color: var(--accent);
+        }
+
+        footer {
+            margin-top: 80px;
+            padding-top: 32px;
+            border-top: 1px solid var(--sand);
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.8s forwards;
+        }
+
+        footer p {
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 540px) {
+            .page { padding: 48px 24px 80px; }
+            .logo { width: 180px; }
+            .hero h1 { font-size: 1.4rem; }
+            .contact-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+
+        <img src="/cairnpartners/logo.png" alt="Cairn Partners" class="logo">
+
+        <div class="hero">
+            <h1>Investment &amp; Management Consulting</h1>
+            <p>Cairn Partners is a South Pasadena-based investment and management firm that incubates and operates early-stage businesses across technology, F&amp;B, and professional services — combining strategic capital with hands-on operational support to help ventures grow.</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <section>
+            <h2>Services</h2>
+            <ul>
+                <li>Early-stage business incubation and investment</li>
+                <li>Operational management and strategic advisory</li>
+                <li>Program and session fees for portfolio ventures</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Contact</h2>
+            <div class="contact-grid">
+                <div>
+                    <div class="label">Email</div>
+                    <div class="value"><a href="mailto:michael.bowers@gmail.com">michael.bowers@gmail.com</a></div>
+                </div>
+                <div>
+                    <div class="label">Phone</div>
+                    <div class="value"><a href="tel:+16263751246">(626) 375-1246</a></div>
+                </div>
+                <div>
+                    <div class="label">Location</div>
+                    <div class="value">South Pasadena, CA</div>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <section>
+            <h2>Refund &amp; Dispute Policy</h2>
+            <p>If you are unsatisfied with a service or believe a charge was made in error, please contact us within 30 days of payment. We will review your request and issue a full or partial refund at our discretion. Disputes should be directed to <a href="mailto:michael.bowers@gmail.com" style="color: var(--stone); border-bottom: 1px solid var(--sand);">michael.bowers@gmail.com</a> before initiating a chargeback with your financial institution.</p>
+        </section>
+
+        <section>
+            <h2>Cancellation Policy</h2>
+            <p>Cancellations for program sessions or services must be submitted in writing at least 7 days prior to the scheduled start date for a full refund. Cancellations made within 7 days of the start date may be eligible for a partial refund or credit toward a future session, at our discretion. No refunds will be issued after a program has begun.</p>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 Cairn Partners, LLC &middot; 318 Camino Del Sol, South Pasadena, CA 91030</p>
+        </footer>
+
+    </div>
+</body>
+</html>
