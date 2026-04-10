@@ -36,7 +36,7 @@
 
         .logo {
             width: 220px;
-            margin-bottom: 56px;
+            margin-bottom: 24px;
             opacity: 0;
             animation: fadeUp 0.8s ease forwards;
         }
@@ -79,7 +79,10 @@
         section:nth-child(5) { animation-delay: 0.4s; }
         section:nth-child(6) { animation-delay: 0.5s; }
         section:nth-child(7) { animation-delay: 0.6s; }
-        section:nth-child(8) { animation-delay: 0.7s; }
+        section:nth-child(8) { animation-delay: 0.65s; }
+        section:nth-child(9) { animation-delay: 0.7s; }
+        section:nth-child(10) { animation-delay: 0.75s; }
+        section:nth-child(11) { animation-delay: 0.8s; }
 
         section h2 {
             font-size: 0.72rem;
@@ -143,12 +146,34 @@
             border-color: var(--accent);
         }
 
+        .project-card {
+            display: inline-block;
+            padding: 20px 28px;
+            border: 1px solid var(--sand);
+            border-radius: 8px;
+            background: var(--warm-white);
+            transition: border-color 0.2s;
+        }
+
+        .project-card:hover {
+            border-color: var(--stone-light);
+        }
+
+        .project-card a {
+            text-decoration: none;
+        }
+
+        .project-card img {
+            height: 32px;
+            display: block;
+        }
+
         footer {
             margin-top: 80px;
             padding-top: 32px;
             border-top: 1px solid var(--sand);
             opacity: 0;
-            animation: fadeUp 0.8s ease 0.8s forwards;
+            animation: fadeUp 0.8s ease 0.85s forwards;
         }
 
         footer p {
@@ -211,6 +236,17 @@
                     <div class="label">Location</div>
                     <div class="value">South Pasadena, CA</div>
                 </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <section>
+            <h2>Current Projects</h2>
+            <div class="project-card">
+                <a href="https://www.sparkworks.kids" target="_blank" rel="noopener">
+                    <img src="/cairnpartners/sparkworks-logo.png" alt="Sparkworks — Think through anything.">
+                </a>
             </div>
         </section>
 
