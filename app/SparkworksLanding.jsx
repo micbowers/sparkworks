@@ -16,6 +16,10 @@ const C = {
   deepBlue: "#2462B8",
 };
 
+// ═══ REGISTRATION TOGGLE ═══
+// Set to false to show "registration full" waitlist mode
+const REGISTRATION_OPEN = false;
+
 const Section = ({ children, bg = C.steel, style = {} }) => (
   <div style={{ background: bg, padding: "60px 24px", ...style }}>{children}</div>
 );
@@ -483,6 +487,9 @@ export default function SparkworksLanding() {
     questions: "",
   });
   const [submitted, setSubmitted] = useState(false);
+  const [waitlistEmail, setWaitlistEmail] = useState("");
+  const [waitlistSubmitted, setWaitlistSubmitted] = useState(false);
+  const [waitlistSubmitting, setWaitlistSubmitting] = useState(false);
   const [heroVisible, setHeroVisible] = useState(false);
 
   useEffect(() => {
@@ -560,6 +567,34 @@ export default function SparkworksLanding() {
       alert("Something went wrong. Please try again or reach out directly.");
     }
     setSubmitting(false);
+  };
+
+  const handleWaitlistSubmit = async () => {
+    if (!waitlistEmail || !waitlistEmail.includes("@")) {
+      alert("Please enter a valid email address.");
+      return;
+    }
+    setWaitlistSubmitting(true);
+    try {
+      const res = await fetch("/api/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          parent1Name: "Waitlist",
+          parent1Email: waitlistEmail,
+          interest: "interested-timing",
+          questions: "Waitlist signup — founding cohort was full.",
+        }),
+      });
+      if (res.ok) {
+        setWaitlistSubmitted(true);
+      } else {
+        alert("Something went wrong. Please try again or reach out directly.");
+      }
+    } catch (err) {
+      alert("Something went wrong. Please try again or reach out directly.");
+    }
+    setWaitlistSubmitting(false);
   };
 
   return (
@@ -849,7 +884,7 @@ export default function SparkworksLanding() {
               letterSpacing: 1,
             }}
           >
-            FOUNDING SPARKS · ONLY 12 SPOTS
+            FOUNDING SPARKS {REGISTRATION_OPEN ? "· ONLY 12 SPOTS" : "· REGISTRATION FULL"}
           </div>
           <div
             style={{
@@ -880,7 +915,108 @@ export default function SparkworksLanding() {
       {/* Registration Form */}
       <Section bg={C.dark} style={{ padding: "50px 24px" }}>
         <Container>
-          {!submitted ? (
+          {!REGISTRATION_OPEN ? (
+            // ═══ WAITLIST MODE ═══
+            <div style={{ textAlign: "center", padding: "40px 0" }}>
+              {!waitlistSubmitted ? (
+                <>
+                  <div style={{ fontSize: 48, marginBottom: 16 }}>⚡</div>
+                  <div
+                    style={{
+                      fontFamily: "'Barlow Condensed', 'Arial Narrow', sans-serif",
+                      fontWeight: 700,
+                      fontSize: 32,
+                      color: C.yellow,
+                      marginBottom: 12,
+                    }}
+                  >
+                    The Founding Sparks cohort is full.
+                  </div>
+                  <div
+                    style={{
+                      fontFamily: "'Instrument Serif', Georgia, serif",
+                      fontSize: 20,
+                      color: C.bone,
+                      lineHeight: 1.6,
+                      maxWidth: 480,
+                      margin: "0 auto 32px",
+                    }}
+                  >
+                    We're so happy this is resonating.
+                    <br />
+                    Drop your email and we'll let you know
+                    <br />
+                    when the next cohort opens for registration.
+                  </div>
+                  <div style={{ maxWidth: 400, margin: "0 auto", display: "flex", gap: 10 }}>
+                    <input
+                      type="email"
+                      placeholder="Your email address"
+                      value={waitlistEmail}
+                      onChange={(e) => setWaitlistEmail(e.target.value)}
+                      onKeyDown={(e) => e.key === "Enter" && handleWaitlistSubmit()}
+                      style={{
+                        flex: 1,
+                        padding: "12px 16px",
+                        borderRadius: 8,
+                        border: `1px solid ${C.muted}40`,
+                        background: C.steel,
+                        color: C.bone,
+                        fontFamily: "'Instrument Serif', Georgia, serif",
+                        fontSize: 16,
+                        outline: "none",
+                      }}
+                    />
+                    <button
+                      onClick={handleWaitlistSubmit}
+                      disabled={waitlistSubmitting}
+                      style={{
+                        padding: "12px 24px",
+                        borderRadius: 8,
+                        border: "none",
+                        background: C.teal,
+                        color: C.steel,
+                        fontFamily: "'Barlow Condensed', 'Arial Narrow', sans-serif",
+                        fontWeight: 700,
+                        fontSize: 16,
+                        cursor: waitlistSubmitting ? "wait" : "pointer",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      {waitlistSubmitting ? "..." : "Notify Me"}
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div style={{ fontSize: 48, marginBottom: 16 }}>⚡</div>
+                  <div
+                    style={{
+                      fontFamily: "'Barlow Condensed', 'Arial Narrow', sans-serif",
+                      fontWeight: 700,
+                      fontSize: 32,
+                      color: C.yellow,
+                      marginBottom: 12,
+                    }}
+                  >
+                    You're on the list!
+                  </div>
+                  <div
+                    style={{
+                      fontFamily: "'Instrument Serif', Georgia, serif",
+                      fontSize: 20,
+                      color: C.bone,
+                      lineHeight: 1.5,
+                    }}
+                  >
+                    We'll reach out as soon as the
+                    <br />
+                    next cohort opens.
+                  </div>
+                </>
+              )}
+            </div>
+          ) : !submitted ? (
             <>
               <Kicker>Register Interest</Kicker>
 
