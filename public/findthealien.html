@@ -284,6 +284,29 @@ body { min-height: 100vh; padding: 24px; }
 .team-row input:focus { outline: 2px solid var(--teal); }
 .team-row .remove-btn { background: none; border: none; color: var(--gray); cursor: pointer; font-size: 18px; padding: 0 8px; }
 .team-row .remove-btn:hover { color: #e06060; }
+.team-row .move-btn {
+  background: #2a3340;
+  border: 1px solid #3a4350;
+  color: var(--bone);
+  cursor: pointer;
+  font-size: 14px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-family: inherit;
+  line-height: 1;
+}
+.team-row .move-btn:hover:not(:disabled) { background: #3a4350; }
+.team-row .move-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.team-order-header {
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 14px;
+  margin-bottom: 8px;
+}
+.team-order-header.show { display: flex; }
+.team-order-header .hint { font-size: 13px; color: var(--gray); }
+.team-order-header .btn { font-size: 13px; padding: 6px 12px; }
 
 /* Answer reveal */
 .answer-reveal {
@@ -513,6 +536,10 @@ body { min-height: 100vh; padding: 24px; }
         <input type="text" id="new-team-input" placeholder="e.g., Maya & Priya">
         <button class="btn" id="btn-add-team">Add team</button>
       </div>
+    </div>
+    <div class="team-order-header" id="team-order-header">
+      <div class="hint">Teams play in this order. Use ↑ ↓ to reorder.</div>
+      <button class="btn secondary" id="btn-shuffle-teams">🎲 Shuffle order</button>
     </div>
     <div id="team-list" style="margin-top:14px;"></div>
   </div>
@@ -840,13 +867,19 @@ function renderSetupGrid() {
 // ============================================================
 function renderTeamList() {
   const list = qs('#team-list');
+  const header = qs('#team-order-header');
   list.innerHTML = '';
+  if (header) header.classList.toggle('show', game.teams.length >= 2);
   game.teams.forEach((team, i) => {
     const row = document.createElement('div');
     row.className = 'team-row';
+    const isFirst = i === 0;
+    const isLast = i === game.teams.length - 1;
     row.innerHTML = `
       <div class="team-idx">#${i+1}</div>
       <input type="text" value="${team.name.replace(/"/g, '&quot;')}" data-team-id="${team.id}">
+      <button class="move-btn" data-move-up="${team.id}" ${isFirst ? 'disabled' : ''} title="Move up">↑</button>
+      <button class="move-btn" data-move-down="${team.id}" ${isLast ? 'disabled' : ''} title="Move down">↓</button>
       <button class="remove-btn" data-remove-id="${team.id}">×</button>
     `;
     list.appendChild(row);
@@ -856,6 +889,32 @@ function renderTeamList() {
       const id = e.target.dataset.teamId;
       const t = game.teams.find(x => x.id === id);
       if (t) { t.name = e.target.value || `Team ${game.teams.indexOf(t)+1}`; saveState(); renderActiveTeamSelect(); renderScoreboard(); }
+    });
+  });
+  qsa('#team-list [data-move-up]').forEach(btn => {
+    btn.addEventListener('click', e => {
+      const id = e.currentTarget.dataset.moveUp;
+      const idx = game.teams.findIndex(t => t.id === id);
+      if (idx > 0) {
+        [game.teams[idx-1], game.teams[idx]] = [game.teams[idx], game.teams[idx-1]];
+        renderTeamList();
+        renderActiveTeamSelect();
+        renderScoreboard();
+        saveState();
+      }
+    });
+  });
+  qsa('#team-list [data-move-down]').forEach(btn => {
+    btn.addEventListener('click', e => {
+      const id = e.currentTarget.dataset.moveDown;
+      const idx = game.teams.findIndex(t => t.id === id);
+      if (idx >= 0 && idx < game.teams.length - 1) {
+        [game.teams[idx], game.teams[idx+1]] = [game.teams[idx+1], game.teams[idx]];
+        renderTeamList();
+        renderActiveTeamSelect();
+        renderScoreboard();
+        saveState();
+      }
     });
   });
   qsa('#team-list .remove-btn').forEach(btn => {
@@ -868,6 +927,19 @@ function renderTeamList() {
       saveState();
     });
   });
+}
+
+function shuffleTeams() {
+  // Fisher-Yates shuffle
+  for (let i = game.teams.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [game.teams[i], game.teams[j]] = [game.teams[j], game.teams[i]];
+  }
+  renderTeamList();
+  renderActiveTeamSelect();
+  renderScoreboard();
+  saveState();
+  flashOk('🎲 Teams shuffled');
 }
 
 function addTeam() {
@@ -1426,6 +1498,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (e.key === 'Enter') { e.preventDefault(); addTeam(); }
     });
   }
+  qs('#btn-shuffle-teams').addEventListener('click', shuffleTeams);
   qs('#btn-reshuffle').addEventListener('click', reshuffleBoard);
   qs('#btn-random-secret').addEventListener('click', pickRandomSecret);
   qs('#btn-start').addEventListener('click', startGame);
