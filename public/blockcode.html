@@ -831,10 +831,28 @@ button.btn.outline.big {
       <span class="step-title">Build the structure</span>
     </div>
     <div class="step-body">
+      <!-- EDIT MODE: dropdown builder -->
       <div id="play-builder-wrap">
         <div id="play-builder"></div>
       </div>
-      <button class="btn full" id="btn-lock-structure" style="margin-top: 16px;">🔓 Lock in structure →</button>
+
+      <!-- PREVIEW MODE: rendered visual (hidden by default) -->
+      <div id="play-preview-wrap" class="hide">
+        <div style="font-size: 11px; letter-spacing: 0.2em; color: var(--gray); margin-bottom: 12px; font-weight: 700;">PREVIEW &middot; IS THIS YOUR STRUCTURE?</div>
+        <div id="play-preview-viz" style="background: #1e2530; border: 1px solid #3a4350; border-radius: 8px; padding: 20px; min-height: 80px; display: flex; align-items: center; justify-content: center;"></div>
+      </div>
+
+      <!-- Single primary action in EDIT mode -->
+      <button class="btn full" id="btn-preview-structure" style="margin-top: 16px;">🔓 Preview structure →</button>
+
+      <!-- Two actions in PREVIEW mode -->
+      <div id="preview-actions" class="hide" style="display: flex; gap: 12px; margin-top: 16px;">
+        <button class="btn secondary" id="btn-back-to-edit" style="flex: 1;">← Edit</button>
+        <button class="btn" id="btn-confirm-structure" style="flex: 2;">✓ Confirm &amp; lock</button>
+      </div>
+
+      <!-- Single action in LOCKED mode -->
+      <button class="btn secondary full hide" id="btn-unlock-structure" style="margin-top: 16px;">🔒 Unlock to edit</button>
     </div>
   </div>
 
@@ -846,8 +864,8 @@ button.btn.outline.big {
     </div>
     <div class="step-body">
       <div style="display:flex; gap:12px;">
-        <button class="btn big" id="btn-test">Test <span style="opacity:.7">· free YES/NO</span></button>
-        <button class="btn warn big" id="btn-showdown">Showdown <span style="opacity:.7">· room votes</span></button>
+        <button class="btn big" id="btn-test">Test <span style="opacity:.7">· does your pattern follow the hidden rule</span></button>
+        <button class="btn warn big" id="btn-showdown">Showdown <span style="opacity:.7">· a chance to earn spark tokens</span></button>
       </div>
     </div>
   </div>
@@ -1676,7 +1694,8 @@ const game = {
   stagingStructure: null,
   stagingCall: null,         // 'test' or 'showdown'
   stagingMove: null,         // the move object mid-creation
-  structureLocked: false,    // has the current turn's structure been locked in?
+  structureLocked: false,    // derived: true iff structureStage === 'locked'
+  structureStage: 'edit',    // 'edit' | 'preview' | 'locked'
 };
 
 function ruleById(id) { return RULES.find(r => r.id === id); }
@@ -1707,6 +1726,7 @@ function resetGame() {
   game.stagingCall = null;
   game.stagingMove = null;
   game.structureLocked = false;
+  game.structureStage = 'edit';
 }
 
 function startGame(secretRuleId) {
@@ -1721,6 +1741,7 @@ function startGame(secretRuleId) {
   game.stagingCall = null;
   game.stagingMove = null;
   game.structureLocked = false;
+  game.structureStage = 'edit';
   // Reset team scores and tokens (teams themselves persist)
   for (const t of game.teams) {
     t.elim = 0;
@@ -1943,6 +1964,7 @@ function saveState() {
       winner: game.winner,
       turnCounter: game.turnCounter,
       structureLocked: game.structureLocked,
+      structureStage: game.structureStage,
     };
     localStorage.setItem('blockcode:state', JSON.stringify(state));
   } catch (e) { console.error('save failed', e); }
@@ -1962,6 +1984,8 @@ function loadState() {
     game.winner = state.winner;
     game.turnCounter = state.turnCounter || 0;
     game.structureLocked = state.structureLocked || false;
+    // Derive stage from saved stage, or fall back to structureLocked flag for old saves
+    game.structureStage = state.structureStage || (game.structureLocked ? 'locked' : 'edit');
     return !!game.secretRuleId;
   } catch (e) { console.error('load failed', e); return false; }
 }
@@ -2762,6 +2786,7 @@ document.addEventListener('DOMContentLoaded', () => {
     game.stagingCall = null;
     game.stagingMove = null;
     game.structureLocked = false;
+    game.structureStage = 'edit';
     for (const t of game.teams) { t.elim = 0; t.tokens = 0; }
     qs('#new-game-modal').classList.add('hide');
     finalizeNewGameReset();
@@ -2940,9 +2965,9 @@ document.addEventListener('DOMContentLoaded', () => {
       qs('#step-1').classList.add('complete');
       qs('#step-2').classList.add('active');
       qs('#step-3').classList.add('dim');
-      // Re-apply lock overlay — if game.structureLocked is true (e.g. after
-      // a page reload mid-turn), the builder stays visually locked and step 3 un-dims.
-      if (typeof applyLockState === 'function') applyLockState();
+      // Re-apply the three-state machine — if game.structureStage is 'preview' or
+      // 'locked' (e.g. after a page reload mid-turn), the preview/locked UI is restored.
+      if (typeof applyStructureStage === 'function') applyStructureStage();
     } else if (step === 3) {
       qs('#step-1').classList.add('complete');
       qs('#step-2').classList.add('complete');
@@ -3027,46 +3052,99 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  function applyLockState() {
-    const btn = qs('#btn-lock-structure');
-    const wrap = qs('#play-builder-wrap');
+  // Three states for Step 2:
+  //   'edit'    — dropdowns visible, "Preview structure →" button
+  //   'preview' — rendered visual visible, Edit + Confirm buttons
+  //   'locked'  — rendered visual visible with LOCKED badge, Unlock button, Step 3 active
+  // game.structureLocked (for save/load compatibility and Test/Showdown gating) is
+  // derived from whether structureStage === 'locked'.
+  function applyStructureStage() {
+    const stage = game.structureStage || 'edit';
+    const builderWrap = qs('#play-builder-wrap');
+    const previewWrap = qs('#play-preview-wrap');
+    const previewViz = qs('#play-preview-viz');
+    const btnPreview = qs('#btn-preview-structure');
+    const previewActions = qs('#preview-actions');
+    const btnUnlock = qs('#btn-unlock-structure');
+    const step2 = qs('#step-2');
     const step3 = qs('#step-3');
-    if (!btn || !wrap || !step3) return;
-    if (game.structureLocked) {
-      wrap.classList.add('locked');
-      btn.classList.add('secondary');
-      btn.innerHTML = '🔒 Unlock to edit';
-      step3.classList.remove('dim');
-      step3.classList.add('active');
-      // Keep Step 2's state indicator as "complete ✓"
-      qs('#step-2').classList.remove('active');
-      qs('#step-2').classList.add('complete');
-    } else {
-      wrap.classList.remove('locked');
-      btn.classList.remove('secondary');
-      btn.innerHTML = '🔓 Lock in structure →';
+    if (!builderWrap || !previewWrap || !btnPreview || !previewActions || !btnUnlock || !step3) return;
+
+    // Default: hide everything conditionally
+    builderWrap.classList.add('hide');
+    previewWrap.classList.add('hide');
+    btnPreview.classList.add('hide');
+    previewActions.classList.add('hide');
+    btnUnlock.classList.add('hide');
+
+    if (stage === 'edit') {
+      builderWrap.classList.remove('hide');
+      builderWrap.classList.remove('locked');
+      btnPreview.classList.remove('hide');
       step3.classList.add('dim');
       step3.classList.remove('active');
-      qs('#step-2').classList.add('active');
-      qs('#step-2').classList.remove('complete');
+      step2.classList.add('active');
+      step2.classList.remove('complete');
+    } else if (stage === 'preview') {
+      // Render the current structure into the preview viz
+      const s = playBuilder.getStructure();
+      if (s && previewViz) {
+        previewViz.innerHTML = renderStructureViz(s);
+      }
+      previewWrap.classList.remove('hide');
+      previewActions.classList.remove('hide');
+      step3.classList.add('dim');
+      step3.classList.remove('active');
+      step2.classList.add('active');
+      step2.classList.remove('complete');
+    } else if (stage === 'locked') {
+      // Keep showing the locked structure as a visual for reference
+      const s = playBuilder.getStructure();
+      if (s && previewViz) {
+        previewViz.innerHTML = renderStructureViz(s);
+      }
+      previewWrap.classList.remove('hide');
+      previewWrap.classList.add('locked');
+      btnUnlock.classList.remove('hide');
+      step3.classList.remove('dim');
+      step3.classList.add('active');
+      step2.classList.remove('active');
+      step2.classList.add('complete');
     }
+
+    // Keep game.structureLocked in sync for save/load and Test/Showdown code
+    game.structureLocked = (stage === 'locked');
   }
 
-  qs('#btn-lock-structure').addEventListener('click', () => {
-    if (game.structureLocked) {
-      // Unlock — return to editable state
-      game.structureLocked = false;
-      applyLockState();
-      saveState();
-      return;
-    }
-    // Lock — validate first
+  // Preview: validate there's a structure and show the visual
+  qs('#btn-preview-structure').addEventListener('click', () => {
     const s = playBuilder.getStructure();
     if (!s) { alert('Build a structure first.'); return; }
     const teamId = qs('#active-team').value;
     if (!teamId) { alert('Pick a team.'); return; }
-    game.structureLocked = true;
-    applyLockState();
+    game.structureStage = 'preview';
+    applyStructureStage();
+    saveState();
+  });
+
+  // Back to edit from preview (without committing)
+  qs('#btn-back-to-edit').addEventListener('click', () => {
+    game.structureStage = 'edit';
+    applyStructureStage();
+    saveState();
+  });
+
+  // Confirm the previewed structure — lock it, un-dim Step 3
+  qs('#btn-confirm-structure').addEventListener('click', () => {
+    game.structureStage = 'locked';
+    applyStructureStage();
+    saveState();
+  });
+
+  // Unlock a locked structure → back to edit
+  qs('#btn-unlock-structure').addEventListener('click', () => {
+    game.structureStage = 'edit';
+    applyStructureStage();
     saveState();
   });
 
@@ -3079,6 +3157,7 @@ document.addEventListener('DOMContentLoaded', () => {
     showAnswerReveal(move);
     setPlayStep(5);
     game.structureLocked = false;
+    game.structureStage = 'edit';
     renderAll();
     playBuilder.reset();
   });
@@ -3109,6 +3188,7 @@ document.addEventListener('DOMContentLoaded', () => {
     game.stagingStructure = s;
     game.stagingCall = 'showdown';
     game.structureLocked = false;
+    game.structureStage = 'edit';
   });
 
   qs('#btn-reveal-showdown').addEventListener('click', () => {
@@ -3218,6 +3298,8 @@ document.addEventListener('DOMContentLoaded', () => {
       game.currentTeamIndex = (game.currentTeamIndex + 1) % game.teams.length;
     }
     game.structureLocked = false;
+    game.structureStage = 'edit';
+    playBuilder.reset();
     renderActiveTeamSelect();
     renderTurnBanner();
     setPlayStep(qs('#active-team').value ? 2 : 1);
@@ -3231,6 +3313,8 @@ document.addEventListener('DOMContentLoaded', () => {
       game.currentTeamIndex = (game.currentTeamIndex - 1 + game.teams.length) % game.teams.length;
     }
     game.structureLocked = false;
+    game.structureStage = 'edit';
+    playBuilder.reset();
     setPlayStep(1);
     renderAll();
   });
