@@ -2376,8 +2376,27 @@ function loadState() {
     const raw = localStorage.getItem('blockcode:state');
     if (!raw) return false;
     const state = JSON.parse(raw);
+    // Guard against stale rule IDs. If a saved game was created when the rule
+    // bank had different IDs (e.g. before a rename or generator change), any
+    // ID that no longer exists must be dropped — otherwise ruleById() returns
+    // undefined and downstream code (renderScoreboard, applyEvidence, etc.)
+    // crashes when it tries to read .text or .check on nothing.
+    const validIds = new Set(RULES.map(r => r.id));
+    const savedAlive = (state.alive || []).filter(id => validIds.has(id));
+    const staleCount = (state.alive?.length || 0) - savedAlive.length;
+    if (state.secretRuleId && !validIds.has(state.secretRuleId)) {
+      // The saved secret rule no longer exists — this save cannot be resumed
+      // safely. Clear it so the user starts fresh instead of crashing.
+      console.warn('[blockcode] saved secret rule id is stale, discarding save:', state.secretRuleId);
+      localStorage.removeItem('blockcode:state');
+      return false;
+    }
+    if (staleCount > 0) {
+      console.warn(`[blockcode] discarded ${staleCount} stale rule IDs from saved state`);
+    }
+
     game.secretRuleId = state.secretRuleId;
-    game.alive = new Set(state.alive);
+    game.alive = new Set(savedAlive.length > 0 ? savedAlive : (state.secretRuleId ? [state.secretRuleId] : []));
     game.teams = state.teams || [];
     game.currentTeamIndex = state.currentTeamIndex || 0;
     game.moves = state.moves || [];
@@ -2726,13 +2745,16 @@ function renderScoreboard() {
     body.appendChild(tr);
   }
 
-  // Alive rules panel — show only when narrowed
+  // Alive rules panel — show only when narrowed.
+  // .filter(Boolean) guards against stale rule IDs in a saved game — if someone
+  // loads localStorage from an older build whose rule IDs no longer exist,
+  // ruleById() returns undefined, and without the filter we'd crash here.
   const pane = qs('#alive-rules-panel');
   const list = qs('#alive-rules-list');
   if (game.alive.size > 0 && game.alive.size <= 15 && game.secretRuleId) {
     pane.style.display = '';
     list.innerHTML = '';
-    [...game.alive].map(ruleById).sort((a,b)=>a.id.localeCompare(b.id)).forEach(r => {
+    [...game.alive].map(ruleById).filter(Boolean).sort((a,b)=>a.id.localeCompare(b.id)).forEach(r => {
       const div = document.createElement('div');
       div.textContent = '• ' + r.text;
       list.appendChild(div);
