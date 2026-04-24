@@ -38,7 +38,7 @@
 }
 
 * { box-sizing: border-box; }
-html, body { margin: 0; padding: 0; background: var(--steel); color: var(--bone); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+html, body { margin: 0; padding: 0; background: #ffffff; color: var(--steel); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
 body { min-height: 100vh; padding: 24px; }
 
 .main-layout {
@@ -84,7 +84,7 @@ body { min-height: 100vh; padding: 24px; }
   align-items: flex-end;
 }
 .header .brand { font-size: 14px; letter-spacing: 0.2em; color: var(--ember); font-weight: 700; }
-.header .title { font-size: 42px; font-weight: 800; color: var(--bone); margin-top: 4px; }
+.header .title { font-size: 42px; font-weight: 800; color: var(--steel); margin-top: 4px; }
 .header .subtitle { font-size: 16px; color: var(--gray); font-style: italic; margin-top: 4px; }
 .header .count {
   text-align: right;
@@ -99,7 +99,7 @@ body { min-height: 100vh; padding: 24px; }
   display: flex;
   gap: 4px;
   margin-bottom: 20px;
-  border-bottom: 1px solid #3a4350;
+  border-bottom: 1px solid #d8d8d8;
 }
 .tab {
   background: none;
@@ -115,17 +115,18 @@ body { min-height: 100vh; padding: 24px; }
   font-family: inherit;
 }
 .tab.active { color: var(--ember); border-bottom-color: var(--ember); }
-.tab:hover:not(.active) { color: var(--bone); }
+.tab:hover:not(.active) { color: var(--steel); }
 
 .tab-pane { display: none; }
 .tab-pane.active { display: block; }
 
 /* Panels */
 .panel {
-  background: #2a3340;
+  background: #f7f5f0;
   border-radius: 10px;
   padding: 24px;
   margin-bottom: 20px;
+  border: 1px solid #e8e4dd;
 }
 .panel h2 {
   font-size: 12px;
@@ -166,7 +167,7 @@ body { min-height: 100vh; padding: 24px; }
   flex-direction: column;
   align-items: center;
   cursor: pointer;
-  border: 3px solid transparent;
+  border: 3px solid #d8d4cc;
   transition: transform 0.12s ease, border-color 0.12s ease, opacity 0.3s ease, filter 0.3s ease;
   position: relative;
 }
@@ -201,19 +202,44 @@ body { min-height: 100vh; padding: 24px; }
   box-shadow: 0 0 0 3px rgba(245, 196, 0, 0.5);
 }
 
+/* Preview-match highlight: shown when user clicks a question and preview toggle is ON.
+   Uses teal (the "yes" color) so it reads as "these are the aliens this question applies to". */
+.alien-card.preview-match {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(14, 158, 138, 0.45);
+}
+
+/* Toggle row for the preview feature */
+.preview-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  background: #eae6de;
+  border-radius: 6px;
+  margin-bottom: 14px;
+  font-size: 12px;
+  color: var(--steel);
+  cursor: pointer;
+  user-select: none;
+}
+.preview-toggle input { margin: 0; cursor: pointer; transform: scale(1.15); }
+.preview-toggle .preview-toggle-label { font-weight: 700; letter-spacing: 0.08em; }
+.preview-toggle .preview-toggle-hint { color: var(--gray); font-style: italic; margin-left: auto; font-size: 11px; }
+
 /* Secret alien display */
 .secret-display {
-  background: linear-gradient(135deg, #2a3340, #1e2530);
+  background: linear-gradient(135deg, #f7f5f0, #eae6de);
   padding: 14px 20px;
   border-radius: 8px;
   margin-bottom: 20px;
-  border: 1px solid #3a4350;
+  border: 1px solid #d8d4cc;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.secret-display .label { font-size: 11px; letter-spacing: 0.2em; color: var(--yellow); font-weight: 700; }
-.secret-display .value { font-size: 18px; color: var(--bone); font-weight: 700; }
+.secret-display .label { font-size: 11px; letter-spacing: 0.2em; color: #b89400; font-weight: 700; }
+.secret-display .value { font-size: 18px; color: var(--steel); font-weight: 700; }
 .secret-display .hidden { color: var(--gray); font-style: italic; }
 .secret-display .spacer { flex: 1; }
 .secret-display-mini {
@@ -226,7 +252,7 @@ body { min-height: 100vh; padding: 24px; }
 
 /* Turn banner */
 .turn-banner {
-  background: #1e2530;
+  background: #eae6de;
   padding: 14px 20px;
   border-radius: 8px;
   margin-bottom: 20px;
@@ -243,7 +269,7 @@ body { min-height: 100vh; padding: 24px; }
   letter-spacing: 0.15em;
   font-weight: 700;
 }
-.turn-banner .team-name { font-size: 18px; font-weight: 700; color: var(--bone); }
+.turn-banner .team-name { font-size: 18px; font-weight: 700; color: var(--steel); }
 .turn-banner .turn-sub { color: var(--gray); font-size: 13px; margin-left: auto; font-style: italic; }
 
 /* Forms */
@@ -251,9 +277,9 @@ body { min-height: 100vh; padding: 24px; }
 .form-group label { display: block; font-size: 11px; letter-spacing: 0.15em; color: var(--gray); margin-bottom: 6px; font-weight: 700; }
 .form-group select, .form-group input {
   width: 100%;
-  background: #1e2530;
-  color: var(--bone);
-  border: 1px solid #3a4350;
+  background: #ffffff;
+  color: var(--steel);
+  border: 1px solid #c8c4bc;
   border-radius: 6px;
   padding: 10px 12px;
   font-size: 15px;
@@ -276,14 +302,14 @@ body { min-height: 100vh; padding: 24px; }
 }
 .btn:hover { background: #e05a20; }
 .btn:disabled { opacity: 0.5; cursor: not-allowed; }
-.btn.secondary { background: #3a4350; }
-.btn.secondary:hover { background: #4a5360; }
+.btn.secondary { background: #d8d4cc; color: var(--steel); }
+.btn.secondary:hover { background: #c8c4bc; }
 .btn.teal { background: var(--teal); }
 .btn.teal:hover { background: #12b59f; }
 .btn.outline {
   background: transparent;
-  border: 1px solid #3a4350;
-  color: var(--bone);
+  border: 1px solid #c8c4bc;
+  color: var(--steel);
 }
 .btn.outline:hover { border-color: var(--ember); color: var(--ember); }
 .btn.big { padding: 16px 28px; font-size: 15px; }
@@ -294,20 +320,20 @@ body { min-height: 100vh; padding: 24px; }
   display: flex;
   gap: 8px;
   padding: 10px;
-  background: #1e2530;
+  background: #eae6de;
   border-radius: 6px;
   margin-bottom: 8px;
   align-items: center;
 }
 .team-row .team-idx { color: var(--gray); font-size: 13px; min-width: 28px; }
-.team-row input { flex: 1; padding: 6px 8px; font-size: 13px; background: #0f1620; color: var(--bone); border: 1px solid #3a4350; border-radius: 4px; font-family: inherit; }
+.team-row input { flex: 1; padding: 6px 8px; font-size: 13px; background: #ffffff; color: var(--steel); border: 1px solid #c8c4bc; border-radius: 4px; font-family: inherit; }
 .team-row input:focus { outline: 2px solid var(--teal); }
 .team-row .remove-btn { background: none; border: none; color: var(--gray); cursor: pointer; font-size: 18px; padding: 0 8px; }
-.team-row .remove-btn:hover { color: #e06060; }
+.team-row .remove-btn:hover { color: #b33a3a; }
 .team-row .move-btn {
-  background: #2a3340;
-  border: 1px solid #3a4350;
-  color: var(--bone);
+  background: #ffffff;
+  border: 1px solid #c8c4bc;
+  color: var(--steel);
   cursor: pointer;
   font-size: 14px;
   padding: 4px 10px;
@@ -315,7 +341,7 @@ body { min-height: 100vh; padding: 24px; }
   font-family: inherit;
   line-height: 1;
 }
-.team-row .move-btn:hover:not(:disabled) { background: #3a4350; }
+.team-row .move-btn:hover:not(:disabled) { background: #eae6de; }
 .team-row .move-btn:disabled { opacity: 0.3; cursor: not-allowed; }
 .team-order-header {
   display: none;
@@ -384,17 +410,17 @@ body { min-height: 100vh; padding: 24px; }
   letter-spacing: 0.2em;
   color: var(--gray);
   padding: 8px 12px;
-  border-bottom: 2px solid #3a4350;
+  border-bottom: 2px solid #c8c4bc;
   font-weight: 700;
 }
 .scoreboard td {
   padding: 14px 12px;
-  border-bottom: 1px solid #2a3340;
+  border-bottom: 1px solid #e8e4dd;
   font-size: 18px;
   vertical-align: middle;
 }
 .scoreboard td.num { font-variant-numeric: tabular-nums; font-weight: 700; }
-.scoreboard .team-name { font-weight: 600; color: var(--bone); }
+.scoreboard .team-name { font-weight: 600; color: var(--steel); }
 .scoreboard .elim { color: var(--ember); }
 .scoreboard .badge-detection { background: var(--yellow); color: var(--steel); padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; margin-left: 6px; }
 .scoreboard .badge-elimination { background: var(--teal); color: white; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; margin-left: 6px; }
@@ -406,12 +432,13 @@ body { min-height: 100vh; padding: 24px; }
   position: sticky;
   top: 24px;
   align-self: flex-start;
-  background: #2a3340;
+  background: #f7f5f0;
   border-radius: 10px;
   padding: 16px;
   max-height: calc(100vh - 48px);
   display: flex;
   flex-direction: column;
+  border: 1px solid #e8e4dd;
 }
 .evidence-rail h2 {
   font-size: 11px;
@@ -435,14 +462,17 @@ body { min-height: 100vh; padding: 24px; }
   padding-right: 4px;
 }
 .evidence-list::-webkit-scrollbar { width: 6px; }
-.evidence-list::-webkit-scrollbar-thumb { background: #3a4350; border-radius: 3px; }
+.evidence-list::-webkit-scrollbar-thumb { background: #c8c4bc; border-radius: 3px; }
 
 .ev-item {
-  background: #1e2530;
+  background: #ffffff;
   border-radius: 6px;
   padding: 10px;
   font-size: 12px;
   border-left: 3px solid transparent;
+  border-top: 1px solid #e8e4dd;
+  border-right: 1px solid #e8e4dd;
+  border-bottom: 1px solid #e8e4dd;
 }
 .ev-item.yes { border-left-color: var(--teal); }
 .ev-item.no  { border-left-color: var(--ember); }
@@ -455,9 +485,9 @@ body { min-height: 100vh; padding: 24px; }
   color: var(--gray);
   margin-bottom: 4px;
 }
-.ev-item .ev-top .team { color: var(--bone); font-weight: 600; }
+.ev-item .ev-top .team { color: var(--steel); font-weight: 600; }
 .ev-item .ev-top .elim { color: var(--ember); font-weight: 700; }
-.ev-item .ev-q { color: var(--bone); font-style: italic; }
+.ev-item .ev-q { color: var(--steel); font-style: italic; }
 .ev-item .ev-a {
   display: inline-block;
   font-weight: 800;
@@ -494,10 +524,13 @@ body { min-height: 100vh; padding: 24px; }
 .stats-row { display: flex; gap: 12px; margin-bottom: 20px; }
 .stat {
   flex: 1;
-  background: #2a3340;
+  background: #f7f5f0;
   border-radius: 10px;
   padding: 14px 16px;
   border-left: 4px solid var(--teal);
+  border-top: 1px solid #e8e4dd;
+  border-right: 1px solid #e8e4dd;
+  border-bottom: 1px solid #e8e4dd;
 }
 .stat .label { font-size: 10px; letter-spacing: 0.2em; color: var(--gray); font-weight: 700; }
 .stat .value { font-size: 32px; font-weight: 800; margin-top: 4px; line-height: 1; }
@@ -625,22 +658,29 @@ body { min-height: 100vh; padding: 24px; }
       </div>
 
       <div class="panel" id="panel-action" style="display: none;">
-        <h2><span class="step-num">2</span>Ask or guess?</h2>
+        <h2><span class="step-num">2</span>Ask a question</h2>
+        <p style="color: var(--gray); margin: 0 0 14px; font-size: 12px; font-style: italic;">
+          Keep asking until one alien is left — that's the winner. No guessing.
+        </p>
         <div class="controls-row">
-          <button class="btn big teal" id="btn-ask-mode">❓ Ask</button>
-          <button class="btn big" id="btn-guess-mode">🎯 Guess</button>
+          <button class="btn big teal" id="btn-ask-mode">❓ Ask a question</button>
         </div>
       </div>
 
       <div class="panel" id="panel-ask" style="display: none;">
         <h2><span class="step-num">3</span>Pick the question</h2>
+        <label class="preview-toggle" for="preview-toggle">
+          <input type="checkbox" id="preview-toggle" checked>
+          <span class="preview-toggle-label">HIGHLIGHT MATCHING ALIENS</span>
+          <span class="preview-toggle-hint">turn off for harder play</span>
+        </label>
         <div class="form-group">
           <label>Search <span id="question-match-count" style="color: var(--gray); font-weight: 400; margin-left: 6px; font-size: 11px;"></span></label>
           <input type="text" id="question-search" placeholder="e.g., 'eyes', 'horns', 'stripes'…"
                  oninput="if(typeof renderQuestionOptions==='function')renderQuestionOptions()">
         </div>
         <div class="form-group">
-          <label>The team asks:</label>
+          <label id="ask-select-label">The team asks:</label>
           <select id="question-select" size="8"></select>
         </div>
         <div class="controls-row">
@@ -649,23 +689,33 @@ body { min-height: 100vh; padding: 24px; }
         </div>
       </div>
 
-      <div class="panel" id="panel-guess" style="display: none;">
-        <h2><span class="step-num">3</span>Click an alien</h2>
-        <p style="color: var(--gray); margin: 0 0 16px; font-size: 12px;">
-          Click any alien on the grid to the left that hasn't been eliminated.
+      <div id="reveal-container"></div>
+
+      <div class="panel" id="panel-between-rounds" style="display: none;">
+        <h2 id="between-rounds-title">Round complete</h2>
+        <p style="color: var(--gray); margin: 0 0 16px; font-size: 13px;" id="between-rounds-sub">
+          The next team will start Round 2.
         </p>
         <div class="controls-row">
-          <button class="btn outline" id="btn-cancel-guess">← Back</button>
+          <button class="btn big teal" id="btn-next-round">▶ Start next round</button>
         </div>
       </div>
 
-      <div id="reveal-container"></div>
+      <div class="panel" id="panel-match-done" style="display: none;">
+        <h2 id="match-done-title">★ Match complete</h2>
+        <p style="color: var(--gray); margin: 0 0 16px; font-size: 13px;" id="match-done-sub">
+          Final standings are shown in the scoreboard below.
+        </p>
+        <div class="controls-row">
+          <button class="btn big" id="btn-end-match">End match</button>
+        </div>
+      </div>
 
       <div class="panel">
         <h2>Scoreboard</h2>
         <table class="scoreboard">
           <thead>
-            <tr><th>TEAM</th><th>TURNS</th><th>ELIM</th></tr>
+            <tr><th>TEAM</th><th>TURNS</th><th>ELIM</th><th>WINS</th></tr>
           </thead>
           <tbody id="scoreboard-body"></tbody>
         </table>
@@ -699,7 +749,7 @@ body { min-height: 100vh; padding: 24px; }
 // ALIEN POOL — 39 hand-illustrated aliens, embedded as base64 PNGs
 // Each alien has attributes tagged from its actual appearance.
 // ============================================================
-const EMBEDDED_ALIENS = [{"num": 1, "name": "Zorp", "color": "purple", "eyes": 4, "heads": 2, "horns": 3, "antennae": false, "tail": false, "stripes": false, "spots": true, "mouth": "smile", "bodyShape": "round", "img": "aliens/01_Zorp.png"}, {"num": 2, "name": "Blix", "color": "orange", "eyes": 2, "heads": 1, "horns": 0, "antennae": true, "tail": true, "stripes": true, "spots": false, "mouth": "smile", "bodyShape": "round", "img": "aliens/02_Blix.png"}, {"num": 3, "name": "Grom", "color": "teal", "eyes": 2, "heads": 2, "horns": 2, "antennae": false, "tail": true, "stripes": true, "spots": false, "mouth": "fangs", "bodyShape": "tall", "img": "aliens/03_Grom.png"}, {"num": 4, "name": "Kex", "color": "purple", "eyes": 1, "heads": 1, "horns": 1, "antennae": true, "tail": false, "stripes": false, "spots": true, "mouth": "smile", "bodyShape": "square", "img": "aliens/04_Kex.png"}, {"num": 5, "name": "Voob", "color": "teal", "eyes": 4, "heads": 2, "horns": 2, "antennae": true, "tail": false, "stripes": false, "spots": false, "mouth": "fangs", "bodyShape": "tall", "img": "aliens/05_Voob.png"}, {"num": 6, "name": "Nix", "color": "orange", "eyes": 2, "heads": 1, "horns": 0, "antennae": true, "tail": true, "stripes": true, "spots": true, "mouth": "smile", "bodyShape": "round", "img": "aliens/06_Nix.png"}, {"num": 7, "name": "Plim", "color": "purple", "eyes": 1, "heads": 1, "horns": 2, "antennae": false, "tail": false, "stripes": true, "spots": true, "mouth": "frown", "bodyShape": "square", "img": "aliens/07_Plim.png"}, {"num": 8, "name": "Zorb", "color": "orange", "eyes": 4, "heads": 2, "horns": 0, "antennae": false, "tail": true, "stripes": false, "spots": false, "mouth": "smile", "bodyShape": "tall", "img": "aliens/08_Zorb.png"}, {"num": 9, "name": "Trax", "color": "teal", "eyes": 2, "heads": 1, "horns": 1, "antennae": false, "tail": true, "stripes": true, "spots": false, "mouth": "fangs", "bodyShape": "round", "img": "aliens/09_Trax.png"}, {"num": 10, "name": "Flop", "color": "orange", "eyes": 4, "heads": 2, "horns": 2, "antennae": true, "tail": false, "stripes": true, "spots": true, "mouth": "smile", "bodyShape": "tall", "img": "aliens/10_Flop.png"}, {"num": 11, "name": "Glub", "color": "purple", "eyes": 4, "heads": 2, "horns": 0, "antennae": false, "tail": false, "stripes": false, "spots": false, "mouth": "fangs", "bodyShape": "tall", "img": "aliens/11_Glub.png"}, {"num": 12, "name": "Spin", "color": "teal", "eyes": 1, "heads": 1, "horns": 2, "antennae": true, "tail": true, "stripes": true, "spots": true, "mouth": "frown", "bodyShape": "square", "img": "aliens/12_Spin.png"}, {"num": 13, "name": "Kip", "color": "teal", "eyes": 3, "heads": 1, "horns": 0, "antennae": false, "tail": true, "stripes": true, "spots": false, "mouth": "smile", "bodyShape": "round", "img": "aliens/13_Kip.png"}, {"num": 14, "name": "Rex", "color": "orange", "eyes": 2, "heads": 2, "horns": 2, "antennae": true, "tail": false, "stripes": true, "spots": true, "mouth": "frown", "bodyShape": "tall", "img": "aliens/14_Rex.png"}, {"num": 15, "name": "Wobb", "color": "purple", "eyes": 4, "heads": 2, "horns": 1, "antennae": false, "tail": false, "stripes": false, "spots": true, "mouth": "fangs", "bodyShape": "tall", "img": "aliens/15_Wobb.png"}, {"num": 16, "name": "Pilt", "color": "purple", "eyes": 2, "heads": 1, "horns": 1, "antennae": true, "tail": true, "stripes": true, "spots": false, "mouth": "smile", "bodyShape": "square", "img": "aliens/16_Pilt.png"}, {"num": 17, "name": "Moxy", "color": "teal", "eyes": 1, "heads": 1, "horns": 0, "antennae": true, "tail": false, "stripes": true, "spots": true, "mouth": "smile", "bodyShape": "tall", "img": "aliens/17_Moxy.png"}, {"num": 18, "name": "Dax", "color": "orange", "eyes": 4, "heads": 2, "horns": 3, "antennae": false, "tail": true, "stripes": false, "spots": true, "mouth": "fangs", "bodyShape": "round", "img": "aliens/18_Dax.png"}, {"num": 19, "name": "Trig", "color": "teal", "eyes": 2, "heads": 1, "horns": 0, "antennae": false, "tail": true, "stripes": false, "spots": false, "mouth": "smile", "bodyShape": "round", "img": "aliens/19_Trig.png"}, {"num": 20, "name": "Quex", "color": "purple", "eyes": 4, "heads": 2, "horns": 2, "antennae": true, "tail": false, "stripes": true, "spots": false, "mouth": "fangs", "bodyShape": "tall", "img": "aliens/20_quex.png"}, {"num": 21, "name": "Zeep", "color": "orange", "eyes": 2, "heads": 2, "horns": 3, "antennae": false, "tail": true, "stripes": false, "spots": false, "mouth": "frown", "bodyShape": "round", "img": "aliens/21_zeep.png"}, {"num": 22, "name": "Vex", "color": "purple", "eyes": 1, "heads": 1, "horns": 2, "antennae": true, "tail": false, "stripes": true, "spots": true, "mouth": "smile", "bodyShape": "square", "img": "aliens/22_vex.png"}, {"num": 23, "name": "Thom", "color": "orange", "eyes": 3, "heads": 1, "horns": 0, "antennae": true, "tail": true, "stripes": false, "spots": false, "mouth": "fangs", "bodyShape": "round", "img": "aliens/23_thom.png"}, {"num": 24, "name": "Gaz", "color": "teal", "eyes": 4, "heads": 2, "horns": 0, "antennae": false, "tail": false, "stripes": true, "spots": true, "mouth": "frown", "bodyShape": "tall", "img": "aliens/24_gaz.png"}, {"num": 25, "name": "Lurb", "color": "orange", "eyes": 1, "heads": 1, "horns": 1, "antennae": false, "tail": false, "stripes": true, "spots": false, "mouth": "smile", "bodyShape": "tall", "img": "aliens/25_lurb.png"}, {"num": 26, "name": "Snix", "color": "purple", "eyes": 4, "heads": 2, "horns": 2, "antennae": true, "tail": true, "stripes": false, "spots": true, "mouth": "fangs", "bodyShape": "round", "img": "aliens/26_snix.png"}, {"num": 27, "name": "Broz", "color": "teal", "eyes": 3, "heads": 1, "horns": 2, "antennae": true, "tail": true, "stripes": true, "spots": false, "mouth": "smile", "bodyShape": "round", "img": "aliens/27_broz.png"}, {"num": 28, "name": "Fip", "color": "teal", "eyes": 2, "heads": 2, "horns": 2, "antennae": false, "tail": false, "stripes": false, "spots": true, "mouth": "smile", "bodyShape": "square", "img": "aliens/28_fip.png"}, {"num": 29, "name": "Klax", "color": "orange", "eyes": 3, "heads": 1, "horns": 0, "antennae": false, "tail": true, "stripes": false, "spots": true, "mouth": "frown", "bodyShape": "tall", "img": "aliens/29_klax.png"}, {"num": 31, "name": "Zim", "color": "orange", "eyes": 2, "heads": 1, "horns": 1, "antennae": false, "tail": true, "stripes": false, "spots": true, "mouth": "smile", "bodyShape": "round", "img": "aliens/31_zim.png"}, {"num": 32, "name": "Plonk", "color": "purple", "eyes": 2, "heads": 1, "horns": 0, "antennae": true, "tail": false, "stripes": false, "spots": true, "mouth": "smile", "bodyShape": "round", "img": "aliens/32_Plonk.png"}, {"num": 33, "name": "Grix", "color": "teal", "eyes": 2, "heads": 2, "horns": 2, "antennae": true, "tail": false, "stripes": false, "spots": false, "mouth": "smile", "bodyShape": "tall", "img": "aliens/33_Grix.png"}, {"num": 34, "name": "Blort", "color": "orange", "eyes": 2, "heads": 1, "horns": 2, "antennae": false, "tail": true, "stripes": false, "spots": true, "mouth": "smile", "bodyShape": "round", "img": "aliens/34_Blort.png"}, {"num": 35, "name": "Gorp", "color": "orange", "eyes": 2, "heads": 2, "horns": 3, "antennae": false, "tail": true, "stripes": false, "spots": false, "mouth": "frown", "bodyShape": "round", "img": "aliens/35_Gorp.png"}, {"num": 36, "name": "Mibble", "color": "orange", "eyes": 2, "heads": 1, "horns": 2, "antennae": false, "tail": false, "stripes": false, "spots": true, "mouth": "smile", "bodyShape": "tall", "img": "aliens/36_Mibble.png"}, {"num": 37, "name": "Plorp", "color": "teal", "eyes": 4, "heads": 2, "horns": 0, "antennae": true, "tail": true, "stripes": true, "spots": true, "mouth": "fangs", "bodyShape": "round", "img": "aliens/37_Plorp.png"}, {"num": 38, "name": "Umbo", "color": "purple", "eyes": 2, "heads": 1, "horns": 1, "antennae": false, "tail": false, "stripes": true, "spots": true, "mouth": "frown", "bodyShape": "tall", "img": "aliens/38_Umbo.png"}, {"num": 39, "name": "Vurn", "color": "purple", "eyes": 1, "heads": 1, "horns": 2, "antennae": false, "tail": false, "stripes": true, "spots": true, "mouth": "frown", "bodyShape": "tall", "img": "aliens/39_Vurn.png"}, {"num": 48, "name": "Zok", "color": "orange", "eyes": 2, "heads": 1, "horns": 2, "antennae": true, "tail": false, "stripes": false, "spots": true, "mouth": "smile", "bodyShape": "round", "img": "aliens/48_zok.png"}];
+const EMBEDDED_ALIENS = [{"num": 1, "name": "Zorp", "color": "purple", "eyes": 6, "heads": 2, "horns": 4, "antennae": false, "tail": false, "stripes": false, "spots": true, "smile": true, "fangs": false, "bodyShape": "round", "img": "aliens/01_Zorp.png"}, {"num": 2, "name": "Blix", "color": "orange", "eyes": 2, "heads": 1, "horns": 0, "antennae": true, "tail": true, "stripes": true, "spots": false, "smile": true, "fangs": false, "bodyShape": "round", "img": "aliens/02_Blix.png"}, {"num": 3, "name": "Grom", "color": "teal", "eyes": 2, "heads": 2, "horns": 2, "antennae": false, "tail": true, "stripes": true, "spots": false, "smile": true, "fangs": true, "bodyShape": "tall", "img": "aliens/03_Grom.png"}, {"num": 4, "name": "Kex", "color": "purple", "eyes": 1, "heads": 1, "horns": 1, "antennae": true, "tail": false, "stripes": false, "spots": true, "smile": true, "fangs": false, "bodyShape": "square", "img": "aliens/04_Kex.png"}, {"num": 5, "name": "Voob", "color": "teal", "eyes": 6, "heads": 2, "horns": 2, "antennae": true, "tail": false, "stripes": false, "spots": false, "smile": true, "fangs": true, "bodyShape": "tall", "img": "aliens/05_Voob.png"}, {"num": 6, "name": "Nix", "color": "orange", "eyes": 2, "heads": 1, "horns": 0, "antennae": true, "tail": true, "stripes": true, "spots": true, "smile": true, "fangs": false, "bodyShape": "round", "img": "aliens/06_Nix.png"}, {"num": 7, "name": "Plim", "color": "purple", "eyes": 1, "heads": 1, "horns": 2, "antennae": false, "tail": false, "stripes": true, "spots": true, "smile": false, "fangs": false, "bodyShape": "square", "img": "aliens/07_Plim.png"}, {"num": 8, "name": "Zorb", "color": "orange", "eyes": 4, "heads": 2, "horns": 0, "antennae": false, "tail": true, "stripes": false, "spots": false, "smile": true, "fangs": false, "bodyShape": "tall", "img": "aliens/08_Zorb.png"}, {"num": 9, "name": "Trax", "color": "teal", "eyes": 2, "heads": 1, "horns": 1, "antennae": false, "tail": true, "stripes": true, "spots": false, "smile": true, "fangs": true, "bodyShape": "round", "img": "aliens/09_Trax.png"}, {"num": 10, "name": "Flop", "color": "orange", "eyes": 6, "heads": 2, "horns": 2, "antennae": true, "tail": false, "stripes": true, "spots": true, "smile": true, "fangs": false, "bodyShape": "tall", "img": "aliens/10_Flop.png"}, {"num": 11, "name": "Glub", "color": "purple", "eyes": 4, "heads": 2, "horns": 0, "antennae": false, "tail": false, "stripes": false, "spots": false, "smile": true, "fangs": true, "bodyShape": "tall", "img": "aliens/11_Glub.png"}, {"num": 12, "name": "Spin", "color": "teal", "eyes": 1, "heads": 1, "horns": 2, "antennae": true, "tail": true, "stripes": true, "spots": true, "smile": false, "fangs": false, "bodyShape": "square", "img": "aliens/12_Spin.png"}, {"num": 13, "name": "Kip", "color": "teal", "eyes": 3, "heads": 1, "horns": 0, "antennae": false, "tail": true, "stripes": true, "spots": false, "smile": true, "fangs": false, "bodyShape": "round", "img": "aliens/13_Kip.png"}, {"num": 14, "name": "Rex", "color": "orange", "eyes": 2, "heads": 2, "horns": 2, "antennae": true, "tail": false, "stripes": true, "spots": true, "smile": false, "fangs": false, "bodyShape": "tall", "img": "aliens/14_Rex.png"}, {"num": 15, "name": "Wobb", "color": "purple", "eyes": 4, "heads": 2, "horns": 1, "antennae": false, "tail": false, "stripes": false, "spots": true, "smile": true, "fangs": true, "bodyShape": "tall", "img": "aliens/15_Wobb.png"}, {"num": 16, "name": "Pilt", "color": "purple", "eyes": 2, "heads": 1, "horns": 1, "antennae": true, "tail": true, "stripes": true, "spots": false, "smile": true, "fangs": false, "bodyShape": "square", "img": "aliens/16_Pilt.png"}, {"num": 17, "name": "Moxy", "color": "teal", "eyes": 1, "heads": 1, "horns": 0, "antennae": true, "tail": false, "stripes": true, "spots": true, "smile": true, "fangs": false, "bodyShape": "tall", "img": "aliens/17_Moxy.png"}, {"num": 18, "name": "Dax", "color": "orange", "eyes": 4, "heads": 2, "horns": 4, "antennae": false, "tail": true, "stripes": false, "spots": true, "smile": true, "fangs": true, "bodyShape": "round", "img": "aliens/18_Dax.png"}, {"num": 19, "name": "Trig", "color": "teal", "eyes": 2, "heads": 1, "horns": 0, "antennae": false, "tail": true, "stripes": false, "spots": false, "smile": true, "fangs": false, "bodyShape": "round", "img": "aliens/19_Trig.png"}, {"num": 20, "name": "Quex", "color": "purple", "eyes": 6, "heads": 2, "horns": 2, "antennae": true, "tail": false, "stripes": true, "spots": false, "smile": true, "fangs": true, "bodyShape": "tall", "img": "aliens/20_quex.png"}, {"num": 21, "name": "Zeep", "color": "orange", "eyes": 2, "heads": 2, "horns": 3, "antennae": false, "tail": true, "stripes": false, "spots": false, "smile": false, "fangs": false, "bodyShape": "round", "img": "aliens/21_zeep.png"}, {"num": 22, "name": "Vex", "color": "purple", "eyes": 1, "heads": 1, "horns": 2, "antennae": true, "tail": false, "stripes": true, "spots": true, "smile": true, "fangs": false, "bodyShape": "square", "img": "aliens/22_vex.png"}, {"num": 23, "name": "Thom", "color": "orange", "eyes": 3, "heads": 1, "horns": 0, "antennae": true, "tail": true, "stripes": false, "spots": false, "smile": true, "fangs": true, "bodyShape": "round", "img": "aliens/23_thom.png"}, {"num": 24, "name": "Gaz", "color": "teal", "eyes": 4, "heads": 2, "horns": 0, "antennae": false, "tail": false, "stripes": true, "spots": true, "smile": false, "fangs": false, "bodyShape": "tall", "img": "aliens/24_gaz.png"}, {"num": 25, "name": "Lurb", "color": "orange", "eyes": 1, "heads": 1, "horns": 1, "antennae": false, "tail": false, "stripes": true, "spots": false, "smile": true, "fangs": false, "bodyShape": "tall", "img": "aliens/25_lurb.png"}, {"num": 26, "name": "Snix", "color": "purple", "eyes": 4, "heads": 2, "horns": 2, "antennae": true, "tail": true, "stripes": false, "spots": true, "smile": true, "fangs": true, "bodyShape": "round", "img": "aliens/26_snix.png"}, {"num": 27, "name": "Broz", "color": "teal", "eyes": 3, "heads": 1, "horns": 2, "antennae": true, "tail": true, "stripes": true, "spots": false, "smile": true, "fangs": false, "bodyShape": "round", "img": "aliens/27_broz.png"}, {"num": 28, "name": "Fip", "color": "teal", "eyes": 2, "heads": 2, "horns": 2, "antennae": false, "tail": false, "stripes": false, "spots": true, "smile": true, "fangs": false, "bodyShape": "square", "img": "aliens/28_fip.png"}, {"num": 29, "name": "Klax", "color": "orange", "eyes": 3, "heads": 1, "horns": 0, "antennae": false, "tail": true, "stripes": false, "spots": true, "smile": false, "fangs": false, "bodyShape": "tall", "img": "aliens/29_klax.png"}, {"num": 31, "name": "Zim", "color": "orange", "eyes": 2, "heads": 1, "horns": 1, "antennae": false, "tail": true, "stripes": false, "spots": true, "smile": true, "fangs": false, "bodyShape": "round", "img": "aliens/31_zim.png"}, {"num": 32, "name": "Plonk", "color": "purple", "eyes": 2, "heads": 1, "horns": 0, "antennae": true, "tail": false, "stripes": false, "spots": true, "smile": false, "fangs": true, "bodyShape": "round", "img": "aliens/32_Plonk.png"}, {"num": 33, "name": "Grix", "color": "teal", "eyes": 2, "heads": 2, "horns": 2, "antennae": true, "tail": false, "stripes": false, "spots": false, "smile": true, "fangs": false, "bodyShape": "tall", "img": "aliens/33_Grix.png"}, {"num": 34, "name": "Blort", "color": "orange", "eyes": 2, "heads": 1, "horns": 2, "antennae": false, "tail": true, "stripes": false, "spots": true, "smile": true, "fangs": false, "bodyShape": "round", "img": "aliens/34_Blort.png"}, {"num": 35, "name": "Gorp", "color": "orange", "eyes": 2, "heads": 2, "horns": 3, "antennae": false, "tail": true, "stripes": false, "spots": false, "smile": true, "fangs": false, "bodyShape": "round", "img": "aliens/35_Gorp.png"}, {"num": 36, "name": "Mibble", "color": "orange", "eyes": 2, "heads": 1, "horns": 2, "antennae": false, "tail": false, "stripes": false, "spots": true, "smile": true, "fangs": false, "bodyShape": "tall", "img": "aliens/36_Mibble.png"}, {"num": 37, "name": "Plorp", "color": "teal", "eyes": 6, "heads": 2, "horns": 0, "antennae": true, "tail": true, "stripes": true, "spots": true, "smile": true, "fangs": true, "bodyShape": "round", "img": "aliens/37_Plorp.png"}, {"num": 38, "name": "Umbo", "color": "purple", "eyes": 2, "heads": 1, "horns": 1, "antennae": false, "tail": false, "stripes": true, "spots": true, "smile": false, "fangs": false, "bodyShape": "tall", "img": "aliens/38_Umbo.png"}, {"num": 39, "name": "Vurn", "color": "purple", "eyes": 1, "heads": 1, "horns": 2, "antennae": false, "tail": false, "stripes": true, "spots": true, "smile": false, "fangs": false, "bodyShape": "tall", "img": "aliens/39_Vurn.png"}, {"num": 48, "name": "Zok", "color": "orange", "eyes": 2, "heads": 1, "horns": 2, "antennae": true, "tail": false, "stripes": false, "spots": true, "smile": true, "fangs": true, "bodyShape": "round", "img": "aliens/48_zok.png"}];
 
 // Image-based renderer. Images live in the aliens/ subfolder as separate PNG files.
 function getAlienImageUrl(name) {
@@ -784,8 +834,41 @@ function buildQuestionBank() {
   Q.push({ id: 'spots',    text: 'Does it have spots?',    check: a => a.spots });
 
   // MOUTH
-  Q.push({ id: 'mouth_smile', text: 'Is it smiling?',       check: a => a.mouth === 'smile' });
-  Q.push({ id: 'mouth_fangs', text: 'Does it have fangs?',  check: a => a.mouth === 'fangs' });
+  Q.push({ id: 'mouth_smile', text: 'Is it smiling?',       check: a => a.smile === true });
+  Q.push({ id: 'mouth_fangs', text: 'Does it have fangs?',  check: a => a.fangs === true });
+
+  // NAME — starts with letter (A–Z). Dead-letter questions auto-hide via the live-question filter.
+  for (let i = 0; i < 26; i++) {
+    const letter = String.fromCharCode(65 + i); // A..Z
+    Q.push({
+      id: 'name_starts_' + letter,
+      text: `Does its name start with ${letter}?`,
+      check: a => a.name && a.name[0].toUpperCase() === letter
+    });
+  }
+
+  // NAME — contains letter (A–Z). Same auto-hide behavior for letters absent from all names.
+  for (let i = 0; i < 26; i++) {
+    const letter = String.fromCharCode(65 + i);
+    Q.push({
+      id: 'name_contains_' + letter,
+      text: `Does its name contain the letter ${letter}?`,
+      check: a => a.name && a.name.toUpperCase().includes(letter)
+    });
+  }
+
+  // NAME — exact length (3..6 covers every current alien; extra bins stay dormant until needed)
+  for (let n = 3; n <= 8; n++) {
+    Q.push({
+      id: 'name_length_' + n,
+      text: `Does its name have exactly ${n} letters?`,
+      check: a => a.name && a.name.length === n
+    });
+  }
+
+  // NAME — length ranges (useful for cutting the pool in half quickly)
+  Q.push({ id: 'name_length_short', text: 'Is its name short (3 or 4 letters)?',  check: a => a.name && a.name.length <= 4 });
+  Q.push({ id: 'name_length_long',  text: 'Is its name long (5 or more letters)?', check: a => a.name && a.name.length >= 5 });
 
   return Q;
 }
@@ -798,14 +881,16 @@ const game = {
   pool: [],                // Full 48 aliens
   board: [],               // The 24 aliens on this game's board
   boardSeed: null,         // Seed used for board sampling (for reshuffle)
-  secretAlien: null,       // The alien object that is the secret
-  teams: [],               // [{id, name, elim}]
-  alive: new Set(),        // Set of alien names still alive
-  moves: [],               // Log: {team, type, questionId?, answer?, alienName?, correct?, eliminated}
+  secretAlien: null,       // The alien object that is the secret for this round
+  teams: [],               // [{id, name, elim, totalElim, totalTurns}] — elim = this round only
+  alive: new Set(),        // Set of alien names still alive this round
+  moves: [],               // Log for current round only — reset between rounds
   started: false,
-  winner: null,            // team id of Rule Detection winner
+  winner: null,            // team id that won the CURRENT ROUND (not the match)
   pendingQuestion: null,   // question id currently being previewed
   pendingReveal: null,     // the reveal state { type: 'ask'|'guess', ...data }
+  // --- Match state (rounds) ---
+  match: null,             // { round, totalRounds, startingOrder: [teamId...], roundWinners: [teamId|null...] }
 };
 
 // ============================================================
@@ -834,6 +919,7 @@ function saveState() {
       moves: game.moves,
       started: game.started,
       winner: game.winner,
+      match: game.match,
     };
     localStorage.setItem('findthealien:state', JSON.stringify(serial));
   } catch (e) { console.warn('save failed', e); }
@@ -850,10 +936,17 @@ function loadState() {
     game.boardSeed = s.boardSeed;
     game.secretAlien = s.secretAlien;
     game.teams = s.teams || [];
+    // Backfill totals for teams from older saves that didn't have them
+    for (const t of game.teams) {
+      if (typeof t.totalElim !== 'number') t.totalElim = 0;
+      if (typeof t.totalTurns !== 'number') t.totalTurns = 0;
+      if (typeof t.elim !== 'number') t.elim = 0;
+    }
     game.alive = new Set(s.alive || []);
     game.moves = s.moves || [];
     game.started = !!s.started;
     game.winner = s.winner;
+    game.match = s.match || null;
     return true;
   } catch (e) {
     console.warn('load failed', e);
@@ -970,7 +1063,9 @@ function addTeam() {
   game.teams.push({
     id: 'team_' + Date.now() + '_' + Math.random().toString(36).slice(2,6),
     name,
-    elim: 0
+    elim: 0,
+    totalElim: 0,
+    totalTurns: 0,
   });
   if (input) { input.value = ''; input.focus(); }
   renderTeamList();
@@ -1000,11 +1095,28 @@ function startGame() {
   game.alive = new Set(game.board.map(a => a.name));
   game.moves = [];
   game.winner = null;
-  for (const t of game.teams) t.elim = 0;
+  // Reset per-round state; zero out cumulative too since this is a fresh match
+  for (const t of game.teams) {
+    t.elim = 0;
+    t.totalElim = 0;
+    t.totalTurns = 0;
+  }
+  // Initialize match: one round per team, starting order locked in now.
+  game.match = {
+    round: 1,
+    totalRounds: game.teams.length,
+    startingOrder: game.teams.map(t => t.id),
+    roundWinners: [],
+  };
+  // Reset active team to the FIRST team in the current play order.
+  // Without this, a stale selection from a prior game (e.g. whoever ended
+  // last game's final turn) would carry over, even if you've reordered teams.
+  const sel = qs('#active-team');
+  if (sel && game.teams.length > 0) sel.value = game.teams[0].id;
   saveState();
   switchTab('play');
   renderAll();
-  flashOk('▶ Game started!');
+  flashOk(`▶ Match started! Round 1 of ${game.match.totalRounds}`);
 }
 
 function currentTeam() {
@@ -1020,17 +1132,95 @@ function switchTab(name) {
 let currentPlayMode = 'idle';
 
 function setPlayMode(mode) {
-  // Modes: 'idle' (showing team picker + action choice)
-  //        'asking' (showing question picker)
-  //        'guessing' (persistent grid becomes clickable)
-  //        'reveal' (showing the answer reveal — buttons hidden)
+  // Modes: 'idle'           - team picker + ask button
+  //        'asking'          - question picker
+  //        'reveal'          - answer/win reveal (buttons hidden)
+  //        'between-rounds'  - round over, cumulative scoreboard + "Start Round N+1"
+  //        'match-done'      - all rounds finished, final leaderboard
   currentPlayMode = mode;
   qs('#panel-team').style.display = (mode === 'idle') ? '' : 'none';
   qs('#panel-action').style.display = (mode === 'idle') ? '' : 'none';
   qs('#panel-ask').style.display = (mode === 'asking') ? '' : 'none';
-  qs('#panel-guess').style.display = (mode === 'guessing') ? '' : 'none';
+  qs('#panel-between-rounds').style.display = (mode === 'between-rounds') ? '' : 'none';
+  qs('#panel-match-done').style.display = (mode === 'match-done') ? '' : 'none';
   // Re-render the play grid so it picks up the mode change (clickable or not)
   renderPlayGrid();
+  // When entering asking mode, apply preview highlight for the currently-selected question.
+  // When leaving, clear any highlights.
+  if (mode === 'asking') {
+    renderQuestionPreview();
+  } else {
+    clearQuestionPreview();
+  }
+  // Populate the copy on the between-rounds / match-done panels
+  renderBetweenRoundsPanel();
+  renderMatchDonePanel();
+}
+
+function renderBetweenRoundsPanel() {
+  if (!game.match) return;
+  const title = qs('#between-rounds-title');
+  const sub = qs('#between-rounds-sub');
+  const btn = qs('#btn-next-round');
+  if (!title || !sub || !btn) return;
+  const justFinished = game.match.round;
+  const nextRound = game.match.round + 1;
+  const total = game.match.totalRounds;
+  const winnerTeam = game.teams.find(t => t.id === game.winner);
+  // The team that will START next round is the second team in the current
+  // order, because startNextRound() rotates by 1.
+  const nextStarter = game.teams.length > 1 ? game.teams[1] : game.teams[0];
+  title.textContent = `★ Round ${justFinished} complete`;
+  sub.innerHTML = winnerTeam
+    ? `<b>${winnerTeam.name}</b> found the alien by elimination. <b>${nextStarter ? nextStarter.name : '—'}</b> starts Round ${nextRound}.`
+    : `<b>${nextStarter ? nextStarter.name : '—'}</b> starts Round ${nextRound}.`;
+  btn.textContent = `▶ Start Round ${nextRound} of ${total}`;
+}
+
+function renderMatchDonePanel() {
+  if (!game.match) return;
+  const title = qs('#match-done-title');
+  const sub = qs('#match-done-sub');
+  if (!title || !sub) return;
+  // Find overall winner by totalElim (ties broken by fewer totalTurns)
+  const ranked = [...game.teams].sort((a, b) => {
+    if (b.totalElim !== a.totalElim) return b.totalElim - a.totalElim;
+    return a.totalTurns - b.totalTurns;
+  });
+  const top = ranked[0];
+  title.textContent = `★ Match complete — ${top ? top.name : '—'} wins!`;
+  sub.innerHTML = top
+    ? `<b>${top.name}</b> eliminated <b>${top.totalElim}</b> aliens across ${game.match.totalRounds} rounds. Final standings below.`
+    : 'Final standings below.';
+}
+
+// --- Question preview highlighting ---
+// When the "Highlight matching aliens" toggle is ON, clicking (or arrow-keying through)
+// a question highlights every alive alien that would answer YES to it.
+// Stored in localStorage so the toggle state persists across refreshes.
+function isPreviewOn() {
+  const el = qs('#preview-toggle');
+  return el ? el.checked : true;
+}
+
+function clearQuestionPreview() {
+  qsa('.alien-card.preview-match').forEach(el => el.classList.remove('preview-match'));
+}
+
+function renderQuestionPreview() {
+  clearQuestionPreview();
+  if (!isPreviewOn()) return;
+  if (currentPlayMode !== 'asking') return;
+  const qid = qs('#question-select').value;
+  if (!qid) return;
+  const q = QUESTIONS.find(x => x.id === qid);
+  if (!q) return;
+  // Cards are rendered in the same order as game.board; match by alien name.
+  const cards = qsa('#play-grid .alien-card');
+  game.board.forEach((alien, i) => {
+    if (!game.alive.has(alien.name)) return;
+    if (q.check(alien)) cards[i] && cards[i].classList.add('preview-match');
+  });
 }
 
 function renderQuestionOptions() {
@@ -1084,44 +1274,40 @@ function renderQuestionOptions() {
       : `— ${totalLive} useful question${totalLive === 1 ? '' : 's'}`;
   }
   // 2. The "X hidden" note next to "The team asks:" label
-  const askLabel = qs('#panel-ask .form-group:nth-child(2) label');
+  const askLabel = qs('#ask-select-label');
   if (askLabel) {
     const deadMsg = deadQuestions.length > 0
       ? ` (${deadQuestions.length} would eliminate 0)`
       : '';
     askLabel.innerHTML = 'The team asks:<span style="color: var(--gray); font-weight: 400; margin-left: 8px; font-size: 11px;">' + deadMsg + '</span>';
   }
+  // 3. Refresh the preview highlight — the selected question may have changed
+  // because we rebuilt the options list.
+  renderQuestionPreview();
 }
 
 function renderPlayGrid() {
   const g = qs('#play-grid');
   if (!g) return;
   g.innerHTML = '';
-  const isGuessMode = (currentPlayMode === 'guessing');
   for (const alien of game.board) {
     const isAlive = game.alive.has(alien.name);
     const card = document.createElement('div');
     let cls = 'alien-card';
     if (!isAlive) cls += ' eliminated';
-    if (!isGuessMode && isAlive) cls += ' disabled';  // visual-only, not clickable
+    else cls += ' disabled';  // visual-only, never clickable
     card.className = cls;
     card.innerHTML = `<div class="alien-svg-wrap">${renderAlien(alien)}</div><div class="alien-name">${alien.name}</div>`;
-    if (isGuessMode && isAlive) {
-      card.addEventListener('click', () => commitGuess(alien));
-    }
     g.appendChild(card);
   }
-  // Update the title
+  // Title stays as "Alien Field" — no more guess mode
   const title = qs('#play-grid-title');
   if (title) {
-    if (isGuessMode) {
-      title.textContent = 'Click an alien to guess';
-      title.style.color = 'var(--yellow)';
-    } else {
-      title.textContent = 'Alien Field';
-      title.style.color = '';
-    }
+    title.textContent = 'Alien Field';
+    title.style.color = '';
   }
+  // Grid was just rebuilt — re-apply preview highlights if we're in asking mode.
+  renderQuestionPreview();
 }
 
 function commitAsk() {
@@ -1144,6 +1330,10 @@ function commitAsk() {
   }
   const eliminated = before - newAlive.size;
 
+  // If this question narrows it down to exactly one alien, the team wins.
+  // No guessing — elimination is how the game ends.
+  const wonByElimination = (newAlive.size === 1);
+
   // Record the move
   const move = {
     team: team.id,
@@ -1153,10 +1343,14 @@ function commitAsk() {
     questionText: q.text,
     answer,
     eliminated,
+    wonByElimination,
   };
   game.moves.push(move);
   team.elim += eliminated;
   game.alive = newAlive;
+  if (wonByElimination) {
+    game.winner = team.id;
+  }
   game.pendingReveal = { ...move, kind: 'ask' };
   saveState();
   renderAll();
@@ -1191,10 +1385,15 @@ function commitGuess(alien) {
 function continueToNextTurn() {
   game.pendingReveal = null;
   saveState();
+  // If there's a round winner, go to the between-rounds screen — not idle.
+  if (game.winner) {
+    endRound();
+    return;
+  }
   renderAll();
   setPlayMode('idle');
   // Auto-rotate active team to the next one
-  if (!game.winner && game.teams.length > 1) {
+  if (game.teams.length > 1) {
     const sel = qs('#active-team');
     const currentIdx = game.teams.findIndex(t => t.id === sel.value);
     const nextIdx = (currentIdx + 1) % game.teams.length;
@@ -1203,8 +1402,89 @@ function continueToNextTurn() {
   }
 }
 
+// Called when a round ends (a team has won it by elimination).
+// Accumulates the round's turns + elims into each team's totals,
+// records the round winner, then shows the between-rounds screen
+// (or the match-done screen if that was the final round).
+function endRound() {
+  if (!game.match) {
+    // Legacy single-game mode — just show winner, no match flow
+    renderAll();
+    setPlayMode('idle');
+    return;
+  }
+  // Count turns this round from the moves log
+  const turnsPerTeam = {};
+  for (const t of game.teams) turnsPerTeam[t.id] = 0;
+  for (const m of game.moves) {
+    if (turnsPerTeam[m.team] !== undefined) turnsPerTeam[m.team]++;
+  }
+  // Accumulate into each team's totals
+  for (const t of game.teams) {
+    t.totalElim += t.elim;
+    t.totalTurns += turnsPerTeam[t.id] || 0;
+  }
+  // Zero out round-local counters NOW — otherwise the between-rounds
+  // scoreboard would double-count (displayElim = totalElim + t.elim when
+  // t.elim is still the just-folded-in number).
+  for (const t of game.teams) t.elim = 0;
+  game.moves = [];
+  // Record round winner
+  game.match.roundWinners.push(game.winner);
+  saveState();
+  // If that was the final round, match is done
+  if (game.match.round >= game.match.totalRounds) {
+    renderAll();
+    setPlayMode('match-done');
+    return;
+  }
+  renderAll();
+  setPlayMode('between-rounds');
+}
+
+// Called when the user clicks "Start Round N+1".
+// Rotates team order by 1, resets round-local state, picks a new secret,
+// and returns to the idle play screen.
+function startNextRound() {
+  if (!game.match) return;
+  // Rotate team order: first team goes to the back
+  const first = game.teams.shift();
+  game.teams.push(first);
+  // Reset round-local state (keep totals)
+  for (const t of game.teams) t.elim = 0;
+  game.moves = [];
+  game.winner = null;
+  game.pendingReveal = null;
+  game.alive = new Set(game.board.map(a => a.name));
+  // New secret alien for this round
+  const idx = Math.floor(Math.random() * game.board.length);
+  game.secretAlien = game.board[idx];
+  // Advance round counter
+  game.match.round++;
+  // Active team = first team in rotated order
+  const sel = qs('#active-team');
+  if (sel && game.teams.length > 0) sel.value = game.teams[0].id;
+  saveState();
+  renderAll();
+  setPlayMode('idle');
+  flashOk(`▶ Round ${game.match.round} of ${game.match.totalRounds}`);
+}
+
+// Called when the match is fully done and the user clicks the final "End match" button.
+// Leaves state intact so the final scoreboard stays visible; user must Reset manually to play again.
+function endMatch() {
+  // Nothing to do — match-done state stays on screen
+  flashOk('Match complete. Reset everything to start a new match.');
+}
+
 function undoLastMove() {
   if (!game.moves.length) { flashOk('Nothing to undo'); return; }
+  // Once a round ends (between-rounds or match-done), totals have been folded in
+  // and you can't undo across that boundary. Force user to continue the match.
+  if (currentPlayMode === 'between-rounds' || currentPlayMode === 'match-done') {
+    flashOk('⚠ Cannot undo across rounds');
+    return;
+  }
   const last = game.moves.pop();
   // Rebuild alive + team elim from scratch
   game.alive = new Set(game.board.map(a => a.name));
@@ -1249,13 +1529,22 @@ function newGame(keepTeams) {
   game.started = false;
   game.winner = null;
   game.pendingReveal = null;
-  for (const t of game.teams) t.elim = 0;
+  game.match = null;
+  for (const t of game.teams) {
+    t.elim = 0;
+    t.totalElim = 0;
+    t.totalTurns = 0;
+  }
   saveState();
   renderAll();
   switchTab('setup');
   renderSetupGrid();
   renderTeamList();
-  flashOk(keepTeams ? '🔄 New game — teams kept' : '⚠ Everything reset');
+  // Reset play-tab panels to their default visibility. Without this, a stale
+  // match-done or between-rounds panel from a previous match would still be
+  // visible when the user starts a new game and lands on the Play tab.
+  setPlayMode('idle');
+  flashOk(keepTeams ? '🔄 New match — teams kept' : '⚠ Everything reset');
 }
 
 function reshuffleBoard() {
@@ -1332,7 +1621,11 @@ function renderTurnBanner() {
   banner.style.display = '';
   const team = currentTeam();
   const turnNum = game.moves.length + 1;
-  qs('#turn-num').textContent = `TURN ${turnNum}`;
+  if (game.match) {
+    qs('#turn-num').textContent = `R${game.match.round}/${game.match.totalRounds} · TURN ${turnNum}`;
+  } else {
+    qs('#turn-num').textContent = `TURN ${turnNum}`;
+  }
   qs('#turn-team').textContent = team ? team.name : '—';
 }
 
@@ -1340,36 +1633,93 @@ function renderScoreboard() {
   const tbody = qs('#scoreboard-body');
   tbody.innerHTML = '';
 
-  // Count turns per team from the moves log (every move = one turn)
+  // In a match, show cumulative totals (this round's numbers are already being
+  // folded into *current* round-in-progress via team.elim — so the displayed
+  // "total" is (totalElim from completed rounds) + (this round's elim).
+  // Outside of a match, fall back to the per-game numbers.
+  const inMatch = !!game.match;
+
+  // Count turns this round from the moves log
   const turnsPerTeam = {};
   for (const t of game.teams) turnsPerTeam[t.id] = 0;
   for (const m of game.moves) {
     if (turnsPerTeam[m.team] !== undefined) turnsPerTeam[m.team]++;
   }
 
-  // Sort: highest elim first
-  const sorted = [...game.teams].sort((a, b) => b.elim - a.elim);
-  const topElim = sorted.length ? sorted[0].elim : 0;
+  // Count round wins per team (from the match's roundWinners log).
+  // Special case: if there's a game.winner set but endRound hasn't run yet
+  // (we're on the reveal screen for the round-ending question), count that
+  // winner too — so the scoreboard on the reveal already reflects the win.
+  const winsPerTeam = {};
+  for (const t of game.teams) winsPerTeam[t.id] = 0;
+  if (inMatch && game.match.roundWinners) {
+    for (const winnerId of game.match.roundWinners) {
+      if (winsPerTeam[winnerId] !== undefined) winsPerTeam[winnerId]++;
+    }
+  }
+  // In-flight round winner (reveal screen): not yet in roundWinners
+  if (inMatch && game.winner
+      && game.match.roundWinners.length < game.match.round) {
+    if (winsPerTeam[game.winner] !== undefined) winsPerTeam[game.winner]++;
+  }
 
-  // Identify who's next in rotation: the team with the fewest turns
-  // (and among ties, the one who's been waiting longest — i.e. team list order)
-  const minTurns = Math.min(...game.teams.map(t => turnsPerTeam[t.id]));
+  // Compute display numbers per team
+  const rowData = game.teams.map(t => {
+    const thisRoundTurns = turnsPerTeam[t.id] || 0;
+    const thisRoundElim = t.elim || 0;
+    const displayTurns = inMatch ? (t.totalTurns + thisRoundTurns) : thisRoundTurns;
+    const displayElim = inMatch ? (t.totalElim + thisRoundElim) : thisRoundElim;
+    const wins = winsPerTeam[t.id] || 0;
+    return { team: t, turns: displayTurns, elim: displayElim, wins, thisRoundTurns };
+  });
 
-  for (const team of sorted) {
-    const turns = turnsPerTeam[team.id];
+  // Track the top elim count for the LEADER badge — independent of row order
+  const topElim = rowData.length ? Math.max(...rowData.map(r => r.elim)) : 0;
+
+  // Preserve the user's original team-entry order. During a match, teams get
+  // rotated each round (round 2 = [B,C,D,A]), so we use the snapshot of the
+  // starting order captured when the match began. Outside a match, use the
+  // current array order.
+  if (inMatch && game.match.startingOrder) {
+    const indexById = new Map(game.match.startingOrder.map((id, i) => [id, i]));
+    rowData.sort((a, b) => {
+      const ai = indexById.has(a.team.id) ? indexById.get(a.team.id) : 999;
+      const bi = indexById.has(b.team.id) ? indexById.get(b.team.id) : 999;
+      return ai - bi;
+    });
+  }
+  // (no sort outside a match — game.teams already holds the entry order)
+
+  // "UP NEXT" badge: only show during active play (not between rounds or match-done),
+  // and only when there's no round winner yet. The up-next team is whichever
+  // team is currently selected in the active-team dropdown — that's who's
+  // actually taking the next turn.
+  const activeSel = qs('#active-team');
+  const activeTeamId = activeSel ? activeSel.value : null;
+  const showUpNext = !game.winner
+    && currentPlayMode !== 'between-rounds'
+    && currentPlayMode !== 'match-done'
+    && !!activeTeamId;
+
+  for (const row of rowData) {
+    const team = row.team;
     const tr = document.createElement('tr');
+    // "DETECTION" badge: this team just won the current round
     const isDetection = game.winner === team.id;
-    const isElimination = game.winner && team.elim === topElim && topElim > 0;
-    const isNextUp = !game.winner && turns === minTurns;
+    // "ELIMINATION" badge: leader by cumulative elim, shown between rounds & at match end
+    const isElimination = (game.winner || currentPlayMode === 'match-done')
+      && row.elim === topElim && topElim > 0;
+    const isNextUp = showUpNext && (team.id === activeTeamId);
 
     tr.innerHTML = `
       <td class="team-name">${team.name}
-        ${isDetection ? '<span class="badge-detection">★ DETECTION</span>' : ''}
-        ${isElimination ? '<span class="badge-elimination">★ ELIMINATION</span>' : ''}
+        ${isDetection ? '<span class="badge-detection">★ ROUND</span>' : ''}
+        ${isElimination ? '<span class="badge-elimination">★ LEADER</span>' : ''}
         ${isNextUp && !isDetection ? '<span class="badge-nextup">UP NEXT</span>' : ''}
       </td>
-      <td class="num">${turns}</td>
-      <td class="num elim">${team.elim}</td>
+      <td class="num">${row.turns}</td>
+      <td class="num elim">${row.elim}</td>
+      <td class="num">${row.wins}</td>
     `;
     tbody.appendChild(tr);
   }
@@ -1432,13 +1782,32 @@ function renderRevealArea() {
       </div>
     `;
     container.appendChild(reveal);
+
+    // If this question narrowed it down to exactly one alien, this team wins.
+    if (r.wonByElimination) {
+      const win = document.createElement('div');
+      win.className = 'guess-result correct';
+      win.style.marginTop = '16px';
+      win.innerHTML = `
+        <div style="font-size: 14px; opacity: 0.9; letter-spacing: 0.15em; margin-bottom: 8px;">ONLY ONE LEFT</div>
+        <div style="font-size: 24px; margin-bottom: 12px; font-weight: 700;">${game.secretAlien.name}</div>
+        <div class="verdict">★ ${r.teamName} WINS!</div>
+        <div class="detail">The secret alien was <b>${game.secretAlien.name}</b>. Found by elimination — no guessing.</div>
+      `;
+      container.appendChild(win);
+    }
+
     const btnRow = document.createElement('div');
     btnRow.className = 'controls-row';
     btnRow.style.justifyContent = 'center';
-    btnRow.innerHTML = '<button class="btn big" id="btn-continue">Continue →</button>';
+    btnRow.innerHTML = r.wonByElimination
+      ? '<button class="btn big" id="btn-continue">End game →</button>'
+      : '<button class="btn big" id="btn-continue">Continue →</button>';
     container.appendChild(btnRow);
     qs('#btn-continue').addEventListener('click', continueToNextTurn);
   } else if (r.kind === 'guess') {
+    // Legacy path — only reachable from saved state of an older game log.
+    // New games never produce guess moves.
     const reveal = document.createElement('div');
     reveal.className = 'guess-result ' + (r.correct ? 'correct' : 'wrong');
     reveal.innerHTML = `
@@ -1455,15 +1824,7 @@ function renderRevealArea() {
       ? '<button class="btn big" id="btn-continue">End game →</button>'
       : '<button class="btn big" id="btn-continue">Continue →</button>';
     container.appendChild(btnRow);
-    qs('#btn-continue').addEventListener('click', () => {
-      if (r.correct) {
-        // Show final scoreboard — just clear reveal
-        continueToNextTurn();
-        // Make sure winner is honored — renderAll will show it
-      } else {
-        continueToNextTurn();
-      }
-    });
+    qs('#btn-continue').addEventListener('click', continueToNextTurn);
   }
 }
 
@@ -1492,8 +1853,8 @@ document.addEventListener('DOMContentLoaded', () => {
     game.moves = [];
     game.started = false;
     game.winner = null;
-    // Seed with one team
-    if (!game.teams || game.teams.length === 0) { game.teams = []; addTeam(); }
+    // Start with no teams — user adds them via the input
+    if (!game.teams) { game.teams = []; }
     saveState();
   }
   // Auto-hide secret on refresh
@@ -1503,10 +1864,22 @@ document.addEventListener('DOMContentLoaded', () => {
   renderAll();
 
   // If game was in progress, go to play tab
-  if (game.started && !game.winner) {
+  if (game.started) {
     switchTab('play');
   }
-  setPlayMode('idle');
+  // Determine the right play mode on restore:
+  //   - If we're in a match and the current round has a winner, we're between rounds
+  //     (or at match-done if all rounds are recorded).
+  //   - Otherwise, default to idle.
+  if (game.started && game.match && game.winner) {
+    if (game.match.roundWinners.length >= game.match.totalRounds) {
+      setPlayMode('match-done');
+    } else {
+      setPlayMode('between-rounds');
+    }
+  } else {
+    setPlayMode('idle');
+  }
 
   // ---- Wire events ----
   qsa('.tab').forEach(t => t.addEventListener('click', () => switchTab(t.dataset.tab)));
@@ -1523,7 +1896,10 @@ document.addEventListener('DOMContentLoaded', () => {
   qs('#btn-random-secret').addEventListener('click', pickRandomSecret);
   qs('#btn-start').addEventListener('click', startGame);
 
-  qs('#active-team').addEventListener('change', renderTurnBanner);
+  qs('#active-team').addEventListener('change', () => {
+    renderTurnBanner();
+    renderScoreboard();
+  });
 
   qs('#btn-ask-mode').addEventListener('click', () => {
     const searchEl = qs('#question-search');
@@ -1531,10 +1907,33 @@ document.addEventListener('DOMContentLoaded', () => {
     setPlayMode('asking');
     if (searchEl) setTimeout(() => searchEl.focus(), 50);
   });
-  qs('#btn-guess-mode').addEventListener('click', () => setPlayMode('guessing'));
   qs('#btn-cancel-ask').addEventListener('click', () => setPlayMode('idle'));
-  qs('#btn-cancel-guess').addEventListener('click', () => setPlayMode('idle'));
   qs('#btn-reveal-answer').addEventListener('click', commitAsk);
+
+  // Round transition buttons
+  const btnNextRound = qs('#btn-next-round');
+  if (btnNextRound) btnNextRound.addEventListener('click', startNextRound);
+  const btnEndMatch = qs('#btn-end-match');
+  if (btnEndMatch) btnEndMatch.addEventListener('click', endMatch);
+
+  // Preview-highlight toggle: restore saved state, then wire change handlers.
+  const previewToggle = qs('#preview-toggle');
+  if (previewToggle) {
+    const saved = localStorage.getItem('findTheAlien.previewOn');
+    // Default to ON if nothing saved (first-time users get the training wheels).
+    previewToggle.checked = (saved === null) ? true : (saved === '1');
+    previewToggle.addEventListener('change', () => {
+      localStorage.setItem('findTheAlien.previewOn', previewToggle.checked ? '1' : '0');
+      renderQuestionPreview();
+    });
+  }
+  // Re-highlight as the user picks different questions (click or arrow-key).
+  const qSelect = qs('#question-select');
+  if (qSelect) {
+    qSelect.addEventListener('change', renderQuestionPreview);
+    qSelect.addEventListener('click', renderQuestionPreview);
+    qSelect.addEventListener('keyup', renderQuestionPreview);
+  }
 
   qs('#btn-undo').addEventListener('click', undoLastMove);
   qs('#btn-new-game-keep').addEventListener('click', () => newGame(true));
