@@ -1232,12 +1232,21 @@ function buildUniversalRules() {
   for (const subj of subjects) {
     for (const c of COLORS) {
       if (subj.color === c) continue;
+      // Skip when the subject already pins a color different from c. Such rules
+      // (e.g. "Every orange block is teal") are only satisfied by structures
+      // with NO orange blocks at all — i.e. they're vacuously true duplicates
+      // of "There are no orange blocks", which already exists in the bank.
+      // Leaving them in created two-color nonsense like "Every orange block is teal".
+      if (subj.color !== null && subj.color !== c) continue;
       addRule(`every_${subj.key}_is_${c}`,
         `Every ${subj.singular} is ${c}.`,
         rEveryColor(subj.color, subj.shape, c));
     }
     for (const sh of SHAPES) {
       if (subj.shape === sh) continue;
+      // Same reasoning for shape — "Every cube is a pyramid" is only ever true
+      // for structures with no cubes, so it's a dup of "There are no cubes".
+      if (subj.shape !== null && subj.shape !== sh) continue;
       addRule(`every_${subj.key}_is_${sh}`,
         `Every ${subj.singular} is a ${sh}.`,
         rEveryShape(subj.color, subj.shape, sh));
@@ -2019,12 +2028,18 @@ function renderMatrixRuleList() {
 
   if (countEl) {
     countEl.textContent = inGame
-      ? `${matches.length.toLocaleString()} of ${pool.length.toLocaleString()} alive (${RULES.length.toLocaleString()} total)`
+      ? `${matches.length.toLocaleString()} still possible · ${pool.length.toLocaleString()} of ${RULES.length.toLocaleString()} rules alive`
       : `${matches.length.toLocaleString()} of ${RULES.length.toLocaleString()} rules`;
   }
 
   if (matches.length === 0) {
-    listEl.innerHTML = '<div style="padding:24px; text-align:center; color:var(--gray);">No rules match.</div>';
+    // Friendlier empty state when a game is active — kids filter by family
+    // expecting to see the universe of rules, but the matrix hides ruled-out
+    // rules during play. Explain what happened.
+    const msg = inGame
+      ? `<div style="padding:24px; text-align:center; color:var(--gray);">No rules of this kind are still possible.<br><span style="font-size:11px; color:rgba(242,239,232,0.4);">All rules in this filter have been ruled out by evidence so far.</span></div>`
+      : `<div style="padding:24px; text-align:center; color:var(--gray);">No rules match.</div>`;
+    listEl.innerHTML = msg;
     return;
   }
 
