@@ -716,7 +716,7 @@ button.btn.outline.big {
 <!-- BIG NUMBERS -->
 <div class="stats-row">
   <div class="stat alive">
-    <div class="label">RULES ALIVE</div>
+    <div class="label">POTENTIAL RULES</div>
     <div class="value" id="stat-alive">—</div>
     <div class="sub" id="stat-alive-pct">—</div>
   </div>
@@ -738,6 +738,7 @@ button.btn.outline.big {
   <button class="tab-btn" data-tab="play">PLAY</button>
   <button class="tab-btn" data-tab="scoreboard">SCOREBOARD</button>
   <button class="tab-btn" data-tab="log">MOVE LOG</button>
+  <button class="tab-btn" data-tab="matrix">RULE MATRIX</button>
 </div>
 
 <!-- SETUP TAB -->
@@ -916,7 +917,7 @@ button.btn.outline.big {
                  oninput="if(typeof renderRuleOptions==='function')renderRuleOptions(document.getElementById('guess-select'), this.value)">
         </div>
         <div class="form-group">
-          <label>Pick the closest matching rule</label>
+          <label>Pick the closest matching rule <span style="color:var(--gray); font-weight:400;">· only rules still possible are shown</span></label>
           <select id="guess-select" size="8"></select>
         </div>
         <button class="btn full" id="btn-submit-guess">Submit guess</button>
@@ -1002,13 +1003,30 @@ button.btn.outline.big {
   </div>
 </div>
 
-<!-- DEBUG FOOTER — shows current state. Helps diagnose persistence issues. -->
-<div style="margin-top: 40px; padding: 12px 16px; background: #1e2530; border-radius: 6px; font-size: 11px; color: var(--gray); font-family: monospace;">
-  <b style="color: var(--gray); font-size: 10px; letter-spacing: 0.15em;">DEBUG</b>
-  <div id="debug-readout" style="margin-top: 6px;"></div>
-  <div style="margin-top: 8px;">
-    <button class="btn secondary" style="font-size: 11px; padding: 6px 12px;" onclick="if(confirm('Clear saved state?')){ localStorage.removeItem('blockcode:state'); location.reload(); }">Clear saved state & reload</button>
+<!-- RULE MATRIX TAB — visual map of every rule in the engine by family × attribute. -->
+<div class="tab-pane hide" id="tab-matrix">
+  <div class="panel">
+    <h2>Rule matrix · <span id="matrix-total" style="color:var(--teal);">—</span> rules</h2>
+    <p style="color:var(--gray); margin-top:-6px; font-size:13px;">Each cell counts how many rules in that family <i>mention</i> that attribute. A single rule can mention several (e.g. "Exactly 2 cubes" appears in both <b style="color:var(--bone);">cube</b> and <b style="color:var(--bone);">count</b>) — so cell counts often add up to more than the number of rules. Darker cells have more mentions.</p>
+    <div id="matrix-heatmap" style="margin-top:16px; overflow-x:auto;"></div>
   </div>
+
+  <div class="panel" style="margin-top:16px;">
+    <h2>All rules</h2>
+    <div style="display:flex; gap:12px; align-items:center; margin-bottom:12px; flex-wrap:wrap;">
+      <input id="matrix-search" type="text" placeholder="Search rule text (e.g. 'teal pyramid')…" style="flex:1; min-width:240px; padding:8px 12px; background:#1e2530; border:1px solid #3a4350; border-radius:6px; color:var(--bone); font-size:14px;">
+      <select id="matrix-family-filter" style="padding:8px 12px; background:#1e2530; border:1px solid #3a4350; border-radius:6px; color:var(--bone); font-size:14px;">
+        <option value="">All families</option>
+      </select>
+      <div id="matrix-match-count" style="color:var(--gray); font-size:13px;">—</div>
+    </div>
+    <div id="matrix-rule-list" style="max-height:560px; overflow-y:auto; background:#1e2530; border:1px solid #3a4350; border-radius:6px;"></div>
+  </div>
+</div>
+
+<!-- Quiet escape hatch — a single reset button if something gets stuck. -->
+<div style="margin-top: 40px; padding: 12px 16px; text-align: right;">
+  <button class="btn secondary" style="font-size: 11px; padding: 6px 12px; opacity: 0.5;" onclick="if(confirm('Clear saved state?')){ localStorage.removeItem('blockcode:state'); location.reload(); }">Clear saved state & reload</button>
 </div>
 
 </div><!-- /.wrap -->
@@ -1017,6 +1035,12 @@ button.btn.outline.big {
 <aside class="evidence-rail" id="evidence-rail">
   <h2>THE EVIDENCE</h2>
   <div class="ev-sub">Every structure played this game.</div>
+  <!-- Prominent counter — watches the rule space shrink in real time -->
+  <div id="ev-potential-rules" style="margin: 14px 0 16px; padding: 14px 16px; background: #1e2530; border: 1px solid #3a4350; border-radius: 8px; text-align: center;">
+    <div style="font-size: 10px; letter-spacing: 0.22em; color: var(--gray); font-weight: 700;">POTENTIAL RULES REMAINING</div>
+    <div id="ev-potential-value" style="font-size: 36px; font-weight: 900; color: var(--teal); line-height: 1.1; margin-top: 4px;">—</div>
+    <div id="ev-potential-sub" style="font-size: 11px; color: rgba(242, 239, 232, 0.5); margin-top: 2px;">&nbsp;</div>
+  </div>
   <div class="evidence-cols">
     <div class="evidence-col yes">
       <div class="evidence-col-header">✓ FOLLOWS RULE</div>
@@ -1456,8 +1480,11 @@ function buildComparativeRules() {
   // but apply to the whole structure at once. Rulebook card #17 is the first of these.
   addRule('every_block_touches_another', 'Every block is touching another block.',
     s => s.blocks.length > 0 && everyBlockTouchesSomething(s));
-  addRule('every_block_on_top', 'Every block is on top of another block.',
-    s => s.blocks.length > 0 && s.blocks.every(b => !b.grounded));
+  // NOTE: "Every block is on top of another block" intentionally NOT generated.
+  // By the game's physics, at least one block must be on the table (grounded) to
+  // support anything stacked above it — so no valid structure can ever satisfy
+  // the rule "every block is on top of another". It's an impossible rule and
+  // would only ever be filtered out as a contradiction.
 }
 
 // ----- Tallest -----
@@ -1602,29 +1629,73 @@ function generateTestStructures() {
     out.push(makeStructure([{color:c1,shape:sh1}, {color:c2,shape:sh2, touching:[0]}]));
     out.push(makeStructure([{color:c1,shape:sh1}, {color:c2,shape:sh2, onTopOf:[0]}]));
   }
-  // Specific 3+ block structures covering edge cases
+  // Systematic 3-of-same (color + shape). Three variants each: non-touching, chain-of-2-touching,
+  // chain-of-3-touching. This closes the "chain_of_N_{subj}" coverage gap that was previously
+  // only satisfied for purple cubes. Each of the 9 subject types (3 colors × 3 shapes) gets
+  // all three variants, so every "at least 2 X touching" and "chain of 3 X" rule has at least
+  // one witness structure.
+  for (const c of COLORS) for (const sh of SHAPES) {
+    // Non-touching trio
+    out.push(makeStructure([{color:c,shape:sh}, {color:c,shape:sh}, {color:c,shape:sh}]));
+    // Two touching, third separate — exercises "at least 2 X touching"
+    out.push(makeStructure([
+      {color:c,shape:sh},
+      {color:c,shape:sh, touching:[0]},
+      {color:c,shape:sh},
+    ]));
+    // Chain of 3 touching
+    out.push(makeStructure([
+      {color:c,shape:sh},
+      {color:c,shape:sh, touching:[0]},
+      {color:c,shape:sh, touching:[1]},
+    ]));
+  }
+  // Systematic 2-of-same for touching variants not already caught by the pair loop
+  for (const c of COLORS) for (const sh of SHAPES) {
+    out.push(makeStructure([{color:c,shape:sh}, {color:c,shape:sh, touching:[0]}]));
+  }
+  // Mixed 3-block structures covering specific hand-chosen edge cases
   out.push(makeStructure([{color:'orange',shape:'cube'}, {color:'purple',shape:'pyramid'}, {color:'orange',shape:'cylinder'}]));
   out.push(makeStructure([{color:'orange',shape:'pyramid'}, {color:'purple',shape:'cube'}, {color:'teal',shape:'cylinder'}, {color:'orange',shape:'pyramid'}]));
-  out.push(makeStructure([{color:'purple',shape:'cube'}, {color:'purple',shape:'cube'}, {color:'purple',shape:'cube'}]));
   out.push(makeStructure([{color:'orange',shape:'cube'}, {color:'orange',shape:'pyramid',touching:[0]}, {color:'orange',shape:'cylinder',touching:[1]}]));
   out.push(makeStructure([{color:'purple',shape:'cube'}, {color:'orange',shape:'pyramid',touching:[0]}, {color:'teal',shape:'cylinder',touching:[1]}]));
   out.push(makeStructure([{color:'purple',shape:'pyramid'}, {color:'orange',shape:'pyramid'}, {color:'teal',shape:'pyramid'}]));
-  out.push(makeStructure([{color:'purple',shape:'cube'}, {color:'purple',shape:'cube',touching:[0]}, {color:'purple',shape:'cube',touching:[1]}]));
-  // Pseudo-random pool
-  let seed = 17;
-  function rand() { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; }
-  for (let k = 0; k < 120; k++) {
-    const n = 2 + Math.floor(rand() * 4);
-    const specs = [];
-    for (let i = 0; i < n; i++) {
-      const c = COLORS[Math.floor(rand() * 3)];
-      const sh = SHAPES[Math.floor(rand() * 3)];
-      const spec = { color: c, shape: sh };
-      if (i > 0 && rand() < 0.35) spec.touching = [i-1];
-      if (i > 0 && rand() < 0.20) spec.onTopOf = [i-1];
-      specs.push(spec);
+  // Stacking-focused 3-block structures — one of each color stacked 3-high
+  for (const c of COLORS) for (const sh of SHAPES) {
+    out.push(makeStructure([
+      {color:c,shape:sh},
+      {color:c,shape:sh,onTopOf:[0]},
+      {color:c,shape:sh,onTopOf:[1]},
+    ]));
+  }
+  // Systematic 4-of-same (color + shape) — all 9 combinations as 4-block structures.
+  // Closes the "exactly 4 X" / "at least 4 X" coverage gap for every color+shape combo.
+  // Without these, the filter drops those rules as contradictions (no test structure
+  // has 4+ of that specific color+shape combo).
+  for (const c of COLORS) for (const sh of SHAPES) {
+    out.push(makeStructure([
+      {color:c,shape:sh}, {color:c,shape:sh}, {color:c,shape:sh}, {color:c,shape:sh},
+    ]));
+  }
+  // Bigger pseudo-random pool — 3 seeds, 100 structures each, up to 6 blocks.
+  // More seeds diversify the pool; larger structures exercise rules that need
+  // 4+ blocks (rare color-shape combinations, chain-of-4, etc).
+  for (const startSeed of [17, 101, 839]) {
+    let seed = startSeed;
+    const rand = () => { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; };
+    for (let k = 0; k < 100; k++) {
+      const n = 2 + Math.floor(rand() * 5); // 2..6 blocks
+      const specs = [];
+      for (let i = 0; i < n; i++) {
+        const c = COLORS[Math.floor(rand() * 3)];
+        const sh = SHAPES[Math.floor(rand() * 3)];
+        const spec = { color: c, shape: sh };
+        if (i > 0 && rand() < 0.40) spec.touching = [i-1];
+        if (i > 0 && rand() < 0.25) spec.onTopOf = [i-1];
+        specs.push(spec);
+      }
+      out.push(makeStructure(specs));
     }
-    out.push(makeStructure(specs));
   }
   return out;
 }
@@ -1632,9 +1703,65 @@ function generateTestStructures() {
 // ==============================================================
 // FILTER
 // ==============================================================
+// Build a structural token signature for a rule text. Two rules can only be
+// considered duplicates if they share BOTH this signature AND a truth vector.
+// The signature captures the *atoms* the rule talks about (colors, shapes,
+// numbers, structural concepts) — so "at least 2 purple pyramids touching"
+// and "at least 2 purple cylinders touching" have different signatures and
+// are never deduped against each other even if they happen to agree across
+// the test bank. Rules with the same signature AND same truth vector are
+// genuine logical equivalents (e.g. "A > B" and "B < A" phrasing pairs).
+function ruleTokenSignature(text) {
+  const t = text.toLowerCase();
+  const tokens = [];
+  // Colors
+  for (const c of ['teal', 'orange', 'purple']) {
+    if (new RegExp(`\\b${c}\\b`).test(t)) tokens.push(`C:${c}`);
+  }
+  // Shapes (singular or plural)
+  for (const sh of ['cube', 'pyramid', 'cylinder']) {
+    if (new RegExp(`\\b${sh}s?\\b`).test(t)) tokens.push(`S:${sh}`);
+  }
+  // Numbers that appear in the rule (1, 2, 3, 4, "one"/"two"/"three"/"four")
+  const numMap = { one: 1, two: 2, three: 3, four: 4 };
+  const digits = t.match(/\b\d+\b/g) || [];
+  for (const d of digits) tokens.push(`N:${d}`);
+  for (const [word, val] of Object.entries(numMap)) {
+    if (new RegExp(`\\b${word}\\b`).test(t)) tokens.push(`N:${val}`);
+  }
+  // Zero / no / none
+  if (/\bno\b/.test(t) || /\bzero\b/.test(t)) tokens.push('N:0');
+  // Quantifier concepts
+  if (/\bat least\b/.test(t)) tokens.push('Q:atleast');
+  if (/\bat most\b/.test(t)) tokens.push('Q:atmost');
+  if (/\bexactly\b/.test(t)) tokens.push('Q:exactly');
+  if (/\bevery\b|\ball\b/.test(t)) tokens.push('Q:every');
+  if (/\bmore\b/.test(t)) tokens.push('Q:more');
+  if (/\bfewer\b|\bless\b/.test(t)) tokens.push('Q:fewer');
+  if (/\bsame\b/.test(t)) tokens.push('Q:same');
+  // Structural/positional concepts
+  if (/\btouching\b|\btouches\b|\btouch\b/.test(t)) tokens.push('R:touching');
+  if (/\bon top of\b/.test(t)) tokens.push('R:ontop');
+  if (/\bon the ground\b|\boff the ground\b|\bgrounded\b|\bungrounded\b/.test(t)) tokens.push('R:ground');
+  if (/\bchain\b/.test(t)) tokens.push('R:chain');
+  if (/\badjacent\b/.test(t)) tokens.push('R:adjacent');
+  if (/\bfirst\b/.test(t)) tokens.push('R:first');
+  if (/\blast\b/.test(t)) tokens.push('R:last');
+  if (/\boutside\b|\boutsides\b/.test(t)) tokens.push('R:outside');
+  if (/\bmiddle\b/.test(t)) tokens.push('R:middle');
+  if (/\btallest\b/.test(t)) tokens.push('R:tallest');
+  if (/\bpair\b/.test(t)) tokens.push('R:pair');
+  if (/\bif\b.*\bthen\b|^if\b/.test(t)) tokens.push('R:conditional');
+  return tokens.sort().join(',');
+}
+
 function filterRules(rules, testStructures) {
   const kept = [];
   const dropped = { tautology: 0, contradiction: 0, duplicate: 0, error: 0 };
+  // Keyed by (truth_vector + token_signature) — both must match for a dup.
+  // This is the STRICT rule: two rules that mention different shapes or
+  // different numbers are never considered duplicates of each other, no
+  // matter how correlated their YES/NO vectors happen to be on the test bank.
   const signatures = new Map();
 
   for (const rule of rules) {
@@ -1652,9 +1779,9 @@ function filterRules(rules, testStructures) {
     const sum = vector.reduce((a, b) => a + b, 0);
     if (sum === vector.length) { dropped.tautology++; continue; }
     if (sum === 0) { dropped.contradiction++; continue; }
-    const sig = vector.join('');
-    if (signatures.has(sig)) { dropped.duplicate++; continue; }
-    signatures.set(sig, rule.id);
+    const compositeKey = vector.join('') + '|' + ruleTokenSignature(rule.text);
+    if (signatures.has(compositeKey)) { dropped.duplicate++; continue; }
+    signatures.set(compositeKey, rule.id);
     kept.push(rule);
   }
   return { kept, dropped };
@@ -1677,6 +1804,280 @@ for (const r of RULES) {
 }
 
 console.log(`Loaded ${RULES.length} rules.`);
+
+// ============================================================
+// RULE MATRIX — classification + renderers for the RULE MATRIX tab.
+// Runs once at load: tags every rule with a "family" and a set of
+// attribute flags (colors, shapes, interactions) it references.
+// ============================================================
+
+// Map each rule to its family by matching the id prefix. Family names
+// mirror the build*Rules() functions that create each set.
+function classifyRuleFamily(r) {
+  const id = r.id;
+  if (id.startsWith('count_')) return 'Count';
+  if (id.startsWith('every_') && (id.includes('_grounded') || id.includes('_ontop'))) return 'Universal';
+  if (id.startsWith('every_') && id.includes('_touching') && !id.includes('_touches_')) return 'Universal';
+  if (id.startsWith('every_') && id.includes('_touches_')) return 'Touching';
+  if (id.startsWith('no_') && id.includes('_touches_')) return 'Touching';
+  if (id.startsWith('every_') && (id.includes('_is_'))) return 'Universal';
+  if (id.startsWith('every_block_')) return 'Universal';
+  if (id.startsWith('atleast_') && id.includes('touching')) return 'Touching';
+  if (id.startsWith('chain_of_') || id.startsWith('no_two_')) return 'Touching';
+  if (id.startsWith('exists_') && id.includes('ontop')) return 'Stacking';
+  if (id.startsWith('outsides_')) return 'Positional';
+  if (id.startsWith('middle_')) return 'Positional';
+  if (id.startsWith('first_') || id.startsWith('last_')) return 'Positional';
+  if (id.startsWith('no_adjacent_') || id.startsWith('all_adjacent_')) return 'Adjacency';
+  if (id.startsWith('all_same_') || id.startsWith('all_different_')) return 'Uniformity';
+  if (id.startsWith('exactly_') && (id.includes('_colors') || id.includes('_shapes'))) return 'Uniformity';
+  if (id.startsWith('one_of_each_')) return 'Uniformity';
+  if (id.startsWith('more_') || id.startsWith('same_')) return 'Comparative';
+  if (id.startsWith('tallest_')) return 'Height';
+  if (id.startsWith('if_')) return 'Conditional';
+  if (id.startsWith('two_') || id.startsWith('any_two_')) return 'Same-X-Different-Y';
+  if (id.startsWith('touching_')) return 'Same-X-Different-Y';
+  if (id.startsWith('all_grounded') || id.startsWith('some_off') || id.startsWith('more_grounded') || id.startsWith('more_off') || id.startsWith('same_grounded') || id.startsWith('no_block_grounded')) return 'Universal';
+  // Totals and unscoped counts
+  if (id === 'atleast_2_touching' || id.includes('2_blocks_touching')) return 'Touching';
+  return 'Other';
+}
+
+// Detect which attributes a rule's TEXT references.
+// Returns an object with boolean flags. Used for the heatmap columns.
+function classifyRuleAttributes(r) {
+  const t = r.text.toLowerCase();
+  return {
+    teal:       /\bteal\b/.test(t),
+    orange:     /\borange\b/.test(t),
+    purple:     /\bpurple\b/.test(t),
+    cube:       /\bcubes?\b/.test(t),
+    pyramid:    /\bpyramids?\b/.test(t),
+    cylinder:   /\bcylinders?\b/.test(t),
+    touching:   /touch/.test(t),
+    stacking:   /on top of|on the ground|off the ground/.test(t),
+    conditional: /^if /.test(t),
+    count:      /\b(exactly|at least|at most|no )\s*\d/.test(t) || /\bthere are no\b/.test(t),
+  };
+}
+
+// Tag every rule with family + attribute flags, once.
+for (const r of RULES) {
+  r.family = classifyRuleFamily(r);
+  r.attrs  = classifyRuleAttributes(r);
+}
+
+// Families in the order we want them shown in the matrix (roughly
+// simplest → most complex, matching the learning arc).
+const FAMILY_ORDER = [
+  'Count', 'Uniformity', 'Positional', 'Adjacency',
+  'Universal', 'Touching', 'Stacking', 'Height',
+  'Comparative', 'Conditional', 'Same-X-Different-Y', 'Other'
+];
+const ATTR_COLUMNS = [
+  { key: 'teal',       label: 'teal',       group: 'color' },
+  { key: 'orange',     label: 'orange',     group: 'color' },
+  { key: 'purple',     label: 'purple',     group: 'color' },
+  { key: 'cube',       label: 'cube',       group: 'shape' },
+  { key: 'pyramid',    label: 'pyramid',    group: 'shape' },
+  { key: 'cylinder',   label: 'cylinder',   group: 'shape' },
+  { key: 'count',      label: 'count',      group: 'other' },
+  { key: 'touching',   label: 'touching',   group: 'other' },
+  { key: 'stacking',   label: 'ground/top', group: 'other' },
+  { key: 'conditional',label: 'if/then',    group: 'other' },
+];
+
+// Render the matrix heatmap — families × attribute columns, each cell a count.
+// When a game is in progress, shows only rules still alive (consistent with
+// every test/showdown/opening played so far). Before game start, shows the
+// full rule bank.
+function renderRuleMatrix() {
+  const totalEl = document.getElementById('matrix-total');
+  const heatEl  = document.getElementById('matrix-heatmap');
+  if (!totalEl || !heatEl) return;
+
+  // Use the alive set if a game is running, otherwise all rules
+  const inGame = !!game.secretRuleId && game.alive && game.alive.size > 0;
+  const aliveSet = inGame ? game.alive : null;
+  const activeRules = inGame ? RULES.filter(r => aliveSet.has(r.id)) : RULES;
+
+  totalEl.textContent = inGame
+    ? `${activeRules.length.toLocaleString()} alive / ${RULES.length.toLocaleString()} total`
+    : RULES.length.toLocaleString();
+
+  // Build family × attr count grid + family row totals
+  const grid = {};
+  const rowTotals = {};
+  for (const fam of FAMILY_ORDER) {
+    grid[fam] = {};
+    rowTotals[fam] = 0;
+    for (const c of ATTR_COLUMNS) grid[fam][c.key] = 0;
+  }
+  for (const r of activeRules) {
+    const fam = r.family;
+    if (!grid[fam]) { grid[fam] = {}; rowTotals[fam] = 0; for (const c of ATTR_COLUMNS) grid[fam][c.key] = 0; }
+    rowTotals[fam]++;
+    for (const c of ATTR_COLUMNS) if (r.attrs[c.key]) grid[fam][c.key]++;
+  }
+  const colTotals = {};
+  for (const c of ATTR_COLUMNS) {
+    colTotals[c.key] = 0;
+    for (const fam of FAMILY_ORDER) colTotals[c.key] += (grid[fam] ? grid[fam][c.key] : 0);
+  }
+
+  // Find max cell value for heatmap scaling
+  let maxCell = 1;
+  for (const fam of FAMILY_ORDER) {
+    for (const c of ATTR_COLUMNS) {
+      if (grid[fam][c.key] > maxCell) maxCell = grid[fam][c.key];
+    }
+  }
+
+  const cellBg = (v) => {
+    if (v === 0) return '#1e2530';
+    const t = Math.min(1, v / maxCell);
+    // Teal ramp: low t -> very dark teal, high t -> saturated Live Teal
+    const alpha = 0.15 + t * 0.75;
+    return `rgba(14, 158, 138, ${alpha.toFixed(2)})`;
+  };
+
+  // Build the table
+  let html = '<table style="border-collapse:collapse; width:100%; font-size:13px;">';
+  // Header row with group labels
+  html += '<thead>';
+  html += '<tr><th style="text-align:left; padding:8px 10px; border-bottom:1px solid #3a4350; color:var(--gray); font-weight:700; font-size:11px; letter-spacing:0.1em;">FAMILY</th>';
+  for (const c of ATTR_COLUMNS) {
+    const groupColor = c.group === 'color' ? 'var(--ember)' : c.group === 'shape' ? 'var(--arc)' : 'var(--gray)';
+    html += `<th style="text-align:center; padding:8px 6px; border-bottom:1px solid #3a4350; color:${groupColor}; font-weight:700; font-size:11px; letter-spacing:0.08em; white-space:nowrap;">${c.label}</th>`;
+  }
+  html += '<th style="text-align:right; padding:8px 12px; border-bottom:1px solid #3a4350; color:var(--teal); font-weight:700; font-size:11px; letter-spacing:0.1em;"># RULES</th>';
+  html += '</tr></thead><tbody>';
+
+  for (const fam of FAMILY_ORDER) {
+    if (rowTotals[fam] === 0) continue;
+    html += '<tr>';
+    html += `<td style="padding:6px 10px; font-weight:600; color:var(--bone); white-space:nowrap; cursor:pointer; border-bottom:1px solid #2a3340;" onclick="filterMatrixByFamily('${fam}')">${fam}</td>`;
+    for (const c of ATTR_COLUMNS) {
+      const v = grid[fam][c.key];
+      const bg = cellBg(v);
+      const fg = v === 0 ? '#4a5260' : (v / maxCell > 0.5 ? '#ffffff' : 'var(--bone)');
+      html += `<td style="padding:8px 6px; text-align:center; background:${bg}; color:${fg}; border-bottom:1px solid #2a3340; font-variant-numeric:tabular-nums;">${v || ''}</td>`;
+    }
+    html += `<td style="padding:6px 12px; text-align:right; color:var(--teal); font-weight:700; font-variant-numeric:tabular-nums; border-bottom:1px solid #2a3340;">${rowTotals[fam]}</td>`;
+    html += '</tr>';
+  }
+
+  // Totals row — these are mention-counts (sum of cells), not rule-counts.
+  // The grand total on the right shows rule count (which matches the column).
+  html += '<tr style="background:#1a212c;">';
+  html += '<td style="padding:10px; font-weight:700; color:var(--gray); font-size:11px; letter-spacing:0.1em;"># MENTIONS</td>';
+  for (const c of ATTR_COLUMNS) {
+    html += `<td style="padding:10px 6px; text-align:center; color:var(--gray); font-weight:700; font-variant-numeric:tabular-nums;">${colTotals[c.key]}</td>`;
+  }
+  html += `<td style="padding:10px 12px; text-align:right; color:var(--teal); font-weight:900; font-size:15px; font-variant-numeric:tabular-nums;">${activeRules.length}</td>`;
+  html += '</tr>';
+  html += '</tbody></table>';
+
+  // Legend
+  html += '<div style="margin-top:16px; display:flex; gap:24px; align-items:center; font-size:12px; color:var(--gray); flex-wrap:wrap;">';
+  html += '<span>Cell density:</span>';
+  for (const v of [0, Math.round(maxCell*0.25), Math.round(maxCell*0.5), Math.round(maxCell*0.75), maxCell]) {
+    html += `<span style="display:inline-flex; align-items:center; gap:6px;"><span style="display:inline-block; width:18px; height:18px; background:${cellBg(v)}; border:1px solid #3a4350; border-radius:3px;"></span>${v}</span>`;
+  }
+  html += '<span style="margin-left:auto; color:var(--gray); font-size:11px;">Click a family name to filter the rule list below.</span>';
+  html += '</div>';
+
+  heatEl.innerHTML = html;
+}
+
+// Filter state for the detail table
+const matrixFilter = { family: '', search: '' };
+
+function filterMatrixByFamily(fam) {
+  matrixFilter.family = fam;
+  const sel = document.getElementById('matrix-family-filter');
+  if (sel) sel.value = fam;
+  renderMatrixRuleList();
+}
+
+function renderMatrixRuleList() {
+  const listEl = document.getElementById('matrix-rule-list');
+  const countEl = document.getElementById('matrix-match-count');
+  if (!listEl) return;
+
+  const inGame = !!game.secretRuleId && game.alive && game.alive.size > 0;
+  const aliveSet = inGame ? game.alive : null;
+  const pool = inGame ? RULES.filter(r => aliveSet.has(r.id)) : RULES;
+
+  const q = (matrixFilter.search || '').toLowerCase().trim();
+  const fam = matrixFilter.family || '';
+  const matches = pool.filter(r => {
+    if (fam && r.family !== fam) return false;
+    if (q && !r.text.toLowerCase().includes(q)) return false;
+    return true;
+  });
+
+  if (countEl) {
+    countEl.textContent = inGame
+      ? `${matches.length.toLocaleString()} of ${pool.length.toLocaleString()} alive (${RULES.length.toLocaleString()} total)`
+      : `${matches.length.toLocaleString()} of ${RULES.length.toLocaleString()} rules`;
+  }
+
+  if (matches.length === 0) {
+    listEl.innerHTML = '<div style="padding:24px; text-align:center; color:var(--gray);">No rules match.</div>';
+    return;
+  }
+
+  // Cap rendering to the first 300 for perf (filtering can narrow it further)
+  const CAP = 300;
+  const shown = matches.slice(0, CAP);
+  let html = '<table style="width:100%; border-collapse:collapse; font-size:13px;">';
+  html += '<thead><tr style="background:#2a3340;">';
+  html += '<th style="text-align:left; padding:8px 12px; color:var(--gray); font-size:11px; letter-spacing:0.1em; width:160px;">FAMILY</th>';
+  html += '<th style="text-align:left; padding:8px 12px; color:var(--gray); font-size:11px; letter-spacing:0.1em;">RULE TEXT</th>';
+  html += '</tr></thead><tbody>';
+  for (const r of shown) {
+    html += `<tr style="border-bottom:1px solid #2a3340;">
+      <td style="padding:8px 12px; color:var(--teal); font-size:12px; font-weight:600;">${r.family}</td>
+      <td style="padding:8px 12px; color:var(--bone);">${r.text}</td>
+    </tr>`;
+  }
+  html += '</tbody></table>';
+  if (matches.length > CAP) {
+    html += `<div style="padding:12px; text-align:center; color:var(--gray); font-size:12px; border-top:1px solid #3a4350;">Showing first ${CAP} of ${matches.length.toLocaleString()}. Narrow the search to see more.</div>`;
+  }
+  listEl.innerHTML = html;
+}
+
+// Populate the family filter dropdown + wire inputs. Runs when the matrix
+// tab is first opened (via initMatrixTab below).
+let _matrixInited = false;
+function initMatrixTab() {
+  if (_matrixInited) return;
+  _matrixInited = true;
+  const sel = document.getElementById('matrix-family-filter');
+  if (sel) {
+    // Count rules per family and build options sorted by size (biggest first after "All")
+    const famCounts = {};
+    for (const r of RULES) famCounts[r.family] = (famCounts[r.family] || 0) + 1;
+    const famEntries = Object.entries(famCounts).sort((a, b) => b[1] - a[1]);
+    for (const [fam, count] of famEntries) {
+      const opt = document.createElement('option');
+      opt.value = fam;
+      opt.textContent = `${fam} (${count})`;
+      sel.appendChild(opt);
+    }
+    sel.addEventListener('change', () => { matrixFilter.family = sel.value; renderMatrixRuleList(); });
+  }
+  const search = document.getElementById('matrix-search');
+  if (search) {
+    search.addEventListener('input', () => { matrixFilter.search = search.value; renderMatrixRuleList(); });
+  }
+  renderRuleMatrix();
+  renderMatrixRuleList();
+}
+// Expose for inline onclick
+window.filterMatrixByFamily = filterMatrixByFamily;
 
 // ============================================================
 // GAME STATE + ENGINE
@@ -1754,8 +2155,8 @@ function startGame(secretRuleId) {
 }
 
 function recordSetupOpening(structure, answer) {
-  applyEvidence(structure, answer);
-  game.setupLog.push({ structure, answer });
+  const eliminated = applyEvidence(structure, answer);
+  game.setupLog.push({ structure, answer, eliminated });
 }
 
 // Returns an array of { index, entry, reason } for any setup examples in
@@ -2004,6 +2405,7 @@ qsa('.tab-btn').forEach(btn => btn.addEventListener('click', () => {
   btn.classList.add('active');
   qsa('.tab-pane').forEach(p => p.classList.add('hide'));
   qs('#tab-' + btn.dataset.tab).classList.remove('hide');
+  if (btn.dataset.tab === 'matrix' && typeof initMatrixTab === 'function') initMatrixTab();
   renderAll();
 }));
 
@@ -2068,11 +2470,19 @@ function renderRuleOptions(selectEl, filter = '') {
     return [...set];
   }
 
+  // When rendering into the guess select during play, restrict to rules that
+  // are still alive (consistent with all evidence so far). The Sparkmaster's
+  // rule-picker in Setup still sees the full bank. The alive filter applies
+  // BEFORE the text search so kids don't see rules that have already been ruled out.
+  const isGuessSelect = selectEl && selectEl.id === 'guess-select';
+  const poolHasAlive = isGuessSelect && !!game.secretRuleId && game.alive && game.alive.size > 0;
+  const basePool = poolHasAlive ? RULES.filter(r => game.alive.has(r.id)) : RULES;
+
   let matching;
   if (words.length === 0) {
-    matching = RULES;
+    matching = basePool;
   } else {
-    matching = RULES.filter(r => {
+    matching = basePool.filter(r => {
       const text = r.text.toLowerCase();
       const id = r.id.toLowerCase();
       // Every user-typed word must find at least one synonym in the rule text
@@ -2493,6 +2903,24 @@ function renderStats() {
   qs('#stat-last-elim').textContent = last ? `+${last.score.toLocaleString()}` : '—';
   qs('#stat-last-detail').textContent = last ? `${(teamById(last.creditedTo||last.teamId)?.name) || last.teamId} · ${last.moveType.replace('_',' ')}` : '—';
   qs('#stat-turns').textContent = game.turnCounter;
+
+  // Evidence-rail counter — the highly visible version right above THE EVIDENCE.
+  // Updates in lockstep with the stat card so players see the number shrink
+  // immediately after each move.
+  const evVal = qs('#ev-potential-value');
+  const evSub = qs('#ev-potential-sub');
+  if (evVal && evSub) {
+    if (game.secretRuleId) {
+      evVal.textContent = game.alive.size.toLocaleString();
+      const eliminated = RULES.length - game.alive.size;
+      evSub.textContent = eliminated > 0
+        ? `${eliminated.toLocaleString()} already eliminated`
+        : `out of ${RULES.length.toLocaleString()}`;
+    } else {
+      evVal.textContent = '—';
+      evSub.innerHTML = '&nbsp;';
+    }
+  }
   if (game.winner) {
     const detectionTeam = teamById(game.winner);
     const elimWinnerId = getElimWinner();
@@ -2527,6 +2955,12 @@ function renderAll() {
   renderGuessTokenInfo();
   renderOpeningSummary();
   renderDebug();
+  // Keep the Rule Matrix tab in sync with the alive set. Only re-renders if
+  // the tab has been opened at least once (otherwise the DOM nodes don't exist).
+  if (_matrixInited) {
+    renderRuleMatrix();
+    renderMatrixRuleList();
+  }
   saveState();
 }
 
@@ -2545,7 +2979,7 @@ function renderEvidenceRail() {
     label: e.answer ? 'Setup · YES example' : 'Setup · NO example',
     team: null,
     turn: null,
-    eliminated: null,
+    eliminated: e.eliminated ?? null,
   }));
   game.moves.forEach(m => {
     if (!m.structure) return; // guesses have no structure
@@ -2578,13 +3012,15 @@ function renderEvidenceRail() {
       div.className = 'evidence-item ' + item.kind;
       let labelLeft = '';
       let labelRight = '';
+      const elimPart = (item.eliminated != null && item.eliminated > 0)
+        ? `<span class="elim">↓ ${item.eliminated.toLocaleString()} rules</span>`
+        : '';
       if (item.kind === 'setup') {
         labelLeft = `<span class="team">${item.answer ? 'YES example' : 'NO example'}</span>`;
-        labelRight = '<span class="turn">setup</span>';
+        labelRight = `<span class="turn">setup</span> ${elimPart}`;
       } else {
         labelLeft = `<span class="team">${item.team}</span>`;
         const mid = item.turn ? `<span class="turn">T${item.turn}</span>` : '';
-        const elimPart = (item.eliminated != null && item.eliminated > 0) ? `<span class="elim">−${item.eliminated}</span>` : '';
         labelRight = `${mid} ${elimPart}`;
       }
       div.innerHTML = `
@@ -3315,7 +3751,13 @@ document.addEventListener('DOMContentLoaded', () => {
     game.structureLocked = false;
     game.structureStage = 'edit';
     playBuilder.reset();
-    setPlayStep(1);
+    // Re-sync the active-team dropdown with the now-rewound currentTeamIndex,
+    // THEN advance to step 2 (build structure) so the team can take their new turn.
+    // Previously this called setPlayStep(1), which dimmed every step and left the
+    // UI with no visible way to enter a move.
+    renderActiveTeamSelect();
+    renderTurnBanner();
+    setPlayStep(qs('#active-team').value ? 2 : 1);
     renderAll();
   });
 });
