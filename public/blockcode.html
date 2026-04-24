@@ -3119,6 +3119,33 @@ function renderGuessTokenInfo() {
 // ============================================================
 // EVENT WIRING
 // ============================================================
+
+// Global error visibility — surfaces any uncaught error directly in the
+// browser console with a recognizable prefix, so if a handler silently
+// fails to attach in the future we'll see it without guessing.
+window.addEventListener('error', e => {
+  console.error('[blockcode]', e.message, 'at', e.filename + ':' + e.lineno);
+});
+
+// Attach a click handler safely. If the element doesn't exist or the
+// handler throws, log the failure but don't let it kill the rest of
+// the init code. Use this for UI wiring that we don't want to be fatal.
+function safeOn(selector, event, fn, label) {
+  try {
+    const el = typeof selector === 'string' ? qs(selector) : selector;
+    if (!el) {
+      console.warn('[blockcode] missing element for', selector, label ? '(' + label + ')' : '');
+      return;
+    }
+    el.addEventListener(event, (...args) => {
+      try { fn(...args); }
+      catch (err) { console.error('[blockcode] handler threw for', selector, err); }
+    });
+  } catch (err) {
+    console.error('[blockcode] safeOn setup failed for', selector, err);
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   mountBuilders();
   renderRuleOptions(qs('#rule-select'));
@@ -3180,17 +3207,20 @@ document.addEventListener('DOMContentLoaded', () => {
     renderAll();
   });
 
-  qs('#btn-new-game').addEventListener('click', () => {
+  safeOn('#btn-new-game', 'click', () => {
     const hasGame = game.secretRuleId || game.moves.length > 0;
+    console.log('[blockcode] New Game clicked. hasGame=' + hasGame);
     if (hasGame) {
       // Show custom modal instead of browser confirm()
-      qs('#new-game-modal').classList.remove('hide');
+      const modal = qs('#new-game-modal');
+      if (!modal) { console.error('[blockcode] new-game-modal element not found'); return; }
+      modal.classList.remove('hide');
     } else {
       // No game in progress — just reset silently
       resetGame();
       finalizeNewGameReset();
     }
-  });
+  }, 'btn-new-game');
 
   // Shared cleanup after any "new game" path — closes panels, clears builders, returns to Setup
   function finalizeNewGameReset() {
@@ -3210,7 +3240,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Modal: keep teams, reset scores + moves
-  qs('#btn-modal-keep').addEventListener('click', () => {
+  safeOn('#btn-modal-keep', 'click', () => {
     game.secretRuleId = null;
     game.alive = new Set(RULES.map(r => r.id));
     game.moves = [];
@@ -3226,26 +3256,26 @@ document.addEventListener('DOMContentLoaded', () => {
     for (const t of game.teams) { t.elim = 0; t.tokens = 0; }
     qs('#new-game-modal').classList.add('hide');
     finalizeNewGameReset();
-  });
+  }, 'btn-modal-keep');
 
   // Modal: wipe everything
-  qs('#btn-modal-wipe').addEventListener('click', () => {
+  safeOn('#btn-modal-wipe', 'click', () => {
     resetGame();
     qs('#new-game-modal').classList.add('hide');
     finalizeNewGameReset();
-  });
+  }, 'btn-modal-wipe');
 
   // Modal: cancel — close without changing anything
-  qs('#btn-modal-cancel').addEventListener('click', () => {
+  safeOn('#btn-modal-cancel', 'click', () => {
     qs('#new-game-modal').classList.add('hide');
-  });
+  }, 'btn-modal-cancel');
 
   // Clicking the backdrop (outside the card) also cancels
-  qs('#new-game-modal').addEventListener('click', (e) => {
+  safeOn('#new-game-modal', 'click', (e) => {
     if (e.target.id === 'new-game-modal') {
       qs('#new-game-modal').classList.add('hide');
     }
-  });
+  }, 'new-game-modal-backdrop');
 
   // ESC key cancels any open modal
   document.addEventListener('keydown', (e) => {
