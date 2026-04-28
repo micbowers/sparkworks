@@ -63,7 +63,7 @@ The registration form posts to a Notion DB with these properties:
 - `Parent 2 Name`, `Parent 2 Email`, `Parent 2 Phone`
 - `Child 1 Name`, `Child 1 Grade` (rich_text), `Child 1 Track` (select: `Ember (grades 2-3)` / `Blaze (grades 4-6)`)
 - (`Child 2…` and `Child 3…` mirror the above)
-- `Cohort` (select: `Founding Sparks`, `Season 1 — Fall 2026`)
+- `Cohort` (select: `Founding Sparks`, `Season 2 — Fall 2026`)
 - `Status` (select: defaults to `New`)
 - `How did you hear about us?`, `Questions or Comments` (rich_text)
 

@@ -4,6 +4,7 @@ import { Footer } from "../components/Footer";
 import { Callout } from "../components/Callout";
 import { CurriculumSection } from "../components/CurriculumSection";
 import { InterestForm } from "../components/InterestForm";
+import { SiteHeader } from "../components/SiteHeader";
 
 const SECTIONS = [
   {
@@ -127,20 +128,51 @@ const FAQS = [
   },
   {
     q: "What does it cost?",
-    a: "Season 1 — Fall 2026 is $449 for all 8 sessions (both tracks, same price). Founding Sparks (our completed pilot) ran at $149 for all 8 sessions.",
+    a: "Season 2 — Fall 2026 is $449 for all 8 sessions (both tracks, same price), starting the week of September 7. Founding Sparks (our Season 1 pilot, completed) ran at $149 for all 8 sessions.",
   },
 ];
 
 export default function ProgramPage() {
   return (
     <>
+      <SiteHeader />
       <Hero
-        eyebrow="The Program · Season 1"
+        showWordmark={false}
+        eyebrow="The Program · Season 2"
         title="An 8-session program that teaches kids to think through hard problems — through games, not lectures."
         tagline="Two grade-calibrated tracks: Ember (grades 2–3) and Blaze (grades 4–6). Six students per track, dedicated instructor, 60-minute sessions."
       />
 
       <main className="sw-page sw-body">
+        <section className="sw-section" style={{ marginTop: 0 }}>
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              gap: 18,
+              alignItems: "center",
+              justifyContent: "space-between",
+              padding: "20px 24px",
+              background: "var(--sw-bone)",
+              borderRadius: "var(--sw-radius-md)",
+              borderLeft: "4px solid var(--sw-ember)",
+            }}
+          >
+            <div>
+              <div className="ts-label" style={{ color: "var(--sw-ember)", fontSize: "0.75rem", marginBottom: 4 }}>
+                Season 2 · Fall 2026
+              </div>
+              <p className="ts-body" style={{ margin: 0 }}>
+                <strong>Founding Sparks filled before we listed it. Season 2 is filling now.</strong>{" "}
+                $449 for all 8 sessions · No payment required to hold a seat.
+              </p>
+            </div>
+            <Link className="sw-btn sw-btn-primary" href="#interest" style={{ whiteSpace: "nowrap" }}>
+              Save my seat
+            </Link>
+          </div>
+        </section>
+
         <section className="sw-section">
           <div className="ts-eyebrow">What kids learn</div>
           <h2 className="ts-h1" style={{ marginTop: 8, marginBottom: 16, maxWidth: 760 }}>
@@ -237,12 +269,6 @@ export default function ProgramPage() {
 
         <section className="sw-section" id="interest">
           <InterestForm />
-          <p className="ts-caption" style={{ marginTop: 14 }}>
-            Founding Sparks (our pilot cohort) is closed. Have other questions?{" "}
-            <Link href="/" className="sw-btn-subtle" style={{ display: "inline" }}>
-              Back to home
-            </Link>.
-          </p>
         </section>
       </main>
 

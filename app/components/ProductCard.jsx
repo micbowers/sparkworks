@@ -2,12 +2,13 @@ import Link from "next/link";
 
 /**
  * Homepage product card — Program / Games / Materials.
- * `accent` maps to a section color for the kicker + bottom rule.
+ * `accent` maps to a section color for the kicker + top rule.
  * `cta` is a single primary action; if href is external, opens in same tab.
- * If `comingSoon` is true, the CTA renders as outline + "Notify me" framing.
+ * `children` renders below the CTA row — used for inline subscribe forms.
  */
-export function ProductCard({ accent = "blue", kicker, title, body, cta, secondary }) {
+export function ProductCard({ accent = "blue", kicker, title, body, cta, secondary, children }) {
   const accentVar = `var(--sw-${accent})`;
+  const hasButtons = cta || secondary;
   return (
     <article
       className="sw-card"
@@ -23,30 +24,33 @@ export function ProductCard({ accent = "blue", kicker, title, body, cta, seconda
       <div style={{ flex: 1 }}>
         <p className="ts-body">{body}</p>
       </div>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginTop: 6 }}>
-        {cta && (
-          cta.external ? (
-            <a className={`sw-btn ${cta.primary ? "sw-btn-primary" : ""}`} href={cta.href} target="_blank" rel="noopener noreferrer">
-              {cta.label}
-            </a>
-          ) : (
-            <Link className={`sw-btn ${cta.primary ? "sw-btn-primary" : ""}`} href={cta.href}>
-              {cta.label}
-            </Link>
-          )
-        )}
-        {secondary && (
-          secondary.external || /\.html?$/.test(secondary.href) ? (
-            <a className="sw-btn sw-btn-subtle" href={secondary.href}>
-              {secondary.label}
-            </a>
-          ) : (
-            <Link className="sw-btn sw-btn-subtle" href={secondary.href}>
-              {secondary.label}
-            </Link>
-          )
-        )}
-      </div>
+      {hasButtons && (
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginTop: 6 }}>
+          {cta && (
+            cta.external ? (
+              <a className={`sw-btn ${cta.primary ? "sw-btn-primary" : ""}`} href={cta.href} target="_blank" rel="noopener noreferrer">
+                {cta.label}
+              </a>
+            ) : (
+              <Link className={`sw-btn ${cta.primary ? "sw-btn-primary" : ""}`} href={cta.href}>
+                {cta.label}
+              </Link>
+            )
+          )}
+          {secondary && (
+            secondary.external || /\.html?$/.test(secondary.href) ? (
+              <a className="sw-btn sw-btn-subtle" href={secondary.href}>
+                {secondary.label}
+              </a>
+            ) : (
+              <Link className="sw-btn sw-btn-subtle" href={secondary.href}>
+                {secondary.label}
+              </Link>
+            )
+          )}
+        </div>
+      )}
+      {children}
     </article>
   );
 }

@@ -17,7 +17,7 @@
 - Blaze Track — grades 4-6 (primary marketing focus for Founding Sparks)
 
 **Structure:** 8 sessions over 4 weeks (1–2x/week). Each track: max 6 students, dedicated instructor.
-**Pricing:** Founding Sparks rate $149 / all 8 sessions (pilot, completed). Season 1 — Fall 2026 is $449 / all 8 sessions, starting the week of September 7, 2026.
+**Pricing:** Founding Sparks rate $149 / all 8 sessions (Season 1 pilot, completed). Season 2 — Fall 2026 is $449 / all 8 sessions, starting the week of September 7, 2026.
 
 ---
 
@@ -189,7 +189,7 @@ Phase ranges are guidance — instructors flex within them based on how the sess
 > "No — it's closer to training. We don't help with school subjects. We teach how to approach a problem you've never seen before. That skill transfers to everything."
 
 **Pricing framing:**
-> "Founding Sparks (our pilot) ran at $149 for all 8 sessions. Season 1 — Fall 2026 is $449 for all 8 sessions, starting the week of September 7."
+> "Founding Sparks (our Season 1 pilot) ran at $149 for all 8 sessions. Season 2 — Fall 2026 is $449 for all 8 sessions, starting the week of September 7."
 
 ---
 

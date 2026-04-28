@@ -23,7 +23,7 @@ export async function POST(request) {
         select: { name: "New" },
       },
       Cohort: {
-        select: { name: data.cohort || "Season 1 — Fall 2026" },
+        select: { name: data.cohort || "Season 2 — Fall 2026" },
       },
       Source: {
         rich_text: [{ text: { content: data.source || "direct" } }],

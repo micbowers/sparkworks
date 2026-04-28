@@ -12,6 +12,7 @@ Brand decisions live in `docs/`. They're authoritative — don't paraphrase, don
 - [docs/DESIGN_PATTERNS.md](docs/DESIGN_PATTERNS.md) — the four locked rules, the 9 `.ts-*` type styles, the 5 layout patterns (hero / footer / step / callout / skill list), button hierarchy. Open this before building any new section.
 - [docs/PROGRAM_AND_MESSAGING.md](docs/PROGRAM_AND_MESSAGING.md) — verbatim pitches, FAQ answers, language to retire. **Copy on the site is governed by this doc.** When changing user-facing text, pull from here rather than rewriting.
 - [docs/MARKETING_GUIDELINES.md](docs/MARKETING_GUIDELINES.md) — production lessons + the 11-point brand audit checklist. Run the checklist before shipping a visual change.
+- [docs/MARKETING.md](docs/MARKETING.md) — **strategic marketing posture.** How we frame the program, when to invoke social proof, what to capture from games/materials visitors. Read before changing CTA copy or restructuring product cards.
 - [docs/starter_template.html](docs/starter_template.html) — reference HTML showing all patterns wired together. The CSS in `app/globals.css` was ported from this file's `<style>` block.
 
 ## The four locked rules (load-bearing every session)
@@ -35,7 +36,9 @@ Recurring layout pieces are already components — reuse them rather than rebuil
 - [app/components/Callout.jsx](app/components/Callout.jsx) — Pattern D, with `accent` prop for the left-border color.
 - [app/components/ProductCard.jsx](app/components/ProductCard.jsx) — homepage product cards.
 - [app/components/CurriculumSection.jsx](app/components/CurriculumSection.jsx) — sprint section card with two sessions.
-- [app/components/InterestForm.jsx](app/components/InterestForm.jsx) — Season 1 enrollment form. Posts to `/api/register` with `cohort: "Season 1 — Fall 2026"`.
+- [app/components/InterestForm.jsx](app/components/InterestForm.jsx) — Season 2 enrollment form. Posts to `/api/register` with `cohort: "Season 2 — Fall 2026"`. No payment required to hold a seat — slots offered in order of registration.
+- [app/components/SubscribeForm.jsx](app/components/SubscribeForm.jsx) — inline email-only capture used on the homepage Games and Materials cards. Posts to `/api/subscribe`.
+- [app/components/SiteHeader.jsx](app/components/SiteHeader.jsx) — wordmark-only top header used on inner pages (e.g. `/program`). Links the wordmark to home. Don't use on the homepage itself.
 - [app/components/Wordmark.jsx](app/components/Wordmark.jsx) — SPARK + WORKS, sized + on-dark variants.
 
 ## Stack
@@ -61,13 +64,28 @@ The registration form on `/program` posts to [app/api/register/route.js](app/api
 
 - DB id: `8c3a6c4a5bb745eea4f247cbe27d77bb` (hardcoded in the route)
 - Env var: `NOTION_API_KEY` (Vercel: Settings → Environment Variables; locally: `.env.local`)
-- The DB needs a `Cohort` select column with at least these values: `Founding Sparks`, `Season 1 — Fall 2026`. Form defaults to `Season 1 — Fall 2026`.
+- The DB needs a `Cohort` select column with at least these values: `Founding Sparks`, `Season 2 — Fall 2026`. Form defaults to `Season 2 — Fall 2026`.
 - Each child row writes `Child N Name`, `Child N Grade` (rich_text), and `Child N Track` (select: `Ember (grades 2-3)` or `Blaze (grades 4-6)`). If you change child fields here, update the Notion DB schema first.
+
+## Notion Subscribers DB
+
+Email subscribers for game and materials launches. Separate database from the Founding Sparks registration DB — keeps interest-list parents distinct from email-only subscribers.
+
+- DB id: `d1084ec54ab9470ba3a2d53743c42f8c` (hardcoded in [app/api/subscribe/route.js](app/api/subscribe/route.js))
+- Same `NOTION_API_KEY` integration as the registration DB
+- Schema:
+  - `Email` (title, used as upsert key)
+  - `Interests` (multi-select: `Games`, `Materials`, `Program`)
+  - `Source` (rich_text — e.g. `home-games-card`, `home-materials-card`)
+  - `Subscribed` (created_time, auto)
+  - `Status` (select: `Active`, `Unsubscribed`)
+- API route is **upsert by email**: subscribing the same email twice with different interests merges the tags rather than creating duplicates.
 
 ## Cohort + pricing facts (April 2026)
 
-- **Founding Sparks** (pilot, completed): $149 for all 8 sessions.
-- **Season 1 — Fall 2026**: starts week of **September 7, 2026**. **$449 for all 8 sessions** (flat, not monthly). This supersedes the older "$349/month" figure that may still appear in older docs.
+- **Founding Sparks** (Season 1 pilot, completed): $149 for all 8 sessions. Oversubscribed before public listing — use as social proof.
+- **Season 2 — Fall 2026**: starts week of **September 7, 2026**. **$449 for all 8 sessions** (flat, not monthly). This supersedes any older "$349/month" or "Season 1 — Fall 2026" framing in stale docs.
+- Founding Sparks WAS Season 1 — call the upcoming cohort Season 2, never Season 1. The pilot already happened; framing this as "Season 1" undersells the social proof.
 
 ## Deployment
 
@@ -84,7 +102,7 @@ Before pushing:
 - Don't say "cognitive resilience", "future-ready", "unlocking potential", "holistic development", "AI fluency", or "enrichment program". The replacements are listed in [docs/PROGRAM_AND_MESSAGING.md §12](docs/PROGRAM_AND_MESSAGING.md).
 - Don't describe the program as "proven" or "tested" — it's "carefully designed and structured."
 - Don't use "Logix Forge" (retired name) or "Leonardo Di Vinci Badge" (it's "Da Vinci Badge").
-- Don't quote a price other than $149 (Founding Sparks pilot, closed) or $449 for all 8 sessions (Season 1).
+- Don't quote a price other than $149 (Founding Sparks / Season 1 pilot, closed) or $449 for all 8 sessions (Season 2 — Fall 2026).
 - Don't use Spark Yellow for buttons/headers — it's reserved for the Da Vinci Badge.
 - Don't use Spark Red for general CTAs — it's for capstones, alerts, urgency only.
 
@@ -101,4 +119,4 @@ A few non-Next pages live in `public/` and are served at their own paths. They'r
 - `/games` and `/materials` dedicated pages — for v1 they're sections on the homepage with outbound links / "notify me" CTAs. Build dedicated pages when there's enough content to fill them.
 - Sponsor/affiliate game recommendations — small, deferred until Mike picks the list.
 - A "How Founding Sparks went" recap on `/program` — hold for after the cohort runs.
-- Block Works + Workbooks email-capture routing — currently both point to `/program#interest` (which captures Season 1 interest). Add an `Interest` multi-select to the Notion DB and route appropriately when those products are closer to launch.
+- Block Code + Workbooks email-capture is wired to a separate Subscribers DB via `/api/subscribe` — see "Subscribers DB" below.
