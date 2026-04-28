@@ -68,7 +68,7 @@ export default function Home() {
             <ProductCard
               accent="teal"
               kicker="The Games"
-              title="Games we make and games we love"
+              title="The games we love"
               body="We believe the best way to teach a thinking skill is to put kids inside a game where they need it. The games here are the same ones we use in our program — a mix of games we build (like Find The Alien) and games we recommend from designers we trust. A small marketplace is coming."
               cta={{ label: "Play Find The Alien", href: "https://findthealien.sparkworks.kids", external: true }}
             />
