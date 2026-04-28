@@ -10,6 +10,7 @@ export default function Home() {
     <>
       <Hero
         wordmarkSize="xl"
+        title="Think through anything."
         tagline="Sparkworks teaches kids in grades 2–6 to think through hard problems — through games, not lectures."
       />
 
