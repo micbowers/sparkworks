@@ -1,6 +1,17 @@
 # SPARKWORKS TRADEMARK GUIDANCE
-*Language and structural constraints to support our pending USPTO trademark application.*
-*Pair with [BRAND_REF.md](BRAND_REF.md), [PROGRAM_AND_MESSAGING.md](PROGRAM_AND_MESSAGING.md), and [MARKETING.md](MARKETING.md). When this doc conflicts with another on legal-positioning grounds, **this doc wins.***
+*Temporary language and structural overrides for the **public website only**, while our USPTO trademark application is pending.*
+
+## SCOPE — READ THIS FIRST
+
+These rules apply **only** to public-facing surfaces that the USPTO can examine: the live website (`www.sparkworks.kids` and any subdomain), site metadata, and any public marketing piece linked from the site.
+
+These rules **do NOT** apply to:
+- Brand docs in this repo ([BRAND_REF.md](BRAND_REF.md), [PROGRAM_AND_MESSAGING.md](PROGRAM_AND_MESSAGING.md), [DESIGN_PATTERNS.md](DESIGN_PATTERNS.md), [MARKETING.md](MARKETING.md), [MARKETING_GUIDELINES.md](MARKETING_GUIDELINES.md)) — those continue to reflect the **real brand voice** for all other use cases.
+- Program documents, session materials, parent recap emails, classroom posters, internal training, decks.
+- Anything not visible to a USPTO examiner reviewing the public-facing brand.
+
+**This is temporary.** Once the trademark is granted, every change made under this doc is reverted. See "Reversibility" below.
+
 *Last updated: April 2026.*
 
 ---
@@ -200,13 +211,57 @@ We are not changing the business — only how we present it.
 
 ---
 
-## RELATIONSHIP TO OTHER DOCS
+## REVERSIBILITY
 
-- **[BRAND_REF.md](BRAND_REF.md)** — palette, typography, name hierarchy. Unchanged by trademark work.
-- **[DESIGN_PATTERNS.md](DESIGN_PATTERNS.md)** — visual rules. Unchanged.
-- **[PROGRAM_AND_MESSAGING.md](PROGRAM_AND_MESSAGING.md)** — verbatim copy + the "language to retire" rules. The retirements there are *brand-voice* concerns (no "cognitive resilience," no "future-ready"). The retirements in **this** doc are *trademark-positioning* concerns. Both apply. Where they conflict, this doc wins on legal-positioning grounds.
-- **[MARKETING.md](MARKETING.md)** — strategic posture. The "specific over aspirational" and "honest about stage" principles still apply. Trademark constraints just narrow which specific words we use.
+Every TM-driven website change must be cleanly reversible when the TM grants. Two-part discipline:
+
+### 1. Inline comment markers in code
+
+Every line of copy edited for TM reasons gets a `// TM-2026:` comment directly above it preserving the original text. Example:
+
+```jsx
+{/* TM-2026: original was "through games, not lectures" */}
+<p className="ts-quote">…through hands-on problem solving, not lectures.</p>
+```
+
+This makes any individual change auditable from the file alone, without consulting external docs.
+
+### 2. Swap log (this doc, below)
+
+A numbered list of every change made under this guidance, with file, line context, original, replacement, and date. When the TM grants, walk this list to revert.
 
 ---
 
-*This doc reflects the trademark posture as of April 2026. As coverage expands, some of these constraints will loosen — but until then, all public-facing copy must follow these rules.*
+## SWAP LOG
+
+*Append a numbered entry every time a TM-driven change ships. When the TM grants, restore each `Original` and remove the `// TM-2026:` comment marker.*
+
+*(empty — populated as edits ship)*
+
+---
+
+## CHECK-BACK CADENCE
+
+USPTO trademark applications typically take 8–12 months. After filing:
+
+- ~3 months → first office action
+- ~6 months → publication for opposition
+- ~9–12 months → registration
+
+Schedule a recurring agent (default: every 8 weeks) to ask Mike about TM status. When status changes to "granted":
+
+1. Walk the Swap Log above and revert each change.
+2. Remove all `// TM-2026:` comment markers.
+3. Delete this doc (or move to an archive).
+4. Update the CLAUDE.md "Read these first" section to drop the TRADEMARK_GUIDANCE pointer.
+
+---
+
+## RELATIONSHIP TO OTHER DOCS
+
+- **[BRAND_REF.md](BRAND_REF.md)**, **[DESIGN_PATTERNS.md](DESIGN_PATTERNS.md)**, **[PROGRAM_AND_MESSAGING.md](PROGRAM_AND_MESSAGING.md)**, **[MARKETING.md](MARKETING.md)**, **[MARKETING_GUIDELINES.md](MARKETING_GUIDELINES.md)** — these all continue to reflect the canonical brand voice. Don't apply TM substitutions to them. They govern everything except the public website.
+- This doc only governs the public website during the TM application window.
+
+---
+
+*This doc reflects the trademark posture as of April 2026. As coverage expands, some of these constraints will loosen — and once the TM grants, this doc retires entirely.*
