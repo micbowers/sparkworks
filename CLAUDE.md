@@ -88,6 +88,14 @@ Before pushing:
 - Don't use Spark Yellow for buttons/headers — it's reserved for the Da Vinci Badge.
 - Don't use Spark Red for general CTAs — it's for capstones, alerts, urgency only.
 
+## Static pages also served from this repo
+
+A few non-Next pages live in `public/` and are served at their own paths. They're standalone HTML — don't rebuild them unless asked.
+
+- [public/blockcode.html](public/blockcode.html) — **Block Code**, a live online game ("Pattern Detection & Elimination"). Linked from the homepage Games card. Uses an older inline palette; preserve as-is unless the user asks for a refresh.
+- [public/cairnpartners/](public/cairnpartners/) — Cairn Partners landing page at `/cairnpartners/`. Preserve as-is.
+- **Find The Alien** is hosted at the `findthealien.sparkworks.kids` subdomain (separate deployment, not this repo). Linked from the homepage but not served here.
+
 ## What's not yet built
 
 - `/games` and `/materials` dedicated pages — for v1 they're sections on the homepage with outbound links / "notify me" CTAs. Build dedicated pages when there's enough content to fill them.

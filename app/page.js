@@ -34,9 +34,10 @@ export default function Home() {
             <ProductCard
               accent="teal"
               kicker="The Games"
-              title="Find The Alien · Block Works"
-              body="Find The Alien is live — a deduction game that teaches elimination reasoning. Block Works (tabletop) is in production. We also recommend a small set of games we love for parents and kids to play together."
+              title="Find The Alien · Block Code"
+              body="Two games, both live. Find The Alien teaches elimination reasoning through deduction. Block Code is a pattern-detection and elimination puzzle. Same skills the program teaches — sessions 1 and 2 in fact — but standalone and free to play."
               cta={{ label: "Play Find The Alien", href: "https://findthealien.sparkworks.kids", external: true }}
+              secondary={{ label: "Play Block Code", href: "/blockcode.html" }}
             />
             <ProductCard
               accent="blue"
