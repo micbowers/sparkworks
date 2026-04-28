@@ -83,13 +83,13 @@ export default function Home() {
               cta={{ label: "Save my seat — Season 2", href: "/program?source=home-program#interest", primary: true }}
               secondary={{ label: "See the curriculum", href: "/program" }}
             />
-            {/* TM-2026: Games card kicker/title/body all reframed. Originals: kicker="The Games"; title="The games we love"; body="We believe the best way to teach a thinking skill is to put kids inside a game where they need it. The games here are the same ones we use in our program — a mix of games we build (like Find The Alien) and games we recommend from designers we trust. A small marketplace is coming." */}
+            {/* TM-2026: Games card kicker + body reframed. Originals: kicker="The Games"; body="We believe the best way to teach a thinking skill is to put kids inside a game where they need it. The games here are the same ones we use in our program — a mix of games we build (like Find The Alien) and games we recommend from designers we trust. A small marketplace is coming." */}
+            {/* The "Play Find The Alien" CTA is intentionally omitted while the games surface isn't ready to launch publicly. */}
             <ProductCard
               accent="teal"
               kicker="Practice at home"
-              title="Games that reinforce Sparkworks skills"
-              body="Critical thinking grows with practice. We point parents toward activities and games that build the same skills our class teaches — some are ones we've put together (Find The Alien is free to play); others come from designers we trust. More on the way."
-              cta={{ label: "Play Find The Alien", href: "https://findthealien.sparkworks.kids", external: true }}
+              title="The games we love · Coming soon"
+              body="Critical thinking grows with practice. We point parents toward activities and games that build the same skills our class teaches. More on the way."
             />
             {/* TM-2026: Materials card title + body reframed. Originals: title="Workbooks · Coming soon"; body="Hands-on workbooks built around the thinking skills the program teaches — patterns, elimination, constraints, estimation, strategy. These are the same materials we use in our classes, usually for the Ignite phase. Designed for kids to work through with a parent on weekends, or solo. The first set is in development." */}
             <ProductCard

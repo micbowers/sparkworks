@@ -256,13 +256,13 @@ A numbered list of every change made under this guidance, with file, line contex
 - **Original:** `The Games`
 - **Replacement:** `Practice at home`
 
-### 4b. 2026-04-28 · `app/page.js` · Homepage Games card title
-- **Original:** `The games we love`
-- **Replacement:** `Games that reinforce Sparkworks skills`
-
-### 4c. 2026-04-28 · `app/page.js` · Homepage Games card body
+### 4b. 2026-04-28 · `app/page.js` · Homepage Games card body
 - **Original:** `We believe the best way to teach a thinking skill is to put kids inside a game where they need it. The games here are the same ones we use in our program — a mix of games we build (like Find The Alien) and games we recommend from designers we trust. A small marketplace is coming.`
-- **Replacement:** `Critical thinking grows with practice. We point parents toward activities and games that build the same skills our class teaches — some are ones we've put together (Find The Alien is free to play); others come from designers we trust. More on the way.`
+- **Replacement:** `Critical thinking grows with practice. We point parents toward activities and games that build the same skills our class teaches. More on the way.`
+
+*(Title swap "The games we love" → "Games that reinforce Sparkworks skills" was reverted on 2026-04-28 per Mike's call. Title is now "The games we love · Coming soon" — the original phrase plus a non-TM "Coming soon" suffix that comes off when the games surface launches. Not a TM swap; nothing to revert here when the trademark grants.)*
+
+*(The "Play Find The Alien" CTA was also removed on 2026-04-28 — non-TM, non-revert. Mike will decide whether to put it back when the games surface is ready. Unrelated to the trademark.)*
 
 ### 5. 2026-04-28 · `app/program/page.js` · Hero title
 - **Original:** `An 8-session program that teaches kids to think through hard problems — through games, not lectures.`
