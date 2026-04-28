@@ -30,8 +30,11 @@ export default function Home() {
             <p className="ts-quote">
               &ldquo;I don&rsquo;t know what you&rsquo;re doing — but keep it up. The kids love it.&rdquo;
             </p>
+            <p className="ts-quote">
+              &ldquo;He got mad at me when we were running late to class.&rdquo;
+            </p>
             <p className="ts-body">
-              One parent&rsquo;s son got mad at her for running late to class. Another student told a classmate at school it was his favorite Friday activity, right alongside football.
+              A pilot kid, telling a classmate at school what he loves about Fridays: Sparkworks and football.
             </p>
             <p className="ts-quote">
               &ldquo;Feels like the kind of thing missing from school, sadly.&rdquo;
