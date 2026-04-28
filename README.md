@@ -1,68 +1,84 @@
-# Sparkworks Landing Page
+# Sparkworks Website
 
-## Quick Deploy to Vercel
+Marketing site for [Sparkworks](https://www.sparkworks.kids) — critical thinking program, games, and materials for kids in grades 2–6.
 
-### 1. Set up Notion Integration
+## Stack
 
-1. Go to https://www.notion.so/my-integrations
-2. Click "New integration"
-3. Name it "Sparkworks Registration"
-4. Copy the **Internal Integration Secret** (starts with `ntn_`)
-5. Go to the "Founding Sparks Registration" database in Notion
-6. Click ••• menu → "Connections" → add your integration
+- **Next.js 14** (App Router) · React 18
+- **CSS:** plain CSS variables + utility classes in [app/globals.css](app/globals.css). No Tailwind, no CSS-in-JS.
+- **Forms:** Notion REST API ([app/api/register/route.js](app/api/register/route.js))
+- **Hosting:** Vercel (auto-deploy from `main`)
 
-### 2. Push to GitHub
-
-```bash
-git init
-git add .
-git commit -m "Sparkworks landing page"
-git remote add origin https://github.com/YOUR_USERNAME/sparkworks-site.git
-git push -u origin main
-```
-
-### 3. Deploy on Vercel
-
-1. Go to https://vercel.com/new
-2. Import your GitHub repo
-3. Add environment variable:
-   - **Name:** `NOTION_API_KEY`
-   - **Value:** Your Notion integration secret (`ntn_...`)
-4. Click Deploy
-
-### 4. Custom Domain (optional)
-
-In Vercel dashboard → Settings → Domains → add your domain.
-
-## Project Structure
+## Project layout
 
 ```
 sparkworks-site/
-├── app/
-│   ├── layout.js              # HTML head, Google Fonts, metadata
-│   ├── page.js                # Root page (renders landing component)
-│   ├── SparkworksLanding.jsx  # The full landing page
-│   └── api/
-│       └── register/
-│           └── route.js       # Form → Notion API endpoint
-├── package.json
-├── next.config.js
-└── README.md
+├── CLAUDE.md                  # working notes — read first if Claude is helping
+├── README.md                  # this file
+├── docs/                      # brand + messaging source of truth
+│   ├── BRAND_REF.md
+│   ├── DESIGN_PATTERNS.md
+│   ├── MARKETING_GUIDELINES.md
+│   ├── PROGRAM_AND_MESSAGING.md
+│   └── starter_template.html  # reference HTML wiring all patterns
+├── public/                    # static assets served at /
+│   ├── logo-stacked-white.png
+│   ├── logo-trans-spark.png
+│   └── logo-white.png
+└── app/
+    ├── globals.css            # design tokens + .ts-* type system
+    ├── layout.js              # html shell, fonts, metadata
+    ├── page.js                # homepage (brand + 3 product lines)
+    ├── program/page.js        # full program page
+    ├── components/            # Hero, Footer, ProductCard, InterestForm, etc.
+    └── api/register/route.js  # POSTs registrations to Notion
 ```
 
-## How Registration Works
+## Local development
 
-1. Parent fills out form on landing page
-2. Form POSTs to `/api/register`
-3. API route creates a new page in the Notion "Founding Sparks Registration" database
-4. Page appears in your Notion database with Status: "New"
-5. You manage registrations directly in Notion
-
-## Notion Database ID
-
-The database ID is hardcoded in `app/api/register/route.js`:
-```
-8c3a6c4a5bb745eea4f247cbe27d77bb
+```bash
+npm install
+cp .env.example .env.local
+# edit .env.local → paste your Notion integration secret
+npm run dev
 ```
 
-If you recreate the database, update this ID.
+Open [http://localhost:3000](http://localhost:3000).
+
+## Environment
+
+Only one secret is needed:
+
+```
+NOTION_API_KEY=ntn_...
+```
+
+Set it in `.env.local` for local dev and in Vercel → Settings → Environment Variables for production. The Notion DB ID is hardcoded in [app/api/register/route.js](app/api/register/route.js); not sensitive on its own.
+
+## Notion DB schema
+
+The registration form posts to a Notion DB with these properties:
+
+- `Parent 1 Name` (title), `Parent 1 Email`, `Parent 1 Phone`
+- `Parent 2 Name`, `Parent 2 Email`, `Parent 2 Phone`
+- `Child 1 Name`, `Child 1 Grade` (rich_text), `Child 1 Track` (select: `Ember (grades 2-3)` / `Blaze (grades 4-6)`)
+- (`Child 2…` and `Child 3…` mirror the above)
+- `Cohort` (select: `Founding Sparks`, `Season 1 — Fall 2026`)
+- `Status` (select: defaults to `New`)
+- `How did you hear about us?`, `Questions or Comments` (rich_text)
+
+The integration must be added to the database in Notion (••• → Connections).
+
+## Deployment
+
+```bash
+git push origin main
+```
+
+Vercel deploys automatically. Smoke-test the live URL after each push.
+
+Run [docs/MARKETING_GUIDELINES.md](docs/MARKETING_GUIDELINES.md) "Brand audit checklist" before any visual change.
+
+## Adding a custom domain
+
+Vercel → Settings → Domains → add `sparkworks.kids` (or whichever).

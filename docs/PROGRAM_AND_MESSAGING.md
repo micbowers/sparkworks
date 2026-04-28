@@ -37,8 +37,8 @@ Founding Sparks (proof-of-concept first run). Not a scaled program yet. Don't re
 - Dedicated instructor per track (small-group, intimate)
 
 ### Pricing
-- **Founding Sparks rate:** $149 for all 8 sessions
-- **Season 1 rate (future):** $349/month
+- **Founding Sparks rate:** $149 for all 8 sessions (pilot, completed)
+- **Season 1 — Fall 2026:** $449 for all 8 sessions, starting the week of September 7, 2026
 
 ---
 
@@ -186,7 +186,7 @@ These are the six questions parents actually ask. Use the answers verbatim. Don'
 | **What will my kid actually do?** | Solve logic grids, crack pattern sequences, find hidden rules in systems, estimate quantities using real engineering methods, catch AI mistakes, and present their reasoning in a capstone challenge. |
 | **How is it different?** | We don't teach a subject. We teach a method — how to approach problems you've never seen before. That skill transfers everywhere. |
 | **Is this proven?** | The curriculum has been carefully designed and structured. This is the Founding Sparks — our deliberate first run. Founding families get our lowest price ever and direct input into the program. |
-| **What does it cost?** | Founding Sparks rate: $149 for all 8 sessions (both tracks, same price). Season 1 will be $349/month. |
+| **What does it cost?** | Season 1 — Fall 2026 is $449 for all 8 sessions (both tracks, same price), starting the week of September 7, 2026. Founding Sparks (our completed pilot) ran at $149 for all 8 sessions. |
 
 ### Additional answers (use when these come up)
 
@@ -307,7 +307,7 @@ If the website has these pages or sections, they must include:
 - Never describe the program as "proven" or "tested" — it is "carefully designed and structured."
 - Never use "Logix Forge" — that name is retired.
 - The capstone is **The Spark Challenge** at Session 8. Parents do not present, kids do not present to parents, and there is no parent showcase. The closing question is the moment.
-- Never quote a price other than $149 (Founding Sparks) or $349/month (future Season 1).
+- Never quote a price other than $149 (Founding Sparks pilot, completed) or $449 for all 8 sessions (Season 1 — Fall 2026).
 - Da Vinci Badge is the only Spark Yellow element. Don't use Spark Yellow for buttons, headers, or general accents.
 - Spark Red is for capstones, alerts, and urgency only — not for general CTAs (use Ember for that).
 

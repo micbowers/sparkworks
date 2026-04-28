@@ -1,18 +1,24 @@
+import "./globals.css";
+
 export const metadata = {
   title: "Sparkworks — Think through anything.",
-  description: "An 8-session program teaching kids critical thinking — through games, not lectures. Founding Sparks cohort in South Pasadena, CA.",
+  description:
+    "Sparkworks teaches kids in grades 2–6 to think through hard problems — through games, not lectures. Critical thinking program, games, and materials.",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
+        <meta name="theme-color" content="#1A5C82" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;900&family=Instrument+Serif:ital@0;1&display=swap"
           rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap"
         />
       </head>
-      <body style={{ margin: 0, padding: 0 }}>{children}</body>
+      <body>{children}</body>
     </html>
   );
 }

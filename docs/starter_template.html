@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sparkworks · [REPLACE WITH PAGE TITLE]</title>
+<meta name="theme-color" content="#1A5C82">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap">
+
+<style>
+/* ============================================================
+   SPARKWORKS BRAND TOKENS
+   ============================================================ */
+
+:root {
+  /* Fonts */
+  --sw-display: "Barlow Condensed", Arial, sans-serif;
+  --sw-body: "Merriweather", Georgia, serif;
+
+  /* Anchors — dark surfaces */
+  --sw-steel: #1E2530;     /* Default text & headings — almost-black workhorse */
+  --sw-spark: #1A5C82;     /* Primary identity — wordmark hero, footer, primary CTAs */
+
+  /* Section accents — sprint colors + brand accent */
+  --sw-purple: #9447D6;    /* Section 1 — See What Others Miss */
+  --sw-teal:   #1FA8AE;    /* Section 2 — Understand the System. Also: success/progress */
+  --sw-ember:  #D4501A;    /* Section 3 — Decide Without All the Facts. Also: brand accent (wordmark, kickers, CTAs) */
+  --sw-blue:   #2A85C2;    /* Section 4 — Think Beyond What You Control. Also: track labels */
+
+  /* Specials — used sparingly */
+  --sw-red:    #CF2C38;    /* Capstone events, alerts, urgency. One per page max. */
+  --sw-yellow: #F5C400;    /* Celebration / Da Vinci Badge — rare */
+
+  /* Neutrals */
+  --sw-bone:   #F2EFE8;    /* Accent surfaces — callouts, table rows. NEVER as main background. NEVER as text. */
+  --sw-white:  #FFFFFF;    /* Default page background */
+
+  /* Light text on dark — see Rule 2 in design patterns */
+  --sw-text-on-dark:       rgba(255,255,255,0.85); /* Default for any white text on dark */
+  --sw-text-on-dark-full:  #FFFFFF;                /* Largest header on a dark surface only — SPARKWORKS wordmark, or hero H1 if no wordmark */
+  --sw-text-on-dark-muted: rgba(255,255,255,0.6);  /* Footnotes, metadata */
+}
+
+/* ============================================================
+   GLOBAL RESET + DEFAULTS
+   ============================================================ */
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; }
+body {
+  font-family: var(--sw-body);
+  color: var(--sw-steel);
+  background: var(--sw-white);  /* Always white. Bone is for accents only. */
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ============================================================
+   TYPE SYSTEM — 9 CORE STYLES
+   ============================================================ */
+
+.ts-display {
+  font-family: var(--sw-display);
+  font-size: 4.25rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -1px;
+  color: var(--sw-steel);
+}
+.ts-h1 {
+  font-family: var(--sw-display);
+  font-size: 2.25rem;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+  color: var(--sw-steel);
+}
+.ts-h2 {
+  font-family: var(--sw-display);
+  font-size: 1.375rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--sw-steel);
+}
+.ts-eyebrow {
+  font-family: var(--sw-display);
+  font-size: 1.1875rem;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--sw-ember);
+}
+.ts-body {
+  font-family: var(--sw-body);
+  font-size: 0.9375rem;
+  font-weight: 400;
+  line-height: 1.7;
+  color: var(--sw-steel);
+}
+.ts-lead {
+  font-family: var(--sw-body);
+  font-size: 1.0625rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--sw-steel);
+}
+.ts-quote {
+  font-family: var(--sw-body);
+  font-size: 1.0625rem;
+  font-weight: 400;
+  line-height: 1.5;
+  font-style: italic;
+  color: var(--sw-steel);
+}
+.ts-label {
+  font-family: var(--sw-display);
+  font-size: 1.1875rem;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--sw-steel);
+}
+.ts-caption {
+  font-family: var(--sw-body);
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #888888;
+}
+
+/* ============================================================
+   ON-DARK UTILITY CLASSES
+   ============================================================ */
+
+/* Use .text-on-dark on any text element sitting on a dark surface (Spark Blue, Steel Black).
+   It overrides the built-in color of any .ts-* class so the same type style works on both
+   light and dark backgrounds.
+
+   Opacity ladder:
+   - text-on-dark        85% — default for everything
+   - text-on-dark-full  100% — ONLY the largest/highest-level header on the surface
+                              (SPARKWORKS wordmark OR a hero H1 when no wordmark is present).
+                              One 100% element per dark surface, max.
+   - text-on-dark-muted  60% — footnotes, metadata, captions */
+.text-on-dark        { color: var(--sw-text-on-dark) !important; }
+.text-on-dark-full   { color: var(--sw-text-on-dark-full) !important; }
+.text-on-dark-muted  { color: var(--sw-text-on-dark-muted) !important; }
+
+/* ============================================================
+   PATTERN: HERO HEADER (Pattern A)
+   ============================================================ */
+
+.sw-hero {
+  background: var(--sw-spark);
+  padding: 36px 40px 32px;
+  color: var(--sw-text-on-dark);
+}
+.sw-hero-mark {
+  font-family: var(--sw-display);
+  font-size: 1.375rem;
+  font-weight: 800;
+  letter-spacing: 4px;
+  line-height: 1;
+}
+.sw-hero-mark .a { color: var(--sw-text-on-dark-full); }
+.sw-hero-mark .b { color: var(--sw-ember); }
+
+/* ============================================================
+   PATTERN: FOOTER MARK (Pattern C)
+   ============================================================ */
+
+.sw-foot {
+  background: var(--sw-spark);
+  padding: 18px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.sw-foot-mark {
+  font-family: var(--sw-display);
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 3px;
+}
+.sw-foot-mark .a { color: var(--sw-text-on-dark-full); }
+.sw-foot-mark .b { color: var(--sw-ember); }
+.sw-foot-tag {
+  font-family: var(--sw-body);
+  font-style: italic;
+  font-size: 12px;
+  color: var(--sw-text-on-dark-muted);
+}
+
+/* ============================================================
+   PATTERN: NUMBERED STEP PANEL (Pattern B)
+   ============================================================ */
+
+.sw-step {
+  background: var(--sw-white);
+  border: 1px solid var(--sw-bone);
+  border-radius: 8px;
+  padding: 24px 28px;
+  margin-bottom: 18px;
+}
+.sw-step-active { border: 2px solid var(--sw-ember); padding: 23px 27px; }
+.sw-step-done   { opacity: 0.5; }
+.sw-step-done .sw-step-num { background: var(--sw-teal); }
+.sw-step-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 8px;
+}
+.sw-step-num {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--sw-steel);
+  color: var(--sw-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--sw-display);
+  font-weight: 800;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.sw-step-body { margin-left: 50px; }
+
+/* ============================================================
+   PATTERN: CALLOUT CARD (Pattern D)
+   ============================================================ */
+
+.sw-callout {
+  background: var(--sw-bone);
+  border-left: 3px solid var(--sw-teal);
+  padding: 14px 18px;
+  margin: 18px 0;
+}
+.sw-callout-purple { border-left-color: var(--sw-purple); }
+.sw-callout-teal   { border-left-color: var(--sw-teal); }
+.sw-callout-ember  { border-left-color: var(--sw-ember); }
+.sw-callout-blue   { border-left-color: var(--sw-blue); }
+
+/* ============================================================
+   BUTTON HIERARCHY
+   ============================================================ */
+
+.sw-btn {
+  display: inline-block;
+  font-family: var(--sw-display);
+  font-size: 0.9375rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 14px 28px;
+  border-radius: 5px;
+  border: 1.5px solid var(--sw-steel);
+  background: transparent;
+  color: var(--sw-steel);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.sw-btn:hover { background: var(--sw-bone); }
+
+/* Primary: one per view max */
+.sw-btn-primary {
+  background: var(--sw-ember);
+  border-color: var(--sw-ember);
+  color: var(--sw-white);
+}
+.sw-btn-primary:hover { background: #B0401A; border-color: #B0401A; }
+
+/* Success / completion */
+.sw-btn-success {
+  background: var(--sw-teal);
+  border-color: var(--sw-teal);
+  color: var(--sw-white);
+}
+.sw-btn-success:hover { background: #0B8975; border-color: #0B8975; }
+
+/* Subtle (link-like) */
+.sw-btn-subtle {
+  border: none;
+  padding: 8px 0;
+  letter-spacing: 1px;
+}
+.sw-btn-subtle:hover { background: transparent; text-decoration: underline; }
+
+/* ============================================================
+   LAYOUT HELPERS
+   ============================================================ */
+
+.sw-page  { max-width: 1100px; margin: 0 auto; }
+.sw-body  { padding: 32px 40px; }
+.sw-card {
+  background: var(--sw-white);
+  border: 1px solid var(--sw-bone);
+  border-radius: 8px;
+  padding: 24px 28px;
+}
+
+/* ============================================================
+   END OF SPARKWORKS BRAND CSS
+   Add page-specific styles below this line.
+   ============================================================ */
+
+</style>
+</head>
+<body>
+
+<div class="sw-page">
+
+  <!-- ============================================================
+       HERO HEADER (Pattern A)
+       Replace placeholder text; remove if not needed.
+       ============================================================ -->
+  <header class="sw-hero">
+    <div class="ts-eyebrow text-on-dark" style="color: var(--sw-ember);">[Eyebrow label]</div>
+    <h1 class="ts-h1 text-on-dark-full">[Page title.]</h1>
+    <p class="ts-quote text-on-dark">[Tagline or supporting line.]</p>
+  </header>
+
+  <!-- ============================================================
+       MAIN CONTENT
+       Replace this entire section with your build.
+       ============================================================ -->
+  <main class="sw-body">
+
+    <!-- Example: a single content card -->
+    <div class="sw-card">
+      <div class="ts-eyebrow">[Section kicker]</div>
+      <h2 class="ts-h2">[Section heading]</h2>
+      <p class="ts-lead">[Lead paragraph — sits right under the heading. Slightly larger than body, not italic.]</p>
+      <p class="ts-body">[Body paragraph. Use ts-body for running text, ts-quote for italic pull-quotes.]</p>
+    </div>
+
+    <!-- Example: a numbered step panel (Pattern B) -->
+    <!--
+    <div class="sw-step sw-step-active">
+      <div class="sw-step-head">
+        <div class="sw-step-num">1</div>
+        <div class="ts-h2">Step heading</div>
+      </div>
+      <div class="sw-step-body">
+        <p class="ts-body">Step instructions go here.</p>
+      </div>
+    </div>
+    -->
+
+    <!-- Example: a callout card (Pattern D) -->
+    <!--
+    <div class="sw-callout">
+      <div class="ts-label">Callout title</div>
+      <p class="ts-quote">Italic body for dinner-question prompts or instructor notes.</p>
+    </div>
+    -->
+
+    <!-- Example: button hierarchy -->
+    <!--
+    <button class="sw-btn sw-btn-primary">Primary action</button>
+    <button class="sw-btn">Secondary action</button>
+    <button class="sw-btn sw-btn-subtle">Subtle action</button>
+    -->
+
+  </main>
+
+  <!-- ============================================================
+       FOOTER MARK (Pattern C)
+       ============================================================ -->
+  <footer class="sw-foot">
+    <div class="sw-foot-mark"><span class="a">SPARK</span><span class="b">WORKS</span></div>
+    <div class="sw-foot-tag">Think through anything.</div>
+  </footer>
+
+</div>
+
+</body>
+</html>

@@ -22,6 +22,9 @@ export async function POST(request) {
       Status: {
         select: { name: "New" },
       },
+      Cohort: {
+        select: { name: data.cohort || "Season 1 — Fall 2026" },
+      },
     };
 
     if (data.parent2Name) {
@@ -44,43 +47,23 @@ export async function POST(request) {
           rich_text: [{ text: { content: child.name } }],
         };
       }
-      if (child.age) {
-        properties[`Child ${num} Age`] = {
-          select: { name: String(child.age) },
+      if (child.grade) {
+        properties[`Child ${num} Grade`] = {
+          rich_text: [{ text: { content: String(child.grade) } }],
         };
       }
-    });
-
-    if (data.schedule && data.schedule.length > 0) {
-      // Write schedule to all registered children's availability fields
-      const scheduleStr = data.schedule.join(", ");
-      const numChildren = Math.min(children.length, 3);
-      for (let i = 0; i < numChildren; i++) {
-        if (children[i] && children[i].name) {
-          properties[`Child ${i + 1} Schedule Availability`] = {
-            rich_text: [{ text: { content: scheduleStr } }],
+      // Assign track per child based on grade.
+      // Ember = grades 2-3, Blaze = grades 4-6.
+      if (child.grade) {
+        const g = String(child.grade).trim();
+        const gradeNum = parseInt(g, 10);
+        if (!Number.isNaN(gradeNum)) {
+          properties[`Child ${num} Track`] = {
+            select: { name: gradeNum <= 3 ? "Ember (grades 2-3)" : "Blaze (grades 4-6)" },
           };
         }
       }
-      // Always write to Child 1 if there's schedule data
-      if (!properties["Child 1 Schedule Availability"]) {
-        properties["Child 1 Schedule Availability"] = {
-          rich_text: [{ text: { content: scheduleStr } }],
-        };
-      }
-    }
-
-    if (data.interest) {
-      const interestMap = {
-        "interested-schedule": "Interested - show me schedule",
-        "interested-timing": "Interested - timing not right",
-        "not-interested-schedule": "Not Interested - schedule full",
-        "not-interested-topic": "Not Interested - topic not for us",
-      };
-      properties["Interest Level"] = {
-        select: { name: interestMap[data.interest] || data.interest },
-      };
-    }
+    });
 
     if (data.heard) {
       properties["How did you hear about us?"] = {
@@ -93,17 +76,6 @@ export async function POST(request) {
         rich_text: [{ text: { content: data.questions } }],
       };
     }
-
-    // Assign track per child based on age
-    children.forEach((child, i) => {
-      if (child.age) {
-        const age = parseInt(child.age);
-        const num = i + 1;
-        properties[`Child ${num} Track`] = {
-          select: { name: age <= 9 ? "Ember (8-9)" : "Blaze (10-12)" },
-        };
-      }
-    });
 
     const response = await fetch("https://api.notion.com/v1/pages", {
       method: "POST",

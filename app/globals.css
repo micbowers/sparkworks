@@ -1,0 +1,352 @@
+/* ============================================================
+   SPARKWORKS BRAND TOKENS
+   See docs/BRAND_REF.md and docs/DESIGN_PATTERNS.md
+   ============================================================ */
+
+:root {
+  /* Fonts */
+  --sw-display: "Barlow Condensed", Arial, sans-serif;
+  --sw-body: "Merriweather", Georgia, serif;
+
+  /* Anchors — dark surfaces */
+  --sw-steel: #1E2530;     /* Default text & headings — almost-black workhorse */
+  --sw-spark: #1A5C82;     /* Primary identity — wordmark hero, footer, primary CTAs */
+
+  /* Section accents — sprint colors + brand accent */
+  --sw-purple: #9447D6;    /* Section 1 — See What Others Miss */
+  --sw-teal:   #1FA8AE;    /* Section 2 — Understand the System. Also: success/progress */
+  --sw-ember:  #D4501A;    /* Section 3 — Decide Without All the Facts. Also: brand accent (wordmark, kickers, CTAs) */
+  --sw-blue:   #2A85C2;    /* Section 4 — Think Beyond What You Control. Also: track labels */
+
+  /* Specials — used sparingly */
+  --sw-red:    #CF2C38;    /* Capstone events, alerts, urgency. One per page max. */
+  --sw-yellow: #F5C400;    /* Celebration / Da Vinci Badge — rare */
+
+  /* Neutrals */
+  --sw-bone:   #F2EFE8;    /* Accent surfaces — callouts, table rows. NEVER as main background. NEVER as text. */
+  --sw-white:  #FFFFFF;    /* Default page background */
+
+  /* Light text on dark */
+  --sw-text-on-dark:       rgba(255,255,255,0.85); /* Default for any white text on dark */
+  --sw-text-on-dark-full:  #FFFFFF;                /* One element per dark surface, max — the largest header */
+  --sw-text-on-dark-muted: rgba(255,255,255,0.6);  /* Footnotes, metadata */
+
+  /* Layout */
+  --sw-radius-md: 8px;
+  --sw-radius-sm: 5px;
+}
+
+/* ============================================================
+   GLOBAL RESET + DEFAULTS
+   ============================================================ */
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; }
+body {
+  font-family: var(--sw-body);
+  color: var(--sw-steel);
+  background: var(--sw-white);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; }
+
+/* ============================================================
+   TYPE SYSTEM — 9 CORE STYLES
+   See docs/DESIGN_PATTERNS.md "TYPE PAIRING"
+   ============================================================ */
+
+.ts-display {
+  font-family: var(--sw-display);
+  font-size: 4.25rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -1px;
+  color: var(--sw-steel);
+}
+.ts-h1 {
+  font-family: var(--sw-display);
+  font-size: 2.25rem;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+  color: var(--sw-steel);
+}
+.ts-h2 {
+  font-family: var(--sw-display);
+  font-size: 1.375rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--sw-steel);
+}
+.ts-eyebrow {
+  font-family: var(--sw-display);
+  font-size: 1.1875rem;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--sw-ember);
+}
+.ts-body {
+  font-family: var(--sw-body);
+  font-size: 0.9375rem;
+  font-weight: 400;
+  line-height: 1.7;
+  color: var(--sw-steel);
+}
+.ts-lead {
+  font-family: var(--sw-body);
+  font-size: 1.0625rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--sw-steel);
+}
+.ts-quote {
+  font-family: var(--sw-body);
+  font-size: 1.0625rem;
+  font-weight: 400;
+  line-height: 1.5;
+  font-style: italic;
+  color: var(--sw-steel);
+}
+.ts-label {
+  font-family: var(--sw-display);
+  font-size: 1.1875rem;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--sw-steel);
+}
+.ts-caption {
+  font-family: var(--sw-body);
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #888888;
+}
+
+/* ============================================================
+   ON-DARK UTILITY CLASSES
+   ============================================================ */
+
+.text-on-dark        { color: var(--sw-text-on-dark) !important; }
+.text-on-dark-full   { color: var(--sw-text-on-dark-full) !important; }
+.text-on-dark-muted  { color: var(--sw-text-on-dark-muted) !important; }
+
+/* ============================================================
+   PATTERN A — HERO HEADER
+   ============================================================ */
+
+.sw-hero {
+  background: var(--sw-spark);
+  padding: 56px 40px 48px;
+  color: var(--sw-text-on-dark);
+}
+.sw-hero-mark {
+  font-family: var(--sw-display);
+  font-size: 1.375rem;
+  font-weight: 800;
+  letter-spacing: 4px;
+  line-height: 1;
+}
+.sw-hero-mark .a { color: var(--sw-text-on-dark-full); }
+.sw-hero-mark .b { color: var(--sw-ember); }
+
+/* ============================================================
+   PATTERN C — FOOTER MARK
+   ============================================================ */
+
+.sw-foot {
+  background: var(--sw-spark);
+  padding: 18px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.sw-foot-mark {
+  font-family: var(--sw-display);
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 3px;
+}
+.sw-foot-mark .a { color: var(--sw-text-on-dark-full); }
+.sw-foot-mark .b { color: var(--sw-ember); }
+.sw-foot-tag {
+  font-family: var(--sw-body);
+  font-style: italic;
+  font-size: 12px;
+  color: var(--sw-text-on-dark-muted);
+}
+
+/* ============================================================
+   PATTERN B — NUMBERED STEP PANEL
+   ============================================================ */
+
+.sw-step {
+  background: var(--sw-white);
+  border: 1px solid var(--sw-bone);
+  border-radius: var(--sw-radius-md);
+  padding: 24px 28px;
+  margin-bottom: 18px;
+}
+.sw-step-active { border: 2px solid var(--sw-ember); padding: 23px 27px; }
+.sw-step-done   { opacity: 0.5; }
+.sw-step-done .sw-step-num { background: var(--sw-teal); }
+.sw-step-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 8px;
+}
+.sw-step-num {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--sw-steel);
+  color: var(--sw-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--sw-display);
+  font-weight: 800;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.sw-step-body { margin-left: 50px; }
+
+/* ============================================================
+   PATTERN D — CALLOUT CARD
+   Bone White background is allowed here only — accent surface, not page.
+   ============================================================ */
+
+.sw-callout {
+  background: var(--sw-bone);
+  border-left: 3px solid var(--sw-teal);
+  padding: 16px 20px;
+  margin: 18px 0;
+  border-radius: 0 var(--sw-radius-sm) var(--sw-radius-sm) 0;
+}
+.sw-callout-purple { border-left-color: var(--sw-purple); }
+.sw-callout-teal   { border-left-color: var(--sw-teal); }
+.sw-callout-ember  { border-left-color: var(--sw-ember); }
+.sw-callout-blue   { border-left-color: var(--sw-blue); }
+.sw-callout-red    { border-left-color: var(--sw-red); }
+
+/* ============================================================
+   BUTTON HIERARCHY
+   ============================================================ */
+
+.sw-btn {
+  display: inline-block;
+  font-family: var(--sw-display);
+  font-size: 0.9375rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 14px 28px;
+  border-radius: var(--sw-radius-sm);
+  border: 1.5px solid var(--sw-steel);
+  background: transparent;
+  color: var(--sw-steel);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.sw-btn:hover { background: var(--sw-bone); }
+
+.sw-btn-primary {
+  background: var(--sw-ember);
+  border-color: var(--sw-ember);
+  color: var(--sw-white);
+}
+.sw-btn-primary:hover { background: #B0401A; border-color: #B0401A; }
+
+.sw-btn-success {
+  background: var(--sw-teal);
+  border-color: var(--sw-teal);
+  color: var(--sw-white);
+}
+.sw-btn-success:hover { background: #178B91; border-color: #178B91; }
+
+.sw-btn-on-dark {
+  border-color: var(--sw-text-on-dark);
+  color: var(--sw-text-on-dark-full);
+}
+.sw-btn-on-dark:hover { background: rgba(255,255,255,0.1); }
+
+.sw-btn-subtle {
+  border: none;
+  padding: 8px 0;
+  letter-spacing: 1px;
+}
+.sw-btn-subtle:hover { background: transparent; text-decoration: underline; }
+
+/* ============================================================
+   LAYOUT HELPERS
+   ============================================================ */
+
+.sw-page  { max-width: 1100px; margin: 0 auto; }
+.sw-body  { padding: 56px 40px; }
+.sw-section + .sw-section { margin-top: 56px; }
+
+.sw-card {
+  background: var(--sw-white);
+  border: 1px solid var(--sw-bone);
+  border-radius: var(--sw-radius-md);
+  padding: 28px 32px;
+}
+
+.sw-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.sw-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+/* Form fields */
+.sw-input,
+.sw-textarea,
+.sw-select {
+  font-family: var(--sw-body);
+  font-size: 1rem;
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #d8d4ca;
+  border-radius: var(--sw-radius-sm);
+  background: var(--sw-white);
+  color: var(--sw-steel);
+  transition: border-color 0.15s;
+}
+.sw-input:focus,
+.sw-textarea:focus,
+.sw-select:focus {
+  outline: none;
+  border-color: var(--sw-ember);
+}
+.sw-textarea { resize: vertical; min-height: 88px; }
+
+.sw-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+.sw-field label {
+  font-family: var(--sw-display);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--sw-steel);
+}
+
+/* Responsive — collapse grids on small screens */
+@media (max-width: 760px) {
+  .sw-grid-3, .sw-grid-2 { grid-template-columns: 1fr; }
+  .sw-body { padding: 36px 22px; }
+  .sw-hero { padding: 40px 22px 36px; }
+  .sw-foot { padding: 18px 22px; }
+}
