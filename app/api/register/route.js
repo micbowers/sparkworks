@@ -25,6 +25,9 @@ export async function POST(request) {
       Cohort: {
         select: { name: data.cohort || "Season 1 — Fall 2026" },
       },
+      Source: {
+        rich_text: [{ text: { content: data.source || "direct" } }],
+      },
     };
 
     if (data.parent2Name) {

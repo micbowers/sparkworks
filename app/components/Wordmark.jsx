@@ -1,6 +1,13 @@
 export function Wordmark({ size = "lg", onDark = false, className = "" }) {
-  const fontSize = size === "lg" ? "2rem" : size === "md" ? "1.375rem" : "14px";
-  const letterSpacing = size === "sm" ? "3px" : "4px";
+  const fontSize =
+    size === "xl" ? "clamp(2.25rem, 7vw, 4.5rem)"
+    : size === "lg" ? "2rem"
+    : size === "md" ? "1.375rem"
+    : "14px";
+  const letterSpacing =
+    size === "xl" ? "6px"
+    : size === "sm" ? "3px"
+    : "4px";
   const aClass = onDark ? "text-on-dark-full" : "";
   return (
     <span

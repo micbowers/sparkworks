@@ -6,13 +6,14 @@ import { Wordmark } from "./Wordmark";
  * If `showWordmark` is true, the wordmark is the 100% element and `title` drops to 85%.
  * If `showWordmark` is false, `title` is the 100% element.
  */
-export function Hero({ eyebrow, title, tagline, showWordmark = true, children }) {
+export function Hero({ eyebrow, title, tagline, showWordmark = true, wordmarkSize = "md", children }) {
+  const wordmarkMargin = wordmarkSize === "xl" ? 32 : 24;
   return (
     <header className="sw-hero">
       <div className="sw-page">
         {showWordmark && (
-          <div style={{ marginBottom: 24 }}>
-            <Wordmark size="md" onDark />
+          <div style={{ marginBottom: wordmarkMargin }}>
+            <Wordmark size={wordmarkSize} onDark />
           </div>
         )}
         {eyebrow && (

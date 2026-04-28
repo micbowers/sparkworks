@@ -1,11 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const EMPTY_CHILD = { name: "", grade: "" };
 const GRADES = ["2", "3", "4", "5", "6"];
 
 export function InterestForm() {
+  const [source, setSource] = useState("direct");
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const s = params.get("source");
+    if (s) setSource(s);
+  }, []);
   const [parent1Name, setParent1Name] = useState("");
   const [parent1Email, setParent1Email] = useState("");
   const [parent1Phone, setParent1Phone] = useState("");
@@ -57,6 +64,7 @@ export function InterestForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           cohort: "Season 1 — Fall 2026",
+          source,
           parent1Name,
           parent1Email,
           parent1Phone,
@@ -104,6 +112,12 @@ export function InterestForm() {
       <p className="ts-body" style={{ marginBottom: 24 }}>
         Season 1 starts the week of September 7. Two tracks: Ember (grades 2–3) and Blaze (grades 4–6),
         capped at 6 students each. Add your details and we&rsquo;ll be in touch with schedule options.
+        {source === "games" && (
+          <>
+            {" "}
+            We&rsquo;ll also add you to game-launch announcements as we ship new ones.
+          </>
+        )}
       </p>
 
       <div className="ts-label" style={{ marginBottom: 12, color: "var(--sw-steel)" }}>Parent 1 (required)</div>

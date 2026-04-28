@@ -7,6 +7,7 @@ export default function Home() {
   return (
     <>
       <Hero
+        wordmarkSize="xl"
         title="Think through anything."
         tagline="Sparkworks teaches kids in grades 2–6 to think through hard problems — through games, not lectures."
       />
@@ -34,10 +35,10 @@ export default function Home() {
             <ProductCard
               accent="teal"
               kicker="The Games"
-              title="Find The Alien · Block Code"
-              body="Two games, both live. Find The Alien teaches elimination reasoning through deduction. Block Code is a pattern-detection and elimination puzzle. Same skills the program teaches — sessions 1 and 2 in fact — but standalone and free to play."
+              title="Find The Alien — and more on the way"
+              body="Find The Alien is live — a deduction game that teaches elimination reasoning, free to play. We're building more games and curating the ones we love. New launches go to subscribers first."
               cta={{ label: "Play Find The Alien", href: "https://findthealien.sparkworks.kids", external: true }}
-              secondary={{ label: "Play Block Code", href: "/blockcode.html" }}
+              secondary={{ label: "Notify me about new games", href: "/program?source=games#interest" }}
             />
             <ProductCard
               accent="blue"
@@ -52,9 +53,10 @@ export default function Home() {
         <section className="sw-section">
           <Callout accent="ember" label="Why this, why now">
             <p className="ts-quote">
-              In this AI age, critical thinking has become a crucial skill for kids. We don&rsquo;t teach
-              AI fluency — we teach how to discern, verify, and push back. The ability to know when
-              you&rsquo;re wrong is the skill AI can&rsquo;t replicate.
+              In the age of AI, it&rsquo;s become crucial to build a strong foundation of critical
+              thinking. We don&rsquo;t teach AI fluency — we teach how to discern, verify, and push
+              back. We teach kids what they&rsquo;ll need to use these powerful tools, not be replaced
+              by them.
             </p>
           </Callout>
         </section>
