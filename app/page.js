@@ -28,13 +28,7 @@ export default function Home() {
           <div className="ts-eyebrow" id="proof-heading">From pilot parents</div>
           <div style={{ marginTop: 14, display: "flex", flexDirection: "column", gap: 14, maxWidth: 760 }}>
             <p className="ts-quote">
-              &ldquo;I don&rsquo;t know what you&rsquo;re doing — but keep it up. The kids love it.&rdquo;
-            </p>
-            <p className="ts-quote">
-              &ldquo;He got mad at me when we were running late to class.&rdquo;
-            </p>
-            <p className="ts-body">
-              A pilot kid, telling a classmate at school what he loves about Fridays: Sparkworks and football.
+              &ldquo;I don&rsquo;t know all of what you&rsquo;re doing — but keep it up. The kids love it.&rdquo;
             </p>
             <p className="ts-quote">
               &ldquo;Feels like the kind of thing missing from school, sadly.&rdquo;
