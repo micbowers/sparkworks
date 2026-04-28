@@ -18,7 +18,7 @@ export function CurriculumSection({ accent, kicker, title, sessions, badges }) {
               Session {s.num} · {s.name}
             </div>
             <p className="ts-body" style={{ marginBottom: 4 }}>{s.skill}</p>
-            <p className="ts-caption">Game: {s.game} · Badge: {badges[i]}</p>
+            <p className="ts-caption">Badge: {badges[i]}</p>
           </div>
         ))}
       </div>

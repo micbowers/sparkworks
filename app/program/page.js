@@ -1,10 +1,8 @@
 import Link from "next/link";
 import { Hero } from "../components/Hero";
 import { Footer } from "../components/Footer";
-import { Callout } from "../components/Callout";
 import { CurriculumSection } from "../components/CurriculumSection";
 import { InterestForm } from "../components/InterestForm";
-import { SiteHeader } from "../components/SiteHeader";
 import { SparkOfHistory } from "../components/SparkOfHistory";
 
 const SECTIONS = [
@@ -152,16 +150,15 @@ const FAQS = [
   },
   {
     q: "What does it cost?",
-    a: "Season 2 — Fall 2026 is $449 for all 8 sessions (both tracks, same price), starting the week of September 7. Founding Sparks (our Season 1 pilot, completed) ran at $149 for all 8 sessions.",
+    a: "Season 2 — Fall 2026 is $449 for all 8 sessions (both tracks, same price), starting the week of September 7. No payment required to hold a seat — slots are offered in order of registration, and we'll be in touch with payment details once Season 2 is locked.",
   },
 ];
 
 export default function ProgramPage() {
   return (
     <>
-      <SiteHeader />
       <Hero
-        showWordmark={false}
+        wordmarkSize="xl"
         eyebrow="The Program · Season 2"
         title="An 8-session program that teaches kids to think through hard problems — through games, not lectures."
         tagline="Two grade-calibrated tracks: Ember (grades 2–3) and Blaze (grades 4–6). Six students per track, dedicated instructor, 60-minute sessions."
@@ -229,11 +226,6 @@ export default function ProgramPage() {
               </div>
             ))}
           </div>
-          <Callout accent="teal" label="The closing question · non-negotiable">
-            <p className="ts-quote">
-              &ldquo;Before you go — what did you notice about your own thinking today?&rdquo;
-            </p>
-          </Callout>
         </section>
 
         <section className="sw-section">

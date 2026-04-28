@@ -5,9 +5,10 @@ import { Wordmark } from "./Wordmark";
  * Per design rules: one 100% white element per dark surface, max.
  * If `showWordmark` is true, the wordmark is the 100% element and `title` drops to 85%.
  * If `showWordmark` is false, `title` is the 100% element.
+ * `title` is optional — pages with only a wordmark + tagline can omit it.
  */
 export function Hero({ eyebrow, title, tagline, showWordmark = true, wordmarkSize = "md", children }) {
-  const wordmarkMargin = wordmarkSize === "xl" ? 32 : 24;
+  const wordmarkMargin = wordmarkSize === "xl" ? 28 : 24;
   return (
     <header className="sw-hero">
       <div className="sw-page">
@@ -24,16 +25,18 @@ export function Hero({ eyebrow, title, tagline, showWordmark = true, wordmarkSiz
             {eyebrow}
           </div>
         )}
-        <h1
-          className={`ts-h1 ${showWordmark ? "text-on-dark" : "text-on-dark-full"}`}
-          style={{
-            fontSize: "clamp(2rem, 5vw, 3.25rem)",
-            maxWidth: 820,
-            marginBottom: tagline ? 18 : 0,
-          }}
-        >
-          {title}
-        </h1>
+        {title && (
+          <h1
+            className={`ts-h1 ${showWordmark ? "text-on-dark" : "text-on-dark-full"}`}
+            style={{
+              fontSize: "clamp(1.5rem, 3.5vw, 2.5rem)",
+              maxWidth: 820,
+              marginBottom: tagline ? 14 : 0,
+            }}
+          >
+            {title}
+          </h1>
+        )}
         {tagline && (
           <p className="ts-quote text-on-dark" style={{ maxWidth: 720, fontSize: "1.1875rem" }}>
             {tagline}

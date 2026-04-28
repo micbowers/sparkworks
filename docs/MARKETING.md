@@ -81,9 +81,9 @@ Games and Materials are **top-of-funnel** assets. They're how parents discover S
 
 ## PRICING POSTURE
 
-- Founding Sparks ran at **$149** for all 8 sessions. The price is gone (one-time founding rate).
+- Founding Sparks ran at **$149** for all 8 sessions. The price is gone (one-time founding rate). **As of 2026-04-28, $149 is no longer referenced in public copy** — Mike removed it because the contrast with $449 risked feeling like a price hike rather than a one-time founding gesture. The number stays in this doc and in `BRAND_REF.md` / `PROGRAM_AND_MESSAGING.md` as historical record only.
 - Season 2 is **$449** for all 8 sessions. Flat, not monthly. This supersedes any older "$349/month" framing in stale docs.
-- **Anchor on $149 when it adds context** — *"Founding Sparks ran at $149; Season 2 is $449"* — because it positions $449 against a credible reference point. Don't lead with the $149 in isolation (would feel like bait-and-switch).
+- **Lead with what Season 2 costs, not what Founding Sparks ran at.** Public copy: "$449 for all 8 sessions." Don't anchor against $149 publicly.
 - **No payment required to hold a seat.** Slots are offered in order of registration. Details and payment come later. State this explicitly on the form.
 
 ---

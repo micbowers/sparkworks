@@ -10,18 +10,40 @@ export default function Home() {
     <>
       <Hero
         wordmarkSize="xl"
-        title="Think through anything."
         tagline="Sparkworks teaches kids in grades 2–6 to think through hard problems — through games, not lectures."
+      />
+
+      <div
+        style={{
+          background: "var(--sw-bone)",
+          borderBottom: "1px solid #e3dfd5",
+        }}
       >
-        <div style={{ marginTop: 28 }}>
-          <p className="text-on-dark" style={{ fontFamily: "var(--sw-body)", fontSize: "0.9375rem", marginBottom: 14, maxWidth: 640 }}>
-            Founding Sparks filled before we listed it. Season 2 starts the week of September 7.
-          </p>
-          <Link className="sw-btn sw-btn-primary" href="/program?source=home-hero#interest">
-            Save my seat — $449 / 8 sessions
+        <div
+          className="sw-page"
+          style={{
+            padding: "20px 40px",
+            display: "flex",
+            flexWrap: "wrap",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: 18,
+          }}
+        >
+          <div>
+            <div className="ts-label" style={{ color: "var(--sw-ember)", fontSize: "0.75rem", marginBottom: 4 }}>
+              Season 2 · Fall 2026
+            </div>
+            <p className="ts-body" style={{ margin: 0 }}>
+              <strong>Founding Sparks filled before we listed it. Season 2 is filling now.</strong>{" "}
+              Sessions start the week of September 7 · No payment required to hold a seat.
+            </p>
+          </div>
+          <Link className="sw-btn sw-btn-primary" href="/program?source=home-hero#interest" style={{ whiteSpace: "nowrap" }}>
+            Save my seat
           </Link>
         </div>
-      </Hero>
+      </div>
 
       <main className="sw-page sw-body">
         <section className="sw-section" aria-labelledby="proof-heading">
@@ -32,12 +54,6 @@ export default function Home() {
             </p>
             <p className="ts-quote">
               &ldquo;Feels like the kind of thing missing from school, sadly.&rdquo;
-            </p>
-            <p className="ts-body" style={{ marginTop: 4 }}>
-              Founding Sparks filled before we listed it publicly. Season 2 is filling now —{" "}
-              <Link href="/program?source=home-proof#interest" style={{ color: "var(--sw-ember)", fontWeight: 700 }}>
-                save my seat →
-              </Link>
             </p>
           </div>
         </section>
