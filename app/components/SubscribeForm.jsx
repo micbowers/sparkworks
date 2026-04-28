@@ -3,11 +3,11 @@
 import { useState } from "react";
 
 /**
- * Tiny inline email-capture form. Used on the homepage Games and Materials cards.
- * Posts to /api/subscribe with { email, interests, source }. Email is the only field —
- * lowest friction for "tell me when X launches" subscribes.
+ * Email-capture form. Posts to /api/subscribe with { email, interests, source }.
+ * Email is the only field — lowest friction for "tell me when X launches" subscribes.
+ * `interests` is an array — pass multiple tags to subscribe to several categories at once.
  */
-export function SubscribeForm({ interest, source, ctaLabel, successMessage }) {
+export function SubscribeForm({ interests = [], source, ctaLabel = "Notify me", successMessage }) {
   const [email, setEmail] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -25,7 +25,7 @@ export function SubscribeForm({ interest, source, ctaLabel, successMessage }) {
       const res = await fetch("/api/subscribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, interests: [interest], source }),
+        body: JSON.stringify({ email, interests, source }),
       });
       if (!res.ok) {
         const body = await res.json().catch(() => ({}));

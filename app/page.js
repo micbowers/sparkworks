@@ -71,37 +71,41 @@ export default function Home() {
               title="Games we make and games we love"
               body="We believe the best way to teach a thinking skill is to put kids inside a game where they need it. The games here are the same ones we use in our program — a mix of games we build (like Find The Alien) and games we recommend from designers we trust. A small marketplace is coming."
               cta={{ label: "Play Find The Alien", href: "https://findthealien.sparkworks.kids", external: true }}
-            >
-              <div style={{ marginTop: 14, paddingTop: 14, borderTop: "1px solid var(--sw-bone)" }}>
-                <p className="ts-body" style={{ fontSize: "0.875rem", marginBottom: 8 }}>
-                  Get an email when we launch a new game.
-                </p>
-                <SubscribeForm
-                  interest="Games"
-                  source="home-games-card"
-                  ctaLabel="Notify me"
-                  successMessage="On the list — we&rsquo;ll let you know when the next game ships."
-                />
-              </div>
-            </ProductCard>
+            />
             <ProductCard
               accent="blue"
               kicker="The Materials"
               title="Workbooks · Coming soon"
               body="Hands-on workbooks built around the thinking skills the program teaches — patterns, elimination, constraints, estimation, strategy. These are the same materials we use in our classes, usually for the Ignite phase. Designed for kids to work through with a parent on weekends, or solo. The first set is in development."
-            >
-              <div style={{ marginTop: 14, paddingTop: 14, borderTop: "1px solid var(--sw-bone)" }}>
-                <p className="ts-body" style={{ fontSize: "0.875rem", marginBottom: 8 }}>
-                  Get an email when the first workbook ships.
-                </p>
-                <SubscribeForm
-                  interest="Materials"
-                  source="home-materials-card"
-                  ctaLabel="Notify me"
-                  successMessage="On the list — we&rsquo;ll let you know when the first workbook is ready."
-                />
-              </div>
-            </ProductCard>
+            />
+          </div>
+        </section>
+
+        <section className="sw-section" id="launches">
+          <div
+            className="sw-card"
+            style={{
+              borderTop: "4px solid var(--sw-teal)",
+              display: "flex",
+              flexDirection: "column",
+              gap: 10,
+              maxWidth: 760,
+            }}
+          >
+            <div className="ts-eyebrow" style={{ color: "var(--sw-teal)" }}>Stay in the loop</div>
+            <h2 className="ts-h2">Hear about new launches.</h2>
+            <p className="ts-body">
+              We&rsquo;re shipping new games and workbooks throughout the year. Drop your email and
+              we&rsquo;ll let you know when something new is ready to play or work through.
+            </p>
+            <div style={{ marginTop: 6 }}>
+              <SubscribeForm
+                interests={["Games", "Materials"]}
+                source="home-launches"
+                ctaLabel="Notify me"
+                successMessage="On the list — we&rsquo;ll let you know when something new ships."
+              />
+            </div>
           </div>
         </section>
 
