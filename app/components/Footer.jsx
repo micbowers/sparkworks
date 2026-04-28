@@ -30,7 +30,7 @@ export function Footer() {
           textAlign: "center",
         }}
       >
-        © {YEAR} Cairn Partners, LLC · Sparkworks is a trademark of Cairn Partners, LLC.
+        © {YEAR} Cairn Partners, LLC · Sparkworks™ is a trademark of Cairn Partners, LLC.
       </div>
     </footer>
   );

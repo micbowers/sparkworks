@@ -23,7 +23,21 @@ export function Wordmark({ size = "lg", onDark = false, className = "" }) {
       <span className={aClass} style={onDark ? undefined : { color: "var(--sw-steel)" }}>
         SPARK
       </span>
-      <span style={{ color: "var(--sw-ember)" }}>WORKS</span>
+      <span style={{ color: "var(--sw-ember)" }}>
+        WORKS
+        <sup
+          style={{
+            fontSize: "0.45em",
+            fontWeight: 700,
+            letterSpacing: "normal",
+            verticalAlign: "super",
+            lineHeight: 0,
+            marginLeft: "0.05em",
+          }}
+        >
+          ™
+        </sup>
+      </span>
     </span>
   );
 }

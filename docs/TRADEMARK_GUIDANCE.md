@@ -16,6 +16,37 @@ These rules **do NOT** apply to:
 
 ---
 
+## ™ SYMBOL USE (separate lifecycle from copy swaps)
+
+The site marks the SPARKWORKS brand with ™ on three surfaces. This is **not** part of the swap-on-grant copy revert below — it stays in place permanently and the symbol just changes form (™ → ®) when the trademark grants.
+
+### Where ™ appears
+
+1. **Wordmark component** — [app/components/Wordmark.jsx](../app/components/Wordmark.jsx). Always-on, rendered as a small superscript after the WORKS span. Covers every wordmark instance: homepage hero, /program hero, footer, and SiteHeader.
+2. **Block Code page wordmark** — [public/blockcode.html](../public/blockcode.html), the `<div class="brand">SPARKWORKS</div>` at the top of the game UI. Static HTML, separate from the Next app.
+3. **Footer trademark notice** — [app/components/Footer.jsx](../app/components/Footer.jsx): `Sparkworks™ is a trademark of Cairn Partners, LLC.`
+
+### Where ™ does NOT appear (intentionally)
+
+Per INTA's "first-or-most-prominent" guidance, marking every body-copy mention is non-standard. The wordmark on each page covers the requirement. Skip:
+
+- Body-copy mentions of "Sparkworks" in [app/page.js](../app/page.js) and [app/program/page.js](../app/program/page.js).
+- Page `<title>`, meta description, OG tags ([app/layout.js](../app/layout.js), [public/blockcode.html](../public/blockcode.html)).
+- aria-labels ([app/components/SiteHeader.jsx](../app/components/SiteHeader.jsx)).
+- Image alt text ([public/cairnpartners/index.html](../public/cairnpartners/index.html)).
+
+### When the trademark grants
+
+Swap ™ → ® in three files:
+
+1. [app/components/Wordmark.jsx](../app/components/Wordmark.jsx) — change the `™` character in the `<sup>` element.
+2. [public/blockcode.html](../public/blockcode.html) — change `&#8482;` to `&#174;` (or the ® character).
+3. [app/components/Footer.jsx](../app/components/Footer.jsx) — change `Sparkworks™` to `Sparkworks®` and (optionally) `is a trademark of` to `is a registered trademark of`.
+
+Sources for the placement choices: INTA fact sheets on trademark symbols and marking requirements, USPTO specimens guidance, Nutter / Gerben / Lexology summaries.
+
+---
+
 ## OBJECTIVE
 
 Position **Sparkworks** clearly as an **educational services brand (USPTO Class 041)** — not a games, toys, or product company. There is already a SPARKWORKS that sells games. To minimize likelihood-of-confusion risk and improve our TM approval odds, our public-facing language must lean class-provider and de-emphasize anything that reads as a game/product brand.
