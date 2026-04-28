@@ -236,7 +236,45 @@ A numbered list of every change made under this guidance, with file, line contex
 
 *Append a numbered entry every time a TM-driven change ships. When the TM grants, restore each `Original` and remove the `// TM-2026:` comment marker.*
 
-*(empty — populated as edits ship)*
+### 1. 2026-04-28 · `app/page.js` · Homepage hero tagline
+- **Original:** `Sparkworks teaches kids in grades 2–6 to think through hard problems — through games, not lectures.`
+- **Replacement:** `Sparkworks teaches kids in grades 2–6 to think through hard problems — through hands-on problem solving, not lectures.`
+
+### 2a. 2026-04-28 · `app/page.js` · "What we make" intro eyebrow
+- **Original:** `What we make`
+- **Replacement:** `What we offer`
+
+### 2b. 2026-04-28 · `app/page.js` · "What we make" lead paragraph
+- **Original:** `Critical thinking is the most important skill in the AI age. Sparkworks builds it three ways — an in-person program, games kids actually want to play, and materials they can work through on their own.`
+- **Replacement:** `Critical thinking is the most important skill in the AI age. Sparkworks builds it three ways: an in-person class for grades 2–6, hands-on activities and games for practice between sessions, and class materials that reinforce what kids learn.`
+
+### 3. 2026-04-28 · `app/page.js` · Homepage Program card body
+- **Original:** `The flagship. Two grade-calibrated tracks — Ember (grades 2–3) and Blaze (grades 4–6), 6 students each. Eight sessions, eight thinking skills, taught through real games and Sparks of History — historical figures who used the same principles to change something that mattered. Founding Sparks filled before we listed it. Season 2 is filling now.`
+- **Replacement:** `The flagship. Two grade-calibrated tracks — Ember (grades 2–3) and Blaze (grades 4–6), 6 students each. Eight sessions, eight thinking skills, taught through hands-on activities and real-world examples of how great critical thinkers used these same skills to solve some of history's most important challenges. Founding Sparks filled before we listed it. Season 2 is filling now.`
+
+### 4a. 2026-04-28 · `app/page.js` · Homepage Games card kicker
+- **Original:** `The Games`
+- **Replacement:** `Practice at home`
+
+### 4b. 2026-04-28 · `app/page.js` · Homepage Games card title
+- **Original:** `The games we love`
+- **Replacement:** `Games that reinforce Sparkworks skills`
+
+### 4c. 2026-04-28 · `app/page.js` · Homepage Games card body
+- **Original:** `We believe the best way to teach a thinking skill is to put kids inside a game where they need it. The games here are the same ones we use in our program — a mix of games we build (like Find The Alien) and games we recommend from designers we trust. A small marketplace is coming.`
+- **Replacement:** `Critical thinking grows with practice. We point parents toward activities and games that build the same skills our class teaches — some are ones we've put together (Find The Alien is free to play); others come from designers we trust. More on the way.`
+
+### 5. 2026-04-28 · `app/program/page.js` · Hero title
+- **Original:** `An 8-session program that teaches kids to think through hard problems — through games, not lectures.`
+- **Replacement:** `An 8-session program that teaches kids to think through hard problems — through hands-on problem solving, not lectures.`
+
+### 6. 2026-04-28 · `app/program/page.js` · FAQ "What is it?" answer
+- **Original:** `An 8-session program that teaches kids to think through hard problems — through games, not lectures.`
+- **Replacement:** `An 8-session program that teaches kids to think through hard problems — through hands-on problem solving, not lectures.`
+
+### 7. 2026-04-28 · `app/layout.js` · Page metadata description (SEO)
+- **Original:** `Sparkworks teaches kids in grades 2–6 to think through hard problems — through games, not lectures. Critical thinking program, games, and materials.`
+- **Replacement:** `Sparkworks teaches kids in grades 2–6 to think through hard problems through hands-on problem solving — not lectures. After-school critical thinking classes for grades 2–6.`
 
 ---
 

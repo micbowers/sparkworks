@@ -8,10 +8,11 @@ import { SubscribeForm } from "./components/SubscribeForm";
 export default function Home() {
   return (
     <>
+      {/* TM-2026: tagline was "Sparkworks teaches kids in grades 2–6 to think through hard problems — through games, not lectures." */}
       <Hero
         wordmarkSize="xl"
         title="Think through anything."
-        tagline="Sparkworks teaches kids in grades 2–6 to think through hard problems — through games, not lectures."
+        tagline="Sparkworks teaches kids in grades 2–6 to think through hard problems — through hands-on problem solving, not lectures."
       />
 
       <div
@@ -60,30 +61,34 @@ export default function Home() {
         </section>
 
         <section className="sw-section">
-          <div className="ts-eyebrow">What we make</div>
+          {/* TM-2026: eyebrow was "What we make" */}
+          <div className="ts-eyebrow">What we offer</div>
           <h2 className="ts-h1" style={{ marginTop: 8, marginBottom: 16, maxWidth: 720 }}>
             Three ways kids build the skill AI can&rsquo;t replace.
           </h2>
+          {/* TM-2026: lead paragraph reframed. Original: "Critical thinking is the most important skill in the AI age. Sparkworks builds it three ways — an in-person program, games kids actually want to play, and materials they can work through on their own." */}
           <p className="ts-lead" style={{ maxWidth: 720, marginBottom: 32 }}>
-            Critical thinking is the most important skill in the AI age. Sparkworks builds it three ways
-            — an in-person program, games kids actually want to play, and materials they can work
-            through on their own.
+            Critical thinking is the most important skill in the AI age. Sparkworks builds it three
+            ways: an in-person class for grades 2–6, hands-on activities and games for practice
+            between sessions, and class materials that reinforce what kids learn.
           </p>
 
           <div className="sw-grid-3">
+            {/* TM-2026: Program card body reframed. Original: "The flagship. Two grade-calibrated tracks — Ember (grades 2–3) and Blaze (grades 4–6), 6 students each. Eight sessions, eight thinking skills, taught through real games and Sparks of History — historical figures who used the same principles to change something that mattered. Founding Sparks filled before we listed it. Season 2 is filling now." */}
             <ProductCard
               accent="purple"
               kicker="The Program"
               title="Sparkworks · 8-session class"
-              body="The flagship. Two grade-calibrated tracks — Ember (grades 2–3) and Blaze (grades 4–6), 6 students each. Eight sessions, eight thinking skills, taught through real games and Sparks of History — historical figures who used the same principles to change something that mattered. Founding Sparks filled before we listed it. Season 2 is filling now."
+              body="The flagship. Two grade-calibrated tracks — Ember (grades 2–3) and Blaze (grades 4–6), 6 students each. Eight sessions, eight thinking skills, taught through hands-on activities and real-world examples of how great critical thinkers used these same skills to solve some of history's most important challenges. Founding Sparks filled before we listed it. Season 2 is filling now."
               cta={{ label: "Save my seat — Season 2", href: "/program?source=home-program#interest", primary: true }}
               secondary={{ label: "See the curriculum", href: "/program" }}
             />
+            {/* TM-2026: Games card kicker/title/body all reframed. Originals: kicker="The Games"; title="The games we love"; body="We believe the best way to teach a thinking skill is to put kids inside a game where they need it. The games here are the same ones we use in our program — a mix of games we build (like Find The Alien) and games we recommend from designers we trust. A small marketplace is coming." */}
             <ProductCard
               accent="teal"
-              kicker="The Games"
-              title="The games we love"
-              body="We believe the best way to teach a thinking skill is to put kids inside a game where they need it. The games here are the same ones we use in our program — a mix of games we build (like Find The Alien) and games we recommend from designers we trust. A small marketplace is coming."
+              kicker="Practice at home"
+              title="Games that reinforce Sparkworks skills"
+              body="Critical thinking grows with practice. We point parents toward activities and games that build the same skills our class teaches — some are ones we've put together (Find The Alien is free to play); others come from designers we trust. More on the way."
               cta={{ label: "Play Find The Alien", href: "https://findthealien.sparkworks.kids", external: true }}
             />
             <ProductCard

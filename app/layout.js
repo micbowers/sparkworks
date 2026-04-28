@@ -2,10 +2,11 @@ import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
+// TM-2026: description was "Sparkworks teaches kids in grades 2–6 to think through hard problems — through games, not lectures. Critical thinking program, games, and materials."
 export const metadata = {
   title: "Sparkworks — Think through anything.",
   description:
-    "Sparkworks teaches kids in grades 2–6 to think through hard problems — through games, not lectures. Critical thinking program, games, and materials.",
+    "Sparkworks teaches kids in grades 2–6 to think through hard problems through hands-on problem solving — not lectures. After-school critical thinking classes for grades 2–6.",
 };
 
 export default function RootLayout({ children }) {

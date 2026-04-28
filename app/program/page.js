@@ -130,7 +130,8 @@ const OUTCOMES = [
 const FAQS = [
   {
     q: "What is it?",
-    a: "An 8-session program that teaches kids to think through hard problems — through games, not lectures.",
+    // TM-2026: original answer ended with "through games, not lectures."
+    a: "An 8-session program that teaches kids to think through hard problems — through hands-on problem solving, not lectures.",
   },
   {
     q: "Who is it for?",
@@ -157,10 +158,11 @@ const FAQS = [
 export default function ProgramPage() {
   return (
     <>
+      {/* TM-2026: Hero title was "An 8-session program that teaches kids to think through hard problems — through games, not lectures." */}
       <Hero
         wordmarkSize="xl"
         eyebrow="The Program · Season 2"
-        title="An 8-session program that teaches kids to think through hard problems — through games, not lectures."
+        title="An 8-session program that teaches kids to think through hard problems — through hands-on problem solving, not lectures."
         tagline="Two grade-calibrated tracks: Ember (grades 2–3) and Blaze (grades 4–6). Six students per track, dedicated instructor, 60-minute sessions."
       />
 
