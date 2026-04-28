@@ -237,7 +237,11 @@ Abstract skill names are a purchasing barrier. Always pair the skill with the se
 
 ## 12 — LANGUAGE TO RETIRE
 
-Never use these phrases on the website or in any copy:
+Never use these phrases on the website or in any copy. **Brand-voice retirements live below; trademark-driven term substitutions live in [TRADEMARK_GUIDANCE.md](TRADEMARK_GUIDANCE.md) — both apply.**
+
+Notable TM-driven retirement (full table in TRADEMARK_GUIDANCE.md):
+- *"through games, not lectures"* → *"through hands-on problem solving, not lectures"* (or *"structured challenges"* / *"guided problem-solving"*).
+
 
 | Don't use | Use instead |
 |-----------|-------------|

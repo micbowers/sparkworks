@@ -13,6 +13,7 @@ Brand decisions live in `docs/`. They're authoritative — don't paraphrase, don
 - [docs/PROGRAM_AND_MESSAGING.md](docs/PROGRAM_AND_MESSAGING.md) — verbatim pitches, FAQ answers, language to retire. **Copy on the site is governed by this doc.** When changing user-facing text, pull from here rather than rewriting.
 - [docs/MARKETING_GUIDELINES.md](docs/MARKETING_GUIDELINES.md) — production lessons + the 11-point brand audit checklist. Run the checklist before shipping a visual change.
 - [docs/MARKETING.md](docs/MARKETING.md) — **strategic marketing posture.** How we frame the program, when to invoke social proof, what to capture from games/materials visitors. Read before changing CTA copy or restructuring product cards.
+- [docs/TRADEMARK_GUIDANCE.md](docs/TRADEMARK_GUIDANCE.md) — **legal-positioning constraints for the pending USPTO TM application.** Term substitutions ("games" → "activities/challenges" when prominent, "workbook" → "class materials," etc.) and structural rules (no Shop section, no product framing) to keep us in Class 041 (educational services) and away from a game-selling SPARKWORKS that already exists. Wins over the other docs when the conflict is about legal positioning. Read before any copy change.
 - [docs/starter_template.html](docs/starter_template.html) — reference HTML showing all patterns wired together. The CSS in `app/globals.css` was ported from this file's `<style>` block.
 
 ## The four locked rules (load-bearing every session)
@@ -105,6 +106,7 @@ Before pushing:
 - Don't quote a price other than $149 (Founding Sparks / Season 1 pilot, closed) or $449 for all 8 sessions (Season 2 — Fall 2026).
 - Don't use Spark Yellow for buttons/headers — it's reserved for the Da Vinci Badge.
 - Don't use Spark Red for general CTAs — it's for capstones, alerts, urgency only.
+- **Don't lean on game/product framing in public copy.** "Games" can stay if framed as a *teaching method*, but prominent uses ("through games, not lectures") need rewording per [docs/TRADEMARK_GUIDANCE.md](docs/TRADEMARK_GUIDANCE.md) — there's an existing SPARKWORKS that sells games, and we're applying for the educational-services TM.
 
 ## Static pages also served from this repo
 
