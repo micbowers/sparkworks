@@ -21,7 +21,7 @@ When in doubt:
 These are real, leverageable, unhyped facts. Use them.
 
 1. **The pilot oversubscribed before being publicly listed.** Founding Sparks was Season 1. It filled. Multiple parents asked for spots after it filled. This is the strongest social proof we have — state it as a fact, not a brag.
-2. **Real curriculum, not vapor.** Eight named sessions, eight named badges, eight real-world case studies, two named tracks, defined session structure. Most "critical thinking" programs are 80% buzzwords. We can name what kids do in Session 5.
+2. **Real curriculum, not vapor.** Eight named sessions, eight named badges, eight Sparks of History (each with a designed 24×36" poster), two named tracks, defined session structure. Most "critical thinking" programs are 80% buzzwords. We can name what kids do in Session 5.
 3. **Two grade-calibrated tracks.** Ember (grades 2–3) and Blaze (grades 4–6). Six students max per track. Most enrichment programs are undifferentiated. State the cap, state it's filling.
 4. **AI-age timing.** Parents already feel this. We don't manufacture the urgency — we offer a constructive answer: critical thinking is what AI can't replace.
 5. **A free working game (Find The Alien).** A top-of-funnel asset most ed brands don't have.

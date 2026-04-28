@@ -157,7 +157,9 @@ Phase ranges are guidance — instructors flex within them based on how the sess
 | 7 | Think Beyond What You Control | Strategy | Connect Four Tournament | Integration of every skill under pressure |
 | 8 | Think Beyond What You Control | Game Theory | Connect Four + Game Theory Problems | Thinking several moves ahead |
 
-**Real-world case studies (one closes each session):**
+**Sparks of History (one closes each session):**
+*Each session ends with a Spark of History — a real person who used the same thinking principle to change something that mattered. We make a printable poster for each. As of April 2026 we have posters for Semmelweis (S1) and Snow (S2); more are produced as the cohorts run.*
+
 - S1: Titanic iceberg warnings (1912)
 - S2: Dr. John Snow, cholera epidemic 1854
 - S3: Apollo 13

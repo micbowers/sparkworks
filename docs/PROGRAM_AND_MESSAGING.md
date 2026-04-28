@@ -69,7 +69,7 @@ Each session uses one game, puzzle, or challenge to teach the core skill. Kids d
 We don't teach AI fluency as the primary outcome. The thesis: critical thinking is the most important skill in the AI age. Kids learn to discern, verify, and push back — not just consume.
 
 ### 4 — Every session ends in the real world
-Each session closes with a real-world case study showing exactly where that skill was used to solve something that mattered. Apollo 13. Dr. John Snow's cholera map. Fermi estimating a nuclear blast with paper scraps. Not analogies — proof.
+Each session closes with a **Spark of History** — a real person who used the same thinking principle to change something that mattered. Apollo 13. Dr. John Snow's cholera map. Fermi estimating a nuclear blast with paper scraps. Semmelweis seeing the pattern in two maternity clinics that nobody else saw. Not analogies — proof. We make a printable poster for each Spark; they hang in the classroom and parents can download the full print masters from the program page.
 
 ---
 
@@ -101,7 +101,9 @@ Use this for curriculum pages, session detail pages, or feature lists. The "skil
 | 7 | Strategy | Connect Four Tournament | Strategy is the integration of every skill — applied under pressure. |
 | 8 | Game Theory | Connect Four + Game Theory Problems | Strong reasoning means thinking several moves ahead — and understanding that the best move depends on what your opponent will do. |
 
-### Real-world case studies (one closes each session)
+### Sparks of History (one closes each session)
+*A real person who used the same thinking principle to change something that mattered. We design a printable 24×36" poster for each Spark.*
+
 - S1 — Titanic iceberg warnings (1912)
 - S2 — Dr. John Snow, cholera epidemic (1854)
 - S3 — Apollo 13
@@ -117,7 +119,7 @@ Every session follows this structure. Useful for "what a session looks like" pag
 | Phase | Time | What happens |
 |-------|------|--------------|
 | **IGNITE** | 8–10 min | High-energy warm-up. Activates before concept. |
-| **SHARPEN** | 8–10 min | One concept introduced. Real-world case study. The AHA moment. |
+| **SHARPEN** | 8–10 min | One concept introduced. The Spark of History. The AHA moment. |
 | **ENGAGE** | 30–40 min | The game. Kids work the problem. Instructor circulates and questions, doesn't solve. |
 | **REINFORCE** | 5–10 min | Reflect, connect to the real world. Closes with the closing question. |
 
@@ -282,7 +284,7 @@ If the website has these pages or sections, they must include:
 
 ### Curriculum / What you'll learn
 - All 8 sessions with their core game and one-sentence skill
-- Mention real-world case studies as proof, not analogy
+- Mention Sparks of History as proof, not analogy
 - Section colors used for visual organization (see brand ref)
 
 ### About / Why this matters

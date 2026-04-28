@@ -5,6 +5,7 @@ import { Callout } from "../components/Callout";
 import { CurriculumSection } from "../components/CurriculumSection";
 import { InterestForm } from "../components/InterestForm";
 import { SiteHeader } from "../components/SiteHeader";
+import { SparkOfHistory } from "../components/SparkOfHistory";
 
 const SECTIONS = [
   {
@@ -89,9 +90,32 @@ const SECTIONS = [
   },
 ];
 
+const SPARKS = [
+  {
+    name: "Ignaz Semmelweis",
+    sessionLabel: "Session 1 · Pattern Detection",
+    skill: "Spotting the pattern others missed.",
+    blurb:
+      "Vienna, 1840s. By comparing two maternity clinics, Semmelweis spotted the pattern that explained why so many mothers were dying — and invented handwashing. The medical establishment ignored him for decades.",
+    image: "/sparks/semmelweis.png",
+    pdf: "/sparks/semmelweis.pdf",
+    accent: "purple",
+  },
+  {
+    name: "Dr. John Snow",
+    sessionLabel: "Session 2 · Elimination",
+    skill: "Ruling out every alternative until one remained.",
+    blurb:
+      "London, 1854. Snow mapped every cholera death and eliminated every other water source until one pump on Broad Street remained. Removing its handle ended the outbreak — and founded modern epidemiology.",
+    image: "/sparks/snow.png",
+    pdf: "/sparks/snow.pdf",
+    accent: "purple",
+  },
+];
+
 const PHASES = [
   { name: "Ignite", time: "8–10 min", body: "High-energy warm-up. Activates before concept." },
-  { name: "Sharpen", time: "8–10 min", body: "One concept introduced. Real-world case study. The AHA moment." },
+  { name: "Sharpen", time: "8–10 min", body: "One concept introduced. A Spark of History — a real person who used the same principle. The AHA moment." },
   { name: "Engage", time: "30–40 min", body: "The game. Kids work the problem. Instructor circulates and questions, doesn't solve." },
   { name: "Reinforce", time: "5–10 min", body: "Reflect, connect to the real world. Closes with the closing question." },
 ];
@@ -210,6 +234,26 @@ export default function ProgramPage() {
               &ldquo;Before you go — what did you notice about your own thinking today?&rdquo;
             </p>
           </Callout>
+        </section>
+
+        <section className="sw-section">
+          <div className="ts-eyebrow">Sparks of History · every session ends with one</div>
+          <h2 className="ts-h2" style={{ marginTop: 8, marginBottom: 12 }}>
+            A real person who used the same thinking principle to change something that mattered.
+          </h2>
+          <p className="ts-body" style={{ maxWidth: 720, marginBottom: 24 }}>
+            Every session closes with a Spark of History — a figure whose story makes the skill we
+            just taught feel inevitable. We made posters for each one. They hang in the classroom,
+            and you can grab the full print masters below.
+          </p>
+          <div className="sw-grid-2">
+            {SPARKS.map((s) => (
+              <SparkOfHistory key={s.name} {...s} />
+            ))}
+          </div>
+          <p className="ts-caption" style={{ marginTop: 18, fontStyle: "italic" }}>
+            More on the way as we run more sessions.
+          </p>
         </section>
 
         <section className="sw-section">

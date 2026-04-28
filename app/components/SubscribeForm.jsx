@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { track } from "@vercel/analytics";
 
 /**
  * Email-capture form. Posts to /api/subscribe with { email, interests, source }.
@@ -31,6 +32,10 @@ export function SubscribeForm({ interests = [], source, ctaLabel = "Notify me", 
         const body = await res.json().catch(() => ({}));
         throw new Error(body.error || "Couldn't subscribe — please try again.");
       }
+      track("subscribe_submit", {
+        source: source || "unknown",
+        interests: (interests || []).join(","),
+      });
       setSubmitted(true);
     } catch (err) {
       setError(err.message || "Couldn't subscribe — please try again.");

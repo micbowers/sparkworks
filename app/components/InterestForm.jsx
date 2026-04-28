@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { track } from "@vercel/analytics";
 
 const EMPTY_CHILD = { name: "", grade: "" };
 const GRADES = ["2", "3", "4", "5", "6"];
@@ -72,6 +73,11 @@ export function InterestForm() {
         const body = await res.json().catch(() => ({}));
         throw new Error(body.error || "Submission failed");
       }
+      track("register_submit", {
+        cohort: "Season 2 — Fall 2026",
+        source,
+        child_count: validChildren.length,
+      });
       setSubmitted(true);
     } catch (err) {
       setError(err.message || "Something went wrong. Please try again.");

@@ -58,7 +58,7 @@ export default function Home() {
               accent="purple"
               kicker="The Program"
               title="Sparkworks · 8-session class"
-              body="The flagship. Two grade-calibrated tracks — Ember (grades 2–3) and Blaze (grades 4–6), 6 students each. Eight sessions, eight thinking skills, taught through real games and real-world case studies. Founding Sparks filled before we listed it. Season 2 is filling now."
+              body="The flagship. Two grade-calibrated tracks — Ember (grades 2–3) and Blaze (grades 4–6), 6 students each. Eight sessions, eight thinking skills, taught through real games and Sparks of History — historical figures who used the same principles to change something that mattered. Founding Sparks filled before we listed it. Season 2 is filling now."
               cta={{ label: "Save my seat — Season 2", href: "/program?source=home-program#interest", primary: true }}
               secondary={{ label: "See the curriculum", href: "/program" }}
             />
