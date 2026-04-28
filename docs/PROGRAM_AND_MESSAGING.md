@@ -69,7 +69,7 @@ Each session uses one game, puzzle, or challenge to teach the core skill. Kids d
 We don't teach AI fluency as the primary outcome. The thesis: critical thinking is the most important skill in the AI age. Kids learn to discern, verify, and push back — not just consume.
 
 ### 4 — Every session ends in the real world
-Each session closes with a **Spark of History** — a real person who used the same thinking principle to change something that mattered. Apollo 13. Dr. John Snow's cholera map. Fermi estimating a nuclear blast with paper scraps. Semmelweis seeing the pattern in two maternity clinics that nobody else saw. Not analogies — proof. We make a printable poster for each Spark; they hang in the classroom and parents can download the full print masters from the program page.
+Each session features a **Spark of History** — a real person who used the same thinking principle to change something that mattered. Apollo 13. Dr. John Snow's cholera map. Fermi estimating a nuclear blast with paper scraps. Semmelweis seeing the pattern in two maternity clinics that nobody else saw. Not analogies — proof. The Spark is introduced during the Sharpen phase (early in the session) so the historical impact frames the skill being taught — we don't just teach critical thinking, we show how the great thinkers used it to change something. We make a printable poster for each Spark; they hang in the classroom and parents can download the full print masters from the program page.
 
 ---
 
@@ -101,8 +101,8 @@ Use this for curriculum pages, session detail pages, or feature lists. The "skil
 | 7 | Strategy | Connect Four Tournament | Strategy is the integration of every skill — applied under pressure. |
 | 8 | Game Theory | Connect Four + Game Theory Problems | Strong reasoning means thinking several moves ahead — and understanding that the best move depends on what your opponent will do. |
 
-### Sparks of History (one closes each session)
-*A real person who used the same thinking principle to change something that mattered. We design a printable 24×36" poster for each Spark.*
+### Sparks of History (one per session)
+*A real person who used the same thinking principle to change something that mattered. Introduced during the Sharpen phase, not at session close. We design a printable 24×36" poster for each Spark.*
 
 - S1 — Titanic iceberg warnings (1912)
 - S2 — Dr. John Snow, cholera epidemic (1854)

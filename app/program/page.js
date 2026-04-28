@@ -229,14 +229,15 @@ export default function ProgramPage() {
         </section>
 
         <section className="sw-section">
-          <div className="ts-eyebrow">Sparks of History · every session ends with one</div>
+          <div className="ts-eyebrow">Sparks of History · stories of the great thinkers</div>
           <h2 className="ts-h2" style={{ marginTop: 8, marginBottom: 12 }}>
             A real person who used the same thinking principle to change something that mattered.
           </h2>
           <p className="ts-body" style={{ maxWidth: 720, marginBottom: 24 }}>
-            Every session closes with a Spark of History — a figure whose story makes the skill we
-            just taught feel inevitable. We made posters for each one. They hang in the classroom,
-            and you can grab the full print masters below.
+            Every session features a Spark of History — the story of someone who used the same
+            skill we&rsquo;re teaching to change something that mattered. We don&rsquo;t just teach
+            critical thinking; we show its impact through history. We make a poster for each Spark —
+            they hang in the classroom, and you can grab the full print masters below.
           </p>
           <div className="sw-grid-2">
             {SPARKS.map((s) => (
