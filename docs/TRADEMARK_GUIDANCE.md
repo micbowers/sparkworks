@@ -276,6 +276,18 @@ A numbered list of every change made under this guidance, with file, line contex
 - **Original:** `Sparkworks teaches kids in grades 2–6 to think through hard problems — through games, not lectures. Critical thinking program, games, and materials.`
 - **Replacement:** `Sparkworks teaches kids in grades 2–6 to think through hard problems through hands-on problem solving — not lectures. After-school critical thinking classes for grades 2–6.`
 
+### 8. 2026-04-28 · `app/page.js` · Materials card title
+- **Original:** `Workbooks · Coming soon`
+- **Replacement:** `Class materials · Coming soon`
+
+### 9. 2026-04-28 · `app/page.js` · Materials card body
+- **Original:** `Hands-on workbooks built around the thinking skills the program teaches — patterns, elimination, constraints, estimation, strategy. These are the same materials we use in our classes, usually for the Ignite phase. Designed for kids to work through with a parent on weekends, or solo. The first set is in development.`
+- **Replacement:** `Class materials built around the thinking skills our program teaches — patterns, elimination, constraints, estimation, strategy. These are the same guided-practice materials we use in our classes, usually during the Ignite phase. We're making them available so families can keep building the skills at home. Coming soon.`
+
+### 10. 2026-04-28 · `app/page.js` · "Hear about new launches" body
+- **Original:** `We're shipping new games and workbooks throughout the year. Drop your email and we'll let you know when something new is ready to play or work through.`
+- **Replacement:** `Sparkworks adds new activities and class materials throughout the year. Drop your email and we'll let you know when something new is available.`
+
 ---
 
 ## CHECK-BACK CADENCE

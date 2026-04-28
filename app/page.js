@@ -91,11 +91,12 @@ export default function Home() {
               body="Critical thinking grows with practice. We point parents toward activities and games that build the same skills our class teaches — some are ones we've put together (Find The Alien is free to play); others come from designers we trust. More on the way."
               cta={{ label: "Play Find The Alien", href: "https://findthealien.sparkworks.kids", external: true }}
             />
+            {/* TM-2026: Materials card title + body reframed. Originals: title="Workbooks · Coming soon"; body="Hands-on workbooks built around the thinking skills the program teaches — patterns, elimination, constraints, estimation, strategy. These are the same materials we use in our classes, usually for the Ignite phase. Designed for kids to work through with a parent on weekends, or solo. The first set is in development." */}
             <ProductCard
               accent="blue"
               kicker="The Materials"
-              title="Workbooks · Coming soon"
-              body="Hands-on workbooks built around the thinking skills the program teaches — patterns, elimination, constraints, estimation, strategy. These are the same materials we use in our classes, usually for the Ignite phase. Designed for kids to work through with a parent on weekends, or solo. The first set is in development."
+              title="Class materials · Coming soon"
+              body="Class materials built around the thinking skills our program teaches — patterns, elimination, constraints, estimation, strategy. These are the same guided-practice materials we use in our classes, usually during the Ignite phase. We're making them available so families can keep building the skills at home. Coming soon."
             />
           </div>
         </section>
@@ -113,9 +114,10 @@ export default function Home() {
           >
             <div className="ts-eyebrow" style={{ color: "var(--sw-teal)" }}>Stay in the loop</div>
             <h2 className="ts-h2">Hear about new launches.</h2>
+            {/* TM-2026: original was "We're shipping new games and workbooks throughout the year. Drop your email and we'll let you know when something new is ready to play or work through." */}
             <p className="ts-body">
-              We&rsquo;re shipping new games and workbooks throughout the year. Drop your email and
-              we&rsquo;ll let you know when something new is ready to play or work through.
+              Sparkworks adds new activities and class materials throughout the year. Drop your
+              email and we&rsquo;ll let you know when something new is available.
             </p>
             <div style={{ marginTop: 6 }}>
               <SubscribeForm
