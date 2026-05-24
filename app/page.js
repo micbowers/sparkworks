@@ -48,18 +48,6 @@ export default function Home() {
       </div>
 
       <main className="sw-page sw-body">
-        <section className="sw-section" aria-labelledby="proof-heading">
-          <div className="ts-eyebrow" id="proof-heading">From pilot parents</div>
-          <div style={{ marginTop: 14, display: "flex", flexDirection: "column", gap: 14, maxWidth: 760 }}>
-            <p className="ts-quote">
-              &ldquo;I don&rsquo;t know all of what you&rsquo;re doing — but keep it up. The kids love it.&rdquo;
-            </p>
-            <p className="ts-quote">
-              &ldquo;Feels like the kind of thing missing from school, sadly.&rdquo;
-            </p>
-          </div>
-        </section>
-
         <section className="sw-section">
           {/* TM-2026: eyebrow was "What we make" */}
           <div className="ts-eyebrow">What we offer</div>
