@@ -52,14 +52,18 @@ export default function Home() {
         <section className="sw-section">
           {/* TM-2026: eyebrow was "What we make" */}
           <div className="ts-eyebrow">What we offer</div>
+          {/* TM-2026 entry 12: H2 was "Three ways kids build the skill AI can't replace." — reframed because Games and Materials merged into one category. */}
           <h2 className="ts-h1" style={{ marginTop: 8, marginBottom: 16, maxWidth: 720 }}>
-            Three ways kids build the skill AI can&rsquo;t replace.
+            How kids build the skill AI can&rsquo;t replace.
           </h2>
-          {/* TM-2026: lead paragraph reframed. Original: "Critical thinking is the most important skill in the AI age. Sparkworks builds it three ways — an in-person program, games kids actually want to play, and materials they can work through on their own." */}
+          {/* TM-2026: lead paragraph reframed. Originals (in sequence):
+              v1 (pre-TM): "Critical thinking is the most important skill in the AI age. Sparkworks builds it three ways — an in-person program, games kids actually want to play, and materials they can work through on their own."
+              v2 (entry 2b TM swap): "Critical thinking is the most important skill in the AI age. Sparkworks builds it three ways: an in-person class for grades 2–6, hands-on activities and games for practice between sessions, and class materials that reinforce what kids learn."
+              v3 (entry 12 merge): activity+materials consolidated into a single category. */}
           <p className="ts-lead" style={{ maxWidth: 720, marginBottom: 32 }}>
-            Critical thinking is the most important skill in the AI age. Sparkworks builds it three
-            ways: an in-person class for grades 2–6, hands-on activities and games for practice
-            between sessions, and class materials that reinforce what kids learn.
+            Critical thinking is the most important skill in the AI age. Sparkworks builds it through
+            our in-person class for grades 2–6 — plus the same activities, games, and class
+            materials we use, organized by skill so families can practice between sessions.
           </p>
 
           <div className="sw-grid-3">
@@ -72,59 +76,34 @@ export default function Home() {
               cta={{ label: "Save my seat — Season 2", href: "/program?source=home-program#interest", primary: true }}
               secondary={{ label: "See the curriculum", href: "/program" }}
             />
-            {/* TM-2026: Games card kicker + body reframed. Originals: kicker="The Games"; body="We believe the best way to teach a thinking skill is to put kids inside a game where they need it. The games here are the same ones we use in our program — a mix of games we build (like Find The Alien) and games we recommend from designers we trust. A small marketplace is coming." */}
-            {/* The "Play Find The Alien" CTA is intentionally omitted while the games surface isn't ready to launch publicly. */}
+            {/* TM-2026 entry 12: Games + Materials cards consolidated into this single merged Practice card.
+                 - Prior Games card kicker (entry 4a): "The Games"
+                 - Prior Games card body (entry 4b): "Critical thinking grows with practice. We point parents toward the same activities and games we use in class — chosen because they hold up across grades and across generations."
+                 - Prior Materials card title (entry 8): "Class materials · Coming soon"
+                 - Prior Materials card body (entry 9): "Class materials built around the thinking skills our program teaches — patterns, elimination, constraints, estimation, strategy. These are the same guided-practice materials we use in our classes, usually during the Ignite phase. We're making them available so families can keep building the skills at home."
+                 The Materials card's `home-materials-card` SubscribeForm moves into the per-Practice-Book inline form on /practice. */}
             <ProductCard
               accent="teal"
               kicker="Practice at home"
-              title="The games we love"
-              body="Critical thinking grows with practice. We point parents toward the same activities and games we use in class — chosen because they hold up across grades and across generations."
+              title="The way kids build the skills"
+              body="Critical thinking grows with practice. We point parents toward the same activities, games, and class materials we use in class — organized by the skills they build."
               cta={{ href: "/practice", label: "See our picks", primary: true }}
-              secondary={{ label: "Why these games", href: "/practice#mastermind-code-breaker" }}
+              secondary={{ label: "Why these picks", href: "/practice" }}
             />
-            {/* TM-2026: Materials card title + body reframed. Originals: title="Workbooks · Coming soon"; body="Hands-on workbooks built around the thinking skills the program teaches — patterns, elimination, constraints, estimation, strategy. These are the same materials we use in our classes, usually for the Ignite phase. Designed for kids to work through with a parent on weekends, or solo. The first set is in development." */}
+            {/* TM-2026 entry 12: previously standalone "Stay in the loop" section at #launches; promoted into card-grid slot 3 to balance the row and bring email capture above the fold. Slot 3 uses Section Blue accent (not Teal) to differentiate from the adjacent merged Practice card per Designer flag #7. */}
             <ProductCard
               accent="blue"
-              kicker="The Materials"
-              title="Class materials · Coming soon"
-              body="Class materials built around the thinking skills our program teaches — patterns, elimination, constraints, estimation, strategy. These are the same guided-practice materials we use in our classes, usually during the Ignite phase. We're making them available so families can keep building the skills at home."
+              kicker="Stay in touch"
+              title="Hear about new picks."
+              body="We add to /practice as we test new games and approve new practice books. Drop your email and we&rsquo;ll let you know when something new lands."
             >
-              <SubscribeForm
-                interests={["Materials"]}
-                source="home-materials-card"
-                ctaLabel="Notify me"
-                successMessage="On the list — we&rsquo;ll email when the first materials are ready."
-              />
-            </ProductCard>
-          </div>
-        </section>
-
-        <section className="sw-section" id="launches">
-          <div
-            className="sw-card"
-            style={{
-              borderTop: "4px solid var(--sw-teal)",
-              display: "flex",
-              flexDirection: "column",
-              gap: 10,
-              maxWidth: 760,
-            }}
-          >
-            <div className="ts-eyebrow" style={{ color: "var(--sw-teal)" }}>Stay in the loop</div>
-            <h2 className="ts-h2">Hear about new launches.</h2>
-            {/* TM-2026: original was "We're shipping new games and workbooks throughout the year. Drop your email and we'll let you know when something new is ready to play or work through." */}
-            <p className="ts-body">
-              Sparkworks adds new activities and class materials throughout the year. Drop your
-              email and we&rsquo;ll let you know when something new is available.
-            </p>
-            <div style={{ marginTop: 6 }}>
               <SubscribeForm
                 interests={["Games", "Materials"]}
                 source="home-launches"
                 ctaLabel="Notify me"
                 successMessage="On the list — we&rsquo;ll let you know when something new ships."
               />
-            </div>
+            </ProductCard>
           </div>
         </section>
 
