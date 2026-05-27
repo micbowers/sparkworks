@@ -191,11 +191,51 @@ const FAMILIES = [
     ],
   },
 
-  // -------- Game family: Morris & Shisima --------
+  // -------- Free Sparkworks game: Find The Alien --------
+  {
+    type: "game-free-play",
+    slug: "find-the-alien",
+    title: "Find The Alien",
+    subtitle: "Free · Play in your browser",
+    highlight: "Ask good questions. Eliminate the impossible.",
+    skills: [
+      { label: "Elimination", color: "purple" },
+      { label: "Pattern Detection", color: "purple" },
+    ],
+    image: "/practice/find-the-alien-cover.png",
+    href: "https://findthealien.sparkworks.kids/",
+    sessionPill: "Used in our elimination session",
+    whatItIs:
+      "Two modes: Team Match (teams take turns asking yes/no questions; whoever eliminates the most aliens wins the Detective trophy) and Solo Score-Attack (find the alien on your own — score is the number of questions you needed, beat your personal best). 24 alien characters with distinct features kids learn to look at and ask about.",
+    whyWeRecommend:
+      "The kids who win Find The Alien consistently aren't the ones who guess fastest — they're the ones who design each question to eliminate as many possibilities as possible. That's the same elimination skill that solves Mastermind, logic grids, and any puzzle where you narrow down options under uncertainty. We use Find The Alien with kids in grades 2–3 during our elimination session; it plays just as well at home with kids and grown-ups taking turns being the question-asker.",
+  },
+
+  // -------- Free Sparkworks game: Knight's Tour --------
+  {
+    type: "game-free-play",
+    slug: "knights-tour",
+    title: "Knight's Tour",
+    subtitle: "Free · Play in your browser",
+    highlight: "A 1,200-year-old chess puzzle. Visit every square exactly once.",
+    skills: [
+      { label: "Strategy", color: "teal" },
+      { label: "Pattern Detection", color: "purple" },
+    ],
+    image: "/practice/knights-tour-cover.png",
+    href: "https://knightstour.sparkworks.kids/",
+    sessionPill: "Used as a warm-up in our game theory session",
+    whatItIs:
+      "A knight on a chess board has to visit every square exactly once — using only the knight's L-shaped move. The puzzle is over a thousand years old: first written down in 9th-century India, formalized by Euler in 1759. Easy to understand, surprisingly hard to solve. Board sizes from 5×5 up; hints and tip-cards available if you get stuck.",
+    whyWeRecommend:
+      "The kids who solve Knight's Tour first don't try to plot the whole path up front — they look at each move and ask “which square has the fewest exits left?” Move there first, before it gets cornered. That heuristic (mathematicians call it Warnsdorff's rule) is the same forward-thinking we teach in our game theory session: pick moves that protect your future options, not just your current best play.",
+  },
+
+  // -------- Game family: Shisima & Nine Men's Morris --------
   {
     type: "game-family",
     slug: "morris-shisima",
-    title: "Morris & Shisima",
+    title: "Shisima & Nine Men's Morris",
     subtitle: "Three-in-a-row classics",
     headlineImage: "/practice/nine-mens-morris-wegames.jpg",
     highlight: "Ancient two-player strategy games — simple boards, deep play.",
@@ -488,9 +528,27 @@ function CompactFooter({ family }) {
   const isGameFamily = family.type === "game-family";
   const isAffiliateBook = family.type === "practice-book-affiliate";
   const isGamePreLaunch = family.type === "game-pre-launch";
+  const isFreePlay = family.type === "game-free-play";
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+      {/* Free Sparkworks-built browser game — cover + Play-free CTA. No price/rating, no Amazon
+          button. Teal-success button visually differentiates from the Amazon black/gold button. */}
+      {isFreePlay && (
+        <>
+          <CompactCover image={family.image} alt={`${family.title} screenshot`} />
+          <a
+            className="sw-btn sw-btn-success"
+            href={family.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ alignSelf: "flex-start" }}
+          >
+            Play free →
+          </a>
+        </>
+      )}
+
       {/* Sparkworks-built game in pre-launch — supports either a single `image` or an `images`
           array (e.g., box front + back rendered side-by-side). + subscribe form. */}
       {isGamePreLaunch && (
