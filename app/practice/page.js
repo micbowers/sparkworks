@@ -30,6 +30,7 @@ const FAMILIES = [
         manufacturer: "Goliath Games",
         specs: "6 colors · 4-peg code · ~10 guesses",
         fitHint: "Great for Ember; grows into Blaze",
+        image: "/practice/mastermind-goliath.jpg",
         why:
           "The classic. Six colors and a 4-peg code keep the whole game inside what a younger kid can hold in their head — they can focus on the thinking, not on tracking pieces. That makes this the right on-ramp for kids in grades 2–3 (our Ember track) or any family new to Mastermind-style puzzles. Once a kid is solving it confidently in a handful of guesses, they’re ready to step up to Code Breaker.",
         href: "https://amzn.to/4fQkfO2",
@@ -39,6 +40,7 @@ const FAMILIES = [
         manufacturer: "KIDAMI",
         specs: "8 colors · 5-peg code · 3 difficulty levels",
         fitHint: "Built for Blaze; keeps growing for years",
+        image: "/practice/code-breaker-kidami.jpg",
         why:
           "Same game, leveled up. Two more colors and a longer code push the puzzle past what a kid can hold in their head — they have to write things down, or organize their unused colors on the side of the board. That’s the strategy lesson made physical — the board does the remembering so the kid can do the thinking. Three difficulty levels mean it keeps growing with your kid over months, not just weeks. This is the version we play with our Blaze-track kids (grades 4–6) during the Sparkworks strategy session.",
         href: "https://amzn.to/4dINIH5",
@@ -70,35 +72,63 @@ function SkillChip({ label, color }) {
   );
 }
 
-function VersionPicker({ name, manufacturer, specs, fitHint, why, href }) {
+function VersionPicker({ name, manufacturer, specs, fitHint, why, href, image }) {
   return (
     <div
       className="sw-card"
       style={{
         display: "flex",
         flexDirection: "column",
-        gap: 10,
+        gap: 12,
         background: "var(--sw-white)",
         borderTop: "3px solid var(--sw-teal)",
+        padding: "20px 22px",
       }}
     >
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          height: 180,
+          background: "var(--sw-bone)",
+          borderRadius: "var(--sw-radius-sm)",
+          padding: 8,
+        }}
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={image}
+          alt={`${manufacturer} ${name} board game`}
+          loading="lazy"
+          style={{
+            maxHeight: "100%",
+            maxWidth: "100%",
+            objectFit: "contain",
+            display: "block",
+          }}
+        />
+      </div>
+
       <div>
-        <div className="ts-label" style={{ fontSize: "0.75rem", color: "var(--sw-teal)" }}>
+        <div className="ts-label" style={{ fontSize: "0.6875rem", color: "var(--sw-teal)" }}>
           {manufacturer}
         </div>
         <h4 className="ts-h2" style={{ marginTop: 2, fontSize: "1.25rem" }}>
           {name}
         </h4>
       </div>
+
       <div className="ts-caption" style={{ color: "var(--sw-steel)" }}>{specs}</div>
       <div className="ts-caption" style={{ fontStyle: "italic" }}>{fitHint}</div>
-      <p className="ts-body" style={{ flex: 1 }}>{why}</p>
+      <p className="ts-body" style={{ flex: 1, fontSize: "0.875rem" }}>{why}</p>
+
       <a
-        className="sw-btn"
+        className="sw-btn sw-btn-primary"
         href={href}
         target="_blank"
         rel="sponsored noopener noreferrer"
-        style={{ alignSelf: "flex-start", marginTop: 6 }}
+        style={{ alignSelf: "flex-start", marginTop: 4 }}
       >
         Get on Amazon
       </a>
@@ -114,7 +144,7 @@ function FamilyCard({ family }) {
       style={{
         display: "flex",
         flexDirection: "column",
-        gap: 18,
+        gap: 20,
         scrollMarginTop: 24,
       }}
     >
@@ -124,13 +154,22 @@ function FamilyCard({ family }) {
         ))}
       </div>
 
-      <h3 className="ts-h1" style={{ fontSize: "1.875rem" }}>{family.title}</h3>
+      <h3 className="ts-h1" style={{ fontSize: "1.875rem", margin: 0 }}>
+        {family.title}
+      </h3>
 
       <div>
-        <div className="ts-label" style={{ fontSize: "0.75rem", color: "var(--sw-steel)", marginBottom: 6 }}>
-          What the game is
+        <div
+          className="ts-eyebrow"
+          style={{ color: "var(--sw-teal)", fontSize: "0.75rem", marginBottom: 12 }}
+        >
+          Pick your version
         </div>
-        <p className="ts-body">{family.whatItIs}</p>
+        <div className="sw-grid-2">
+          {family.versions.map((v) => (
+            <VersionPicker key={v.name} {...v} />
+          ))}
+        </div>
       </div>
 
       <div>
@@ -140,25 +179,18 @@ function FamilyCard({ family }) {
         <p className="ts-body">{family.whyWeRecommend}</p>
       </div>
 
-      <div
-        className="sw-callout sw-callout-blue"
-        style={{ margin: 0 }}
-      >
+      <div>
+        <div className="ts-label" style={{ fontSize: "0.75rem", color: "var(--sw-steel)", marginBottom: 6 }}>
+          What the game is
+        </div>
+        <p className="ts-body">{family.whatItIs}</p>
+      </div>
+
+      <div className="sw-callout sw-callout-blue" style={{ margin: 0 }}>
         <div className="ts-label" style={{ fontSize: "0.6875rem", color: "var(--sw-blue)", marginBottom: 4 }}>
           {family.sessionPill}
         </div>
         <p className="ts-body" style={{ margin: 0, fontSize: "0.875rem" }}>{family.whereWeUseIt}</p>
-      </div>
-
-      <div style={{ marginTop: 6 }}>
-        <div className="ts-eyebrow" style={{ color: "var(--sw-teal)", fontSize: "0.75rem", marginBottom: 12 }}>
-          Pick your version
-        </div>
-        <div className="sw-grid-2">
-          {family.versions.map((v) => (
-            <VersionPicker key={v.name} {...v} />
-          ))}
-        </div>
       </div>
     </article>
   );
@@ -171,21 +203,12 @@ export default function PracticePage() {
       <Hero
         showWordmark={false}
         eyebrow="Practice at home"
-        title="The games we use in class — and recommend for play between sessions."
-        tagline="The same games we teach with in our program, picked because they hold up across grades and across generations. As fun against grown-ups as they are between kids."
+        title="Games we use in class — and recommend for play at home."
+        tagline="Same picks we teach with in our program. Chosen because they hold up across grades — and play just as well with grown-ups."
       />
 
       <main className="sw-page sw-body">
         <section className="sw-section" style={{ marginTop: 0 }}>
-          <p className="ts-lead" style={{ maxWidth: 760 }}>
-            Every game on this page is one we&rsquo;ve actually played — in a Sparkworks session, at our own kitchen table, or both. Each entry has our notes on what skill it builds, who in the family it fits, and the version we recommend if there&rsquo;s more than one good option.
-          </p>
-        </section>
-
-        <section className="sw-section" aria-labelledby="recommendations-heading">
-          <h2 id="recommendations-heading" className="ts-h2" style={{ marginBottom: 20 }}>
-            What we recommend
-          </h2>
           <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
             {FAMILIES.map((f) => (
               <FamilyCard key={f.slug} family={f} />
@@ -194,11 +217,8 @@ export default function PracticePage() {
         </section>
 
         <section className="sw-section">
-          <div
-            className="sw-callout sw-callout-ember"
-            style={{ margin: 0 }}
-          >
-            <div className="ts-label" style={{ fontSize: "0.75rem", color: "var(--sw-ember)", marginBottom: 6 }}>
+          <div className="sw-callout sw-callout-teal" style={{ margin: 0 }}>
+            <div className="ts-label" style={{ fontSize: "0.75rem", color: "var(--sw-teal)", marginBottom: 6 }}>
               More on the way
             </div>
             <p className="ts-body" style={{ margin: 0 }}>
