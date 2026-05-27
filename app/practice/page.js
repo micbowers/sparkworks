@@ -19,6 +19,39 @@ export const metadata = {
 // third-party endorsements — and lets the skill chips do the discovery work within.
 
 const FAMILIES = [
+  // -------- Sparkworks-built: Block Code (Coming soon) --------
+  // Verbatim editorial pulled 2026-05-27 from BCT positioning (locked tagline + locked one-line
+  // positioning + S1A Patterns session-1 reference doc). Brand-architecture rule: this is a
+  // Sparkworks-owned surface, so Sparkworks leads and Block Code is referenced as a teaching
+  // activity it uses — that's the allowed cross-product direction per BCT CLAUDE.md.
+  {
+    type: "game-pre-launch",
+    sparkworksBuilt: true,
+    slug: "block-code",
+    title: "Block Code",
+    subtitle: "Ages 8+ · 2–6 players · Coming soon",
+    highlight: "A hands-on thinking game. Eliminate to discover.",
+    skills: [
+      { label: "Pattern Detection", color: "purple" },
+      { label: "Elimination", color: "purple" },
+    ],
+    image: "/practice/block-code-creative.svg",
+    subscribe: {
+      interests: ["Games"],
+      source: "block-code-tabletop",
+      ctaLabel: "Notify me when it ships",
+      successMessage: "On the list — we’ll email when Block Code ships.",
+    },
+    // Editorial detail (shown on "Why we love it" expand)
+    whyWeRecommend:
+      "Block Code is the capstone activity in our pattern-detection session: a block-pattern game where the instructor has a secret rule and players have to test arrangements to figure it out. The best players aren't the ones guessing the fastest — they're the ones testing their ideas most carefully.",
+    whatItIs:
+      "One player is the Code Keeper and knows a secret rule about which block structures are “valid.” The other players are Code Breakers — they take turns building structures and either Test them (safe — get a free YES / NO) or Showdown them (risky — everyone votes first; correct voters earn Code Tokens). Spend a Code Token to make an official guess at the rule. The first player to correctly state the secret rule wins the game.",
+    whereWeUseIt:
+      "During the pattern-detection session (week 1) of our 8-session Sparkworks program, with kids in grades 4–6. The first activity of the program — kids practice forming, testing, and refining ideas under a hidden rule.",
+    sessionPill: "Used in our pattern-detection session",
+  },
+
   // -------- Sparkworks-built materials (multi-skill — sit outside the skill-section grouping) --------
   {
     type: "practice-book-pre-launch",
@@ -401,9 +434,30 @@ function CompactFooter({ family }) {
   const isPreLaunch = family.type === "practice-book-pre-launch";
   const isGameFamily = family.type === "game-family";
   const isAffiliateBook = family.type === "practice-book-affiliate";
+  const isGamePreLaunch = family.type === "game-pre-launch";
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+      {/* Sparkworks-built game in pre-launch — real cover artwork (no placeholder) + subscribe form */}
+      {isGamePreLaunch && (
+        <>
+          <CompactCover image={family.image} alt={`${family.title} cover`} />
+          {family.body && (
+            <p className="ts-body" style={{ margin: 0 }}>{family.body}</p>
+          )}
+          {family.subscribe && (
+            <div>
+              <SubscribeForm
+                interests={family.subscribe.interests}
+                source={family.subscribe.source}
+                ctaLabel={family.subscribe.ctaLabel}
+                successMessage={family.subscribe.successMessage}
+              />
+            </div>
+          )}
+        </>
+      )}
+
       {/* Game family — one or more product blocks, side-by-side when multiple */}
       {isGameFamily && family.versions && family.versions.length > 0 && (
         family.versions.length > 1 ? (
