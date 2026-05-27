@@ -22,7 +22,7 @@ export function ExpandableCard({
   summary,
   detail,
   defaultOpen = false,
-  expandLabel = "Why we love this",
+  expandLabel = "Why we love it",
   collapseLabel = "Hide details",
 }) {
   const [open, setOpen] = useState(defaultOpen);
@@ -37,6 +37,7 @@ export function ExpandableCard({
     }
   }, [slug]);
 
+  const hasDetail = detail != null && detail !== false;
   return (
     <article
       id={slug}
@@ -50,30 +51,32 @@ export function ExpandableCard({
       }}
     >
       {summary}
-      <button
-        type="button"
-        onClick={() => setOpen((v) => !v)}
-        aria-expanded={open}
-        aria-controls={`${slug}-detail`}
-        style={{
-          alignSelf: "flex-start",
-          background: "none",
-          border: "none",
-          padding: "4px 0",
-          fontFamily: "var(--sw-display)",
-          fontSize: "0.8125rem",
-          fontWeight: 700,
-          letterSpacing: "1.2px",
-          textTransform: "uppercase",
-          color: "var(--sw-steel)",
-          cursor: "pointer",
-          textDecoration: "underline",
-          textUnderlineOffset: 4,
-        }}
-      >
-        {open ? collapseLabel : expandLabel}
-      </button>
-      {open && (
+      {hasDetail && (
+        <button
+          type="button"
+          onClick={() => setOpen((v) => !v)}
+          aria-expanded={open}
+          aria-controls={`${slug}-detail`}
+          style={{
+            alignSelf: "flex-start",
+            background: "none",
+            border: "none",
+            padding: "4px 0",
+            fontFamily: "var(--sw-display)",
+            fontSize: "0.8125rem",
+            fontWeight: 700,
+            letterSpacing: "1.2px",
+            textTransform: "uppercase",
+            color: "var(--sw-steel)",
+            cursor: "pointer",
+            textDecoration: "underline",
+            textUnderlineOffset: 4,
+          }}
+        >
+          {open ? collapseLabel : expandLabel}
+        </button>
+      )}
+      {hasDetail && open && (
         <div
           id={`${slug}-detail`}
           style={{

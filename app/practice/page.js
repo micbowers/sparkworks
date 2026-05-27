@@ -52,7 +52,6 @@ const FAMILIES = [
     subtitle: "Goliath Games · KIDAMI",
     headlineImage: "/practice/mastermind-goliath.jpg",
     highlight: "The classic 2-player code-breaking pegs game.",
-    expandLabel: "See both versions",
     skills: [
       { label: "Pattern Detection", color: "purple" },
       { label: "Elimination", color: "purple" },
@@ -321,115 +320,28 @@ function CompactCover({ image, alt }) {
 // COMPACT SUMMARY — what's always visible in the grid
 // ============================================================
 
-function CompactSummary({ family }) {
-  const isPreLaunch = family.type === "practice-book-pre-launch";
-  const isSingleProduct =
-    family.type === "practice-book-affiliate" ||
-    (family.type === "game-family" && family.versions && family.versions.length === 1);
-  const headlineHref = isSingleProduct
-    ? family.href || (family.versions && family.versions[0] && family.versions[0].href)
-    : null;
-
-  // Image-on-top layout (Mike feedback 2026-05-27): on desktop, image-left + narrow content-right
-  // was wrapping text into more lines than mobile's full-width single column — making the cards
-  // read as "too texty." Stacking image-on-top gives the content row the full card width and
-  // shortens the textual stack. The image carries more visual weight too.
+// Product block — used in the always-visible state of each entry. Cover + manufacturer + name +
+// specs + fitHint + Amazon CTA. Per-version `why` text (and other editorial content) lives in the
+// expanded "Why we love it" section. No nested card border (Mike: "too many lines"); just a content
+// block stacked vertically.
+function ProductBlock({ name, manufacturer, specs, fitHint, href, image }) {
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-      {isPreLaunch ? (
-        <PracticeBookPlaceholder size="compact" />
-      ) : (
-        <CompactCover image={family.headlineImage || family.image} alt={`${family.title} cover`} />
-      )}
-
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
-        {family.skills.map((s) => (
-          <SkillChip key={s.label} label={s.label} color={s.color} />
-        ))}
-      </div>
-
-      <div>
-        <h3 className="ts-h2" style={{ margin: 0, fontSize: "1.25rem" }}>
-          {family.title}
-        </h3>
-        {family.subtitle && (
-          <div className="ts-caption" style={{ marginTop: 2 }}>
-            {family.subtitle}
-          </div>
-        )}
-      </div>
-
-      {family.highlight && (
-        <p
-          className="ts-body"
-          style={{
-            margin: 0,
-            fontSize: "0.9375rem",
-          }}
-        >
-          {family.highlight}
-        </p>
-      )}
-
-      {/* Compact-view primary action — outlined for clean look; Ember-primary lives inside expanded detail.
-          Multi-version families have no direct Amazon CTA in compact (which version?) — the expand button
-          label "See both versions" carries that affordance. */}
-      {isPreLaunch && family.subscribe ? (
-        <div>
-          <SubscribeForm
-            interests={family.subscribe.interests}
-            source={family.subscribe.source}
-            ctaLabel={family.subscribe.ctaLabel}
-            successMessage={family.subscribe.successMessage}
-          />
-        </div>
-      ) : headlineHref ? (
-        <a
-          className="sw-btn"
-          href={headlineHref}
-          target="_blank"
-          rel="sponsored noopener noreferrer"
-          style={{ alignSelf: "flex-start" }}
-        >
-          Get on Amazon
-        </a>
-      ) : null}
-    </div>
-  );
-}
-
-// ============================================================
-// DETAIL — what appears when the card is expanded
-// ============================================================
-
-function VersionPicker({ name, manufacturer, specs, fitHint, why, href, image }) {
-  return (
-    <div
-      className="sw-card"
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: 12,
-        background: "var(--sw-white)",
-        padding: "16px 18px",
-      }}
-    >
+    <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
       <div
         style={{
+          height: 200,
+          background: "var(--sw-bone)",
+          borderRadius: "var(--sw-radius-sm)",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          height: 180,
-          background: "var(--sw-white)",
-          border: "1px solid var(--sw-bone)",
-          borderRadius: "var(--sw-radius-sm)",
-          padding: 8,
+          padding: 14,
         }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={image}
-          alt={`${manufacturer} ${name} board game`}
+          alt={`${manufacturer} ${name}`}
           loading="lazy"
           style={{
             maxHeight: "100%",
@@ -439,11 +351,7 @@ function VersionPicker({ name, manufacturer, specs, fitHint, why, href, image })
           }}
         />
       </div>
-
       <div>
-        {/* Designer 2026-05-27: manufacturer label switched from Teal to Steel — Teal carries
-            sectional meaning ("Understand the System") and using it as a generic small-text label
-            dilutes that sectional cue. */}
         <div className="ts-label" style={{ fontSize: "0.6875rem", color: "var(--sw-steel)" }}>
           {manufacturer}
         </div>
@@ -451,17 +359,14 @@ function VersionPicker({ name, manufacturer, specs, fitHint, why, href, image })
           {name}
         </h4>
       </div>
-
-      <div className="ts-caption" style={{ color: "var(--sw-steel)" }}>{specs}</div>
-      <div className="ts-caption" style={{ fontStyle: "italic" }}>{fitHint}</div>
-      <p className="ts-body" style={{ flex: 1, fontSize: "0.875rem" }}>{why}</p>
-
+      {specs && <div className="ts-caption" style={{ color: "var(--sw-steel)" }}>{specs}</div>}
+      {fitHint && <div className="ts-caption" style={{ fontStyle: "italic" }}>{fitHint}</div>}
       <a
         className="sw-btn sw-btn-primary"
         href={href}
         target="_blank"
         rel="sponsored noopener noreferrer"
-        style={{ alignSelf: "flex-start", marginTop: 2 }}
+        style={{ alignSelf: "flex-start" }}
       >
         Get on Amazon
       </a>
@@ -469,37 +374,123 @@ function VersionPicker({ name, manufacturer, specs, fitHint, why, href, image })
   );
 }
 
-function GameFamilyDetail({ family }) {
+function CompactSummary({ family }) {
+  const isPreLaunch = family.type === "practice-book-pre-launch";
+  const isGameFamily = family.type === "game-family";
+  const isAffiliateBook = family.type === "practice-book-affiliate";
+
   return (
-    <>
-      {family.versions && family.versions.length > 0 && (
-        <div>
-          {family.versions.length > 1 && (
-            <div
-              className="ts-eyebrow"
-              style={{ color: "var(--sw-teal)", fontSize: "0.75rem", marginBottom: 12 }}
-            >
-              Pick your version
-            </div>
-          )}
-          {family.versions.length > 1 ? (
-            <div className="sw-grid-2">
-              {family.versions.map((v) => (
-                <VersionPicker key={v.name} {...v} />
-              ))}
-            </div>
-          ) : (
-            <div style={{ maxWidth: 520 }}>
-              <VersionPicker {...family.versions[0]} />
-            </div>
-          )}
+    <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+      {/* Tags */}
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+        {family.skills.map((s) => (
+          <SkillChip key={s.label} label={s.label} color={s.color} />
+        ))}
+      </div>
+
+      {/* Family title + optional subtitle */}
+      <div>
+        <h3 className="ts-h2" style={{ margin: 0, fontSize: "1.375rem" }}>
+          {family.title}
+        </h3>
+        {family.subtitle && (
+          <div className="ts-caption" style={{ marginTop: 2 }}>
+            {family.subtitle}
+          </div>
+        )}
+      </div>
+
+      {/* Optional 1-line highlight */}
+      {family.highlight && (
+        <p className="ts-body" style={{ margin: 0, fontSize: "0.9375rem" }}>
+          {family.highlight}
+        </p>
+      )}
+
+      {/* Products — one or more, side-by-side when multiple */}
+      {isGameFamily && family.versions && family.versions.length > 0 && (
+        family.versions.length > 1 ? (
+          <div className="sw-grid-2" style={{ gap: 28 }}>
+            {family.versions.map((v) => (
+              <ProductBlock key={v.name} {...v} />
+            ))}
+          </div>
+        ) : (
+          <ProductBlock {...family.versions[0]} />
+        )
+      )}
+
+      {/* Affiliate book — the entry header already carries the product name + author/manufacturer,
+          so the product block here is just cover + specs + fitHint + CTA. No duplicated name. */}
+      {isAffiliateBook && (
+        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          <div
+            style={{
+              height: 220,
+              background: "var(--sw-bone)",
+              borderRadius: "var(--sw-radius-sm)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: 14,
+            }}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={family.image}
+              alt={`${family.title} cover`}
+              loading="lazy"
+              style={{
+                maxHeight: "100%",
+                maxWidth: "100%",
+                objectFit: "contain",
+                display: "block",
+              }}
+            />
+          </div>
+          {family.specs && <div className="ts-caption" style={{ color: "var(--sw-steel)" }}>{family.specs}</div>}
+          {family.fitHint && <div className="ts-caption" style={{ fontStyle: "italic" }}>{family.fitHint}</div>}
+          <a
+            className="sw-btn sw-btn-primary"
+            href={family.href}
+            target="_blank"
+            rel="sponsored noopener noreferrer"
+            style={{ alignSelf: "flex-start" }}
+          >
+            Get on Amazon
+          </a>
         </div>
       )}
 
-      {family.proTips && family.proTips.map((tip, i) => (
-        <ProTip key={i} title={tip.title}>{tip.body}</ProTip>
-      ))}
+      {isPreLaunch && (
+        <>
+          <PracticeBookPlaceholder size="compact" />
+          {family.body && (
+            <p className="ts-body" style={{ margin: 0 }}>{family.body}</p>
+          )}
+          {family.subscribe && (
+            <div>
+              <SubscribeForm
+                interests={family.subscribe.interests}
+                source={family.subscribe.source}
+                ctaLabel={family.subscribe.ctaLabel}
+                successMessage={family.subscribe.successMessage}
+              />
+            </div>
+          )}
+        </>
+      )}
+    </div>
+  );
+}
 
+// ============================================================
+// DETAIL — what appears when the card is expanded
+// ============================================================
+
+function GameFamilyDetail({ family }) {
+  return (
+    <>
       {family.whyWeRecommend && (
         <div>
           <div className="ts-label" style={{ fontSize: "0.75rem", color: "var(--sw-steel)", marginBottom: 6 }}>
@@ -518,6 +509,32 @@ function GameFamilyDetail({ family }) {
         </div>
       )}
 
+      {/* Per-version notes — the picker copy that helps a parent choose between editions. Shown in
+          detail (not compact) so the always-visible product blocks stay clean: cover + specs + CTA.
+          Renders for every entry that has versions, including single-version families where the per-
+          version `why` is product-specific reasoning distinct from the family-level whyWeRecommend. */}
+      {family.versions && family.versions.length > 0 && (
+        <div>
+          <div className="ts-label" style={{ fontSize: "0.75rem", color: "var(--sw-steel)", marginBottom: 10 }}>
+            {family.versions.length > 1 ? "More about each version" : "More about this version"}
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+            {family.versions.map((v) => (
+              <div key={v.name}>
+                <div className="ts-label" style={{ fontSize: "0.75rem", color: "var(--sw-steel)" }}>
+                  {v.manufacturer} · {v.name}
+                </div>
+                <p className="ts-body" style={{ marginTop: 4, fontSize: "0.9375rem" }}>{v.why}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {family.proTips && family.proTips.map((tip, i) => (
+        <ProTip key={i} title={tip.title}>{tip.body}</ProTip>
+      ))}
+
       {family.sessionPill && family.whereWeUseIt && (
         <div className="sw-callout sw-callout-teal" style={{ margin: 0 }}>
           <div className="ts-label" style={{ fontSize: "0.6875rem", color: "var(--sw-teal)", marginBottom: 4 }}>
@@ -531,33 +548,22 @@ function GameFamilyDetail({ family }) {
 }
 
 function PracticeBookDetail({ family }) {
-  const isAffiliate = family.type === "practice-book-affiliate";
+  // Affiliate book detail = the long-form body (the verbatim PCr `why` text).
+  // Cover, specs, fitHint, and Amazon CTA all live in the compact view now.
   return (
     <>
-      {family.specs && (
-        <div className="ts-caption" style={{ color: "var(--sw-steel)" }}>{family.specs}</div>
-      )}
-      {family.fitHint && (
-        <div className="ts-caption" style={{ fontStyle: "italic" }}>{family.fitHint}</div>
-      )}
-      <p className="ts-body">{family.body}</p>
-      {isAffiliate && family.href && (
-        <a
-          className="sw-btn sw-btn-primary"
-          href={family.href}
-          target="_blank"
-          rel="sponsored noopener noreferrer"
-          style={{ alignSelf: "flex-start" }}
-        >
-          Get on Amazon
-        </a>
-      )}
+      {family.body && <p className="ts-body">{family.body}</p>}
     </>
   );
 }
 
 function FamilyDetail({ family }) {
-  if (family.type === "practice-book-pre-launch" || family.type === "practice-book-affiliate") {
+  // Pre-launch books surface the full body inline in the compact view, so the expand has
+  // nothing to add. Returning null tells ExpandableCard to skip the expand button.
+  if (family.type === "practice-book-pre-launch") {
+    return null;
+  }
+  if (family.type === "practice-book-affiliate") {
     return <PracticeBookDetail family={family} />;
   }
   return <GameFamilyDetail family={family} />;
@@ -590,7 +596,8 @@ export default function PracticePage() {
             <h2 className="ts-h2" style={{ marginTop: 0, marginBottom: 18, fontSize: "2rem" }}>
               Built by us
             </h2>
-            <div className={sparkworksBuilt.length > 1 ? "sw-grid-2" : undefined}>
+            {/* Entries stack vertically (Mike 2026-05-27: "one at a time like on mobile"). */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
               {sparkworksBuilt.map((f) => (
                 <ExpandableCard
                   key={f.slug}
@@ -609,7 +616,7 @@ export default function PracticePage() {
             <h2 className="ts-h2" style={{ marginTop: 0, marginBottom: 18, fontSize: "2rem" }}>
               We recommend
             </h2>
-            <div className={recommended.length > 1 ? "sw-grid-2" : undefined}>
+            <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
               {recommended.map((f) => (
                 <ExpandableCard
                   key={f.slug}
