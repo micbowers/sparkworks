@@ -35,7 +35,13 @@ const FAMILIES = [
       { label: "Pattern Detection", color: "purple" },
       { label: "Elimination", color: "purple" },
     ],
-    image: "/practice/block-code-creative.svg",
+    // Two product images shown side-by-side (Mike 2026-05-27: use box front + back). Rendered from
+    // BCT's print-ready PDF outputs (cover.pdf + back.pdf); back has the dev-annotation banner
+    // cropped off the top.
+    images: [
+      { src: "/practice/block-code-box-front.png", alt: "Block Code box front", label: "Box front" },
+      { src: "/practice/block-code-box-back.png", alt: "Block Code box back", label: "Box back" },
+    ],
     subscribe: {
       interests: ["Games"],
       source: "block-code-tabletop",
@@ -438,10 +444,48 @@ function CompactFooter({ family }) {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-      {/* Sparkworks-built game in pre-launch — real cover artwork (no placeholder) + subscribe form */}
+      {/* Sparkworks-built game in pre-launch — supports either a single `image` or an `images`
+          array (e.g., box front + back rendered side-by-side). + subscribe form. */}
       {isGamePreLaunch && (
         <>
-          <CompactCover image={family.image} alt={`${family.title} cover`} />
+          {family.images && family.images.length > 1 ? (
+            <div className="sw-grid-2" style={{ gap: 16 }}>
+              {family.images.map((img) => (
+                <div key={img.src} style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                  <div
+                    style={{
+                      height: 240,
+                      background: "var(--sw-white)",
+                      borderRadius: "var(--sw-radius-sm)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "flex-start",
+                      padding: 0,
+                    }}
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={img.src}
+                      alt={img.alt}
+                      loading="lazy"
+                      style={{
+                        maxHeight: "100%",
+                        maxWidth: "100%",
+                        objectFit: "contain",
+                        objectPosition: "left center",
+                        display: "block",
+                      }}
+                    />
+                  </div>
+                  {img.label && (
+                    <div className="ts-caption" style={{ color: "var(--sw-steel)" }}>{img.label}</div>
+                  )}
+                </div>
+              ))}
+            </div>
+          ) : (
+            <CompactCover image={family.image || (family.images && family.images[0]?.src)} alt={`${family.title} cover`} />
+          )}
           {family.body && (
             <p className="ts-body" style={{ margin: 0 }}>{family.body}</p>
           )}
