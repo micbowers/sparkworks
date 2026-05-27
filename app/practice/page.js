@@ -191,24 +191,24 @@ const FAMILIES = [
     ],
   },
 
-  // -------- Game family: Morris games --------
+  // -------- Game family: Morris & Shisima --------
   {
     type: "game-family",
-    slug: "morris-games",
-    title: "Morris games",
-    subtitle: "WE Games",
+    slug: "morris-shisima",
+    title: "Morris & Shisima",
+    subtitle: "Three-in-a-row classics",
     headlineImage: "/practice/nine-mens-morris-wegames.jpg",
-    highlight: "An ancient two-player strategy game.",
+    highlight: "Ancient two-player strategy games — simple boards, deep play.",
     skills: [
       { label: "Game Theory", color: "teal" },
     ],
-    sessionPill: "Used in our game theory session · all grades",
+    sessionPill: "Used in our game theory session",
     whatItIs:
-      "A family of ancient strategy games — Three Men's Morris (3 pieces, 3×3 grid), Six Men's Morris, Nine Men's Morris (the most popular), Twelve Men's Morris — all played on nested squares connected by lines, all built around the same goal: place your pieces, then slide them along the lines to form a row of three (“a mill”), which captures one of your opponent's pieces. The Romans scratched Morris boards into the floor of the Forum. Viking sailors carved them into ship decks. People have been playing for over 3,000 years for the same reason chess has lasted: simple rules, deep strategy.",
+      "A family of ancient strategy games — small board, a few pieces each, one shared goal: line up three of your pieces in a row. The European branch is called Morris (Three Men's, Six Men's, Nine Men's, Twelve Men's — all played on boards with nested squares connected by lines). The East African branch includes Shisima from Kenya — played on an octagonal star with a central point called “shisima,” meaning “body of water.” The Romans scratched Morris boards into the floor of the Forum. Viking sailors carved them into ship decks. Kids in Kenyan villages still play Shisima with stones on a hand-drawn board. These games are thousands of years old and have outlived empires for the same reason chess has: simple rules, deep strategy.",
     whyWeRecommend:
-      "Morris is a two-player game with no hidden information — both players see everything. That structure forces a specific kind of thinking: every move you consider, you also have to think about your opponent's response to it, and the response to their response. That's the same reasoning at the heart of game theory, one of the thinking skills our Sparkworks program teaches directly.",
+      "These are two-player games with no hidden information — both players see everything. That structure forces a specific kind of thinking: every move you consider, you also have to think about your opponent's response to it, and the response to their response. That's the same reasoning at the heart of game theory, one of the thinking skills our Sparkworks program teaches directly.",
     whereWeUseIt:
-      "During the game theory session (week 7) of our 8-session Sparkworks program — Nine Men's Morris with kids in grades 4–6, Three Men's Morris (also called Tapatan) with kids in grades 2–3. Same lesson, different scale.",
+      "During the game theory session (week 7) of our 8-session Sparkworks program. With kids in grades 4–6 we play Nine Men's Morris. With kids in grades 2–3 we play a smaller three-piece version — Three Men's Morris in class, but Shisima (below) is the version we'd recommend for home play because it's actually purchasable as a standalone product. Same lesson, different scale.",
     proTips: [
       {
         title: "Play the person, not the board",
@@ -221,10 +221,25 @@ const FAMILIES = [
     ],
     versions: [
       {
+        name: "Shisima",
+        manufacturer: "FROEBEL",
+        specs: "Octagonal board · 8 outer points + 1 center · 3 pieces per player · ages 6+",
+        fitHint: "Best for grades 2–3; accessible for any kid new to three-in-a-row games",
+        image: "/practice/shisima-froebel.jpg",
+        // Amazon snapshot 2026-05-27. Parser returned 2 ratings — likely correct given the small
+        // listing; reviewCount hidden until verified higher-confidence.
+        price: "$16.95",
+        rating: 4.7,
+        reviewCount: null,
+        why:
+          "A Kenyan strategy game from the Tiriki tradition, played on an octagonal star with a central point called “shisima” — meaning “body of water.” Three pieces per player, simple movement along the lines, but the same game-theoretic challenge as its bigger Morris cousins: every move sets up or blocks a three-in-a-row, and the smart move depends on what your opponent is about to do. The small board and fast games make this the right pick for kids in grades 2–3 — or any family that wants an accessible introduction to this kind of game before stepping up to Nine Men's Morris.",
+        href: "https://amzn.to/49rnF6d",
+      },
+      {
         name: "Nine Men's Morris",
         manufacturer: "WE Games",
         specs: "Wooden board · 9 pieces per player · 24 board positions",
-        fitHint: "Best for grades 4–6; also great for younger kids once they outgrow Three Men's Morris",
+        fitHint: "Best for grades 4–6; also great for younger kids once they outgrow Shisima or Three Men's Morris",
         image: "/practice/nine-mens-morris-wegames.jpg",
         // Amazon snapshot 2026-05-27 — review-count parser returned 1, may have caught a different
         // counter; worth manual verification in next refresh cycle.
