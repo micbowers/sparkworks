@@ -166,6 +166,46 @@ const FAMILIES = [
     ],
   },
 
+  // -------- Morris games family (single version for now; PCr to add Tapatan/Three Men's Morris when a worthy standalone product surfaces) --------
+  {
+    type: "game-family",
+    section: "think-beyond-what-you-control",
+    slug: "morris-games",
+    title: "Morris games",
+    skills: [
+      { label: "Game Theory", color: "teal" },
+    ],
+    sessionPill: "Used in our game theory session · both tracks",
+    whatItIs:
+      "A family of ancient strategy games — Three Men's Morris (3 pieces, 3×3 grid), Six Men's Morris, Nine Men's Morris (the most popular), Twelve Men's Morris — all played on nested squares connected by lines, all built around the same goal: place your pieces, then slide them along the lines to form a row of three (“a mill”), which captures one of your opponent's pieces. The Romans scratched Morris boards into the floor of the Forum. Viking sailors carved them into ship decks. People have been playing for over 3,000 years for the same reason chess has lasted: simple rules, deep strategy.",
+    whyWeRecommend:
+      "Morris is a two-player game with no hidden information — both players see everything. That structure forces a specific kind of thinking: every move you consider, you also have to think about your opponent's response to it, and the response to their response. That's the same reasoning at the heart of game theory, one of the thinking skills our Sparkworks program teaches directly.",
+    whereWeUseIt:
+      "During the game theory session (week 7) of our 8-session Sparkworks program — Nine Men's Morris with our Blaze-track kids (grades 4–6), Three Men's Morris (also called Tapatan) with our Ember-track kids (grades 2–3). Same lesson, different scale.",
+    proTips: [
+      {
+        title: "Play the person, not the board",
+        body: (
+          <p style={{ margin: 0 }}>
+            Most kids&rsquo; first instinct in Morris is to stare at their own pieces — where to build their next mill. The kids who win consistently do something different: they look at their opponent&rsquo;s pieces first, every single turn. Before they make a move, they ask &ldquo;what is my opponent about to do, and do I need to block it or work around it?&rdquo; That habit — playing the OTHER person, not just your own board — is the single biggest skill jump in this kind of game. It&rsquo;s the same prompt our instructors use in class: <em>&ldquo;What&rsquo;s the bigger goal?&rdquo;</em>
+          </p>
+        ),
+      },
+    ],
+    versions: [
+      {
+        name: "Nine Men's Morris",
+        manufacturer: "WE Games",
+        specs: "Wooden board · 9 pieces per player · 24 board positions",
+        fitHint: "Built for Blaze; also great for Ember once kids outgrow Three Men's Morris",
+        image: "/practice/nine-mens-morris-wegames.jpg",
+        why:
+          "The classic nine-piece, three-squares-nested board is where the strategy gets real — kids have to manage their own developing mills AND track the threat of their opponent's near-mills, sometimes both in the same turn. WE Games' wooden edition is the kind of board that lives on a shelf for years and gets pulled out for rainy Saturdays. This is the version we play with our Blaze-track kids (grades 4–6) during the game theory session of the Sparkworks program.",
+        href: "https://amzn.to/4x11gH1",
+      },
+    ],
+  },
+
   // -------- Third-party workbook recommendation (Type B — practice-book-affiliate) --------
   {
     type: "practice-book-affiliate",
@@ -460,17 +500,25 @@ function GameFamilyCard({ family }) {
       </h3>
 
       <div>
-        <div
-          className="ts-eyebrow"
-          style={{ color: "var(--sw-teal)", fontSize: "0.75rem", marginBottom: 12 }}
-        >
-          Pick your version
-        </div>
-        <div className="sw-grid-2">
-          {family.versions.map((v) => (
-            <VersionPicker key={v.name} {...v} />
-          ))}
-        </div>
+        {family.versions.length > 1 && (
+          <div
+            className="ts-eyebrow"
+            style={{ color: "var(--sw-teal)", fontSize: "0.75rem", marginBottom: 12 }}
+          >
+            Pick your version
+          </div>
+        )}
+        {family.versions.length > 1 ? (
+          <div className="sw-grid-2">
+            {family.versions.map((v) => (
+              <VersionPicker key={v.name} {...v} />
+            ))}
+          </div>
+        ) : (
+          <div style={{ maxWidth: 640 }}>
+            <VersionPicker {...family.versions[0]} />
+          </div>
+        )}
       </div>
 
       {family.proTips && family.proTips.map((tip, i) => (
