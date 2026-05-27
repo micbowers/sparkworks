@@ -203,6 +203,7 @@ const FAMILIES = [
       { label: "Pattern Detection", color: "purple" },
     ],
     image: "/practice/find-the-alien-cover.png",
+    imageAlt: "Find The Alien — Dax the alien (the game's social-share mascot)",
     href: "https://findthealien.sparkworks.kids/",
     sessionPill: "Used in our elimination session",
     whatItIs:
@@ -536,7 +537,7 @@ function CompactFooter({ family }) {
           button. Teal-success button visually differentiates from the Amazon black/gold button. */}
       {isFreePlay && (
         <>
-          <CompactCover image={family.image} alt={`${family.title} screenshot`} />
+          <CompactCover image={family.image} alt={family.imageAlt || `${family.title} cover`} />
           <a
             className="sw-btn sw-btn-success"
             href={family.href}
