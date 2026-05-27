@@ -1,6 +1,7 @@
 import { SiteHeader } from "../components/SiteHeader";
 import { Hero } from "../components/Hero";
 import { Footer } from "../components/Footer";
+import { SubscribeForm } from "../components/SubscribeForm";
 
 export const metadata = {
   title: "Practice at home · Sparkworks",
@@ -217,13 +218,31 @@ export default function PracticePage() {
         </section>
 
         <section className="sw-section">
-          <div className="sw-callout sw-callout-teal" style={{ margin: 0 }}>
-            <div className="ts-label" style={{ fontSize: "0.75rem", color: "var(--sw-teal)", marginBottom: 6 }}>
+          <div
+            className="sw-card"
+            style={{
+              borderTop: "4px solid var(--sw-teal)",
+              display: "flex",
+              flexDirection: "column",
+              gap: 10,
+              maxWidth: 760,
+            }}
+          >
+            <div className="ts-eyebrow" style={{ color: "var(--sw-teal)" }}>
               More on the way
             </div>
-            <p className="ts-body" style={{ margin: 0 }}>
-              We add to this page as we play and approve new games. If a parent has asked us about a specific game, we may answer here next.
+            <h2 className="ts-h2">Hear about new picks.</h2>
+            <p className="ts-body">
+              We add to this page as we play and approve new games. Drop your email and we&rsquo;ll let you know when something new lands here.
             </p>
+            <div style={{ marginTop: 6 }}>
+              <SubscribeForm
+                interests={["Games"]}
+                source="practice-page"
+                ctaLabel="Notify me"
+                successMessage="On the list — we&rsquo;ll email when we add a new pick."
+              />
+            </div>
           </div>
         </section>
 
