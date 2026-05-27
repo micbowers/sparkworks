@@ -755,10 +755,10 @@ export default function PracticePage() {
         )}
 
         {recommended.length > 0 && (
-          <section className="sw-section" id="we-recommend">
-            <h2 className="ts-h2" style={{ marginTop: 0, marginBottom: 18, fontSize: "2rem" }}>
-              We recommend
-            </h2>
+          <section className="sw-section" id="we-recommend" style={{ marginTop: 0 }}>
+            {/* Section header dropped 2026-05-27 (Mike): with the Sparkworks-built section hidden,
+                there's nothing to distinguish "We recommend" from — the hero already frames the page.
+                Re-add the h2 when the Built-by-us section comes back. */}
             <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
               {recommended.map((f) => (
                 <ExpandableCard
