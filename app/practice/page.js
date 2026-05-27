@@ -2,6 +2,7 @@ import { SiteHeader } from "../components/SiteHeader";
 import { Hero } from "../components/Hero";
 import { Footer } from "../components/Footer";
 import { SubscribeForm } from "../components/SubscribeForm";
+import { ProTip } from "../components/ProTip";
 
 export const metadata = {
   title: "Practice at home · Sparkworks",
@@ -28,25 +29,50 @@ const FAMILIES = [
     ),
     whereWeUseIt:
       "During the strategy session of our 8-session Sparkworks program, with kids on our Blaze track (grades 4–6). The smaller version below plays just as well at home with younger kids on our Ember track (grades 2–3).",
+    proTip: {
+      title: "Three levels of difficulty",
+      body: (
+        <>
+          <p style={{ margin: 0 }}>
+            Mastermind-style games let you crank the difficulty without buying anything new. Three levels, same equipment:
+          </p>
+          <ol style={{ margin: "12px 0", paddingLeft: "1.5rem" }}>
+            <li style={{ marginBottom: 8 }}>
+              <strong>Level 1 — No repeat colors.</strong> Every peg in the hidden code is a different color. The smallest puzzle space. Best on-ramp for new players.
+            </li>
+            <li style={{ marginBottom: 8 }}>
+              <strong>Level 2 — Repeat colors allowed.</strong> The same color can appear twice or more in the code. The puzzle space roughly triples.
+            </li>
+            <li>
+              <strong>Level 3 — Repeat colors + empty slots.</strong> Same as Level 2, plus the code can include a blank in any position. The hardest mode.
+            </li>
+          </ol>
+          <p style={{ margin: 0 }}>
+            Most boxes default to Level 1. Step up when your kid is solving Level 1 in a handful of guesses — and step up again when Level 2 stops being a challenge. Same game, three lifetimes of replay.
+          </p>
+        </>
+      ),
+    },
     versions: [
       {
+        // Endorsements doc pulled 2026-05-27 (PCr voice + accessibility pass; "3 difficulty levels" moved to family-level Pro Tip).
         name: "Mastermind",
         manufacturer: "Goliath Games",
-        specs: "6 colors · 4-peg code · ~10 guesses",
+        specs: "6 colors · 4-peg code · 10 guesses",
         fitHint: "Great for Ember; grows into Blaze",
         image: "/practice/mastermind-goliath.jpg",
         why:
-          "The classic. Six colors and a 4-peg code keep the whole game inside what a younger kid can hold in their head — they can focus on the thinking, not on tracking pieces. That makes this the right on-ramp for kids in grades 2–3 (our Ember track) or any family new to Mastermind-style puzzles. Once a kid is solving it confidently in a handful of guesses, they’re ready to step up to Code Breaker.",
+          "The classic and simplest. Six colors and a 4-peg code keep the whole game inside what a younger kid can hold in their head — they can focus on the thinking, not on tracking pieces. The right on-ramp for kids in grades 2–3 (our Ember track) or any family new to Mastermind-style puzzles. Once a kid is solving it confidently in a handful of guesses, they’re ready to step up to Code Breaker.",
         href: "https://amzn.to/4fQkfO2",
       },
       {
         name: "Code Breaker",
         manufacturer: "KIDAMI",
-        specs: "8 colors · 5-peg code · 3 difficulty levels (Level 1 no-repeats → Level 2 repeats allowed → Level 3 repeats + empty slots)",
+        specs: "8 colors · 5-peg code · 10 guesses",
         fitHint: "Built for Blaze; keeps growing for years",
         image: "/practice/code-breaker-kidami.jpg",
         why:
-          "Same game, leveled up. Two more colors and a longer code push the puzzle past what a kid can hold in their head — they have to write things down, or organize their unused colors on the side of the board. That’s the strategy lesson made physical — the board does the remembering so the kid can do the thinking. Three difficulty levels mean it keeps growing with your kid over months, not just weeks. This is the version we play with our Blaze-track kids (grades 4–6) during the Sparkworks strategy session.",
+          "Same game, sized up. Two more colors and a longer code push the puzzle past what a kid can hold in their head — they have to write things down, or organize their unused colors on the side of the board. That’s the strategy lesson made physical — the board does the remembering so the kid can do the thinking. This is the version we play with our Blaze-track kids (grades 4–6) during the Sparkworks strategy session.",
         href: "https://amzn.to/4dINIH5",
       },
     ],
@@ -175,6 +201,10 @@ function FamilyCard({ family }) {
           ))}
         </div>
       </div>
+
+      {family.proTip && (
+        <ProTip title={family.proTip.title}>{family.proTip.body}</ProTip>
+      )}
 
       <div>
         <div className="ts-label" style={{ fontSize: "0.75rem", color: "var(--sw-steel)", marginBottom: 6 }}>
