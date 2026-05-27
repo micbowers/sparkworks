@@ -41,7 +41,8 @@ export default function Home() {
               Sessions start the week of September 7 · No payment required to hold a seat.
             </p>
           </div>
-          <Link className="sw-btn sw-btn-primary" href="/program?source=home-hero#interest" style={{ whiteSpace: "nowrap" }}>
+          {/* Ember demotion 2026-05-27: ribbon CTA was sw-btn-primary; the Program card primary CTA below carries the same href, and Designer flagged 3-Ember-CTAs in the upper fold as over the rationing budget. Ribbon now serves as supporting context (kicker + body + outlined button), Program card carries the filled-Ember enrollment action. */}
+          <Link className="sw-btn" href="/program?source=home-hero#interest" style={{ whiteSpace: "nowrap" }}>
             Save my seat
           </Link>
         </div>
@@ -77,8 +78,9 @@ export default function Home() {
               accent="teal"
               kicker="Practice at home"
               title="The games we love"
-              body="Critical thinking grows with practice. We point parents toward the same games we use in class — chosen because they hold up across grades and across generations."
-              cta={{ href: "/practice", label: "See our picks" }}
+              body="Critical thinking grows with practice. We point parents toward the same activities and games we use in class — chosen because they hold up across grades and across generations."
+              cta={{ href: "/practice", label: "See our picks", primary: true }}
+              secondary={{ label: "Why these games", href: "/practice#mastermind-code-breaker" }}
             />
             {/* TM-2026: Materials card title + body reframed. Originals: title="Workbooks · Coming soon"; body="Hands-on workbooks built around the thinking skills the program teaches — patterns, elimination, constraints, estimation, strategy. These are the same materials we use in our classes, usually for the Ignite phase. Designed for kids to work through with a parent on weekends, or solo. The first set is in development." */}
             <ProductCard

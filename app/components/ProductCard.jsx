@@ -28,11 +28,11 @@ export function ProductCard({ accent = "blue", kicker, title, body, cta, seconda
         <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginTop: 6 }}>
           {cta && (
             cta.external ? (
-              <a className={`sw-btn ${cta.primary ? "sw-btn-primary" : ""}`} href={cta.href} target="_blank" rel="noopener noreferrer">
+              <a className={`sw-btn${cta.primary ? " sw-btn-primary" : ""}`} href={cta.href} target="_blank" rel="noopener noreferrer">
                 {cta.label}
               </a>
             ) : (
-              <Link className={`sw-btn ${cta.primary ? "sw-btn-primary" : ""}`} href={cta.href}>
+              <Link className={`sw-btn${cta.primary ? " sw-btn-primary" : ""}`} href={cta.href}>
                 {cta.label}
               </Link>
             )

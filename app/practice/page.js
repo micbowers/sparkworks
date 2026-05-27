@@ -21,8 +21,11 @@ const FAMILIES = [
     sessionPill: "Used in our strategy session · Blaze track",
     whatItIs:
       "Two players. One sets a hidden code of colored pegs behind a shield. The other has a limited number of guesses to crack it. After every guess, the code-setter places small feedback pegs — one for each guess-peg that's the right color in the right spot, another for each that's the right color but in the wrong spot. Misses get no feedback peg at all. The cracker uses the feedback to design their next guess.",
-    whyWeRecommend:
-      "A natural fit for three of the thinking skills our Sparkworks program focuses on most: pattern detection (reading what each piece of feedback actually tells you), elimination (every “miss” permanently rules out a color), and strategy (the kid who pauses to design each guess to teach them something specific beats the kid who grabs at pegs). The whole game is one long pause-think-act loop: pause before guessing, think about what your next guess will teach you, act on what you already know.",
+    whyWeRecommend: (
+      <>
+        A natural fit for three of the thinking skills our Sparkworks program focuses on most: <strong>pattern detection</strong> (reading what each piece of feedback actually tells you), <strong>elimination</strong> (every &ldquo;miss&rdquo; permanently rules out a color), and <strong>strategy</strong> (the kid who pauses to design each guess to teach them something specific beats the kid who grabs at pegs). The whole game is one long pause-think-act loop: pause before guessing, think about what your next guess will teach you, act on what you already know.
+      </>
+    ),
     whereWeUseIt:
       "During the strategy session of our 8-session Sparkworks program, with kids on our Blaze track (grades 4–6). The smaller version below plays just as well at home with younger kids on our Ember track (grades 2–3).",
     versions: [
@@ -39,7 +42,7 @@ const FAMILIES = [
       {
         name: "Code Breaker",
         manufacturer: "KIDAMI",
-        specs: "8 colors · 5-peg code · 3 difficulty levels",
+        specs: "8 colors · 5-peg code · 3 difficulty levels (Level 1 no-repeats → Level 2 repeats allowed → Level 3 repeats + empty slots)",
         fitHint: "Built for Blaze; keeps growing for years",
         image: "/practice/code-breaker-kidami.jpg",
         why:
@@ -82,7 +85,6 @@ function VersionPicker({ name, manufacturer, specs, fitHint, why, href, image })
         flexDirection: "column",
         gap: 12,
         background: "var(--sw-white)",
-        borderTop: "3px solid var(--sw-teal)",
         padding: "20px 22px",
       }}
     >
@@ -92,7 +94,8 @@ function VersionPicker({ name, manufacturer, specs, fitHint, why, href, image })
           alignItems: "center",
           justifyContent: "center",
           height: 180,
-          background: "var(--sw-bone)",
+          background: "var(--sw-white)",
+          border: "1px solid var(--sw-bone)",
           borderRadius: "var(--sw-radius-sm)",
           padding: 8,
         }}
@@ -115,9 +118,9 @@ function VersionPicker({ name, manufacturer, specs, fitHint, why, href, image })
         <div className="ts-label" style={{ fontSize: "0.6875rem", color: "var(--sw-teal)" }}>
           {manufacturer}
         </div>
-        <h4 className="ts-h2" style={{ marginTop: 2, fontSize: "1.25rem" }}>
+        <h3 className="ts-h2" style={{ marginTop: 2, fontSize: "1.25rem" }}>
           {name}
-        </h4>
+        </h3>
       </div>
 
       <div className="ts-caption" style={{ color: "var(--sw-steel)" }}>{specs}</div>
@@ -155,9 +158,9 @@ function FamilyCard({ family }) {
         ))}
       </div>
 
-      <h3 className="ts-h1" style={{ fontSize: "1.875rem", margin: 0 }}>
+      <h2 className="ts-h1" style={{ fontSize: "1.875rem", margin: 0 }}>
         {family.title}
-      </h3>
+      </h2>
 
       <div>
         <div
@@ -201,10 +204,11 @@ export default function PracticePage() {
   return (
     <>
       <SiteHeader />
+      {/* TM-2026: hero title reframed from "Games we use in class — and recommend for play at home." to lead with "Activities" per SPARKWORKS_TRADEMARK_GUIDANCE.md §2 — public-website framing leans activity-led, not game-led, while the Class 041 application is pending. */}
       <Hero
         showWordmark={false}
         eyebrow="Practice at home"
-        title="Games we use in class — and recommend for play at home."
+        title="Activities and games we use in class — and recommend for play at home."
         tagline="Same picks we teach with in our program. Chosen because they hold up across grades — and play just as well with grown-ups."
       />
 
@@ -217,7 +221,7 @@ export default function PracticePage() {
           </div>
         </section>
 
-        <section className="sw-section">
+        <section className="sw-section" id="subscribe">
           <div
             className="sw-card"
             style={{
@@ -226,6 +230,7 @@ export default function PracticePage() {
               flexDirection: "column",
               gap: 10,
               maxWidth: 760,
+              scrollMarginTop: 24,
             }}
           >
             <div className="ts-eyebrow" style={{ color: "var(--sw-teal)" }}>
