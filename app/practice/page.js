@@ -3,6 +3,7 @@ import { Hero } from "../components/Hero";
 import { Footer } from "../components/Footer";
 import { SubscribeForm } from "../components/SubscribeForm";
 import { ProTip } from "../components/ProTip";
+import { ExpandableCard } from "../components/ExpandableCard";
 
 export const metadata = {
   title: "Practice at home · Sparkworks",
@@ -11,8 +12,7 @@ export const metadata = {
 };
 
 // Skill-section structure. Matches the program page's 4-sprint structure.
-// Mike's revision 2026-05-27: Game Theory folds into "Think Beyond What You Control"
-// alongside Strategy (no separate "Think About How Others Will React" section on the website).
+// Mike's revision 2026-05-27: Game Theory folds into "Think Beyond What You Control" alongside Strategy.
 const SECTIONS = [
   {
     slug: "see-what-others-miss",
@@ -47,17 +47,15 @@ const FAMILIES = [
     sparkworksBuilt: true,
     slug: "sparkworks-ignite-practice-book-1",
     title: "Sparkworks Ignite Practice Book 1",
-    // Per Sparkworks Ignite Workbooks Agent TRADEMARK_RULES.md: must use "Practice Book"
-    // (never "Workbook" / "Activity Book"); cover language must reference the Sparkworks program;
-    // position under Programs/Curriculum on the website, never Shop/Store. Surfaced here as a
-    // program material, not as a retail product.
+    subtitle: "Ages 8–12 · Coming soon",
+    highlight: "Four sections, four thinking skills.",
+    expandLabel: "What's inside",
+    // Designer 2026-05-27: four palette-color chips read as a brand-color demo on the compact
+    // card. Single Steel chip in the compact view; the four skills are surfaced in the expanded
+    // detail body.
     skills: [
-      { label: "Pattern Detection", color: "purple" },
-      { label: "Hidden Rules", color: "blue" },
-      { label: "Estimation", color: "ember" },
-      { label: "Strategy", color: "teal" },
+      { label: "Four thinking skills", color: "steel" },
     ],
-    badge: "Coming soon",
     body:
       "A four-section tour through the same thinking skills our class teaches: pattern detection, hidden rules, reasoning under uncertainty, and strategy. Designed for kids ages 8–12 to work through alongside the Sparkworks program — or on their own to keep the spark going between sessions.",
     subscribe: {
@@ -68,12 +66,16 @@ const FAMILIES = [
     },
   },
 
-  // -------- Third-party endorsements (grouped under their primary skill section) --------
+  // -------- Game family: Mastermind & Code Breaker --------
   {
     type: "game-family",
     section: "think-beyond-what-you-control",
     slug: "mastermind-code-breaker",
     title: "Mastermind & Code Breaker",
+    subtitle: "Goliath Games · KIDAMI",
+    headlineImage: "/practice/mastermind-goliath.jpg",
+    highlight: "The classic 2-player code-breaking pegs game.",
+    expandLabel: "See both versions",
     skills: [
       { label: "Pattern Detection", color: "purple" },
       { label: "Elimination", color: "purple" },
@@ -89,11 +91,6 @@ const FAMILIES = [
     ),
     whereWeUseIt:
       "During the strategy session (week 6) of our 8-session Sparkworks program, with kids on our Blaze track (grades 4–6). The smaller version below plays just as well at home with younger kids on our Ember track (grades 2–3).",
-    // Multiple family-level Pro Tips supported via array. Pulled verbatim from canonical sources:
-    //   - "Three strategies we teach in class": SW_S6_Strategy_v1_draft.md (S3B Strategy session plan, lines 473-482, Blaze track Strategy Pause)
-    //   - "Three levels of difficulty": SPARKWORKS_ENDORSEMENTS.md (Mastermind family-level Pro Tip)
-    // Strategies content adjusted to sentence-case bold (kid-facing source used ALL CAPS) for the
-    // parent-facing typographic register; meaning preserved.
     proTips: [
       {
         title: "Three strategies we teach in class",
@@ -143,7 +140,6 @@ const FAMILIES = [
     ],
     versions: [
       {
-        // Endorsements doc pulled 2026-05-27 (PCr voice + accessibility pass; "3 difficulty levels" moved to family-level Pro Tip).
         name: "Mastermind",
         manufacturer: "Goliath Games",
         specs: "6 colors · 4-peg code · 10 guesses",
@@ -166,12 +162,15 @@ const FAMILIES = [
     ],
   },
 
-  // -------- Morris games family (single version for now; PCr to add Tapatan/Three Men's Morris when a worthy standalone product surfaces) --------
+  // -------- Game family: Morris games --------
   {
     type: "game-family",
     section: "think-beyond-what-you-control",
     slug: "morris-games",
     title: "Morris games",
+    subtitle: "WE Games",
+    headlineImage: "/practice/nine-mens-morris-wegames.jpg",
+    highlight: "An ancient two-player strategy game with no hidden information.",
     skills: [
       { label: "Game Theory", color: "teal" },
     ],
@@ -206,13 +205,15 @@ const FAMILIES = [
     ],
   },
 
-  // -------- Third-party workbook recommendation (Type B — practice-book-affiliate) --------
+  // -------- Third-party workbook (Type B — practice-book-affiliate) --------
   {
     type: "practice-book-affiliate",
-    section: "understand-the-system", // primary: Hidden Rules + Constraints; also touches Elimination per PCr's why text
+    section: "understand-the-system",
     slug: "perfectly-logical",
     title: "Perfectly Logical!",
-    subtitle: "by Jenn Larson (Rockridge Press)",
+    subtitle: "Jenn Larson · Rockridge Press",
+    headlineImage: "/practice/perfectly-logical-rockridge.jpg",
+    highlight: "100 logic puzzles for grades 3–6. Solo practice between sessions.",
     skills: [
       { label: "Elimination", color: "purple" },
       { label: "Hidden Rules", color: "blue" },
@@ -221,12 +222,15 @@ const FAMILIES = [
     specs: "100 puzzles · 10 chapters · paperback",
     fitHint: "Best for grades 3–6 (full Blaze track + older Ember)",
     image: "/practice/perfectly-logical-rockridge.jpg",
-    // Endorsements doc pulled 2026-05-27 — verbatim from "Workbooks — Critical Thinking" entry.
     body:
       "100 puzzles across 10 chapters of increasing difficulty — logic grids, cryptograms, secret codes, and Sudoku — from elementary teacher Jenn Larson (20+ years in the classroom). Three of the thinking skills our Sparkworks program teaches show up directly: elimination (the logic grids drill the same reasoning as our second session), hidden-rule hunting (the cryptograms map to our fourth session), and constraint navigation (Sudoku is the same skill as our third). A good solo-practice companion for kids who love the games we play in class — workable between sessions, or after a kid has wrapped the program.",
     href: "https://amzn.to/4e5VEnc",
   },
 ];
+
+// ============================================================
+// Shared atoms
+// ============================================================
 
 function SkillChip({ label, color }) {
   return (
@@ -238,7 +242,7 @@ function SkillChip({ label, color }) {
         fontWeight: 700,
         letterSpacing: "1.5px",
         textTransform: "uppercase",
-        padding: "5px 10px",
+        padding: "4px 9px",
         borderRadius: 999,
         border: `1.5px solid var(--sw-${color})`,
         color: `var(--sw-${color})`,
@@ -251,6 +255,187 @@ function SkillChip({ label, color }) {
   );
 }
 
+// Pre-launch placeholder cover for a Sparkworks Ignite Practice Book.
+function PracticeBookPlaceholder({ size = "compact" }) {
+  const isCompact = size === "compact";
+  return (
+    <div
+      role="img"
+      aria-label="Sparkworks Ignite Practice Book 1 — placeholder cover (preview, real cover coming)"
+      style={{
+        height: isCompact ? 160 : 220,
+        background: "var(--sw-bone)",
+        border: "1.5px solid var(--sw-steel)",
+        borderRadius: "var(--sw-radius-sm)",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: isCompact ? 6 : 10,
+        padding: isCompact ? 14 : 20,
+        textAlign: "center",
+        position: "relative",
+      }}
+    >
+      <span
+        style={{
+          position: "absolute",
+          top: 8,
+          right: 8,
+          fontFamily: "var(--sw-display)",
+          fontSize: "0.5625rem",
+          fontWeight: 700,
+          letterSpacing: "1.2px",
+          textTransform: "uppercase",
+          padding: "2px 6px",
+          border: "1px dashed var(--sw-steel)",
+          borderRadius: 3,
+          color: "var(--sw-steel)",
+          background: "var(--sw-white)",
+        }}
+      >
+        Preview
+      </span>
+      <div>
+        <span style={{ fontFamily: "var(--sw-display)", fontWeight: 800, fontSize: isCompact ? "1.125rem" : "1.5rem", color: "var(--sw-steel)", letterSpacing: "2px" }}>
+          SPARKWORKS
+        </span>
+      </div>
+      <div style={{ fontFamily: "var(--sw-display)", fontWeight: 800, fontSize: isCompact ? "1.875rem" : "2.5rem", color: "var(--sw-ember)", letterSpacing: "3px", lineHeight: 1 }}>
+        IGNITE
+      </div>
+      <div className="ts-caption" style={{ color: "var(--sw-steel)", marginTop: 2, fontSize: "0.6875rem" }}>
+        Practice Book 1
+      </div>
+    </div>
+  );
+}
+
+// Compact image well for a real product cover.
+// Designer 2026-05-27: Bone-bg + aspect-ratio 1:1 makes whitespace around varied-aspect covers
+// (square game boxes vs. taller workbook covers) read as a deliberate framing well, not
+// accidental empty space. Tightened from 160 → 140 to flatten the overall card.
+function CompactCover({ image, alt }) {
+  return (
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        width: "100%",
+        aspectRatio: "1 / 1",
+        maxHeight: 140,
+        background: "var(--sw-bone)",
+        border: "1px solid var(--sw-bone)",
+        borderRadius: "var(--sw-radius-sm)",
+        padding: 12,
+      }}
+    >
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={image}
+        alt={alt}
+        loading="lazy"
+        style={{
+          maxHeight: "100%",
+          maxWidth: "100%",
+          objectFit: "contain",
+          display: "block",
+        }}
+      />
+    </div>
+  );
+}
+
+// ============================================================
+// COMPACT SUMMARY — what's always visible in the grid
+// ============================================================
+
+function CompactSummary({ family }) {
+  const isPreLaunch = family.type === "practice-book-pre-launch";
+  const isSingleProduct =
+    family.type === "practice-book-affiliate" ||
+    (family.type === "game-family" && family.versions && family.versions.length === 1);
+  const headlineHref = isSingleProduct
+    ? family.href || (family.versions && family.versions[0] && family.versions[0].href)
+    : null;
+
+  return (
+    <div style={{ display: "flex", gap: 16, alignItems: "stretch", flexWrap: "wrap" }}>
+      {/* Cover — 140px target per Designer; flexible flex-shrink for the compact grid */}
+      <div style={{ flex: "0 0 140px", maxWidth: 140 }}>
+        {isPreLaunch ? (
+          <PracticeBookPlaceholder size="compact" />
+        ) : (
+          <CompactCover image={family.headlineImage || family.image} alt={`${family.title} cover`} />
+        )}
+      </div>
+
+      {/* Content */}
+      <div style={{ flex: "1 1 240px", display: "flex", flexDirection: "column", gap: 8, minWidth: 0 }}>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+          {family.skills.map((s) => (
+            <SkillChip key={s.label} label={s.label} color={s.color} />
+          ))}
+        </div>
+
+        <div>
+          <h3 className="ts-h2" style={{ margin: 0, fontSize: "1.25rem" }}>
+            {family.title}
+          </h3>
+          {family.subtitle && (
+            <div className="ts-caption" style={{ marginTop: 2 }}>
+              {family.subtitle}
+            </div>
+          )}
+        </div>
+
+        <p
+          className="ts-body"
+          style={{
+            margin: 0,
+            fontSize: "0.9375rem",
+            display: "-webkit-box",
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: "vertical",
+            overflow: "hidden",
+          }}
+        >
+          {family.highlight}
+        </p>
+
+        {/* Compact-view primary action — outlined for clean look; Ember-primary lives inside expanded detail.
+            Multi-version families have no direct Amazon CTA in compact view (which version?) — the new
+            expand button label "See both versions" carries that affordance. */}
+        {isPreLaunch && family.subscribe ? (
+          <div style={{ marginTop: 4 }}>
+            <SubscribeForm
+              interests={family.subscribe.interests}
+              source={family.subscribe.source}
+              ctaLabel={family.subscribe.ctaLabel}
+              successMessage={family.subscribe.successMessage}
+            />
+          </div>
+        ) : headlineHref ? (
+          <a
+            className="sw-btn"
+            href={headlineHref}
+            target="_blank"
+            rel="sponsored noopener noreferrer"
+            style={{ alignSelf: "flex-start", marginTop: 4 }}
+          >
+            Get on Amazon
+          </a>
+        ) : null}
+      </div>
+    </div>
+  );
+}
+
+// ============================================================
+// DETAIL — what appears when the card is expanded
+// ============================================================
+
 function VersionPicker({ name, manufacturer, specs, fitHint, why, href, image }) {
   return (
     <div
@@ -260,7 +445,7 @@ function VersionPicker({ name, manufacturer, specs, fitHint, why, href, image })
         flexDirection: "column",
         gap: 12,
         background: "var(--sw-white)",
-        padding: "20px 22px",
+        padding: "16px 18px",
       }}
     >
       <div
@@ -290,10 +475,13 @@ function VersionPicker({ name, manufacturer, specs, fitHint, why, href, image })
       </div>
 
       <div>
-        <div className="ts-label" style={{ fontSize: "0.6875rem", color: "var(--sw-teal)" }}>
+        {/* Designer 2026-05-27: manufacturer label switched from Teal to Steel — Teal carries
+            sectional meaning ("Understand the System") and using it as a generic small-text label
+            dilutes that sectional cue. */}
+        <div className="ts-label" style={{ fontSize: "0.6875rem", color: "var(--sw-steel)" }}>
           {manufacturer}
         </div>
-        <h4 className="ts-h2" style={{ marginTop: 2, fontSize: "1.25rem" }}>
+        <h4 className="ts-h2" style={{ marginTop: 2, fontSize: "1.125rem" }}>
           {name}
         </h4>
       </div>
@@ -307,7 +495,7 @@ function VersionPicker({ name, manufacturer, specs, fitHint, why, href, image })
         href={href}
         target="_blank"
         rel="sponsored noopener noreferrer"
-        style={{ alignSelf: "flex-start", marginTop: 4 }}
+        style={{ alignSelf: "flex-start", marginTop: 2 }}
       >
         Get on Amazon
       </a>
@@ -315,247 +503,103 @@ function VersionPicker({ name, manufacturer, specs, fitHint, why, href, image })
   );
 }
 
-// Pre-launch placeholder cover for a Sparkworks Ignite Practice Book.
-// Uses the canonical SPARKWORKS + IGNITE split-color line mark per the Ignite TRADEMARK_RULES.md.
-// Designer 2026-05-27: dashed-border preview tab in top-right corner signals "this is a placeholder,
-// not the real cover" honestly — package-design convention for unprinted/proof state.
-function PracticeBookPlaceholder() {
+function GameFamilyDetail({ family }) {
   return (
-    <div
-      role="img"
-      aria-label="Sparkworks Ignite Practice Book 1 — placeholder cover (preview, real cover coming)"
-      style={{
-        height: 220,
-        background: "var(--sw-bone)",
-        border: "1.5px solid var(--sw-steel)",
-        borderRadius: "var(--sw-radius-sm)",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: 10,
-        padding: 20,
-        textAlign: "center",
-        position: "relative",
-      }}
-    >
-      <span
-        style={{
-          position: "absolute",
-          top: 10,
-          right: 10,
-          fontFamily: "var(--sw-display)",
-          fontSize: "0.625rem",
-          fontWeight: 700,
-          letterSpacing: "1.5px",
-          textTransform: "uppercase",
-          padding: "3px 8px",
-          border: "1px dashed var(--sw-steel)",
-          borderRadius: 3,
-          color: "var(--sw-steel)",
-          background: "var(--sw-white)",
-        }}
-      >
-        Preview · Coming soon
-      </span>
-      <div>
-        <span style={{ fontFamily: "var(--sw-display)", fontWeight: 800, fontSize: "1.5rem", color: "var(--sw-steel)", letterSpacing: "2.5px" }}>
-          SPARKWORKS
-        </span>
-      </div>
-      <div style={{ fontFamily: "var(--sw-display)", fontWeight: 800, fontSize: "2.5rem", color: "var(--sw-ember)", letterSpacing: "4px", lineHeight: 1 }}>
-        IGNITE
-      </div>
-      <div className="ts-caption" style={{ color: "var(--sw-steel)", marginTop: 4 }}>
-        Practice Book 1 · Ages 8–12
-      </div>
-    </div>
-  );
-}
-
-// Real product cover for affiliate practice books — Bone-bordered white tile matching the
-// version-picker image well so game and book covers read in the same visual register.
-function PracticeBookCover({ image, alt }) {
-  return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        height: 220,
-        background: "var(--sw-white)",
-        border: "1px solid var(--sw-bone)",
-        borderRadius: "var(--sw-radius-sm)",
-        padding: 8,
-      }}
-    >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={image}
-        alt={alt}
-        loading="lazy"
-        style={{
-          maxHeight: "100%",
-          maxWidth: "100%",
-          objectFit: "contain",
-          display: "block",
-        }}
-      />
-    </div>
-  );
-}
-
-function PracticeBookCard({ family }) {
-  const isPreLaunch = family.type === "practice-book-pre-launch";
-  return (
-    <article
-      id={family.slug}
-      className="sw-card"
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: 18,
-        scrollMarginTop: 24,
-      }}
-    >
-      {/* Designer 2026-05-27: "Coming soon" badge moved from this chip row to the placeholder cover's top-right preview tab — drops one Ember surface AND keeps the launch state visible on the cover where parents look first. */}
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center" }}>
-        {family.skills.map((s) => (
-          <SkillChip key={s.label} label={s.label} color={s.color} />
-        ))}
-      </div>
-
-      <div>
-        <h3 className="ts-h1" style={{ fontSize: "1.5rem", margin: 0 }}>
-          {family.title}
-        </h3>
-        {family.subtitle && (
-          <div className="ts-caption" style={{ marginTop: 4, color: "var(--sw-steel)" }}>
-            {family.subtitle}
-          </div>
-        )}
-      </div>
-
-      <div className="sw-grid-2" style={{ alignItems: "start", gap: 24 }}>
-        {isPreLaunch ? (
-          <PracticeBookPlaceholder />
-        ) : (
-          <PracticeBookCover image={family.image} alt={`${family.title} cover`} />
-        )}
-        <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-          {family.specs && (
-            <div className="ts-caption" style={{ color: "var(--sw-steel)" }}>{family.specs}</div>
-          )}
-          {family.fitHint && (
-            <div className="ts-caption" style={{ fontStyle: "italic" }}>{family.fitHint}</div>
-          )}
-          <p className="ts-body">{family.body}</p>
-          {family.href && (
-            <a
-              className="sw-btn sw-btn-primary"
-              href={family.href}
-              target="_blank"
-              rel="sponsored noopener noreferrer"
-              style={{ alignSelf: "flex-start", marginTop: 4 }}
+    <>
+      {family.versions && family.versions.length > 0 && (
+        <div>
+          {family.versions.length > 1 && (
+            <div
+              className="ts-eyebrow"
+              style={{ color: "var(--sw-teal)", fontSize: "0.75rem", marginBottom: 12 }}
             >
-              Get on Amazon
-            </a>
+              Pick your version
+            </div>
           )}
-          {family.subscribe && (
-            <div style={{ marginTop: 6 }}>
-              <SubscribeForm
-                interests={family.subscribe.interests}
-                source={family.subscribe.source}
-                ctaLabel={family.subscribe.ctaLabel}
-                successMessage={family.subscribe.successMessage}
-              />
+          {family.versions.length > 1 ? (
+            <div className="sw-grid-2">
+              {family.versions.map((v) => (
+                <VersionPicker key={v.name} {...v} />
+              ))}
+            </div>
+          ) : (
+            <div style={{ maxWidth: 520 }}>
+              <VersionPicker {...family.versions[0]} />
             </div>
           )}
         </div>
-      </div>
-    </article>
-  );
-}
-
-function GameFamilyCard({ family }) {
-  return (
-    <article
-      id={family.slug}
-      className="sw-card"
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: 20,
-        scrollMarginTop: 24,
-      }}
-    >
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-        {family.skills.map((s) => (
-          <SkillChip key={s.label} label={s.label} color={s.color} />
-        ))}
-      </div>
-
-      <h3 className="ts-h1" style={{ fontSize: "1.5rem", margin: 0 }}>
-        {family.title}
-      </h3>
-
-      <div>
-        {family.versions.length > 1 && (
-          <div
-            className="ts-eyebrow"
-            style={{ color: "var(--sw-teal)", fontSize: "0.75rem", marginBottom: 12 }}
-          >
-            Pick your version
-          </div>
-        )}
-        {family.versions.length > 1 ? (
-          <div className="sw-grid-2">
-            {family.versions.map((v) => (
-              <VersionPicker key={v.name} {...v} />
-            ))}
-          </div>
-        ) : (
-          <div style={{ maxWidth: 640 }}>
-            <VersionPicker {...family.versions[0]} />
-          </div>
-        )}
-      </div>
+      )}
 
       {family.proTips && family.proTips.map((tip, i) => (
         <ProTip key={i} title={tip.title}>{tip.body}</ProTip>
       ))}
 
-      <div>
-        <div className="ts-label" style={{ fontSize: "0.75rem", color: "var(--sw-steel)", marginBottom: 6 }}>
-          Why we recommend it
+      {family.whyWeRecommend && (
+        <div>
+          <div className="ts-label" style={{ fontSize: "0.75rem", color: "var(--sw-steel)", marginBottom: 6 }}>
+            Why we recommend it
+          </div>
+          <p className="ts-body">{family.whyWeRecommend}</p>
         </div>
-        <p className="ts-body">{family.whyWeRecommend}</p>
-      </div>
+      )}
 
-      <div>
-        <div className="ts-label" style={{ fontSize: "0.75rem", color: "var(--sw-steel)", marginBottom: 6 }}>
-          What the game is
+      {family.whatItIs && (
+        <div>
+          <div className="ts-label" style={{ fontSize: "0.75rem", color: "var(--sw-steel)", marginBottom: 6 }}>
+            What the game is
+          </div>
+          <p className="ts-body">{family.whatItIs}</p>
         </div>
-        <p className="ts-body">{family.whatItIs}</p>
-      </div>
+      )}
 
-      <div className="sw-callout sw-callout-teal" style={{ margin: 0 }}>
-        <div className="ts-label" style={{ fontSize: "0.6875rem", color: "var(--sw-teal)", marginBottom: 4 }}>
-          {family.sessionPill}
+      {family.sessionPill && family.whereWeUseIt && (
+        <div className="sw-callout sw-callout-teal" style={{ margin: 0 }}>
+          <div className="ts-label" style={{ fontSize: "0.6875rem", color: "var(--sw-teal)", marginBottom: 4 }}>
+            {family.sessionPill}
+          </div>
+          <p className="ts-body" style={{ margin: 0, fontSize: "0.875rem" }}>{family.whereWeUseIt}</p>
         </div>
-        <p className="ts-body" style={{ margin: 0, fontSize: "0.875rem" }}>{family.whereWeUseIt}</p>
-      </div>
-    </article>
+      )}
+    </>
   );
 }
 
-function FamilyCard({ family }) {
-  if (family.type === "practice-book-pre-launch" || family.type === "practice-book-affiliate") {
-    return <PracticeBookCard family={family} />;
-  }
-  // Default: game-family (Type A)
-  return <GameFamilyCard family={family} />;
+function PracticeBookDetail({ family }) {
+  const isAffiliate = family.type === "practice-book-affiliate";
+  return (
+    <>
+      {family.specs && (
+        <div className="ts-caption" style={{ color: "var(--sw-steel)" }}>{family.specs}</div>
+      )}
+      {family.fitHint && (
+        <div className="ts-caption" style={{ fontStyle: "italic" }}>{family.fitHint}</div>
+      )}
+      <p className="ts-body">{family.body}</p>
+      {isAffiliate && family.href && (
+        <a
+          className="sw-btn sw-btn-primary"
+          href={family.href}
+          target="_blank"
+          rel="sponsored noopener noreferrer"
+          style={{ alignSelf: "flex-start" }}
+        >
+          Get on Amazon
+        </a>
+      )}
+    </>
+  );
 }
+
+function FamilyDetail({ family }) {
+  if (family.type === "practice-book-pre-launch" || family.type === "practice-book-affiliate") {
+    return <PracticeBookDetail family={family} />;
+  }
+  return <GameFamilyDetail family={family} />;
+}
+
+// ============================================================
+// PAGE
+// ============================================================
 
 export default function PracticePage() {
   const sparkworksBuilt = FAMILIES.filter((f) => f.sparkworksBuilt);
@@ -567,27 +611,36 @@ export default function PracticePage() {
   return (
     <>
       <SiteHeader />
-      {/* TM-2026 entry 12: hero title re-scoped on the Games + Materials merge. Prior text was "Activities and games we use in class — and recommend for play at home." (entry 11); page now covers class materials too. */}
+      {/* TM-2026 entry 12c (revised 2026-05-27): hero title shortened per Designer pre-publish
+          critique — the prior 22-word title was paragraph-in-display-type, fighting the clean
+          shopping intent of the page below. Explanatory clause moved to tagline. */}
       <Hero
         showWordmark={false}
         eyebrow="Practice at home"
-        title="Practice at home — the activities, games, and class materials we use to build each skill."
-        tagline="Same picks we teach with in our program. Chosen because they hold up across grades — and play just as well with grown-ups."
+        title="Practice at home."
+        tagline="Activities, games, and class materials we use in class — recommended for play at home, across grades, and with grown-ups too."
       />
 
       <main className="sw-page sw-body">
         {sparkworksBuilt.length > 0 && (
           <section className="sw-section" id="sparkworks-built" style={{ marginTop: 0 }}>
-            {/* Designer 2026-05-27: "Built by us" eyebrow uses Spark Blue (senior brand identity) rather than Steel to claim the in-house material without recruiting Ember. */}
+            {/* Built-by-us section keeps the eyebrow (it does distinct work — signals "we made this"); skill sections below drop their eyebrow because the H2 already carries the section label. */}
             <div className="ts-eyebrow" style={{ color: "var(--sw-spark)" }}>
               Built by us
             </div>
             <h2 className="ts-h2" style={{ marginTop: 8, marginBottom: 18, fontSize: "2rem" }}>
               Sparkworks practice books
             </h2>
-            <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
+            {/* Single-card cases render full-width (no half-empty 2-col grid); 2+ cards use the standard 2-up grid. */}
+            <div className={sparkworksBuilt.length > 1 ? "sw-grid-2" : undefined}>
               {sparkworksBuilt.map((f) => (
-                <FamilyCard key={f.slug} family={f} />
+                <ExpandableCard
+                  key={f.slug}
+                  slug={f.slug}
+                  expandLabel={f.expandLabel}
+                  summary={<CompactSummary family={f} />}
+                  detail={<FamilyDetail family={f} />}
+                />
               ))}
             </div>
           </section>
@@ -595,19 +648,20 @@ export default function PracticePage() {
 
         {bySection.map((s) => (
           <section key={s.slug} className="sw-section" id={s.slug}>
-            {/* Designer 2026-05-27: dropped "By skill · " prefix from section eyebrow — was visually noisy. Skills list alone in section color is sufficient. */}
-            <div
-              className="ts-eyebrow"
-              style={{ color: `var(--sw-${s.color})` }}
-            >
-              {s.skills}
-            </div>
-            <h2 className="ts-h2" style={{ marginTop: 8, marginBottom: 18, fontSize: "2rem" }}>
+            {/* Designer 2026-05-27: dropped the redundant section eyebrow (was duplicating the H2);
+                H2 now carries the section color so the section identity reads in one element. */}
+            <h2 className="ts-h2" style={{ marginTop: 0, marginBottom: 18, fontSize: "2rem", color: `var(--sw-${s.color})` }}>
               {s.label}
             </h2>
-            <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
+            <div className={s.families.length > 1 ? "sw-grid-2" : undefined}>
               {s.families.map((f) => (
-                <FamilyCard key={f.slug} family={f} />
+                <ExpandableCard
+                  key={f.slug}
+                  slug={f.slug}
+                  expandLabel={f.expandLabel}
+                  summary={<CompactSummary family={f} />}
+                  detail={<FamilyDetail family={f} />}
+                />
               ))}
             </div>
           </section>
@@ -633,10 +687,15 @@ export default function PracticePage() {
               We add to this page as we play, test, and approve new games and practice books. Drop your email and we&rsquo;ll let you know when something new lands here.
             </p>
             <div style={{ marginTop: 6 }}>
+              {/* Designer 2026-05-27: this subscribe form sits in a Teal-accented section (border + eyebrow);
+                  matching the submit button to Teal-success keeps the Ember-rationing budget within bounds
+                  AND reads as visually coherent inside the callout. The Ember-primary CTA register is reserved
+                  for the buy-decision moment inside expanded VersionPicker cards. */}
               <SubscribeForm
                 interests={["Games", "Materials"]}
                 source="practice-page"
                 ctaLabel="Notify me"
+                accent="success"
                 successMessage="On the list — we&rsquo;ll email when we add a new pick."
               />
             </div>
