@@ -76,8 +76,9 @@ export default function Home() {
             <ProductCard
               accent="teal"
               kicker="Practice at home"
-              title="The games we love · Coming soon"
-              body="Critical thinking grows with practice. We point parents toward activities and games that build the same skills our class teaches. More on the way."
+              title="The games we love"
+              body="Critical thinking grows with practice. We point parents toward the same games we use in class — chosen because they hold up across grades and across generations."
+              cta={{ href: "/practice", label: "See our picks" }}
             />
             {/* TM-2026: Materials card title + body reframed. Originals: title="Workbooks · Coming soon"; body="Hands-on workbooks built around the thinking skills the program teaches — patterns, elimination, constraints, estimation, strategy. These are the same materials we use in our classes, usually for the Ignite phase. Designed for kids to work through with a parent on weekends, or solo. The first set is in development." */}
             <ProductCard
