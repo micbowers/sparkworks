@@ -89,30 +89,58 @@ const FAMILIES = [
     ),
     whereWeUseIt:
       "During the strategy session (week 6) of our 8-session Sparkworks program, with kids on our Blaze track (grades 4–6). The smaller version below plays just as well at home with younger kids on our Ember track (grades 2–3).",
-    proTip: {
-      title: "Three levels of difficulty",
-      body: (
-        <>
-          <p style={{ margin: 0 }}>
-            Mastermind-style games let you crank the difficulty without buying anything new. Three levels, same equipment:
-          </p>
-          <ol style={{ margin: "12px 0", paddingLeft: "1.5rem" }}>
-            <li style={{ marginBottom: 8 }}>
-              <strong>Level 1 — No repeat colors.</strong> Every peg in the hidden code is a different color. The smallest puzzle space. Best on-ramp for new players.
-            </li>
-            <li style={{ marginBottom: 8 }}>
-              <strong>Level 2 — Repeat colors allowed.</strong> The same color can appear twice or more in the code. The puzzle space roughly triples.
-            </li>
-            <li>
-              <strong>Level 3 — Repeat colors + empty slots.</strong> Same as Level 2, plus the code can include a blank in any position. The hardest mode.
-            </li>
-          </ol>
-          <p style={{ margin: 0 }}>
-            Most boxes default to Level 1. Step up when your kid is solving Level 1 in a handful of guesses — and step up again when Level 2 stops being a challenge. Same game, three lifetimes of replay.
-          </p>
-        </>
-      ),
-    },
+    // Multiple family-level Pro Tips supported via array. Pulled verbatim from canonical sources:
+    //   - "Three strategies we teach in class": SW_S6_Strategy_v1_draft.md (S3B Strategy session plan, lines 473-482, Blaze track Strategy Pause)
+    //   - "Three levels of difficulty": SPARKWORKS_ENDORSEMENTS.md (Mastermind family-level Pro Tip)
+    // Strategies content adjusted to sentence-case bold (kid-facing source used ALL CAPS) for the
+    // parent-facing typographic register; meaning preserved.
+    proTips: [
+      {
+        title: "Three strategies we teach in class",
+        body: (
+          <>
+            <p style={{ margin: 0 }}>
+              Halfway through the Session 6 Mastermind tournament, we pause and teach kids three deliberate moves. Same moves we use ourselves when we play.
+            </p>
+            <ol style={{ margin: "12px 0", paddingLeft: "1.5rem" }}>
+              <li style={{ marginBottom: 12 }}>
+                <strong>Sort your colors.</strong> Place all six colors on the side of your board where you can see them. As you learn a color is out, push it to one side; as you learn it&rsquo;s in, push it to the other. The board tracks what you know — you don&rsquo;t have to hold it in your head.
+              </li>
+              <li style={{ marginBottom: 12 }}>
+                <strong>Test two at a time.</strong> Each guess, focus on testing two specific colors. Fill the other slots however — repeats, fillers, doesn&rsquo;t matter. Two colors per guess is easier to read than four. You learn less per guess, but you never get confused about what the feedback means.
+              </li>
+              <li>
+                <strong>Use dead colors as noise.</strong> Once you know a color is not in the code, use it deliberately in your next guess. That slot becomes a &ldquo;free&rdquo; slot whose feedback you can ignore — which means the other slots are easier to read. Dead colors are tools, not waste.
+              </li>
+            </ol>
+          </>
+        ),
+      },
+      {
+        title: "Three levels of difficulty",
+        body: (
+          <>
+            <p style={{ margin: 0 }}>
+              Mastermind-style games let you crank the difficulty without buying anything new. Three levels, same equipment:
+            </p>
+            <ol style={{ margin: "12px 0", paddingLeft: "1.5rem" }}>
+              <li style={{ marginBottom: 8 }}>
+                <strong>Level 1 — No repeat colors.</strong> Every peg in the hidden code is a different color. The smallest puzzle space. Best on-ramp for new players.
+              </li>
+              <li style={{ marginBottom: 8 }}>
+                <strong>Level 2 — Repeat colors allowed.</strong> The same color can appear twice or more in the code. The puzzle space roughly triples.
+              </li>
+              <li>
+                <strong>Level 3 — Repeat colors + empty slots.</strong> Same as Level 2, plus the code can include a blank in any position. The hardest mode.
+              </li>
+            </ol>
+            <p style={{ margin: 0 }}>
+              Most boxes default to Level 1. Step up when your kid is solving Level 1 in a handful of guesses — and step up again when Level 2 stops being a challenge. Same game, three lifetimes of replay.
+            </p>
+          </>
+        ),
+      },
+    ],
     versions: [
       {
         // Endorsements doc pulled 2026-05-27 (PCr voice + accessibility pass; "3 difficulty levels" moved to family-level Pro Tip).
@@ -363,9 +391,9 @@ function GameFamilyCard({ family }) {
         </div>
       </div>
 
-      {family.proTip && (
-        <ProTip title={family.proTip.title}>{family.proTip.body}</ProTip>
-      )}
+      {family.proTips && family.proTips.map((tip, i) => (
+        <ProTip key={i} title={tip.title}>{tip.body}</ProTip>
+      ))}
 
       <div>
         <div className="ts-label" style={{ fontSize: "0.75rem", color: "var(--sw-steel)", marginBottom: 6 }}>
