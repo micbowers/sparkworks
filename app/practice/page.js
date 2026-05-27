@@ -165,6 +165,27 @@ const FAMILIES = [
       },
     ],
   },
+
+  // -------- Third-party workbook recommendation (Type B — practice-book-affiliate) --------
+  {
+    type: "practice-book-affiliate",
+    section: "understand-the-system", // primary: Hidden Rules + Constraints; also touches Elimination per PCr's why text
+    slug: "perfectly-logical",
+    title: "Perfectly Logical!",
+    subtitle: "by Jenn Larson (Rockridge Press)",
+    skills: [
+      { label: "Elimination", color: "purple" },
+      { label: "Hidden Rules", color: "blue" },
+      { label: "Constraints", color: "blue" },
+    ],
+    specs: "100 puzzles · 10 chapters · paperback",
+    fitHint: "Best for grades 3–6 (full Blaze track + older Ember)",
+    image: "/practice/perfectly-logical-rockridge.jpg",
+    // Endorsements doc pulled 2026-05-27 — verbatim from "Workbooks — Critical Thinking" entry.
+    body:
+      "100 puzzles across 10 chapters of increasing difficulty — logic grids, cryptograms, secret codes, and Sudoku — from elementary teacher Jenn Larson (20+ years in the classroom). Three of the thinking skills our Sparkworks program teaches show up directly: elimination (the logic grids drill the same reasoning as our second session), hidden-rule hunting (the cryptograms map to our fourth session), and constraint navigation (Sudoku is the same skill as our third). A good solo-practice companion for kids who love the games we play in class — workable between sessions, or after a kid has wrapped the program.",
+    href: "https://amzn.to/4e5VEnc",
+  },
 ];
 
 function SkillChip({ label, color }) {
@@ -312,7 +333,40 @@ function PracticeBookPlaceholder() {
   );
 }
 
+// Real product cover for affiliate practice books — Bone-bordered white tile matching the
+// version-picker image well so game and book covers read in the same visual register.
+function PracticeBookCover({ image, alt }) {
+  return (
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        height: 220,
+        background: "var(--sw-white)",
+        border: "1px solid var(--sw-bone)",
+        borderRadius: "var(--sw-radius-sm)",
+        padding: 8,
+      }}
+    >
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={image}
+        alt={alt}
+        loading="lazy"
+        style={{
+          maxHeight: "100%",
+          maxWidth: "100%",
+          objectFit: "contain",
+          display: "block",
+        }}
+      />
+    </div>
+  );
+}
+
 function PracticeBookCard({ family }) {
+  const isPreLaunch = family.type === "practice-book-pre-launch";
   return (
     <article
       id={family.slug}
@@ -331,14 +385,42 @@ function PracticeBookCard({ family }) {
         ))}
       </div>
 
-      <h3 className="ts-h1" style={{ fontSize: "1.5rem", margin: 0 }}>
-        {family.title}
-      </h3>
+      <div>
+        <h3 className="ts-h1" style={{ fontSize: "1.5rem", margin: 0 }}>
+          {family.title}
+        </h3>
+        {family.subtitle && (
+          <div className="ts-caption" style={{ marginTop: 4, color: "var(--sw-steel)" }}>
+            {family.subtitle}
+          </div>
+        )}
+      </div>
 
       <div className="sw-grid-2" style={{ alignItems: "start", gap: 24 }}>
-        <PracticeBookPlaceholder />
+        {isPreLaunch ? (
+          <PracticeBookPlaceholder />
+        ) : (
+          <PracticeBookCover image={family.image} alt={`${family.title} cover`} />
+        )}
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+          {family.specs && (
+            <div className="ts-caption" style={{ color: "var(--sw-steel)" }}>{family.specs}</div>
+          )}
+          {family.fitHint && (
+            <div className="ts-caption" style={{ fontStyle: "italic" }}>{family.fitHint}</div>
+          )}
           <p className="ts-body">{family.body}</p>
+          {family.href && (
+            <a
+              className="sw-btn sw-btn-primary"
+              href={family.href}
+              target="_blank"
+              rel="sponsored noopener noreferrer"
+              style={{ alignSelf: "flex-start", marginTop: 4 }}
+            >
+              Get on Amazon
+            </a>
+          )}
           {family.subscribe && (
             <div style={{ marginTop: 6 }}>
               <SubscribeForm
@@ -420,10 +502,10 @@ function GameFamilyCard({ family }) {
 }
 
 function FamilyCard({ family }) {
-  if (family.type === "practice-book-pre-launch") {
+  if (family.type === "practice-book-pre-launch" || family.type === "practice-book-affiliate") {
     return <PracticeBookCard family={family} />;
   }
-  // Default: game-family (Type A). Future: practice-book-affiliate (Type B) once PCr authors entries.
+  // Default: game-family (Type A)
   return <GameFamilyCard family={family} />;
 }
 
