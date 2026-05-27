@@ -165,7 +165,7 @@ const FAMILIES = [
         name: "Mastermind",
         manufacturer: "Goliath Games",
         specs: "6 colors · 4-peg code · 10 guesses",
-        fitHint: "Best for grades 2–3; grows with kids",
+        fitHint: "Grades 2–3 and up · fun for adults too",
         image: "/practice/mastermind-goliath.jpg",
         // Amazon snapshot 2026-05-27 — refresh task filed for periodic update.
         price: "$39.05",
@@ -179,7 +179,7 @@ const FAMILIES = [
         name: "Code Breaker",
         manufacturer: "KIDAMI",
         specs: "8 colors · 5-peg code · 10 guesses",
-        fitHint: "Best for grades 4–6; keeps growing for years",
+        fitHint: "Grades 4–6 and up · fun for adults too",
         image: "/practice/code-breaker-kidami.jpg",
         price: "$15.99",
         rating: 4.6,
@@ -200,6 +200,7 @@ const FAMILIES = [
     headlineImage: "/practice/nine-mens-morris-wegames.jpg",
     highlight: "Ancient two-player strategy games — simple boards, deep play.",
     skills: [
+      { label: "Strategy", color: "teal" },
       { label: "Game Theory", color: "teal" },
     ],
     sessionPill: "Used in our game theory session",
@@ -223,8 +224,8 @@ const FAMILIES = [
       {
         name: "Shisima",
         manufacturer: "FROEBEL",
-        specs: "Octagonal board · 8 outer points + 1 center · 3 pieces per player · ages 6+",
-        fitHint: "Best for grades 2–3; accessible for any kid new to three-in-a-row games",
+        specs: "Octagonal board · 8 outer points + 1 center · 3 pieces per player · ages 6 and up",
+        fitHint: "Grades 2–3 and up · fun for adults too",
         image: "/practice/shisima-froebel.jpg",
         // Amazon snapshot 2026-05-27. Parser returned 2 ratings — likely correct given the small
         // listing; reviewCount hidden until verified higher-confidence.
@@ -239,7 +240,7 @@ const FAMILIES = [
         name: "Nine Men's Morris",
         manufacturer: "WE Games",
         specs: "Wooden board · 9 pieces per player · 24 board positions",
-        fitHint: "Best for grades 4–6; also great for younger kids once they outgrow Shisima or Three Men's Morris",
+        fitHint: "Grades 4–6 and up · fun for adults too · also great for younger kids once they outgrow Shisima",
         image: "/practice/nine-mens-morris-wegames.jpg",
         // Amazon snapshot 2026-05-27 — review-count parser returned 1, may have caught a different
         // counter; worth manual verification in next refresh cycle.
@@ -260,14 +261,14 @@ const FAMILIES = [
     title: "Perfectly Logical!",
     subtitle: "Jenn Larson · Rockridge Press",
     headlineImage: "/practice/perfectly-logical-rockridge.jpg",
-    highlight: "100 logic puzzles for grades 3–6.",
+    highlight: "100 logic puzzles for grades 3 and up.",
     skills: [
       { label: "Elimination", color: "purple" },
       { label: "Hidden Rules", color: "blue" },
       { label: "Constraints", color: "blue" },
     ],
     specs: "100 puzzles · 10 chapters · paperback",
-    fitHint: "Best for grades 3–6",
+    fitHint: "Grades 3 and up · fun for adults too",
     image: "/practice/perfectly-logical-rockridge.jpg",
     // Amazon snapshot 2026-05-27
     price: "$12.99",
