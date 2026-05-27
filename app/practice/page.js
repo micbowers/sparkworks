@@ -4,6 +4,7 @@ import { Footer } from "../components/Footer";
 import { SubscribeForm } from "../components/SubscribeForm";
 import { ProTip } from "../components/ProTip";
 import { ExpandableCard } from "../components/ExpandableCard";
+import { AmazonButton } from "../components/AmazonButton";
 
 export const metadata = {
   title: "Practice at home · Sparkworks",
@@ -164,6 +165,10 @@ const FAMILIES = [
         specs: "6 colors · 4-peg code · 10 guesses",
         fitHint: "Best for grades 2–3; grows with kids",
         image: "/practice/mastermind-goliath.jpg",
+        // Amazon snapshot 2026-05-27 — refresh task filed for periodic update.
+        price: "$39.05",
+        rating: 4.5,
+        reviewCount: 489,
         why:
           "The classic and simplest. Six colors and a 4-peg code keep the whole game inside what a younger kid can hold in their head — they can focus on the thinking, not on tracking pieces. The right on-ramp for kids in grades 2–3 or any family new to Mastermind-style puzzles. Once a kid is solving it confidently in a handful of guesses, they’re ready to step up to Code Breaker.",
         href: "https://amzn.to/4fQkfO2",
@@ -174,6 +179,9 @@ const FAMILIES = [
         specs: "8 colors · 5-peg code · 10 guesses",
         fitHint: "Best for grades 4–6; keeps growing for years",
         image: "/practice/code-breaker-kidami.jpg",
+        price: "$15.99",
+        rating: 4.6,
+        reviewCount: 164,
         why:
           "Same game, sized up. Two more colors and a longer code push the puzzle past what a kid can hold in their head — they have to write things down, or organize their unused colors on the side of the board. That’s the strategy lesson made physical — the board does the remembering so the kid can do the thinking. This is the version we play with kids in grades 4–6 during the Sparkworks strategy session.",
         href: "https://amzn.to/4dINIH5",
@@ -216,6 +224,11 @@ const FAMILIES = [
         specs: "Wooden board · 9 pieces per player · 24 board positions",
         fitHint: "Best for grades 4–6; also great for younger kids once they outgrow Three Men's Morris",
         image: "/practice/nine-mens-morris-wegames.jpg",
+        // Amazon snapshot 2026-05-27 — review-count parser returned 1, may have caught a different
+        // counter; worth manual verification in next refresh cycle.
+        price: "$15.99",
+        rating: 4.7,
+        reviewCount: null, // hidden until verified
         why:
           "The classic nine-piece, three-squares-nested board is where the strategy gets real — kids have to manage their own developing mills AND track the threat of their opponent's near-mills, sometimes both in the same turn. WE Games' wooden edition is the kind of board that lives on a shelf for years and gets pulled out for rainy Saturdays. This is the version we play with kids in grades 4–6 during the game theory session of the Sparkworks program.",
         href: "https://amzn.to/4x11gH1",
@@ -239,6 +252,10 @@ const FAMILIES = [
     specs: "100 puzzles · 10 chapters · paperback",
     fitHint: "Best for grades 3–6",
     image: "/practice/perfectly-logical-rockridge.jpg",
+    // Amazon snapshot 2026-05-27
+    price: "$12.99",
+    rating: 4.7,
+    reviewCount: 5849,
     body:
       "100 puzzles across 10 chapters of increasing difficulty — logic grids, cryptograms, secret codes, and Sudoku — from elementary teacher Jenn Larson (20+ years in the classroom). Three of the thinking skills our Sparkworks program teaches show up directly: elimination (the logic grids drill the same reasoning as our second session), hidden-rule hunting (the cryptograms map to our fourth session), and constraint navigation (Sudoku is the same skill as our third). A good solo-practice companion for kids who love the games we play in class — workable between sessions, or after a kid has wrapped the program.",
     href: "https://amzn.to/4e5VEnc",
@@ -352,7 +369,26 @@ function CompactCover({ image, alt }) {
 // specs + fitHint + Amazon CTA. Per-version `why` text (and other editorial content) lives in the
 // expanded "Why we love it" section. No nested card border (Mike: "too many lines"); just a content
 // block stacked vertically.
-function ProductBlock({ name, manufacturer, specs, fitHint, href, image }) {
+// Single-line star + numeric rating + (review count). Amazon-orange star color (#FFA41C)
+// matches the shopping convention parents already recognize; doesn't conflict with brand-reserved
+// Spark Yellow (Da Vinci Badge use only).
+function RatingLine({ rating, reviewCount, price }) {
+  if (rating == null && price == null) return null;
+  return (
+    <div className="ts-caption" style={{ color: "var(--sw-steel)", display: "flex", flexWrap: "wrap", gap: 8, alignItems: "baseline" }}>
+      {rating != null && (
+        <span style={{ display: "inline-flex", alignItems: "baseline", gap: 4 }}>
+          <span style={{ color: "#FFA41C", fontSize: "0.875rem" }}>★</span>
+          <span><strong>{rating.toFixed(1)}</strong>{reviewCount ? ` (${reviewCount.toLocaleString()})` : ""}</span>
+        </span>
+      )}
+      {rating != null && price != null && <span aria-hidden="true">·</span>}
+      {price != null && <span><strong>{price}</strong></span>}
+    </div>
+  );
+}
+
+function ProductBlock({ name, manufacturer, specs, fitHint, href, image, price, rating, reviewCount }) {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
       <div
@@ -390,15 +426,8 @@ function ProductBlock({ name, manufacturer, specs, fitHint, href, image }) {
       </div>
       {specs && <div className="ts-caption" style={{ color: "var(--sw-steel)" }}>{specs}</div>}
       {fitHint && <div className="ts-caption" style={{ fontStyle: "italic" }}>{fitHint}</div>}
-      <a
-        className="sw-btn sw-btn-primary"
-        href={href}
-        target="_blank"
-        rel="sponsored noopener noreferrer"
-        style={{ alignSelf: "flex-start" }}
-      >
-        Get on Amazon
-      </a>
+      <RatingLine rating={rating} reviewCount={reviewCount} price={price} />
+      <AmazonButton href={href} />
     </div>
   );
 }
@@ -546,15 +575,8 @@ function CompactFooter({ family }) {
           </div>
           {family.specs && <div className="ts-caption" style={{ color: "var(--sw-steel)" }}>{family.specs}</div>}
           {family.fitHint && <div className="ts-caption" style={{ fontStyle: "italic" }}>{family.fitHint}</div>}
-          <a
-            className="sw-btn sw-btn-primary"
-            href={family.href}
-            target="_blank"
-            rel="sponsored noopener noreferrer"
-            style={{ alignSelf: "flex-start" }}
-          >
-            Get on Amazon
-          </a>
+          <RatingLine rating={family.rating} reviewCount={family.reviewCount} price={family.price} />
+          <AmazonButton href={family.href} />
         </div>
       )}
 
@@ -645,13 +667,16 @@ function GameFamilyDetail({ family }) {
 
 function PracticeBookDetail({ family }) {
   // Affiliate book detail = the long-form body (the verbatim PCr `why` text).
-  // Cover, specs, fitHint, and Amazon CTA all live in the compact view now.
+  // Cover, specs, fitHint, price/rating, and Amazon CTA all live in the compact view now.
   return (
     <>
       {family.body && <p className="ts-body">{family.body}</p>}
     </>
   );
 }
+
+// Game-family detail also gets a per-version `why` block — already in GameFamilyDetail above.
+// No changes needed there since price/rating live in the compact ProductBlock, not in detail.
 
 function FamilyDetail({ family }) {
   // Pre-launch books surface the full body inline in the compact view, so the expand has
@@ -771,7 +796,7 @@ export default function PracticePage() {
 
         <section className="sw-section">
           <p className="ts-caption" style={{ fontStyle: "italic" }}>
-            Some links on this page are affiliate links. Sparkworks is an Amazon Associate; we earn from qualifying purchases at no extra cost to you.
+            Some links on this page are affiliate links. Sparkworks is an Amazon Associate; we earn from qualifying purchases at no extra cost to you. Price and rating data shown is as of 2026-05-27 and may have changed — check Amazon for the latest.
           </p>
         </section>
       </main>
