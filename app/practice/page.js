@@ -11,34 +11,12 @@ export const metadata = {
     "Activities, games, and class materials the Sparkworks program uses to teach critical thinking — organized by the skills they build, and recommended for practice between sessions.",
 };
 
-// Skill-section structure. Matches the program page's 4-sprint structure.
-// Mike's revision 2026-05-27: Game Theory folds into "Think Beyond What You Control" alongside Strategy.
-const SECTIONS = [
-  {
-    slug: "see-what-others-miss",
-    label: "See What Others Miss",
-    color: "purple",
-    skills: "Pattern Detection · Elimination",
-  },
-  {
-    slug: "understand-the-system",
-    label: "Understand the System",
-    color: "blue",
-    skills: "Constraints · Hidden Rules",
-  },
-  {
-    slug: "decide-without-all-the-facts",
-    label: "Decide Without All the Facts",
-    color: "ember",
-    skills: "Estimation · Elimination (under uncertainty)",
-  },
-  {
-    slug: "think-beyond-what-you-control",
-    label: "Think Beyond What You Control",
-    color: "teal",
-    skills: "Strategy · Game Theory",
-  },
-];
+// Skills are TAGS — they appear as chips on each card so parents can see at a glance
+// what each pick builds, but they do NOT determine where the card sits on the page.
+// (Mike's clarification 2026-05-27: most games and books cover multiple skill areas, so
+// trying to bucket them by skill creates arbitrary placement decisions and misses the
+// cross-cutting nature.) The page now organizes by SOURCE — Sparkworks-built vs.
+// third-party endorsements — and lets the skill chips do the discovery work within.
 
 const FAMILIES = [
   // -------- Sparkworks-built materials (multi-skill — sit outside the skill-section grouping) --------
@@ -69,7 +47,6 @@ const FAMILIES = [
   // -------- Game family: Mastermind & Code Breaker --------
   {
     type: "game-family",
-    section: "think-beyond-what-you-control",
     slug: "mastermind-code-breaker",
     title: "Mastermind & Code Breaker",
     subtitle: "Goliath Games · KIDAMI",
@@ -165,7 +142,6 @@ const FAMILIES = [
   // -------- Game family: Morris games --------
   {
     type: "game-family",
-    section: "think-beyond-what-you-control",
     slug: "morris-games",
     title: "Morris games",
     subtitle: "WE Games",
@@ -208,7 +184,6 @@ const FAMILIES = [
   // -------- Third-party workbook (Type B — practice-book-affiliate) --------
   {
     type: "practice-book-affiliate",
-    section: "understand-the-system",
     slug: "perfectly-logical",
     title: "Perfectly Logical!",
     subtitle: "Jenn Larson · Rockridge Press",
@@ -603,10 +578,7 @@ function FamilyDetail({ family }) {
 
 export default function PracticePage() {
   const sparkworksBuilt = FAMILIES.filter((f) => f.sparkworksBuilt);
-  const bySection = SECTIONS.map((s) => ({
-    ...s,
-    families: FAMILIES.filter((f) => f.section === s.slug && !f.sparkworksBuilt),
-  })).filter((s) => s.families.length > 0);
+  const recommended = FAMILIES.filter((f) => !f.sparkworksBuilt);
 
   return (
     <>
@@ -624,14 +596,9 @@ export default function PracticePage() {
       <main className="sw-page sw-body">
         {sparkworksBuilt.length > 0 && (
           <section className="sw-section" id="sparkworks-built" style={{ marginTop: 0 }}>
-            {/* Built-by-us section keeps the eyebrow (it does distinct work — signals "we made this"); skill sections below drop their eyebrow because the H2 already carries the section label. */}
-            <div className="ts-eyebrow" style={{ color: "var(--sw-spark)" }}>
+            <h2 className="ts-h2" style={{ marginTop: 0, marginBottom: 18, fontSize: "2rem" }}>
               Built by us
-            </div>
-            <h2 className="ts-h2" style={{ marginTop: 8, marginBottom: 18, fontSize: "2rem" }}>
-              Sparkworks practice books
             </h2>
-            {/* Single-card cases render full-width (no half-empty 2-col grid); 2+ cards use the standard 2-up grid. */}
             <div className={sparkworksBuilt.length > 1 ? "sw-grid-2" : undefined}>
               {sparkworksBuilt.map((f) => (
                 <ExpandableCard
@@ -646,15 +613,13 @@ export default function PracticePage() {
           </section>
         )}
 
-        {bySection.map((s) => (
-          <section key={s.slug} className="sw-section" id={s.slug}>
-            {/* Designer 2026-05-27: dropped the redundant section eyebrow (was duplicating the H2);
-                H2 now carries the section color so the section identity reads in one element. */}
-            <h2 className="ts-h2" style={{ marginTop: 0, marginBottom: 18, fontSize: "2rem", color: `var(--sw-${s.color})` }}>
-              {s.label}
+        {recommended.length > 0 && (
+          <section className="sw-section" id="we-recommend">
+            <h2 className="ts-h2" style={{ marginTop: 0, marginBottom: 18, fontSize: "2rem" }}>
+              We recommend
             </h2>
-            <div className={s.families.length > 1 ? "sw-grid-2" : undefined}>
-              {s.families.map((f) => (
+            <div className={recommended.length > 1 ? "sw-grid-2" : undefined}>
+              {recommended.map((f) => (
                 <ExpandableCard
                   key={f.slug}
                   slug={f.slug}
@@ -665,7 +630,7 @@ export default function PracticePage() {
               ))}
             </div>
           </section>
-        ))}
+        )}
 
         <section className="sw-section" id="subscribe">
           <div
