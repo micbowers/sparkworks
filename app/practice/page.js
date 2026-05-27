@@ -146,7 +146,7 @@ const FAMILIES = [
     title: "Morris games",
     subtitle: "WE Games",
     headlineImage: "/practice/nine-mens-morris-wegames.jpg",
-    highlight: "An ancient two-player strategy game with no hidden information.",
+    highlight: "An ancient two-player strategy game.",
     skills: [
       { label: "Game Theory", color: "teal" },
     ],
@@ -188,7 +188,7 @@ const FAMILIES = [
     title: "Perfectly Logical!",
     subtitle: "Jenn Larson · Rockridge Press",
     headlineImage: "/practice/perfectly-logical-rockridge.jpg",
-    highlight: "100 logic puzzles for grades 3–6. Solo practice between sessions.",
+    highlight: "100 logic puzzles for grades 3–6.",
     skills: [
       { label: "Elimination", color: "purple" },
       { label: "Hidden Rules", color: "blue" },
@@ -238,16 +238,15 @@ function PracticeBookPlaceholder({ size = "compact" }) {
       role="img"
       aria-label="Sparkworks Ignite Practice Book 1 — placeholder cover (preview, real cover coming)"
       style={{
-        height: isCompact ? 160 : 220,
+        height: isCompact ? 200 : 220,
         background: "var(--sw-bone)",
-        border: "1.5px solid var(--sw-steel)",
         borderRadius: "var(--sw-radius-sm)",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        gap: isCompact ? 6 : 10,
-        padding: isCompact ? 14 : 20,
+        gap: isCompact ? 8 : 10,
+        padding: isCompact ? 20 : 24,
         textAlign: "center",
         position: "relative",
       }}
@@ -286,10 +285,8 @@ function PracticeBookPlaceholder({ size = "compact" }) {
   );
 }
 
-// Compact image well for a real product cover.
-// Designer 2026-05-27: Bone-bg + aspect-ratio 1:1 makes whitespace around varied-aspect covers
-// (square game boxes vs. taller workbook covers) read as a deliberate framing well, not
-// accidental empty space. Tightened from 160 → 140 to flatten the overall card.
+// Compact image well — image-on-top layout. Full card width × moderate fixed height. Bone-bg
+// makes whitespace around varied-aspect covers read as deliberate framing.
 function CompactCover({ image, alt }) {
   return (
     <div
@@ -298,12 +295,10 @@ function CompactCover({ image, alt }) {
         alignItems: "center",
         justifyContent: "center",
         width: "100%",
-        aspectRatio: "1 / 1",
-        maxHeight: 140,
+        height: 200,
         background: "var(--sw-bone)",
-        border: "1px solid var(--sw-bone)",
         borderRadius: "var(--sw-radius-sm)",
-        padding: 12,
+        padding: 14,
       }}
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -335,74 +330,70 @@ function CompactSummary({ family }) {
     ? family.href || (family.versions && family.versions[0] && family.versions[0].href)
     : null;
 
+  // Image-on-top layout (Mike feedback 2026-05-27): on desktop, image-left + narrow content-right
+  // was wrapping text into more lines than mobile's full-width single column — making the cards
+  // read as "too texty." Stacking image-on-top gives the content row the full card width and
+  // shortens the textual stack. The image carries more visual weight too.
   return (
-    <div style={{ display: "flex", gap: 16, alignItems: "stretch", flexWrap: "wrap" }}>
-      {/* Cover — 140px target per Designer; flexible flex-shrink for the compact grid */}
-      <div style={{ flex: "0 0 140px", maxWidth: 140 }}>
-        {isPreLaunch ? (
-          <PracticeBookPlaceholder size="compact" />
-        ) : (
-          <CompactCover image={family.headlineImage || family.image} alt={`${family.title} cover`} />
+    <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+      {isPreLaunch ? (
+        <PracticeBookPlaceholder size="compact" />
+      ) : (
+        <CompactCover image={family.headlineImage || family.image} alt={`${family.title} cover`} />
+      )}
+
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+        {family.skills.map((s) => (
+          <SkillChip key={s.label} label={s.label} color={s.color} />
+        ))}
+      </div>
+
+      <div>
+        <h3 className="ts-h2" style={{ margin: 0, fontSize: "1.25rem" }}>
+          {family.title}
+        </h3>
+        {family.subtitle && (
+          <div className="ts-caption" style={{ marginTop: 2 }}>
+            {family.subtitle}
+          </div>
         )}
       </div>
 
-      {/* Content */}
-      <div style={{ flex: "1 1 240px", display: "flex", flexDirection: "column", gap: 8, minWidth: 0 }}>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
-          {family.skills.map((s) => (
-            <SkillChip key={s.label} label={s.label} color={s.color} />
-          ))}
-        </div>
-
-        <div>
-          <h3 className="ts-h2" style={{ margin: 0, fontSize: "1.25rem" }}>
-            {family.title}
-          </h3>
-          {family.subtitle && (
-            <div className="ts-caption" style={{ marginTop: 2 }}>
-              {family.subtitle}
-            </div>
-          )}
-        </div>
-
+      {family.highlight && (
         <p
           className="ts-body"
           style={{
             margin: 0,
             fontSize: "0.9375rem",
-            display: "-webkit-box",
-            WebkitLineClamp: 2,
-            WebkitBoxOrient: "vertical",
-            overflow: "hidden",
           }}
         >
           {family.highlight}
         </p>
+      )}
 
-        {/* Compact-view primary action — outlined for clean look; Ember-primary lives inside expanded detail.
-            Multi-version families have no direct Amazon CTA in compact view (which version?) — the new
-            expand button label "See both versions" carries that affordance. */}
-        {isPreLaunch && family.subscribe ? (
-          <div style={{ marginTop: 4 }}>
-            <SubscribeForm
-              interests={family.subscribe.interests}
-              source={family.subscribe.source}
-              ctaLabel={family.subscribe.ctaLabel}
-              successMessage={family.subscribe.successMessage}
-            />
-          </div>
-        ) : headlineHref ? (
-          <a
-            className="sw-btn"
-            href={headlineHref}
-            target="_blank"
-            rel="sponsored noopener noreferrer"
-            style={{ alignSelf: "flex-start", marginTop: 4 }}
-          >
-            Get on Amazon
-          </a>
-        ) : null}
-      </div>
+      {/* Compact-view primary action — outlined for clean look; Ember-primary lives inside expanded detail.
+          Multi-version families have no direct Amazon CTA in compact (which version?) — the expand button
+          label "See both versions" carries that affordance. */}
+      {isPreLaunch && family.subscribe ? (
+        <div>
+          <SubscribeForm
+            interests={family.subscribe.interests}
+            source={family.subscribe.source}
+            ctaLabel={family.subscribe.ctaLabel}
+            successMessage={family.subscribe.successMessage}
+          />
+        </div>
+      ) : headlineHref ? (
+        <a
+          className="sw-btn"
+          href={headlineHref}
+          target="_blank"
+          rel="sponsored noopener noreferrer"
+          style={{ alignSelf: "flex-start" }}
+        >
+          Get on Amazon
+        </a>
+      ) : null}
     </div>
   );
 }
