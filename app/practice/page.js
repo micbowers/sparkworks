@@ -57,7 +57,7 @@ const FAMILIES = [
       { label: "Elimination", color: "purple" },
       { label: "Strategy", color: "teal" },
     ],
-    sessionPill: "Used in our strategy session · Blaze track",
+    sessionPill: "Used in our strategy session",
     whatItIs:
       "Two players. One sets a hidden code of colored pegs behind a shield. The other has a limited number of guesses to crack it. After every guess, the code-setter places small feedback pegs — one for each guess-peg that's the right color in the right spot, another for each that's the right color but in the wrong spot. Misses get no feedback peg at all. The cracker uses the feedback to design their next guess.",
     whyWeRecommend: (
@@ -65,8 +65,12 @@ const FAMILIES = [
         A natural fit for three of the thinking skills our Sparkworks program focuses on most: <strong>pattern detection</strong> (reading what each piece of feedback actually tells you), <strong>elimination</strong> (every &ldquo;miss&rdquo; permanently rules out a color), and <strong>strategy</strong> (the kid who pauses to design each guess to teach them something specific beats the kid who grabs at pegs). The whole game is one long pause-think-act loop: pause before guessing, think about what your next guess will teach you, act on what you already know.
       </>
     ),
+    // Public-website voice (Mike 2026-05-27): drop "Ember track" / "Blaze track" insider terms — most
+    // visitors aren't Sparkworks-program members and won't know what those mean. Plain grade ranges
+    // travel better. Canonical PCr text in SPARKWORKS_ENDORSEMENTS.md retains the original phrasing;
+    // a [PCr] task is open to author plain-language versions for non-instructor surfaces.
     whereWeUseIt:
-      "During the strategy session (week 6) of our 8-session Sparkworks program, with kids on our Blaze track (grades 4–6). The smaller version below plays just as well at home with younger kids on our Ember track (grades 2–3).",
+      "During the strategy session (week 6) of our 8-session Sparkworks program, with kids in grades 4–6. The smaller version below plays just as well at home with younger kids in grades 2–3.",
     proTips: [
       {
         title: "Three strategies we teach in class",
@@ -119,20 +123,20 @@ const FAMILIES = [
         name: "Mastermind",
         manufacturer: "Goliath Games",
         specs: "6 colors · 4-peg code · 10 guesses",
-        fitHint: "Great for Ember; grows into Blaze",
+        fitHint: "Best for grades 2–3; grows with kids",
         image: "/practice/mastermind-goliath.jpg",
         why:
-          "The classic and simplest. Six colors and a 4-peg code keep the whole game inside what a younger kid can hold in their head — they can focus on the thinking, not on tracking pieces. The right on-ramp for kids in grades 2–3 (our Ember track) or any family new to Mastermind-style puzzles. Once a kid is solving it confidently in a handful of guesses, they’re ready to step up to Code Breaker.",
+          "The classic and simplest. Six colors and a 4-peg code keep the whole game inside what a younger kid can hold in their head — they can focus on the thinking, not on tracking pieces. The right on-ramp for kids in grades 2–3 or any family new to Mastermind-style puzzles. Once a kid is solving it confidently in a handful of guesses, they’re ready to step up to Code Breaker.",
         href: "https://amzn.to/4fQkfO2",
       },
       {
         name: "Code Breaker",
         manufacturer: "KIDAMI",
         specs: "8 colors · 5-peg code · 10 guesses",
-        fitHint: "Built for Blaze; keeps growing for years",
+        fitHint: "Best for grades 4–6; keeps growing for years",
         image: "/practice/code-breaker-kidami.jpg",
         why:
-          "Same game, sized up. Two more colors and a longer code push the puzzle past what a kid can hold in their head — they have to write things down, or organize their unused colors on the side of the board. That’s the strategy lesson made physical — the board does the remembering so the kid can do the thinking. This is the version we play with our Blaze-track kids (grades 4–6) during the Sparkworks strategy session.",
+          "Same game, sized up. Two more colors and a longer code push the puzzle past what a kid can hold in their head — they have to write things down, or organize their unused colors on the side of the board. That’s the strategy lesson made physical — the board does the remembering so the kid can do the thinking. This is the version we play with kids in grades 4–6 during the Sparkworks strategy session.",
         href: "https://amzn.to/4dINIH5",
       },
     ],
@@ -149,13 +153,13 @@ const FAMILIES = [
     skills: [
       { label: "Game Theory", color: "teal" },
     ],
-    sessionPill: "Used in our game theory session · both tracks",
+    sessionPill: "Used in our game theory session · all grades",
     whatItIs:
       "A family of ancient strategy games — Three Men's Morris (3 pieces, 3×3 grid), Six Men's Morris, Nine Men's Morris (the most popular), Twelve Men's Morris — all played on nested squares connected by lines, all built around the same goal: place your pieces, then slide them along the lines to form a row of three (“a mill”), which captures one of your opponent's pieces. The Romans scratched Morris boards into the floor of the Forum. Viking sailors carved them into ship decks. People have been playing for over 3,000 years for the same reason chess has lasted: simple rules, deep strategy.",
     whyWeRecommend:
       "Morris is a two-player game with no hidden information — both players see everything. That structure forces a specific kind of thinking: every move you consider, you also have to think about your opponent's response to it, and the response to their response. That's the same reasoning at the heart of game theory, one of the thinking skills our Sparkworks program teaches directly.",
     whereWeUseIt:
-      "During the game theory session (week 7) of our 8-session Sparkworks program — Nine Men's Morris with our Blaze-track kids (grades 4–6), Three Men's Morris (also called Tapatan) with our Ember-track kids (grades 2–3). Same lesson, different scale.",
+      "During the game theory session (week 7) of our 8-session Sparkworks program — Nine Men's Morris with kids in grades 4–6, Three Men's Morris (also called Tapatan) with kids in grades 2–3. Same lesson, different scale.",
     proTips: [
       {
         title: "Play the person, not the board",
@@ -171,10 +175,10 @@ const FAMILIES = [
         name: "Nine Men's Morris",
         manufacturer: "WE Games",
         specs: "Wooden board · 9 pieces per player · 24 board positions",
-        fitHint: "Built for Blaze; also great for Ember once kids outgrow Three Men's Morris",
+        fitHint: "Best for grades 4–6; also great for younger kids once they outgrow Three Men's Morris",
         image: "/practice/nine-mens-morris-wegames.jpg",
         why:
-          "The classic nine-piece, three-squares-nested board is where the strategy gets real — kids have to manage their own developing mills AND track the threat of their opponent's near-mills, sometimes both in the same turn. WE Games' wooden edition is the kind of board that lives on a shelf for years and gets pulled out for rainy Saturdays. This is the version we play with our Blaze-track kids (grades 4–6) during the game theory session of the Sparkworks program.",
+          "The classic nine-piece, three-squares-nested board is where the strategy gets real — kids have to manage their own developing mills AND track the threat of their opponent's near-mills, sometimes both in the same turn. WE Games' wooden edition is the kind of board that lives on a shelf for years and gets pulled out for rainy Saturdays. This is the version we play with kids in grades 4–6 during the game theory session of the Sparkworks program.",
         href: "https://amzn.to/4x11gH1",
       },
     ],
@@ -194,7 +198,7 @@ const FAMILIES = [
       { label: "Constraints", color: "blue" },
     ],
     specs: "100 puzzles · 10 chapters · paperback",
-    fitHint: "Best for grades 3–6 (full Blaze track + older Ember)",
+    fitHint: "Best for grades 3–6",
     image: "/practice/perfectly-logical-rockridge.jpg",
     body:
       "100 puzzles across 10 chapters of increasing difficulty — logic grids, cryptograms, secret codes, and Sudoku — from elementary teacher Jenn Larson (20+ years in the classroom). Three of the thinking skills our Sparkworks program teaches show up directly: elimination (the logic grids drill the same reasoning as our second session), hidden-rule hunting (the cryptograms map to our fourth session), and constraint navigation (Sudoku is the same skill as our third). A good solo-practice companion for kids who love the games we play in class — workable between sessions, or after a kid has wrapped the program.",
@@ -235,40 +239,22 @@ function PracticeBookPlaceholder({ size = "compact" }) {
   return (
     <div
       role="img"
-      aria-label="Sparkworks Ignite Practice Book 1 — placeholder cover (preview, real cover coming)"
+      aria-label="Sparkworks Ignite Practice Book 1 — placeholder cover (real cover coming)"
       style={{
         height: isCompact ? 200 : 220,
-        background: "var(--sw-bone)",
+        background: "var(--sw-white)",
+        border: "1px solid var(--sw-bone)",
         borderRadius: "var(--sw-radius-sm)",
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
+        alignItems: "flex-start",
         justifyContent: "center",
         gap: isCompact ? 8 : 10,
-        padding: isCompact ? 20 : 24,
-        textAlign: "center",
+        padding: isCompact ? "20px 24px" : "24px 28px",
+        textAlign: "left",
         position: "relative",
       }}
     >
-      <span
-        style={{
-          position: "absolute",
-          top: 8,
-          right: 8,
-          fontFamily: "var(--sw-display)",
-          fontSize: "0.5625rem",
-          fontWeight: 700,
-          letterSpacing: "1.2px",
-          textTransform: "uppercase",
-          padding: "2px 6px",
-          border: "1px dashed var(--sw-steel)",
-          borderRadius: 3,
-          color: "var(--sw-steel)",
-          background: "var(--sw-white)",
-        }}
-      >
-        Preview
-      </span>
       <div>
         <span style={{ fontFamily: "var(--sw-display)", fontWeight: 800, fontSize: isCompact ? "1.125rem" : "1.5rem", color: "var(--sw-steel)", letterSpacing: "2px" }}>
           SPARKWORKS
@@ -278,26 +264,28 @@ function PracticeBookPlaceholder({ size = "compact" }) {
         IGNITE
       </div>
       <div className="ts-caption" style={{ color: "var(--sw-steel)", marginTop: 2, fontSize: "0.6875rem" }}>
-        Practice Book 1
+        Practice Book 1 · Cover coming soon
       </div>
     </div>
   );
 }
 
-// Compact image well — image-on-top layout. Full card width × moderate fixed height. Bone-bg
-// makes whitespace around varied-aspect covers read as deliberate framing.
+// Compact image well — full card width × fixed height. White bg matches product covers that
+// already have white backgrounds (Mike 2026-05-27: stop putting white images on a gray well).
+// Image left-justified instead of centered so the cover hugs the same left edge as the text below,
+// closing the gap between image and copy.
 function CompactCover({ image, alt }) {
   return (
     <div
       style={{
         display: "flex",
         alignItems: "center",
-        justifyContent: "center",
+        justifyContent: "flex-start",
         width: "100%",
         height: 200,
-        background: "var(--sw-bone)",
+        background: "var(--sw-white)",
         borderRadius: "var(--sw-radius-sm)",
-        padding: 14,
+        padding: 0,
       }}
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -309,6 +297,7 @@ function CompactCover({ image, alt }) {
           maxHeight: "100%",
           maxWidth: "100%",
           objectFit: "contain",
+          objectPosition: "left center",
           display: "block",
         }}
       />
@@ -330,12 +319,12 @@ function ProductBlock({ name, manufacturer, specs, fitHint, href, image }) {
       <div
         style={{
           height: 200,
-          background: "var(--sw-bone)",
+          background: "var(--sw-white)",
           borderRadius: "var(--sw-radius-sm)",
           display: "flex",
           alignItems: "center",
-          justifyContent: "center",
-          padding: 14,
+          justifyContent: "flex-start",
+          padding: 0,
         }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -347,6 +336,7 @@ function ProductBlock({ name, manufacturer, specs, fitHint, href, image }) {
             maxHeight: "100%",
             maxWidth: "100%",
             objectFit: "contain",
+            objectPosition: "left center",
             display: "block",
           }}
         />
@@ -374,23 +364,19 @@ function ProductBlock({ name, manufacturer, specs, fitHint, href, image }) {
   );
 }
 
-function CompactSummary({ family }) {
-  const isPreLaunch = family.type === "practice-book-pre-launch";
-  const isGameFamily = family.type === "game-family";
-  const isAffiliateBook = family.type === "practice-book-affiliate";
-
+// Header — sits above the expand button at the top of the entry. Tags + title + highlight.
+// Always visible. (Mike 2026-05-27: expand button is the editorial differentiator and belongs
+// at the top, right after the title, before products.)
+function CompactHeader({ family }) {
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-      {/* Tags */}
+    <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
       <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
         {family.skills.map((s) => (
           <SkillChip key={s.label} label={s.label} color={s.color} />
         ))}
       </div>
-
-      {/* Family title + optional subtitle */}
       <div>
-        <h3 className="ts-h2" style={{ margin: 0, fontSize: "1.375rem" }}>
+        <h3 className="ts-h2" style={{ margin: 0, fontSize: "1.5rem" }}>
           {family.title}
         </h3>
         {family.subtitle && (
@@ -399,15 +385,26 @@ function CompactSummary({ family }) {
           </div>
         )}
       </div>
-
-      {/* Optional 1-line highlight */}
       {family.highlight && (
         <p className="ts-body" style={{ margin: 0, fontSize: "0.9375rem" }}>
           {family.highlight}
         </p>
       )}
+    </div>
+  );
+}
 
-      {/* Products — one or more, side-by-side when multiple */}
+// Footer — sits below the expand button + detail at the bottom of the entry. Products + CTAs.
+// Always visible. For multi-version game families, two product blocks side-by-side. For affiliate
+// books and pre-launch books, an inline cover block.
+function CompactFooter({ family }) {
+  const isPreLaunch = family.type === "practice-book-pre-launch";
+  const isGameFamily = family.type === "game-family";
+  const isAffiliateBook = family.type === "practice-book-affiliate";
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+      {/* Game family — one or more product blocks, side-by-side when multiple */}
       {isGameFamily && family.versions && family.versions.length > 0 && (
         family.versions.length > 1 ? (
           <div className="sw-grid-2" style={{ gap: 28 }}>
@@ -427,12 +424,12 @@ function CompactSummary({ family }) {
           <div
             style={{
               height: 220,
-              background: "var(--sw-bone)",
+              background: "var(--sw-white)",
               borderRadius: "var(--sw-radius-sm)",
               display: "flex",
               alignItems: "center",
-              justifyContent: "center",
-              padding: 14,
+              justifyContent: "flex-start",
+              padding: 0,
             }}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -444,6 +441,7 @@ function CompactSummary({ family }) {
                 maxHeight: "100%",
                 maxWidth: "100%",
                 objectFit: "contain",
+                objectPosition: "left center",
                 display: "block",
               }}
             />
@@ -602,9 +600,13 @@ export default function PracticePage() {
                 <ExpandableCard
                   key={f.slug}
                   slug={f.slug}
-                  expandLabel={f.expandLabel}
-                  summary={<CompactSummary family={f} />}
+                  expandLabel={
+                    f.expandLabel ||
+                    (f.versions && f.versions.length > 1 ? "Why we love them" : "Why we love it")
+                  }
+                  summary={<CompactHeader family={f} />}
                   detail={<FamilyDetail family={f} />}
+                  footer={<CompactFooter family={f} />}
                 />
               ))}
             </div>
@@ -621,9 +623,13 @@ export default function PracticePage() {
                 <ExpandableCard
                   key={f.slug}
                   slug={f.slug}
-                  expandLabel={f.expandLabel}
-                  summary={<CompactSummary family={f} />}
+                  expandLabel={
+                    f.expandLabel ||
+                    (f.versions && f.versions.length > 1 ? "Why we love them" : "Why we love it")
+                  }
+                  summary={<CompactHeader family={f} />}
                   detail={<FamilyDetail family={f} />}
+                  footer={<CompactFooter family={f} />}
                 />
               ))}
             </div>

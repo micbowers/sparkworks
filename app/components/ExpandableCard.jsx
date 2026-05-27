@@ -3,32 +3,38 @@
 import { useState, useEffect } from "react";
 
 /**
- * Shopping-style card for /practice with on-demand detail.
+ * Entry card for /practice with on-demand detail.
  *
- * Always-visible: compact summary (cover, skill chips, title, 1-line highlight, primary CTA
- * if applicable). On click of the expand button the card grows in place to reveal full
- * description, Pro Tips, version pickers, session context, etc.
+ * Layout slots (top to bottom):
+ *  - `summary` — content always visible above the expand affordance (tags, title, highlight)
+ *  - the expand button (prominent — this is the editorial differentiation)
+ *  - `detail` — content revealed when expanded
+ *  - `footer` — content always visible below the expand affordance (products, CTAs)
  *
- * `slug` is set as the article `id` so /practice#mastermind-code-breaker and similar email
- * deep-links still scroll to the right card. If the URL hash on mount matches the card's slug,
- * the card auto-expands — so email recap links land on the open detail, not a collapsed card.
+ * The expand button sits at the TOP of the card body (Mike 2026-05-27: "this is our
+ * differentiation"), so when a reader expands, the editorial detail appears right where the
+ * button is — directly under the title, above the products. If `detail` is null, no button
+ * renders (the entry has nothing additional to reveal beyond its summary + footer).
  *
- * `expandLabel` / `collapseLabel` let each card use copy that fits its kind: endorsement
- * cards default to "Why we love this" / "Hide details", but Sparkworks-built cards may prefer
- * "What's inside", and multi-version cards may prefer "See both versions".
+ * `slug` is set as the article `id` so /practice#mastermind-code-breaker email deep-links
+ * still scroll to the right card; the card auto-expands when the URL hash matches its slug.
+ *
+ * `expandLabel` / `collapseLabel` let each entry use copy that fits its kind: endorsement
+ * cards default to "Why we love it" / "Hide details". Multi-product entries should pass
+ * "Why we love them"; Sparkworks-built cards may prefer "What's inside".
  */
 export function ExpandableCard({
   slug,
   summary,
   detail,
+  footer,
   defaultOpen = false,
   expandLabel = "Why we love it",
   collapseLabel = "Hide details",
 }) {
   const [open, setOpen] = useState(defaultOpen);
+  const hasDetail = detail != null && detail !== false;
 
-  // Open automatically if the URL hash matches this card's slug — so /practice#slug
-  // deep-links (from email recaps, /program cross-links, etc.) land on the open card.
   useEffect(() => {
     if (typeof window === "undefined") return;
     const hash = window.location.hash.replace(/^#/, "");
@@ -37,7 +43,6 @@ export function ExpandableCard({
     }
   }, [slug]);
 
-  const hasDetail = detail != null && detail !== false;
   return (
     <article
       id={slug}
@@ -45,8 +50,8 @@ export function ExpandableCard({
       style={{
         display: "flex",
         flexDirection: "column",
-        gap: 14,
-        padding: "20px 22px",
+        gap: 16,
+        padding: "24px 26px",
         scrollMarginTop: 24,
       }}
     >
@@ -61,19 +66,33 @@ export function ExpandableCard({
             alignSelf: "flex-start",
             background: "none",
             border: "none",
-            padding: "4px 0",
+            padding: "6px 0",
             fontFamily: "var(--sw-display)",
-            fontSize: "0.8125rem",
+            fontSize: "1.0625rem",
             fontWeight: 700,
-            letterSpacing: "1.2px",
+            letterSpacing: "1.5px",
             textTransform: "uppercase",
             color: "var(--sw-steel)",
             cursor: "pointer",
-            textDecoration: "underline",
-            textUnderlineOffset: 4,
+            display: "flex",
+            alignItems: "center",
+            gap: 8,
           }}
         >
-          {open ? collapseLabel : expandLabel}
+          <span style={{ textDecoration: "underline", textUnderlineOffset: 4 }}>
+            {open ? collapseLabel : expandLabel}
+          </span>
+          <span
+            aria-hidden="true"
+            style={{
+              display: "inline-block",
+              transform: open ? "rotate(180deg)" : "rotate(0deg)",
+              transition: "transform 0.2s",
+              fontSize: "0.875rem",
+            }}
+          >
+            ↓
+          </span>
         </button>
       )}
       {hasDetail && open && (
@@ -83,14 +102,14 @@ export function ExpandableCard({
             display: "flex",
             flexDirection: "column",
             gap: 18,
-            marginTop: 6,
-            paddingTop: 18,
-            borderTop: "1px solid var(--sw-bone)",
+            paddingTop: 6,
+            paddingBottom: 6,
           }}
         >
           {detail}
         </div>
       )}
+      {footer}
     </article>
   );
 }
