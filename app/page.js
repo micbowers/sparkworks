@@ -87,8 +87,15 @@ export default function Home() {
               accent="blue"
               kicker="The Materials"
               title="Class materials · Coming soon"
-              body="Class materials built around the thinking skills our program teaches — patterns, elimination, constraints, estimation, strategy. These are the same guided-practice materials we use in our classes, usually during the Ignite phase. We're making them available so families can keep building the skills at home. Coming soon."
-            />
+              body="Class materials built around the thinking skills our program teaches — patterns, elimination, constraints, estimation, strategy. These are the same guided-practice materials we use in our classes, usually during the Ignite phase. We're making them available so families can keep building the skills at home."
+            >
+              <SubscribeForm
+                interests={["Materials"]}
+                source="home-materials-card"
+                ctaLabel="Notify me"
+                successMessage="On the list — we&rsquo;ll email when the first materials are ready."
+              />
+            </ProductCard>
           </div>
         </section>
 
