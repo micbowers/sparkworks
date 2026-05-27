@@ -20,11 +20,13 @@ export const metadata = {
 // third-party endorsements — and lets the skill chips do the discovery work within.
 
 const FAMILIES = [
-  // -------- Sparkworks-built: Block Code (Coming soon) --------
-  // Verbatim editorial pulled 2026-05-27 from BCT positioning (locked tagline + locked one-line
-  // positioning + S1A Patterns session-1 reference doc). Brand-architecture rule: this is a
-  // Sparkworks-owned surface, so Sparkworks leads and Block Code is referenced as a teaching
-  // activity it uses — that's the allowed cross-product direction per BCT CLAUDE.md.
+  // -------- Sparkworks-built entries temporarily hidden (Mike 2026-05-27): Block Code + Ignite
+  // Practice Book 1 are not surfaced on /practice for now. Code retained in /* … */ block below
+  // so it's easy to restore — just uncomment the two entries and the imports/components are
+  // already in place (game-pre-launch type + practice-book-pre-launch type, PracticeBookPlaceholder,
+  // multi-image grid render in CompactFooter).
+
+  /* TEMPORARILY HIDDEN — Sparkworks-built items
   {
     type: "game-pre-launch",
     sparkworksBuilt: true,
@@ -59,7 +61,6 @@ const FAMILIES = [
     sessionPill: "Used in our pattern-detection session",
   },
 
-  // -------- Sparkworks-built materials (multi-skill — sit outside the skill-section grouping) --------
   {
     type: "practice-book-pre-launch",
     sparkworksBuilt: true,
@@ -83,6 +84,7 @@ const FAMILIES = [
       successMessage: "On the list — we’ll email when Practice Book 1 lands.",
     },
   },
+  */
 
   // -------- Game family: Mastermind & Code Breaker --------
   {
