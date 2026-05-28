@@ -1,3 +1,7 @@
+"use client";
+
+import { track } from "@vercel/analytics";
+
 /**
  * Amazon Associates buy button. Inline SVG mark + "Buy on Amazon" label.
  *
@@ -5,10 +9,24 @@
  * white wordmark. Per Amazon Associates Operating Agreement: every affiliate link gets
  * rel="sponsored noopener noreferrer" + target="_blank"; the page footer carries the FTC
  * disclosure boilerplate; price/rating data shown alongside is dated and subject to change.
+ *
+ * Click tracking: every click fires a Vercel `amazon_click` event with the product context so we
+ * can see conversion funnel per product in the dashboard (page views → cards expanded → clicks).
+ * Properties must be primitives — numbers cast to strings, nulls coerced to "unknown".
  */
-export function AmazonButton({ href, label = "Buy on Amazon" }) {
+export function AmazonButton({ href, label = "Buy on Amazon", product, manufacturer, price, rating, source }) {
+  const handleClick = () => {
+    track("amazon_click", {
+      product: product || "unknown",
+      manufacturer: manufacturer || "unknown",
+      price: price || "unknown",
+      rating: rating != null ? String(rating) : "unknown",
+      source: source || "practice",
+    });
+  };
   return (
     <a
+      onClick={handleClick}
       href={href}
       target="_blank"
       rel="sponsored noopener noreferrer"

@@ -447,7 +447,7 @@ function RatingLine({ rating, reviewCount, price }) {
   );
 }
 
-function ProductBlock({ name, manufacturer, specs, fitHint, href, image, price, rating, reviewCount }) {
+function ProductBlock({ name, manufacturer, specs, fitHint, href, image, price, rating, reviewCount, source }) {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
       <div
@@ -486,7 +486,14 @@ function ProductBlock({ name, manufacturer, specs, fitHint, href, image, price, 
       {specs && <div className="ts-caption" style={{ color: "var(--sw-steel)" }}>{specs}</div>}
       {fitHint && <div className="ts-caption" style={{ fontStyle: "italic" }}>{fitHint}</div>}
       <RatingLine rating={rating} reviewCount={reviewCount} price={price} />
-      <AmazonButton href={href} />
+      <AmazonButton
+        href={href}
+        product={name}
+        manufacturer={manufacturer}
+        price={price}
+        rating={rating}
+        source="practice-product-block"
+      />
     </div>
   );
 }
@@ -653,7 +660,14 @@ function CompactFooter({ family }) {
           {family.specs && <div className="ts-caption" style={{ color: "var(--sw-steel)" }}>{family.specs}</div>}
           {family.fitHint && <div className="ts-caption" style={{ fontStyle: "italic" }}>{family.fitHint}</div>}
           <RatingLine rating={family.rating} reviewCount={family.reviewCount} price={family.price} />
-          <AmazonButton href={family.href} />
+          <AmazonButton
+            href={family.href}
+            product={family.title}
+            manufacturer={family.subtitle}
+            price={family.price}
+            rating={family.rating}
+            source="practice-affiliate-book"
+          />
         </div>
       )}
 
