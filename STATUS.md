@@ -5,38 +5,75 @@ cadence: weekly (daily during cohort enrollment pushes)
 ---
 
 ## Current focus
-Practice surface (`/practice`) launched as the merged home for games + practice books. Homepage collapsed from 3 product cards (Program / Games / Materials) to 3-up grid of Program / merged Practice / promoted Subscribe slot. `/practice` now grouped by 4 skill sections matching `/program`'s sprint structure (Mike's revision: collapse Game Theory into Think Beyond What You Control). First Practice Book card (Sparkworks Ignite Book 1) shipped as "Preview · Coming soon" with SubscribeForm — real cover/KDP listing waits on Ignite project Phase 5.
+`/practice` shipped today through ~25 iterations of feedback + redesign. Final state is an entry-based vertical list under a tight hero — no skill-section grouping, no "We recommend" section header (Sparkworks-built items hidden for now so there's nothing to distinguish a "recommended" group from). 5 entries in revenue-first order:
+1. Mastermind & Code Breaker (Amazon affiliate, 2 versions)
+2. Shisima & Nine Men's Morris (Amazon affiliate, 2 versions)
+3. Perfectly Logical! (Amazon affiliate, solo workbook)
+4. Find The Alien (free, live at findthealien.sparkworks.kids)
+5. Knight's Tour (free, live at knightstour.sparkworks.kids)
+
+Each entry: tags row → family title → 1-line highlight → prominent **Why we love it / Why we love them** expand at top → product blocks (cover + manufacturer + name + specs + fit hint + ★ rating + price + Buy on Amazon for affiliate, or Play free → for free games). Compact view stays minimal; the editorial differentiator opens on demand.
 
 ## KPIs
 - Registrations to date (Founding Sparks + Season 2): _populate next refresh — needs Notion DB query_
 - Subscribers to date (Games / Materials / Program interests): _populate next refresh — needs Notion DB query_
-- Deploy status: green · main @ d5f1b3d deployed to www.sparkworks.kids on 2026-05-27; Games + Materials merge pending push (this commit)
+- Deploy status: green · main @ `eafccc6` deployed to www.sparkworks.kids on 2026-05-27 (Vercel auto-deploy on push)
+- Analytics: Vercel `<Analytics />` + `<SpeedInsights />` mounted in `app/layout.js`. Custom events firing: `subscribe_submit` (SubscribeForm), `amazon_click` (AmazonButton), enrollment event (InterestForm). Mike to confirm Vercel dashboard toggles are ON.
 
 ## Open items needing Mike (or Tina)
 - See `[SW]` tasks on `Cairn – Sparkworks`
-- Decision deferred from 2026-05-27 Designer critique on the merge: should the "Get on Amazon" Amazon affiliate CTAs on `/practice` stay as `sw-btn-primary` (Ember filled) for revenue prominence, or demote to outlined `sw-btn` to respect the 2-3 Ember rationing rule? Mike previously approved Ember-primary for revenue. Current state keeps them primary; the page sits at ~4 editorial Ember surfaces (Hero kicker + ProTip + 2 Amazon CTAs).
-- Designer flagged subscribe-form redundancy: 3 SubscribeForm instances visible to a parent who lands on the homepage and clicks through (homepage slot 3 + /practice "More on the way" section + per-Practice-Book inline form). Designer recommends dropping the homepage slot 3 back to a content card. Holding for Mike's call — the plan-approved structure keeps slot 3 as Subscribe.
+- **Bring Sparkworks-built items back** when ready: Block Code + Ignite Practice Book 1 entries are commented out in `app/practice/page.js` FAMILIES array (with a clear note pointing to the easy-restore path). Find The Alien + Knight's Tour are currently in the recommended list since they're working products parents can use immediately; when the Sparkworks-built block returns, FTA + KT could move up there with Block Code + Ignite.
+- **Designer subscribe-form redundancy flag** (from prior critique) still open: 2 SubscribeForms visible end-to-end (homepage slot 3 + /practice bottom "Hear about new picks"). Per-Ignite-Book inline form is currently hidden. Lower priority now that Sparkworks-built items aren't on /practice.
+- **Cipher Step** game exists in `Games/Cipher Step/` as PDFs only (no web app). Could surface as a "free print-and-play download" entry later; not added today.
+- **PA-API migration** trigger: switch to Amazon Product Advertising API for live price/rating data once Sparkworks-20 affiliate account has the required qualifying sales (currently ~3 sales/180 days per Amazon). Task filed.
+- **Vercel dashboard toggles**: please verify Analytics + Speed Insights are toggled ON in the project settings — code is wired but data won't flow without the per-project toggle.
 
-## Recently completed
-- 2026-05-27 — Removed the "From pilot parents" quotes section from the homepage (`92784c1`)
-- 2026-05-27 — Shipped `/practice` page with Mastermind & Code Breaker family card (verbatim PCr endorsement copy, two version pickers with affiliate links, site-level affiliate disclosure); wired homepage Games ProductCard to `/practice`; dropped "· Coming soon" suffix on the Games card title (`355e05a`)
-- 2026-05-27 — Filed design brief on `Cairn – Products` (`[Des] Hero + family-card visual for sparkworks.kids/practice page`) — async hand-off, stubbed visuals on the page today
-- 2026-05-27 — Filed content reconciliation task on `Cairn – Sparkworks` (`[PCr] Reconcile Mastermind session-number mapping (S6 vs S7)`) — endorsements doc says S6, program page shows S7 for the strategy session
-- 2026-05-27 — Added product photos (Mastermind / Code Breaker) to /practice and restructured the family card so version pickers + buy buttons sit above the fold; promoted Amazon CTAs to Ember-primary, demoted "More on the way" callout to teal to preserve Ember rationing (`b633124`)
-- 2026-05-27 — Replaced static "More on the way" callout on /practice with an email subscribe form (`interests: ["Games"]`, `source: "practice-page"`) — captures interest from email-link visitors who already saw the recommendation (`c81d057`)
-- 2026-05-27 — **Process miss + recovery**: Mike flagged image-bg and CTA-alignment issues that should have been caught pre-publish. Invoked **sparkworks-designer (Critique mode)** and **cairn-dev-qa** in parallel — both confirmed Mike's flags plus surfaced ~10 additional findings. Filed `[AR] Update sparkworks-designer + cairn-dev-qa checklists` task on `Cairn – Ops` ([task link](https://tasks.google.com/task/sAIcMXtt8FD44_JK?sa=6)). Integrated fix shipped: image well → white + 1px Bone border (resolves Locked Rule #1 violation); homepage Games CTA promoted to Ember-primary + "Why these games" secondary anchor → /practice#mastermind-code-breaker (Mike: visual parity with Program card); hero-ribbon "Save my seat" demoted to outlined (Mike's call, drops upper-fold Ember count to 2); /practice hero title reframed to "Activities and games we use in class…" per TM doc (TM-2026 entry 11 logged); homepage Games card body re-aligned to activity-led framing (swap log entry 4b updated); /practice family title h3→h2 + version-picker name h4→h3 (a11y heading order); skill names bolded in whyWeRecommend (verbatim discipline); Code Breaker specs restored to full form including difficulty-level detail; VersionPicker top-border dropped (resolves triple-Teal stacking); ProductCard className trailing-space artifact fixed; `id="subscribe"` anchor added on /practice subscribe section.
-- 2026-05-27 — Integrated PCr's endorsement v2 voice/accessibility pass for Mastermind & Code Breaker: simplified specs (both versions now "10 guesses" — 3 difficulty levels moved into family-level Pro Tip per PCr's restructure), softened "leveled up" → "sized up", added new reusable [ProTip](app/components/ProTip.jsx) component for the "Three levels of difficulty" callout (`d5f1b3d`). Established Pro Tip as a recurring family-level pattern for future endorsements.
-- 2026-05-27 — **Games + Materials merge** (pending push): collapsed the homepage 3-card structure (Program / Games / Materials) into 3-up grid of Program / merged Practice / Subscribe slot. `/practice` expanded to host games + practice books, grouped under 4 skill-section headers (Mike's 2026-05-27 revision dropped the canonical 5th "Think About How Others Will React" section; Game Theory folds into "Think Beyond What You Control"). New `PracticeBookCard` + `PracticeBookPlaceholder` components; Sparkworks Ignite Book 1 added as a "Preview · Coming soon" card with SubscribeForm. Strategy chip color fixed (blue → teal) and Mastermind session pill updated to match the new Strategy=Teal mapping. TM swap log entry 12 logged. Pre-publish Designer + Dev-QA reviews invoked; Designer findings integrated (slot 3 accent teal → blue to differentiate from merged Practice card; "Built by us" eyebrow Steel → Spark Blue; "By skill ·" prefix dropped from section eyebrows; section h2 sized larger than card h3 to fix heading inversion; Coming Soon badge moved from Ember-filled chip to Steel-outlined "Preview · Coming soon" tab on placeholder cover — also serves as the "this is a mock" honesty signal). Holding two Designer findings for Mike's decision: Amazon CTA Ember demotion + slot-3 subscribe redundancy.
+## Recently completed (2026-05-27 — single-day session, abbreviated)
+- **`/practice` initial launch** with Mastermind & Code Breaker (`355e05a` → `c81d057`)
+- **Product photos + above-fold restructure** (`b633124`)
+- **Process recovery**: invoked Designer + Dev-QA after Mike flagged image-bg + CTA-alignment issues; filed `[AR]` task to bake pre-publish reviews into agent checklists (`8b9c249`). Held: Amazon-CTA Ember demotion (Mike kept Ember-primary for revenue).
+- **PCr endorsement v2** integrated — voice/accessibility pass on Mastermind & Code Breaker; established the reusable `ProTip` component pattern; added "Three strategies we teach in class" Pro Tip verbatim from `S6 Strategy` session plan (`d5f1b3d` → `efe66f2`).
+- **Games + Materials merge** on the homepage (`476d40a`): collapsed 3 cards → Program / merged Practice / subscribe slot. TM swap-log entry 12 logged.
+- **Added Morris games** family with Nine Men's Morris (WE Games) (`bd56ae9`).
+- **Added Perfectly Logical!** workbook (Jenn Larson / Rockridge Press) (`43d5d30`).
+- **Shopping-grid redesign** per Mike's "too texty" feedback: 2-col grid with compact cards, inline expand, ExpandableCard component (`a3d2f4b`).
+- **Entry-based vertical layout** ("one at a time like on mobile") with products visible in compact view and editorial revealed via `Why we love it/them` expand (`561f03e`).
+- **Designer fixes integrated**: image wells white-bg + left-justify (no more white-on-gray); section-eyebrow simplification; section drop to two top-level groups (`a59f99b` → `8ec601c`).
+- **Block Code added** as Sparkworks-built game-pre-launch entry with verbatim session-1 editorial and box-front+back PDFs rasterized as covers (`db1233d` → `7ffab81`).
+- **Sparkworks-built items hidden** at Mike's call (`ce85da2`); Block Code + Ignite Book commented out, restore-path noted.
+- **Shisima (FROEBEL)** added to Morris family per PCr's update; family renamed to "Shisima & Nine Men's Morris" (Mike's preferred order, simpler product first) (`2add774` → `e233a34`).
+- **Strategy chip added to Morris family**; "and up" / "fun for adults too" language applied across all fitHints to signal inclusive multi-age appeal (`a6a51c0`).
+- **"We recommend" h2 dropped** since Sparkworks-built section is hidden (`c6066d8`).
+- **Find The Alien + Knight's Tour added** as free-play entries with Teal `Play free →` CTAs distinct from the Steel/golden Amazon button (`e233a34`). FTA cover swapped to the OG "Dax the alien" share image (`2e726d3`); Knight's Tour cover background made transparent (`6ff8f0c`).
+- **Reordered revenue-first**: 3 affiliate entries at top, 2 free Sparkworks entries at bottom (`21ce522`).
+- **Amazon button v2**: new `AmazonButton` component with inline a-smile SVG mark + price + ★ rating + (review count) per affiliate version. Snapshot data manually entered for 4 ASINs; refresh task filed on quarterly cadence (`78f6a95`).
+- **`amazon_click` event tracking** added to AmazonButton with product/manufacturer/price/rating/source properties (`87fbad9`).
+- **Proactive-analytics standing instruction** recorded in CLAUDE.md (`eafccc6`).
+- **Hero title** shortened to "Practice at home." with explanatory clause moved to tagline (logged as TM-2026 entry 12c revision).
+- **Ember/Blaze insider terms stripped** from public-facing copy on `/practice` (replaced with plain grade ranges); `[PCr]` task open to author canonical plain-language versions in the endorsements doc.
 
 ## Blocked / waiting on
-- Waiting on **Design** for hero + family-card visual treatment for `/practice` (brief filed 2026-05-27; stubs live in the meantime)
-- Waiting on **PCr** to reconcile Mastermind session-number mapping (filed 2026-05-27; `/practice` uses session name without a number until then)
-- Waiting on **PCr + Mike** to author more endorsement entries (Strategy & Critical Thinking, Pattern Detection categories are empty placeholders in `SPARKWORKS_ENDORSEMENTS.md`)
+- **Design** — original hero + family-card visual brief still open on `Cairn – Products` ([task](https://tasks.google.com/task/iibgX-Bzn07lGKm-?sa=6)). Page currently uses self-styled compact cards; Design hasn't returned visuals yet.
+- **PCr** — multiple open tasks: reconcile S6/S7 session-number mapping (Mastermind appears at S6 in endorsements doc but program page shows S7); populate workbook section more broadly; author canonical plain-language versions of `whereWeUseIt` / per-version `why` (drop "Ember track" / "Blaze track" insider terms); author canonical 1-line `shelf_claim` field for each endorsement.
+- **Architect** — two open AR tasks: update `sparkworks-designer` + `cairn-dev-qa` checklists with the lessons from today's iteration loop; bump Designer quality bar with reference designs (Cascadia/Wingspan, Aesop, Apple) and explicit "clean modern sophisticated" target.
 
-## Brand-audit notes (run on /practice 2026-05-27)
-- 11-point checklist from `SPARKWORKS_MARKETING_GUIDELINES.md` passes overall
-- **Borderline #9**: Bone White used as the background of the product-image container inside each version picker. Defensible — it's a small accent surface inside a card, not the page background — but worth Mike's eye if it reads off.
-- **Skill-chip naming**: chips use technical names ("Pattern Detection", "Elimination", "Strategy"), consistent with the existing `/program` page. The guidelines suggest accessible plain language for *marketing materials* (e.g., WhatsApp teaser) — website nav/structural labels traditionally keep the technical names.
+## Process locked in this session
+- **Pre-publish Designer + Dev-QA review** before any substantial visual/structural push (after the initial process miss). Multiple successful loops since.
+- **Dev server stays running** across edits; verify with PowerShell poll-with-deadline loop (NOT `ScheduleWakeup`). Saved to auto-memory as `feedback_dev_verification_pattern.md`.
+- **TM swap-log discipline**: every copy edit on public-facing surfaces logged in `SPARKWORKS_TRADEMARK_GUIDANCE.md` with Original + Replacement + date.
+- **Verbatim discipline**: endorsement prose pulled verbatim from `SPARKWORKS_ENDORSEMENTS.md`. Public-facing translations of insider terms (Ember/Blaze → plain grade ranges) overridden inline with a comment pointing to the PCr task for canonicalization.
+- **Proactive analytics**: any new outbound link / form / conversion step gets a `track()` proposal (per Mike's directive, recorded in CLAUDE.md).
 
 ## Known issues
-- Local `next build` and `next dev` cache writes fail intermittently with `EINVAL` / `ENOENT` on the Google Drive virtual filesystem (`G:\My Drive\…`). Dev server still serves; build still completes the compile step on Vercel. Not blocking — Vercel's Linux build env is the source of truth for production validation.
+- Local `next build` and `next dev` cache writes fail intermittently with `EINVAL` / `ENOENT` / `EPERM` on the Google Drive virtual filesystem (`G:\My Drive\…`). Dev server still serves; Vercel's Linux build env is the source of truth for production validation. Filed `[QD]` task to document the workaround.
+- Block Code + Perfectly Logical entries show review counts that the scraper returned as 1 and 5849 respectively. The 1 for Nine Men's Morris and 2 for Shisima look like parser-matching mistakes (caught a different counter in the HTML) — `reviewCount: null` set on those two so the count hides until manually verified in the next refresh cycle.
+- Storefront-hero SVG for Block Code (`/practice/block-code-creative.svg`) is in `public/practice/` but not referenced (kept around since Block Code may return).
+- Dev server is currently DOWN at session end (port 3000 not listening). Next session will need to restart it. Use the polling pattern, not ScheduleWakeup.
+
+## What's not yet built (deferred)
+- Dedicated `/games` and `/materials` pages (currently merged into `/practice`)
+- Per-skill filter UI on `/practice` (defer until entry count > 6)
+- Real Ignite Practice Book 1 cover (waits on Ignite Phase 5 + KDP listing)
+- Cipher Step "print and play" download section
+- "How Founding Sparks went" recap on `/program` (hold for after cohort completes)
+- Knight's Tour-style interactive build for any other session warm-ups
