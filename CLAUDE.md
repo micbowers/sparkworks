@@ -168,6 +168,25 @@ You're a **Project Handbook** archetype agent. This file is your project context
 
 Anything you learn that you'll need later goes in a Drive doc, **not** auto-memory. New design conventions go in `Brand guidelines/`; project-specific quirks go in this CLAUDE.md or a `lessons-learned.md` in this folder.
 
+## Standing instruction: proactively assess for analytics opportunities
+
+Mike directive 2026-05-27: *"please always be assessing for better analytics opportunities with the site."*
+
+When making changes, surface analytics gaps without being asked. Examples:
+- Any new outbound link (affiliate, sponsor, partner) → propose a `track()` call on the click
+- Any new form or interactive element → propose a `track()` call on submit/interaction
+- Any new page or major surface → confirm Vercel `<Analytics />` will cover it (it does globally via `app/layout.js`); flag if any custom segmentation needs adding (`source` property convention used elsewhere)
+- Any new conversion funnel step (e.g., card expand, scroll past hero, /practice item visible) → propose if useful
+
+Vercel Analytics stack already wired in `app/layout.js`: `@vercel/analytics` for events, `@vercel/speed-insights` for Web Vitals. Custom events fire via `import { track } from "@vercel/analytics"` (browser context only — requires `"use client"` on the component). Existing custom events:
+- `subscribe_submit` — `SubscribeForm.jsx` (properties: `source`, `interests`)
+- `amazon_click` — `AmazonButton.jsx` (properties: `product`, `manufacturer`, `price`, `rating`, `source`)
+- enrollment event — `InterestForm.jsx`
+
+Use the `source` property convention to attribute clicks/submits to a specific surface (e.g., `practice-product-block`, `practice-affiliate-book`, `home-launches`, `practice-book-ignite-1`).
+
+When PA-API access opens up, revisit which events are still useful vs. duplicated by Amazon's reporting (the `[SW] Switch /practice from hardcoded Amazon snapshots to PA-API…` task tracks the migration trigger).
+
 ## STATUS.md
 
 Maintain `STATUS.md` at the root of this folder. KPIs: registrations to date, subscribers to date, deploy status, open issues. Weekly cadence, or daily during cohort enrollment pushes.
