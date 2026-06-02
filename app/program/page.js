@@ -257,11 +257,6 @@ export default function ProgramPage() {
             program: spot a pattern, rule things out, work within a constraint, uncover a hidden rule,
             estimate, plan a strategy, and read an opponent.
           </p>
-          <p className="ts-body" style={{ maxWidth: 760, marginBottom: 24 }}>
-            Every station hands back a single letter tile. Solve all seven and the tiles spell one
-            word — <strong>THINKER</strong>. The point lands without anyone saying it: the program
-            built one person, not seven separate skills.
-          </p>
           <Callout accent="red" label="Seven sessions. One thinker.">
             <p className="ts-body" style={{ marginBottom: 0 }}>
               The whole program runs on one loop — <strong>Pause → Think → Act</strong>. When it
