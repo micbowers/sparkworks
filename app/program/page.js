@@ -2,87 +2,71 @@ import Link from "next/link";
 import { Hero } from "../components/Hero";
 import { Footer } from "../components/Footer";
 import { CurriculumSection } from "../components/CurriculumSection";
+import { Callout } from "../components/Callout";
 import { InterestForm } from "../components/InterestForm";
 import { SparkOfHistory } from "../components/SparkOfHistory";
 
 const SECTIONS = [
   {
     accent: "purple",
-    kicker: "Section 1 · See What Others Miss",
+    kicker: "See What Others Miss",
     title: "Pattern Detection · Elimination",
-    badges: ["Archimedes Badge", "Euclid Badge"],
     sessions: [
       {
-        num: 1,
         name: "Pattern Detection",
-        game: "Knight's Tour (5×5 grid)",
-        skill: "In Session 1, kids spot a pattern — then realize it's wrong. That moment, catching the mistake, is the real skill.",
+        skill: "Kids spot a pattern — then realize it's wrong. That moment, catching the mistake, is the real skill.",
+        eureka: "What's hardest is letting go of patterns you believe in — when the data no longer supports them.",
       },
       {
-        num: 2,
         name: "Elimination",
-        game: "Logic Grid + Reverse Deduction",
-        skill: "In Session 2, kids solve a puzzle by ruling things out — the fastest path to the answer.",
+        skill: "Kids solve a puzzle by ruling things out — the fastest path to the answer.",
+        eureka: "When finding the answer is hard, ruling out what isn't correct is often faster.",
       },
     ],
   },
   {
     accent: "teal",
-    kicker: "Section 2 · Understand the System",
+    kicker: "Understand the System",
     title: "Constraints · Hidden Rules",
-    badges: ["Snow Badge", "Lovelace Badge"],
     sessions: [
       {
-        num: 3,
         name: "Constraints",
-        game: "River Crossing + Boat Formula",
-        skill: "In Session 3, kids face rules that seem limiting — until they realize the rules actually guide the solution.",
+        skill: "Kids face rules that seem limiting — until they realize the rules actually guide the solution.",
+        eureka: "Constraints don't block the answer. They point to it.",
       },
       {
-        num: 4,
         name: "Hidden Rules",
-        game: "Rule Hunter + Mastermind",
         skill: "Hidden rules are where the advantage lives. Kids learn to find them.",
+        eureka: "When something surprises you — you just learned something.",
       },
     ],
   },
   {
     accent: "ember",
-    kicker: "Section 3 · Decide Without All the Facts",
-    title: "Estimation · Order of Operations",
-    badges: ["Fermi Badge", "Al-Khwarizmi Badge"],
+    kicker: "Decide Without All the Facts",
+    title: "Estimation",
     sessions: [
       {
-        num: 5,
         name: "Estimation",
-        game: "Fermi Estimation Stations",
-        skill: "In Session 5, kids estimate something without counting — using logic instead of exact numbers.",
-      },
-      {
-        num: 6,
-        name: "Order of Operations",
-        game: "Poker Card Formula + Spot the AI Mistake",
-        skill: "In Session 6, kids catch a mistake made by AI — and understand why it looked right at first.",
+        skill: "Kids estimate something without counting — using logic instead of exact numbers.",
+        eureka: "You don't need the exact answer. You need one close enough to make a good decision.",
       },
     ],
   },
   {
     accent: "blue",
-    kicker: "Section 4 · Think Beyond What You Control",
+    kicker: "Think Beyond What You Control",
     title: "Strategy · Game Theory",
-    badges: ["Sun Tzu Badge", "Turing Badge"],
     sessions: [
       {
-        num: 7,
         name: "Strategy",
-        game: "Connect Four Tournament",
-        skill: "In Sessions 7 and 8, kids play strategy games where the best move depends on what someone else might do next.",
+        skill: "Kids play strategy games where the best move depends on what someone else might do next.",
+        eureka: "Reaction is fast and often wrong. Strategy is slow and usually wins.",
       },
       {
-        num: 8,
-        name: "Game Theory · The Spark Challenge",
-        game: "Connect Four + Game Theory Problems",
-        skill: "Strong reasoning means thinking several moves ahead — and understanding the best move depends on your opponent.",
+        name: "Game Theory",
+        skill: "Strong reasoning means thinking several moves ahead — the best move depends on your opponent.",
+        eureka: "The smart move connects your decision to your goal — through how others react.",
       },
     ],
   },
@@ -91,23 +75,71 @@ const SECTIONS = [
 const SPARKS = [
   {
     name: "Ignaz Semmelweis",
-    sessionLabel: "Session 1 · Pattern Detection",
+    sessionLabel: "Pattern Detection",
     skill: "Spotting the pattern others missed.",
     blurb:
-      "Vienna, 1840s. By comparing two maternity clinics, Semmelweis spotted the pattern that explained why so many mothers were dying — and invented handwashing. The medical establishment ignored him for decades.",
-    image: "/sparks/semmelweis.png",
+      "In the 1840s, doctors believed disease came from “bad air.” In Vienna, Dr. Ignaz Semmelweis noticed five times more mothers died in the doctors’ ward than the midwives’ ward. The difference? Doctors did autopsies, then delivered babies without washing their hands. Semmelweis made them wash. Deaths dropped overnight. He was fired — and it took 20 years for the world to accept he was right.",
+    image: "/sparks/semmelweis.jpg",
     pdf: "/sparks/semmelweis.pdf",
     accent: "purple",
   },
   {
     name: "Dr. John Snow",
-    sessionLabel: "Session 2 · Elimination",
+    sessionLabel: "Elimination",
     skill: "Ruling out every alternative until one remained.",
     blurb:
-      "London, 1854. Snow mapped every cholera death and eliminated every other water source until one pump on Broad Street remained. Removing its handle ended the outbreak — and founded modern epidemiology.",
-    image: "/sparks/snow.png",
+      "London, 1854. A cholera outbreak killed hundreds in ten days, and everyone blamed “bad air.” Dr. John Snow didn’t. He mapped every death and ruled out bad air, contaminated food, and person-to-person contact. One thing was left: the water pump on Broad Street. He removed the handle and the outbreak ended. Snow didn’t find the answer — he eliminated everything that wasn’t.",
+    image: "/sparks/snow.jpg",
     pdf: "/sparks/snow.pdf",
     accent: "purple",
+  },
+  {
+    name: "Apollo 13",
+    sessionLabel: "Constraints",
+    skill: "Finding the advantage inside the limits.",
+    blurb:
+      "Three astronauts. An exploded oxygen tank. Square CO₂ filters that wouldn’t fit round sockets. Engineers had to save the crew using only what was already on the spacecraft — duct tape, a sock, cardboard, and a hose. The constraint didn’t block the rescue. It pointed to it.",
+    image: "/sparks/apollo13.jpg",
+    pdf: "/sparks/apollo13.pdf",
+    accent: "teal",
+  },
+  {
+    name: "Alexander Fleming",
+    sessionLabel: "Hidden Rules",
+    skill: "Refusing to dismiss a surprise.",
+    blurb:
+      "London, 1928. Antibiotics didn’t exist. Alexander Fleming came back from vacation to find his bacteria dishes contaminated with mold, and was about to throw them out — then noticed something strange on one dish. Instead of ignoring it, he stopped and asked why. That single moment of not dismissing a surprise became penicillin: the first antibiotic, and an estimated 200 million lives saved.",
+    image: "/sparks/fleming.jpg",
+    pdf: "/sparks/fleming.pdf",
+    accent: "teal",
+  },
+  {
+    name: "Enrico Fermi",
+    sessionLabel: "Estimation",
+    skill: "Making a smart estimate with almost no data.",
+    blurb:
+      "July 16, 1945. Fermi stood in a bunker ten miles from the world’s first atomic bomb. When the shockwave hit, he dropped scraps of paper from his hand, watched them blow sideways, paced off the distance, and wrote down a number: 10 kilotons. The precision instruments took three days to deliver their answer: 18 kilotons. Fermi was off by less than half — in seconds, with nothing but paper.",
+    image: "/sparks/fermi.jpg",
+    accent: "ember",
+  },
+  {
+    name: "Amundsen vs. Scott",
+    sessionLabel: "Strategy",
+    skill: "Planning before the game even starts.",
+    blurb:
+      "Two expeditions raced to be first to the South Pole. Scott — a Royal Navy captain with fame, money, and experience — was the favorite. Amundsen was the Norwegian underdog. Amundsen reached the Pole on December 14, 1911, 34 days ahead, and all his men walked home healthy. Scott arrived to find Amundsen’s flag waiting, and died with his party on the return — eleven miles from a food depot. The race was decided a year earlier, by preparation.",
+    image: "/sparks/amundsen.jpg",
+    pdf: "/sparks/amundsen.pdf",
+    accent: "blue",
+  },
+  {
+    name: "Winston Churchill",
+    sessionLabel: "Game Theory",
+    skill: "The smart move depends on how others react.",
+    blurb:
+      "June 1940. France has fallen, and its navy — the fourth largest in the world — could fall into Hitler’s hands. Churchill doesn’t trust the promise that it won’t. On July 3, the Royal Navy fires on its former ally’s fleet at Mers-el-Kébir. The world is horrified — but in Washington, Roosevelt updates his read: Britain will do whatever it takes to win. A year later, Lend-Lease begins.",
+    image: "/sparks/churchill.jpg",
+    accent: "blue",
   },
 ];
 
@@ -203,8 +235,8 @@ export default function ProgramPage() {
           </h2>
           <p className="ts-lead" style={{ maxWidth: 760, marginBottom: 24 }}>
             Pattern detection, elimination, constraint navigation, estimation under uncertainty, and
-            strategy. The program ends with the Spark Challenge — a team scenario where the winning team
-            isn&rsquo;t the one with the right answer, it&rsquo;s the one with the clearest reasoning.
+            strategy — grouped into four ways of thinking. It all comes together in the Spark
+            Challenge, the final session.
           </p>
 
           <div className="sw-grid-2" style={{ gap: 24 }}>
@@ -212,6 +244,33 @@ export default function ProgramPage() {
               <CurriculumSection key={s.kicker} {...s} />
             ))}
           </div>
+        </section>
+
+        <section className="sw-section">
+          <div className="ts-eyebrow" style={{ color: "var(--sw-red)" }}>The finale · Spark Challenge</div>
+          <h2 className="ts-h2" style={{ marginTop: 8, marginBottom: 16, maxWidth: 760 }}>
+            The last session pulls everything together.
+          </h2>
+          <p className="ts-lead" style={{ maxWidth: 760, marginBottom: 20 }}>
+            There&rsquo;s no new lesson and no new game. Instead, kids run a seven-station Spark
+            Trail — part scavenger hunt, part escape room. Each station calls back one skill from the
+            program: spot a pattern, rule things out, work within a constraint, uncover a hidden rule,
+            estimate, plan a strategy, and read an opponent.
+          </p>
+          <p className="ts-body" style={{ maxWidth: 760, marginBottom: 24 }}>
+            Every station hands back a single letter tile. Solve all seven and the tiles spell one
+            word — <strong>THINKER</strong>. The point lands without anyone saying it: the program
+            built one person, not seven separate skills.
+          </p>
+          <Callout accent="red" label="Seven sessions. One thinker.">
+            <p className="ts-body" style={{ marginBottom: 0 }}>
+              The whole program runs on one loop — <strong>Pause → Think → Act</strong>. When it
+              counts, every skill shows up at once. In January 2009, Captain Sully Sullenberger lost
+              both engines over New York and had 208 seconds to land US Airways Flight 1549 on the
+              Hudson. All 155 people walked away. It was the same loop the kids run for seven
+              sessions — compressed into three and a half minutes.
+            </p>
+          </Callout>
         </section>
 
         <section className="sw-section">

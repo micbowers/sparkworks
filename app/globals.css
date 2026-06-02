@@ -350,3 +350,9 @@ a { color: inherit; }
   .sw-hero { padding: 40px 22px 36px; }
   .sw-foot { padding: 18px 22px; }
 }
+
+/* Image lightbox (ImageLightbox.jsx) */
+@keyframes sw-lightbox-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}

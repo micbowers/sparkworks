@@ -1,8 +1,10 @@
 /**
- * One sprint section (4 of these on the program page).
- * Each renders a colored kicker, header, and two SessionRow children.
+ * One meta-area card (4 of these on the program page).
+ * Renders a colored kicker, header, and its two topics.
+ * No session numbers, no ordering, no badges — the program groups topics by
+ * area, not by sequence.
  */
-export function CurriculumSection({ accent, kicker, title, sessions, badges }) {
+export function CurriculumSection({ accent, kicker, title, sessions }) {
   const accentVar = `var(--sw-${accent})`;
   return (
     <article
@@ -13,12 +15,19 @@ export function CurriculumSection({ accent, kicker, title, sessions, badges }) {
       <h3 className="ts-h2">{title}</h3>
       <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
         {sessions.map((s, i) => (
-          <div key={s.num} style={{ paddingTop: i === 0 ? 0 : 14, borderTop: i === 0 ? "none" : "1px solid var(--sw-bone)" }}>
+          <div key={s.name} style={{ paddingTop: i === 0 ? 0 : 14, borderTop: i === 0 ? "none" : "1px solid var(--sw-bone)" }}>
             <div className="ts-label" style={{ fontSize: "0.8125rem", letterSpacing: 1.2, color: accentVar, marginBottom: 4 }}>
-              Session {s.num} · {s.name}
+              {s.name}
             </div>
-            <p className="ts-body" style={{ marginBottom: 4 }}>{s.skill}</p>
-            <p className="ts-caption">Badge: {badges[i]}</p>
+            <p className="ts-body" style={{ marginBottom: s.eureka ? 8 : 0 }}>{s.skill}</p>
+            {s.eureka && (
+              <p className="ts-caption" style={{ fontStyle: "italic", marginBottom: 0, color: "var(--sw-steel)" }}>
+                <span style={{ fontStyle: "normal", fontFamily: "var(--sw-display)", fontWeight: 700, letterSpacing: 0.5, color: accentVar }}>
+                  Eureka —{" "}
+                </span>
+                {s.eureka}
+              </p>
+            )}
           </div>
         ))}
       </div>
