@@ -150,6 +150,14 @@ const PHASES = [
   { name: "Reinforce", time: "5–10 min", body: "Reflect, connect to the real world. Closes with the closing question." },
 ];
 
+// The program-wide thinking loop. Verbatim from SPARKWORKS_PROGRAM_AND_MESSAGING.md §3
+// and the S7 designer brief's PAUSE > THINK > ACT band.
+const LOOP = [
+  { step: "Pause", question: "What’s going on?", phrase: "Stop and take a breath." },
+  { step: "Think", question: "Why? Am I sure? What are my options?", phrase: "What’s the bigger goal?" },
+  { step: "Act", question: "What am I going to do about it?", phrase: "Make the move that gets you there." },
+];
+
 const OUTCOMES = [
   "Figuring things out without being told",
   "Working through problems step-by-step",
@@ -247,6 +255,28 @@ export default function ProgramPage() {
         </section>
 
         <section className="sw-section">
+          <div className="ts-eyebrow">How kids learn to think</div>
+          <h2 className="ts-h2" style={{ marginTop: 8, marginBottom: 12 }}>
+            Pause <span style={{ color: "var(--sw-spark)" }}>→</span> Think{" "}
+            <span style={{ color: "var(--sw-spark)" }}>→</span> Act
+          </h2>
+          <p className="ts-lead" style={{ maxWidth: 760, marginBottom: 24 }}>
+            Every skill we teach runs on the same loop. It&rsquo;s the through-line that turns the
+            sessions into one program rather than a pile of unrelated lessons — and the habit kids
+            carry into any problem they&rsquo;ve never seen before.
+          </p>
+          <div className="sw-grid-3">
+            {LOOP.map((l) => (
+              <div key={l.step} className="sw-card" style={{ borderTop: "4px solid var(--sw-spark)", display: "flex", flexDirection: "column", gap: 8 }}>
+                <div className="ts-label" style={{ color: "var(--sw-spark)", fontSize: "1rem" }}>{l.step}</div>
+                <p className="ts-body" style={{ marginBottom: 0, fontWeight: 700 }}>{l.question}</p>
+                <p className="ts-caption" style={{ marginBottom: 0, color: "var(--sw-steel)" }}>{l.phrase}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="sw-section">
           <div className="ts-eyebrow" style={{ color: "var(--sw-red)" }}>The finale · Spark Challenge</div>
           <h2 className="ts-h2" style={{ marginTop: 8, marginBottom: 16, maxWidth: 760 }}>
             The last session pulls everything together.
@@ -259,11 +289,9 @@ export default function ProgramPage() {
           </p>
           <Callout accent="red" label="Seven sessions. One thinker.">
             <p className="ts-body" style={{ marginBottom: 0 }}>
-              The whole program runs on one loop — <strong>Pause → Think → Act</strong>. When it
-              counts, every skill shows up at once. In January 2009, Captain Sully Sullenberger lost
-              both engines over New York and had 208 seconds to land US Airways Flight 1549 on the
-              Hudson. All 155 people walked away. It was the same loop the kids run for seven
-              sessions — compressed into three and a half minutes.
+              When it counts, every skill shows up at once — and the only way through is to use them
+              together. The Spark Challenge is the first time kids see the loop named on the board:{" "}
+              <strong>Pause → Think → Act</strong>.
             </p>
           </Callout>
         </section>
@@ -290,10 +318,11 @@ export default function ProgramPage() {
             A real person who used the same thinking principle to change something that mattered.
           </h2>
           <p className="ts-body" style={{ maxWidth: 720, marginBottom: 24 }}>
-            Every session features a Spark of History — the story of someone who used the same
-            skill we&rsquo;re teaching to change something that mattered. We don&rsquo;t just teach
-            critical thinking; we show its impact through history. We make a poster for each Spark —
-            they hang in the classroom, and you can grab the full print masters below.
+            A Spark of History is a small but pivotal moment in each session — just a few minutes
+            during the Sharpen phase. It&rsquo;s where the skill kids are about to practice gets tied
+            to a real person who used it to change something that mattered. We don&rsquo;t just teach
+            careful thinking — we show its real-world impact, made concrete. We make a poster for
+            each Spark; they hang in the classroom, and you can grab them below.
           </p>
           <div className="sw-grid-2">
             {SPARKS.map((s) => (
