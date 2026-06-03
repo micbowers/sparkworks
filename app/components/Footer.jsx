@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Wordmark } from "./Wordmark";
 
 const YEAR = new Date().getFullYear();
@@ -57,6 +58,19 @@ export function Footer() {
         }}
       >
         Some links on this site are affiliate links. Sparkworks is an Amazon Associate; we earn from qualifying purchases at no extra cost to you.
+      </div>
+      <div
+        className="sw-page"
+        style={{
+          fontFamily: "var(--sw-body)",
+          fontSize: 11,
+          width: "100%",
+          textAlign: "center",
+        }}
+      >
+        <Link href="/legal" style={{ color: "var(--sw-text-on-dark-muted)", textDecoration: "underline", textUnderlineOffset: 3 }}>
+          Terms &amp; Privacy
+        </Link>
       </div>
     </footer>
   );
