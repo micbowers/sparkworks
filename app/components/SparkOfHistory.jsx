@@ -90,15 +90,15 @@ export function SparkOfHistory({ name, sessionLabel, skill, blurb, image, pdf, a
       <p className="ts-body">{blurb}</p>
 
       <a
-        href={pdf || image}
+        href={image}
         target="_blank"
         rel="noopener noreferrer"
-        download={pdf ? undefined : true}
-        onClick={() => track("spark_poster_download", { figure: name, source: "program-spark-of-history", format: pdf ? "pdf" : "image" })}
+        download
+        onClick={() => track("spark_poster_download", { figure: name, source: "program-spark-of-history" })}
         className="sw-btn sw-btn-subtle"
         style={{ alignSelf: "flex-start", marginTop: 2 }}
       >
-        {pdf ? "Download print poster (PDF) →" : "Download poster (image) →"}
+        Download poster →
       </a>
 
       <ImageLightbox

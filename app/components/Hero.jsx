@@ -18,10 +18,7 @@ export function Hero({ eyebrow, title, tagline, showWordmark = true, wordmarkSiz
           </div>
         )}
         {eyebrow && (
-          <div
-            className="ts-eyebrow"
-            style={{ color: "var(--sw-ember)", marginBottom: 12 }}
-          >
+          <div className="ts-eyebrow text-on-dark" style={{ marginBottom: 12 }}>
             {eyebrow}
           </div>
         )}

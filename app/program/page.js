@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { Hero } from "../components/Hero";
+import { SiteHeader } from "../components/SiteHeader";
 import { Footer } from "../components/Footer";
 import { CurriculumSection } from "../components/CurriculumSection";
 import { Callout } from "../components/Callout";
 import { InterestForm } from "../components/InterestForm";
 import { SparkOfHistory } from "../components/SparkOfHistory";
+import { TrackedLink } from "../components/TrackedLink";
 
 const SECTIONS = [
   {
@@ -80,7 +82,6 @@ const SPARKS = [
     blurb:
       "In the 1840s, doctors believed disease came from “bad air.” In Vienna, Dr. Ignaz Semmelweis noticed five times more mothers died in the doctors’ ward than the midwives’ ward. The difference? Doctors did autopsies, then delivered babies without washing their hands. Semmelweis made them wash. Deaths dropped overnight. He was fired — and it took 20 years for the world to accept he was right.",
     image: "/sparks/semmelweis.jpg",
-    pdf: "/sparks/semmelweis.pdf",
     accent: "purple",
   },
   {
@@ -90,7 +91,6 @@ const SPARKS = [
     blurb:
       "London, 1854. A cholera outbreak killed hundreds in ten days, and everyone blamed “bad air.” Dr. John Snow didn’t. He mapped every death and ruled out bad air, contaminated food, and person-to-person contact. One thing was left: the water pump on Broad Street. He removed the handle and the outbreak ended. Snow didn’t find the answer — he eliminated everything that wasn’t.",
     image: "/sparks/snow.jpg",
-    pdf: "/sparks/snow.pdf",
     accent: "purple",
   },
   {
@@ -100,7 +100,6 @@ const SPARKS = [
     blurb:
       "Three astronauts. An exploded oxygen tank. Square CO₂ filters that wouldn’t fit round sockets. Engineers had to save the crew using only what was already on the spacecraft — duct tape, a sock, cardboard, and a hose. The constraint didn’t block the rescue. It pointed to it.",
     image: "/sparks/apollo13.jpg",
-    pdf: "/sparks/apollo13.pdf",
     accent: "teal",
   },
   {
@@ -110,7 +109,6 @@ const SPARKS = [
     blurb:
       "London, 1928. Antibiotics didn’t exist. Alexander Fleming came back from vacation to find his bacteria dishes contaminated with mold, and was about to throw them out — then noticed something strange on one dish. Instead of ignoring it, he stopped and asked why. That single moment of not dismissing a surprise became penicillin: the first antibiotic, and an estimated 200 million lives saved.",
     image: "/sparks/fleming.jpg",
-    pdf: "/sparks/fleming.pdf",
     accent: "teal",
   },
   {
@@ -129,7 +127,6 @@ const SPARKS = [
     blurb:
       "Two expeditions raced to be first to the South Pole. Scott — a Royal Navy captain with fame, money, and experience — was the favorite. Amundsen was the Norwegian underdog. Amundsen reached the Pole on December 14, 1911, 34 days ahead, and all his men walked home healthy. Scott arrived to find Amundsen’s flag waiting, and died with his party on the return — eleven miles from a food depot. The race was decided a year earlier, by preparation.",
     image: "/sparks/amundsen.jpg",
-    pdf: "/sparks/amundsen.pdf",
     accent: "blue",
   },
   {
@@ -198,12 +195,13 @@ const FAQS = [
 export default function ProgramPage() {
   return (
     <>
+      <SiteHeader />
       {/* TM-2026: Hero title was "An 8-session program that teaches kids to think through hard problems — through games, not lectures." */}
       <Hero
         wordmarkSize="xl"
         eyebrow="The Program · Season 2"
         title="An 8-session program that teaches kids to think through hard problems — through hands-on problem solving, not lectures."
-        tagline="Two grade-calibrated tracks: Ember (grades 2–3) and Blaze (grades 4–6). Six students per track, dedicated instructor, 60-minute sessions."
+        tagline="Two grade-calibrated tracks: Ember (grades 2–3) and Blaze (grades 4–6). Eight students per track, dedicated instructor, 60-minute sessions."
       />
 
       <main className="sw-page sw-body">
@@ -251,6 +249,22 @@ export default function ProgramPage() {
             {SECTIONS.map((s) => (
               <CurriculumSection key={s.kicker} {...s} />
             ))}
+          </div>
+
+          <div style={{ marginTop: 28 }}>
+            <p className="ts-body" style={{ maxWidth: 760, marginBottom: 12 }}>
+              These skills are built through hands-on games and activities. Want to keep them going
+              between sessions? We point families to the same games and materials we use &mdash;
+              organized by the skill each one builds.
+            </p>
+            <TrackedLink
+              className="sw-btn"
+              href="/practice?source=program-games"
+              event="games_cta_click"
+              eventProps={{ source: "program-curriculum" }}
+            >
+              See the games we recommend &rarr;
+            </TrackedLink>
           </div>
         </section>
 
@@ -343,12 +357,12 @@ export default function ProgramPage() {
             <div className="sw-card" style={{ borderTop: "4px solid var(--sw-blue)" }}>
               <div className="ts-eyebrow" style={{ color: "var(--sw-blue)" }}>Ember Track</div>
               <h3 className="ts-h2" style={{ marginTop: 6, marginBottom: 10 }}>Grades 2–3</h3>
-              <p className="ts-body">Max 6 students · dedicated instructor · same 8-session arc, calibrated to younger reasoners.</p>
+              <p className="ts-body">Max 8 students · dedicated instructor · same 8-session arc, calibrated to younger reasoners.</p>
             </div>
             <div className="sw-card" style={{ borderTop: "4px solid var(--sw-blue)" }}>
               <div className="ts-eyebrow" style={{ color: "var(--sw-blue)" }}>Blaze Track</div>
               <h3 className="ts-h2" style={{ marginTop: 6, marginBottom: 10 }}>Grades 4–6</h3>
-              <p className="ts-body">Max 6 students · dedicated instructor · same 8-session arc, calibrated to older reasoners.</p>
+              <p className="ts-body">Max 8 students · dedicated instructor · same 8-session arc, calibrated to older reasoners.</p>
             </div>
           </div>
         </section>

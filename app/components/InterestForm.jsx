@@ -109,7 +109,7 @@ export function InterestForm() {
         Save my seat — $449 for all 8 sessions.
       </h3>
       <p className="ts-body" style={{ marginBottom: 8 }}>
-        Two tracks: Ember (grades 2–3) and Blaze (grades 4–6), 6 students each. Sessions start the
+        Two tracks: Ember (grades 2–3) and Blaze (grades 4–6), 8 students each. Sessions start the
         week of September 7. <strong>No payment required to hold a spot</strong> — slots will be
         offered in order of registration. We&rsquo;ll be in touch with schedule options and payment
         details once Season 2 is locked.

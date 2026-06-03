@@ -39,11 +39,11 @@ export function ProductCard({ accent = "blue", kicker, title, body, cta, seconda
           )}
           {secondary && (
             secondary.external || /\.html?$/.test(secondary.href) ? (
-              <a className="sw-btn sw-btn-subtle" href={secondary.href}>
+              <a className="sw-btn" href={secondary.href}>
                 {secondary.label}
               </a>
             ) : (
-              <Link className="sw-btn sw-btn-subtle" href={secondary.href}>
+              <Link className="sw-btn" href={secondary.href}>
                 {secondary.label}
               </Link>
             )

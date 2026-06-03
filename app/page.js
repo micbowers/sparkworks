@@ -72,9 +72,9 @@ export default function Home() {
               accent="purple"
               kicker="The Program"
               title="Sparkworks · 8-session class"
-              body="The flagship. Two grade-calibrated tracks — Ember (grades 2–3) and Blaze (grades 4–6), 6 students each. Eight sessions, eight thinking skills, taught through hands-on activities and real-world examples of how great critical thinkers used these same skills to solve some of history's most important challenges. Founding Sparks filled before we listed it. Season 2 is filling now."
+              body="The flagship. Two grade-calibrated tracks — Ember (grades 2–3) and Blaze (grades 4–6), 8 students each. Eight sessions, eight thinking skills, taught through hands-on activities and real-world examples of how great critical thinkers used these same skills to solve some of history's most important challenges. Founding Sparks filled before we listed it. Season 2 is filling now."
               cta={{ label: "Save my seat — Season 2", href: "/program?source=home-program#interest", primary: true }}
-              secondary={{ label: "See the curriculum", href: "/program" }}
+              secondary={{ label: "View Program Details", href: "/program" }}
             />
             {/* TM-2026 entry 12: Games + Materials cards consolidated into this single merged Practice card.
                  - Prior Games card kicker (entry 4a): "The Games"
@@ -88,7 +88,6 @@ export default function Home() {
               title="The way kids build the skills"
               body="Critical thinking grows with practice. We point parents toward the same activities, games, and class materials we use in class — organized by the skills they build."
               cta={{ href: "/practice", label: "See our picks", primary: true }}
-              secondary={{ label: "Why these picks", href: "/practice" }}
             />
             {/* TM-2026 entry 12: previously standalone "Stay in the loop" section at #launches; promoted into card-grid slot 3 to balance the row and bring email capture above the fold. Slot 3 uses Section Blue accent (not Teal) to differentiate from the adjacent merged Practice card per Designer flag #7. */}
             <ProductCard
