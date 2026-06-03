@@ -32,6 +32,32 @@ export function Footer() {
       >
         © {YEAR} Cairn Partners, LLC · Sparkworks™ is a trademark of Cairn Partners, LLC.
       </div>
+      {/* Proprietary-rights notice — RBG-approved 2026-06-03; not TM-driven, no ™/® revert. */}
+      <div
+        className="sw-page"
+        style={{
+          fontFamily: "var(--sw-body)",
+          fontSize: 11,
+          color: "var(--sw-text-on-dark-muted)",
+          width: "100%",
+          textAlign: "center",
+        }}
+      >
+        Sparkworks program content — including curriculum, program materials, illustrations, and Spark of History images — is the proprietary work of Cairn Partners, LLC. All rights reserved. No part may be copied, reproduced, distributed, modified, or used to create derivative works without prior written permission.
+      </div>
+      <div
+        className="sw-page"
+        style={{
+          fontFamily: "var(--sw-body)",
+          fontSize: 11,
+          fontStyle: "italic",
+          color: "var(--sw-text-on-dark-muted)",
+          width: "100%",
+          textAlign: "center",
+        }}
+      >
+        Some links on this site are affiliate links. Sparkworks is an Amazon Associate; we earn from qualifying purchases at no extra cost to you.
+      </div>
     </footer>
   );
 }
