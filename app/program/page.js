@@ -357,12 +357,12 @@ export default function ProgramPage() {
             <div className="sw-card" style={{ borderTop: "4px solid var(--sw-blue)" }}>
               <div className="ts-eyebrow" style={{ color: "var(--sw-blue)" }}>Ember Track</div>
               <h3 className="ts-h2" style={{ marginTop: 6, marginBottom: 10 }}>Grades 2–3</h3>
-              <p className="ts-body">Max 8 students · dedicated instructor · same 8-session arc, calibrated to younger reasoners.</p>
+              <p className="ts-body">Kept deliberately small · dedicated instructor · same 8-session arc, calibrated to younger reasoners.</p>
             </div>
             <div className="sw-card" style={{ borderTop: "4px solid var(--sw-blue)" }}>
               <div className="ts-eyebrow" style={{ color: "var(--sw-blue)" }}>Blaze Track</div>
               <h3 className="ts-h2" style={{ marginTop: 6, marginBottom: 10 }}>Grades 4–6</h3>
-              <p className="ts-body">Max 8 students · dedicated instructor · same 8-session arc, calibrated to older reasoners.</p>
+              <p className="ts-body">Kept deliberately small · dedicated instructor · same 8-session arc, calibrated to older reasoners.</p>
             </div>
           </div>
         </section>
