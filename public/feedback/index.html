@@ -628,7 +628,7 @@
   <!-- INTRO -->
   <div class="sheet-pad">
     <p class="intro-quote">You're one of our <b>founding families</b> — the very first group through Sparkworks — so your answers carry real weight. Please be blunt; critical feedback helps us most. Your pricing answers stay strictly between us.</p>
-    <p class="req-key"><span class="req-star">✱</span> = required question</p>
+    <p class="req-key"><span class="req-star">✱</span> Every question is required — it's short, and each answer genuinely helps.</p>
   </div>
 
   <!-- ============================================================= -->
@@ -730,16 +730,15 @@
       </div>
       <p class="q-err-msg">Please answer this question.</p>
     </div>
-    <div class="q" data-q="B4" id="q-B4" style="display:none;">
-      <div class="q-num">B4 <span class="q-condflag">Conditional</span></div>
-      <p class="q-text">If the Ember and Blaze classes were at different times, would you have…
-        <span style="display:block;font-weight:400;font-style:italic;font-size:13.5px;color:#7A828D;margin-top:4px;">(shown only to families with children in both tracks)</span>
-      </p>
+    <div class="q" data-q="B4" id="q-B4" data-req style="display:none;">
+      <div class="q-num">B4</div>
+      <p class="q-text">If the Ember and Blaze classes were at different times, would you have…<span class="req-star">✱</span></p>
       <div class="choices" data-choice="B4">
         <label class="choice"><input type="radio" name="B4" value="Still enrolled both kids (as long as the times worked)"><span class="dot"></span>Still enrolled both kids (as long as the times worked)</label>
         <label class="choice"><input type="radio" name="B4" value="Enrolled only one of your kids"><span class="dot"></span>Enrolled only one of your kids</label>
         <label class="choice"><input type="radio" name="B4" value="Not enrolled"><span class="dot"></span>Not enrolled</label>
       </div>
+      <p class="q-err-msg">Please answer this question.</p>
     </div>
   </div>
 
@@ -787,19 +786,21 @@
       </div>
       <p class="q-err-msg">Please answer this question.</p>
     </div>
-    <div class="q" data-q="C4">
-      <div class="q-num">C4 <span class="q-opt">Optional</span></div>
-      <p class="q-text">Did you try any of the "do this at home" prompts from the recap emails with your child?</p>
+    <div class="q" data-q="C4" data-req>
+      <div class="q-num">C4</div>
+      <p class="q-text">Did you try any of the "do this at home" prompts from the recap emails with your child?<span class="req-star">✱</span></p>
       <div class="choices" data-choice="C4">
         <label class="choice"><input type="radio" name="C4" value="Yes, several"><span class="dot"></span>Yes, several</label>
         <label class="choice"><input type="radio" name="C4" value="Once or twice"><span class="dot"></span>Once or twice</label>
         <label class="choice"><input type="radio" name="C4" value="No"><span class="dot"></span>No</label>
       </div>
+      <p class="q-err-msg">Please answer this question.</p>
     </div>
-    <div class="q" data-q="C5">
-      <div class="q-num">C5 <span class="q-opt">Optional</span></div>
-      <p class="q-text">Any other comments on communication?</p>
+    <div class="q" data-q="C5" data-req>
+      <div class="q-num">C5</div>
+      <p class="q-text">Any other comments on communication?<span class="req-star">✱</span></p>
       <textarea class="sw-area" data-field="C5" placeholder="Your answer"></textarea>
+      <p class="q-err-msg">Please answer this question.</p>
     </div>
   </div>
 
@@ -997,15 +998,17 @@
       <textarea class="sw-area" data-field="E8" placeholder="Your answer"></textarea>
       <p class="q-err-msg">Please answer this question.</p>
     </div>
-    <div class="q" data-q="E9">
-      <div class="q-num">E9 <span class="q-opt">Optional</span></div>
-      <p class="q-text">If you were going to recommend Sparkworks, how would you describe it to another family?</p>
+    <div class="q" data-q="E9" data-req>
+      <div class="q-num">E9</div>
+      <p class="q-text">If you were going to recommend Sparkworks, how would you describe it to another family?<span class="req-star">✱</span></p>
       <textarea class="sw-area" data-field="E9" placeholder="Your answer"></textarea>
+      <p class="q-err-msg">Please answer this question.</p>
     </div>
-    <div class="q" data-q="E10">
-      <div class="q-num">E10 <span class="q-opt">Optional</span></div>
-      <p class="q-text">And what caveats would you add — the "it's a great fit if…" conditions? (e.g., "if your kid already likes puzzles," or "if your child is comfortable being challenged")</p>
+    <div class="q" data-q="E10" data-req>
+      <div class="q-num">E10</div>
+      <p class="q-text">And what caveats would you add — the "it's a great fit if…" conditions? (e.g., "if your kid already likes puzzles," or "if your child is comfortable being challenged")<span class="req-star">✱</span></p>
       <textarea class="sw-area" data-field="E10" placeholder="Your answer"></textarea>
+      <p class="q-err-msg">Please answer this question.</p>
     </div>
   </div>
 
@@ -1015,20 +1018,22 @@
   </div>
   <div class="section-help-band" style="--band:var(--sw-purple);">Answered once, across all your children.</div>
   <div class="q-pad" style="--band:var(--sw-purple);">
-    <div class="q" data-q="F1">
-      <div class="q-num">F1 <span class="q-opt">Optional</span></div>
-      <p class="q-text">How often did your child(ren) talk about Sparkworks at home, unprompted?</p>
+    <div class="q" data-q="F1" data-req>
+      <div class="q-num">F1</div>
+      <p class="q-text">How often did your child(ren) talk about Sparkworks at home, unprompted?<span class="req-star">✱</span></p>
       <div class="choices" data-choice="F1">
         <label class="choice"><input type="radio" name="F1" value="Never"><span class="dot"></span>Never</label>
         <label class="choice"><input type="radio" name="F1" value="Rarely"><span class="dot"></span>Rarely</label>
         <label class="choice"><input type="radio" name="F1" value="Sometimes"><span class="dot"></span>Sometimes</label>
         <label class="choice"><input type="radio" name="F1" value="Often"><span class="dot"></span>Often</label>
       </div>
+      <p class="q-err-msg">Please answer this question.</p>
     </div>
-    <div class="q" data-q="F2">
-      <div class="q-num">F2 <span class="q-opt">Optional</span></div>
-      <p class="q-text">Anything else to share — something that stood out, fell flat, or examples of improvements you saw in your kids' thinking?</p>
+    <div class="q" data-q="F2" data-req>
+      <div class="q-num">F2</div>
+      <p class="q-text">Anything else to share — something that stood out, fell flat, or examples of improvements you saw in your kids' thinking?<span class="req-star">✱</span></p>
       <textarea class="sw-area" data-field="F2" placeholder="Your answer"></textarea>
+      <p class="q-err-msg">Please answer this question.</p>
     </div>
   </div>
 
@@ -1037,15 +1042,17 @@
     <span class="sec-letter">G</span><span class="sec-name">Wrap-up</span>
   </div>
   <div class="q-pad" style="--band:var(--sw-teal);">
-    <div class="q" data-q="G1">
-      <div class="q-num">G1 <span class="q-opt">Optional</span></div>
-      <p class="q-text">What was the single best thing about Sparkworks?</p>
+    <div class="q" data-q="G1" data-req>
+      <div class="q-num">G1</div>
+      <p class="q-text">What was the single best thing about Sparkworks?<span class="req-star">✱</span></p>
       <textarea class="sw-area" data-field="G1" placeholder="Your answer"></textarea>
+      <p class="q-err-msg">Please answer this question.</p>
     </div>
-    <div class="q" data-q="G2">
-      <div class="q-num">G2 <span class="q-opt">Optional</span></div>
-      <p class="q-text">If you could change ONE thing, what would it be?</p>
+    <div class="q" data-q="G2" data-req>
+      <div class="q-num">G2</div>
+      <p class="q-text">If you could change ONE thing, what would it be?<span class="req-star">✱</span></p>
       <textarea class="sw-area" data-field="G2" placeholder="Your answer"></textarea>
+      <p class="q-err-msg">Please answer this question.</p>
     </div>
     <div class="q" data-q="G3" data-req>
       <div class="q-num">G3</div>
@@ -1122,24 +1129,26 @@
           </div>
           <p class="q-err-msg">Please answer this question.</p>
         </div>
-        <div class="q" data-q="K5">
-          <div class="q-num">K5 <span class="q-opt">Optional</span></div>
-          <p class="q-text">Did this child use a Sparkworks <b>way of thinking</b> in real life — pausing before reacting, ruling options out, estimating, thinking about what someone else will do?</p>
+        <div class="q" data-q="K5" data-req>
+          <div class="q-num">K5</div>
+          <p class="q-text">Did this child use a Sparkworks <b>way of thinking</b> in real life — pausing before reacting, ruling options out, estimating, thinking about what someone else will do?<span class="req-star">✱</span></p>
           <div class="choices" data-choice="K5">
             <label class="choice"><input type="radio" value="Yes clearly"><span class="dot"></span>Yes clearly</label>
             <label class="choice"><input type="radio" value="Maybe once or twice"><span class="dot"></span>Maybe once or twice</label>
             <label class="choice"><input type="radio" value="Not that I saw"><span class="dot"></span>Not that I saw</label>
             <label class="choice"><input type="radio" value="Not sure"><span class="dot"></span>Not sure</label>
           </div>
+          <p class="q-err-msg">Please answer this question.</p>
         </div>
-        <div class="q" data-q="K6">
-          <div class="q-num">K6 <span class="q-opt">Optional</span></div>
-          <p class="q-text">Did this child <b>show off a skill</b> (like spotting patterns) or ask to <b>replay the games/exercises</b> at home?</p>
+        <div class="q" data-q="K6" data-req>
+          <div class="q-num">K6</div>
+          <p class="q-text">Did this child <b>show off a skill</b> (like spotting patterns) or ask to <b>replay the games/exercises</b> at home?<span class="req-star">✱</span></p>
           <div class="choices" data-choice="K6">
             <label class="choice"><input type="radio" value="Yes, more than once"><span class="dot"></span>Yes, more than once</label>
             <label class="choice"><input type="radio" value="Once or twice"><span class="dot"></span>Once or twice</label>
             <label class="choice"><input type="radio" value="No"><span class="dot"></span>No</label>
           </div>
+          <p class="q-err-msg">Please answer this question.</p>
         </div>
         <div class="q" data-q="K7" data-req>
           <div class="q-num">K7</div>
@@ -1442,7 +1451,7 @@ var childContainer = document.getElementById('childContainer');
     container.appendChild(clone);
     initAllRankLists(clone);
     relabelChildren();
-    clone.scrollIntoView({behavior:'smooth', block:'start'});
+    if(!window.__prefilling) clone.scrollIntoView({behavior:'smooth', block:'start'});
   });
 })();
 
@@ -1498,6 +1507,7 @@ document.addEventListener('input', function(e){
       if(nameInput && d.parentName) nameInput.value = d.parentName;
       var kids = Array.isArray(d.children) ? d.children : [];
       var addBtn = document.getElementById('addChildBtn');
+      window.__prefilling = true; // suppress the add-child auto-scroll while we spawn blocks
       kids.forEach(function(kid, i){
         if(i > 0 && addBtn) addBtn.click(); // spawn a block (reuses handler -> inits its rank widget)
         var blocks = childContainer.querySelectorAll('.child-block');
@@ -1506,7 +1516,9 @@ document.addEventListener('input', function(e){
         var k1 = block.querySelector('input[data-field="K1"]');
         if(k1) k1.value = kid.name + (kid.track ? ' — ' + kid.track : '');
       });
+      window.__prefilling = false;
       maybeToggleB4();
+      window.scrollTo(0, 0); // land the visitor at the top, not on the last child block
     })
     .catch(function(){ /* fail silent — page still works manually */ });
 })();
