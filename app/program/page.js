@@ -201,7 +201,7 @@ export default function ProgramPage() {
         wordmarkSize="xl"
         eyebrow="The Program · Season 2"
         title="An 8-session program that teaches kids to think through hard problems — through hands-on problem solving, not lectures."
-        tagline="Two grade-calibrated tracks: Ember (grades 2–3) and Blaze (grades 4–6). Eight students per track, dedicated instructor, 60-minute sessions."
+        tagline="Two grade-calibrated tracks: Ember (grades 2–3) and Blaze (grades 4–6). Each kept deliberately small, with a dedicated instructor and 60-minute sessions."
       />
 
       <main className="sw-page sw-body">

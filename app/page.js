@@ -68,11 +68,12 @@ export default function Home() {
 
           <div className="sw-grid-3">
             {/* TM-2026: Program card body reframed. Original: "The flagship. Two grade-calibrated tracks — Ember (grades 2–3) and Blaze (grades 4–6), 6 students each. Eight sessions, eight thinking skills, taught through real games and Sparks of History — historical figures who used the same principles to change something that mattered. Founding Sparks filled before we listed it. Season 2 is filling now." */}
+            {/* ACCURACY-2026-06-07 (non-TM): per-track group-size number dropped from this card's live copy ("6 students each" → "each kept deliberately small with a dedicated instructor"). Season-1 pilot ran ~8:1, real Season-2 cap is pending. Do NOT restore the "6 students each" figure when the TM swap above is unwound. See SPARKWORKS_BRAND_REF.md (Structure line) and TRADEMARK_GUIDANCE swap-log accuracy note. */}
             <ProductCard
               accent="purple"
               kicker="The Program"
               title="Sparkworks · 8-session class"
-              body="The flagship. Two grade-calibrated tracks — Ember (grades 2–3) and Blaze (grades 4–6), 8 students each. Eight sessions, eight thinking skills, taught through hands-on activities and real-world examples of how great critical thinkers used these same skills to solve some of history's most important challenges. Founding Sparks filled before we listed it. Season 2 is filling now."
+              body="The flagship. Two grade-calibrated tracks — Ember (grades 2–3) and Blaze (grades 4–6), each kept deliberately small with a dedicated instructor. Eight sessions, eight thinking skills, taught through hands-on activities and real-world examples of how great critical thinkers used these same skills to solve some of history's most important challenges. Founding Sparks filled before we listed it. Season 2 is filling now."
               cta={{ label: "Save my seat — Season 2", href: "/program?source=home-program#interest", primary: true }}
               secondary={{ label: "View Program Details", href: "/program" }}
             />
