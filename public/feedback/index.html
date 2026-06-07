@@ -1072,7 +1072,7 @@
   <div class="part-band">
     <div class="part-kicker">Part 2 of 2</div>
     <h2 class="part-title">About each child</h2>
-    <p class="part-sub">Fill out one block per child who attended. Use "+ Add another child" if more than one of your kids took part.</p>
+    <p class="part-sub">There's a block below for each of your children — please fill one out per child.</p>
   </div>
 
   <!-- container holds all child blocks -->
@@ -1189,7 +1189,9 @@
     </div>
   </div>
 
-  <div class="add-child-wrap">
+  <!-- Add-child is hidden: each family link pre-loads the right number of kids.
+       The button stays in the DOM so the prefill routine can spawn blocks programmatically. -->
+  <div class="add-child-wrap" style="display:none;">
     <button type="button" class="btn-add-child" id="addChildBtn"><span class="plus">+</span> Add another child</button>
   </div>
 
@@ -1436,18 +1438,7 @@ var childContainer = document.getElementById('childContainer');
       });
     });
 
-    var head = clone.querySelector('.child-head');
-    var rm = document.createElement('button');
-    rm.type = 'button';
-    rm.className = 'child-remove';
-    rm.textContent = 'Remove';
-    rm.addEventListener('click', function(){
-      clone.parentNode.removeChild(clone);
-      relabelChildren();
-      maybeToggleB4();
-    });
-    head.appendChild(rm);
-
+    // No "Remove" control — the family link pre-loads the right number of children.
     container.appendChild(clone);
     initAllRankLists(clone);
     relabelChildren();
@@ -1714,10 +1705,14 @@ submitBtn.addEventListener('click', async function(){
       var body = await res.json().catch(function(){ return {}; });
       throw new Error(body.error || 'Submission failed');
     }
-    // success — reveal confirmation, hide the form controls
-    document.querySelector('.submit-wrap').style.display = 'none';
+    // success — submission is final: replace the entire form with the thank-you panel
+    // so nothing stays editable and the survey can't be re-submitted.
+    var sheet = document.querySelector('.sheet');
+    Array.prototype.forEach.call(sheet.children, function(ch){
+      if(ch.id !== 'confirm') ch.style.display = 'none';
+    });
     document.getElementById('confirm').classList.add('show');
-    document.getElementById('confirm').scrollIntoView({behavior:'smooth', block:'start'});
+    window.scrollTo(0, 0);
   } catch(err){
     submitBtn.disabled = false;
     submitBtn.textContent = 'Submit';
