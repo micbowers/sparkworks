@@ -1,0 +1,1688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Founding Sparks — Parent Survey · Sparkworks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sw-steel:#1E2530;
+    --sw-spark:#1A5C82;
+    --sw-purple:#9447D6;
+    --sw-teal:#1FA8AE;
+    --sw-ember:#D4501A;
+    --sw-secblue:#2A85C2;
+    --sw-red:#CF2C38;
+    --sw-yellow:#F5C400;
+    --sw-bone:#F2EFE8;
+    --sw-white:#FFFFFF;
+    --display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+    --body:"Merriweather",Georgia,"Times New Roman",serif;
+    --radius:6px;
+    --maxw:760px;
+  }
+
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;
+    background:#EDEAE3; /* neutral page chrome so the white survey card reads as a sheet */
+    color:var(--sw-steel);
+    font-family:var(--body);
+    line-height:1.65;
+    font-size:16px;
+  }
+
+  /* ---------- HERO HEADER ---------- */
+  .hero{
+    background:var(--sw-spark);
+    padding:44px 28px 40px;
+  }
+  .hero-inner{max-width:var(--maxw);margin:0 auto;}
+  .wordmark{
+    font-family:var(--display);
+    font-weight:800;
+    letter-spacing:4px;
+    font-size:30px;
+    line-height:1;
+    margin-bottom:22px;
+  }
+  .wordmark .spark{color:#FFFFFF;}
+  .wordmark .works{color:var(--sw-ember);}
+  .hero-eyebrow{
+    font-family:var(--display);
+    font-weight:700;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    font-size:13px;
+    color:rgba(255,255,255,0.85); /* kicker on dark surface = white 85% per opacity ladder (was Ember — orange-on-blue fails contrast) */
+    margin-bottom:10px;
+  }
+  .hero-title{
+    font-family:var(--display);
+    font-weight:800;
+    letter-spacing:.5px;
+    font-size:42px;
+    line-height:1.04;
+    color:#FFFFFF; /* the single 100% element on this dark surface */
+    margin:0 0 14px;
+  }
+  .hero-sub{
+    font-family:var(--body);
+    font-style:italic;
+    font-size:17px;
+    color:rgba(255,255,255,0.85);
+    margin:0;
+    max-width:60ch;
+  }
+
+  /* ---------- SHEET / CARD ---------- */
+  .sheet{
+    max-width:var(--maxw);
+    margin:-22px auto 56px;
+    background:var(--sw-white);
+    border-radius:var(--radius);
+    box-shadow:0 10px 30px rgba(30,37,48,0.10);
+    overflow:hidden;
+  }
+  .sheet-pad{padding:34px 32px;}
+
+  /* ---------- PART DIVIDERS ---------- */
+  .part-band{
+    background:var(--sw-spark);
+    color:#FFFFFF;
+    padding:24px 32px 22px;
+  }
+  .part-band .part-kicker{
+    font-family:var(--display);
+    font-weight:700;letter-spacing:3px;text-transform:uppercase;
+    font-size:12px;color:rgba(255,255,255,0.6);margin-bottom:6px;
+  }
+  .part-band .part-title{
+    font-family:var(--display);
+    font-weight:800;letter-spacing:.5px;
+    font-size:28px;line-height:1.05;color:#FFFFFF;margin:0;
+  }
+  .part-band .part-sub{
+    font-family:var(--body);font-style:italic;font-size:14.5px;
+    color:rgba(255,255,255,0.85);margin:8px 0 0;max-width:58ch;
+  }
+
+  /* ---------- INTRO ---------- */
+  .intro-quote{
+    border-left:3px solid var(--sw-teal);
+    background:var(--sw-bone);
+    padding:16px 20px;
+    border-radius:0 var(--radius) var(--radius) 0;
+    font-style:italic;
+    font-size:16px;
+    color:var(--sw-steel);
+    margin:0 0 8px;
+  }
+  .req-key{
+    font-family:var(--display);
+    font-weight:700;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    font-size:12px;
+    color:#6B7480;
+    margin:18px 0 0;
+  }
+  .req-key .req-star{color:var(--sw-ember);font-size:14px;}
+
+  /* ---------- SECTION BANDS ---------- */
+  .section-band{
+    background:var(--sw-steel);
+    color:#FFFFFF;
+    padding:16px 32px;
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    border-left:6px solid var(--band,var(--sw-teal));
+  }
+  .section-band .sec-letter{
+    font-family:var(--display);
+    font-weight:800;
+    font-size:26px;
+    line-height:1;
+    color:var(--band,var(--sw-teal));
+    min-width:1.4em;
+  }
+  .section-band .sec-name{
+    font-family:var(--display);
+    font-weight:700;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    font-size:21px;
+    color:#FFFFFF;
+  }
+  .section-help{
+    font-family:var(--body);
+    font-style:italic;
+    font-size:14.5px;
+    color:#5A6573;
+    background:#F7F5F0;
+    padding:12px 32px;
+    border-bottom:1px solid #ECE8E0;
+  }
+  /* the E-section confidential callout — slightly stronger */
+  .conf-callout{
+    border-left:3px solid var(--sw-red);
+    background:#FBF1F1;
+    margin:0;
+    padding:14px 32px;
+    font-family:var(--body);
+    font-style:italic;
+    font-size:14.5px;
+    color:#5A2A2C;
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+  }
+  .conf-callout .lock{
+    font-style:normal;
+    font-family:var(--display);
+    font-weight:800;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    font-size:11px;
+    color:var(--sw-red);
+    background:#fff;
+    border:1.5px solid var(--sw-red);
+    border-radius:3px;
+    padding:2px 7px;
+    white-space:nowrap;
+    margin-top:2px;
+  }
+  .section-help-band{ /* generic help line under a band */
+    border-left:3px solid var(--band,var(--sw-teal));
+    background:#F7F5F0;
+    margin:0;
+    padding:12px 32px 12px 30px;
+    font-family:var(--body);
+    font-style:italic;
+    font-size:14.5px;
+    color:#5A6573;
+  }
+
+  /* ---------- QUESTIONS ---------- */
+  .q-pad{padding:26px 32px;}
+  .q{
+    padding:0 0 26px;
+    margin:0 0 26px;
+    border-bottom:1px solid #F0EDE6;
+  }
+  .q:last-child{border-bottom:none;margin-bottom:0;padding-bottom:6px;}
+  .q-num{
+    font-family:var(--display);
+    font-weight:700;
+    letter-spacing:1px;
+    font-size:13px;
+    color:var(--band,var(--sw-teal));
+    text-transform:uppercase;
+    margin-bottom:3px;
+  }
+  .q-text{
+    font-family:var(--body);
+    font-size:16.5px;
+    font-weight:700;
+    line-height:1.5;
+    color:var(--sw-steel);
+    margin:0 0 14px;
+  }
+  .q-text .req-star{color:var(--sw-ember);font-weight:400;margin-left:4px;}
+  .q-text b{font-weight:700;}
+  .q-opt{
+    font-family:var(--display);
+    font-weight:600;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    font-size:11px;
+    color:#9AA1AB;
+    margin-left:6px;
+  }
+  .q-condflag{
+    font-family:var(--display);
+    font-weight:700;letter-spacing:.5px;text-transform:uppercase;
+    font-size:10.5px;color:#fff;background:var(--sw-secblue);
+    border-radius:3px;padding:2px 7px;margin-left:8px;vertical-align:middle;
+    letter-spacing:.5px;
+  }
+  /* per-question inline validation error */
+  .q.q-error .q-text{color:var(--sw-red);}
+  .q-err-msg{
+    display:none;
+    font-family:var(--display);font-weight:700;letter-spacing:.5px;text-transform:uppercase;
+    font-size:11.5px;color:var(--sw-red);margin:8px 0 0;
+  }
+  .q.q-error .q-err-msg{display:block;}
+
+  /* text inputs */
+  input[type="text"].sw-text{
+    width:100%;
+    font-family:var(--body);
+    font-size:15px;
+    color:var(--sw-steel);
+    padding:11px 13px;
+    border:1.5px solid #CDD2D8;
+    border-radius:var(--radius);
+    background:#fff;
+  }
+  textarea.sw-area{
+    width:100%;
+    min-height:90px;
+    resize:vertical;
+    font-family:var(--body);
+    font-size:15px;
+    line-height:1.6;
+    color:var(--sw-steel);
+    padding:11px 13px;
+    border:1.5px solid #CDD2D8;
+    border-radius:var(--radius);
+    background:#fff;
+  }
+  input.sw-text:focus,textarea.sw-area:focus{
+    outline:none;border-color:var(--sw-spark);box-shadow:0 0 0 3px rgba(26,92,130,0.12);
+  }
+
+  /* radio / choice rows */
+  .choices{display:flex;flex-direction:column;gap:9px;}
+  .choice{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    font-family:var(--body);
+    font-size:15px;
+    color:var(--sw-steel);
+    padding:9px 13px;
+    border:1.5px solid #E3E6EA;
+    border-radius:var(--radius);
+    cursor:pointer;
+    transition:border-color .12s,background .12s;
+  }
+  .choice:hover{border-color:var(--sw-spark);background:#F6FAFC;}
+  .choice .dot{
+    width:17px;height:17px;border-radius:50%;
+    border:2px solid #AEB5BE;flex:0 0 auto;
+  }
+  /* selected choice (radio behavior driven by JS) */
+  .choice.sel{border-color:var(--sw-spark);background:#EAF3F8;}
+  .choice.sel .dot{border-color:var(--sw-spark);background:var(--sw-spark);box-shadow:inset 0 0 0 3px #fff;}
+  /* keep the native radio accessible but visually folded into the .dot */
+  .choice input[type="radio"]{position:absolute;opacity:0;width:1px;height:1px;}
+  .choice:focus-within{border-color:var(--sw-spark);box-shadow:0 0 0 3px rgba(26,92,130,0.12);}
+  .choice .other-blank{
+    flex:1;border:none;border-bottom:1px dashed #B6BCC4;
+    font-family:var(--body);font-size:15px;color:var(--sw-steel);
+    padding:2px 4px;background:transparent;min-width:80px;
+  }
+  .choice .other-blank:focus{outline:none;border-bottom-color:var(--sw-spark);}
+
+  /* scale rows (Likert 1-5, NPS 0-10) */
+  .scale{
+    border:1.5px solid #E3E6EA;
+    border-radius:var(--radius);
+    padding:16px 14px 12px;
+    background:#FAFBFC;
+  }
+  .scale-row{
+    display:flex;
+    justify-content:space-between;
+    gap:6px;
+  }
+  .scale-pt{
+    flex:1;
+    text-align:center;
+    cursor:pointer;
+    background:none;border:none;padding:0;font:inherit;
+  }
+  .scale-pt .dot{
+    width:20px;height:20px;border-radius:50%;
+    border:2px solid #AEB5BE;margin:0 auto 6px;
+    transition:border-color .12s,background .12s;
+  }
+  .scale-pt:hover .dot{border-color:var(--sw-spark);background:#E8F1F6;}
+  .scale-pt:focus-visible{outline:2px solid var(--sw-spark);outline-offset:3px;border-radius:4px;}
+  .scale-pt.sel .dot{border-color:var(--sw-spark);background:var(--sw-spark);box-shadow:inset 0 0 0 3px #fff;}
+  .scale-pt .num{
+    font-family:var(--display);font-weight:700;font-size:15px;color:#5A6573;
+  }
+  .scale-pt.sel .num{color:var(--sw-spark);}
+  .scale-labels{
+    display:flex;justify-content:space-between;
+    margin-top:11px;
+    font-family:var(--display);
+    font-weight:600;letter-spacing:.5px;text-transform:uppercase;
+    font-size:11.5px;color:#7A828D;
+  }
+  .scale-labels.three{justify-content:space-between;}
+  .scale-labels .lo{text-align:left;flex:1;}
+  .scale-labels .mid{text-align:center;flex:1;}
+  .scale-labels .hi{text-align:right;flex:1;}
+
+  /* price grid E5 / length grid B1 */
+  .grid-wrap{border:1.5px solid #E3E6EA;border-radius:var(--radius);overflow:hidden;}
+  table.pricegrid{width:100%;border-collapse:collapse;font-family:var(--body);}
+  table.pricegrid th,table.pricegrid td{padding:13px 10px;text-align:center;}
+  table.pricegrid thead th{
+    background:var(--sw-steel);color:#fff;
+    font-family:var(--display);font-weight:700;letter-spacing:1px;
+    text-transform:uppercase;font-size:13px;
+  }
+  table.pricegrid thead th:first-child{background:var(--sw-steel);}
+  table.pricegrid tbody td:first-child{
+    text-align:left;font-family:var(--display);font-weight:800;
+    font-size:19px;color:var(--sw-steel);background:var(--sw-bone);
+    letter-spacing:.5px;width:34%;padding-left:18px;
+  }
+  table.pricegrid tbody tr:nth-child(even) td{background:#FAFBFC;}
+  table.pricegrid tbody tr:nth-child(even) td:first-child{background:#ECE7DD;}
+  table.pricegrid tbody td .gcell{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:100%;min-height:34px;cursor:pointer;border:none;background:none;padding:6px;
+  }
+  table.pricegrid tbody td .gdot{
+    width:19px;height:19px;border-radius:50%;
+    border:2px solid #AEB5BE;display:inline-block;cursor:pointer;
+    transition:border-color .12s,background .12s;
+  }
+  table.pricegrid tbody td:hover .gdot{border-color:var(--sw-spark);background:#E8F1F6;}
+  table.pricegrid tbody td.sel .gdot{border-color:var(--sw-spark);background:var(--sw-spark);box-shadow:inset 0 0 0 3px #fff;}
+  table.pricegrid tbody td .gcell:focus-visible{outline:2px solid var(--sw-spark);outline-offset:2px;border-radius:4px;}
+  table.pricegrid .colhead-blank{background:var(--sw-bone) !important;}
+
+  /* ---------- DRAG-TO-REORDER RANKING ---------- */
+  .rank-help{
+    font-family:var(--body);font-style:italic;font-size:13.5px;color:#7A828D;margin:0 0 12px;
+  }
+  .rank-list{
+    display:flex;flex-direction:column;gap:9px;
+    list-style:none;margin:0;padding:0;
+  }
+  .rank-row{
+    display:flex;align-items:center;gap:12px;
+    background:#fff;
+    border:1.5px solid #E3E6EA;
+    border-radius:var(--radius);
+    padding:10px 12px 10px 10px;
+    cursor:grab;
+    transition:border-color .12s,background .12s,box-shadow .12s,transform .08s;
+  }
+  .rank-row:hover{border-color:var(--sw-spark);background:#F6FAFC;}
+  .rank-row.dragging{
+    opacity:.6;cursor:grabbing;border-color:var(--sw-spark);
+    box-shadow:0 8px 20px rgba(30,37,48,0.16);
+  }
+  .rank-row.drop-target{border-color:var(--sw-spark);background:#EAF3F8;}
+  /* a row toggled "we don't do this" — pulled out of the ranking */
+  .rank-row.excluded{
+    background:#F4F2EE;border-style:dashed;border-color:#D8D3CA;
+    cursor:default;opacity:.85;
+  }
+  .rank-row.excluded:hover{border-color:#D8D3CA;background:#F4F2EE;}
+  .rank-chip{
+    flex:0 0 auto;
+    width:30px;height:30px;border-radius:50%;
+    background:var(--sw-spark);color:#fff;
+    font-family:var(--display);font-weight:800;font-size:16px;
+    display:flex;align-items:center;justify-content:center;
+    line-height:1;
+  }
+  .rank-row.excluded .rank-chip{
+    background:#C7C0B4;color:#fff;font-size:13px;letter-spacing:0;
+  }
+  .rank-handle{
+    flex:0 0 auto;
+    font-size:19px;color:#AEB5BE;line-height:1;
+    cursor:grab;user-select:none;
+    padding:0 2px;
+  }
+  .rank-row:hover .rank-handle{color:var(--sw-spark);}
+  .rank-row.excluded .rank-handle{visibility:hidden;}
+  .rank-label{
+    flex:1;min-width:0;
+    font-family:var(--body);font-size:15px;color:var(--sw-steel);
+    display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  }
+  .rank-row.excluded .rank-label{color:#9A948A;text-decoration:line-through;text-decoration-color:#C7C0B4;}
+  .rank-label .rank-other-blank{
+    flex:1;border:none;border-bottom:1px dashed #B6BCC4;
+    font-family:var(--body);font-size:15px;color:var(--sw-steel);
+    padding:2px 4px;background:transparent;min-width:90px;
+  }
+  .rank-label .rank-other-blank:focus{outline:none;border-bottom-color:var(--sw-spark);}
+  /* ACCESSIBILITY (QA flag): up/down reorder buttons are the primary, touch-friendly
+     control — large 44px-tall touch targets, side by side, keyboard focusable.
+     Drag is an enhancement on top of these. */
+  .rank-moves{
+    flex:0 0 auto;display:flex;flex-direction:row;gap:6px;
+  }
+  .rank-moves button{
+    width:40px;height:44px;
+    border:1.5px solid #C2CAD2;background:#fff;
+    border-radius:6px;cursor:pointer;
+    font-family:var(--display);font-weight:800;font-size:17px;line-height:1;
+    color:var(--sw-spark);padding:0;
+    display:flex;align-items:center;justify-content:center;
+    touch-action:manipulation;
+  }
+  .rank-moves button:hover{border-color:var(--sw-spark);background:#EAF3F8;}
+  .rank-moves button:focus-visible{outline:2px solid var(--sw-spark);outline-offset:2px;}
+  .rank-moves button:disabled{opacity:.3;cursor:default;color:#9AA1AB;}
+  .rank-moves button:disabled:hover{border-color:#C2CAD2;background:#fff;}
+  .rank-row.excluded .rank-moves{visibility:hidden;}
+  /* per-row "we don't do this" toggle */
+  .rank-na{
+    flex:0 0 auto;display:flex;align-items:center;gap:6px;
+    font-family:var(--display);font-weight:600;letter-spacing:.5px;text-transform:uppercase;
+    font-size:10.5px;color:#8A919B;cursor:pointer;user-select:none;
+    border:1px solid #DCDFE4;border-radius:4px;padding:8px 10px;
+    background:#FBFBFC;white-space:nowrap;min-height:40px;
+  }
+  .rank-na:hover{border-color:var(--sw-secblue);color:var(--sw-secblue);}
+  .rank-na input{margin:0;cursor:pointer;width:18px;height:18px;}
+  .rank-row.excluded .rank-na{
+    background:#fff;border-color:var(--sw-secblue);color:var(--sw-secblue);
+  }
+
+  /* ---------- PER-CHILD REPEATER ---------- */
+  .child-block{
+    border:1.5px solid #DDE0E5;
+    border-top:5px solid var(--sw-purple);
+    border-radius:var(--radius);
+    margin:0 32px 24px;
+    background:#FCFCFD;
+    overflow:hidden;
+  }
+  .child-head{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+    padding:14px 20px;background:#F4F1F7;border-bottom:1px solid #E6E1EC;
+  }
+  .child-head .child-tag{
+    font-family:var(--display);font-weight:800;letter-spacing:1px;text-transform:uppercase;
+    font-size:17px;color:var(--sw-purple);display:flex;align-items:baseline;gap:9px;
+  }
+  .child-head .child-tag .cnum{
+    background:var(--sw-purple);color:#fff;border-radius:50%;
+    width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;
+    font-size:14px;line-height:1;
+  }
+  .child-remove{
+    font-family:var(--display);font-weight:700;letter-spacing:.5px;text-transform:uppercase;
+    font-size:11px;color:#9A4A4A;background:#fff;border:1.5px solid #E2C5C5;
+    border-radius:4px;padding:6px 12px;cursor:pointer;
+  }
+  .child-remove:hover{border-color:var(--sw-red);color:var(--sw-red);background:#FCF3F3;}
+  .child-block .q-pad{padding:22px 22px;}
+  .add-child-wrap{padding:6px 32px 34px;}
+  .btn-add-child{
+    display:inline-flex;align-items:center;gap:9px;
+    font-family:var(--display);font-weight:700;letter-spacing:1px;text-transform:uppercase;
+    font-size:14px;color:var(--sw-purple);background:#fff;
+    border:2px dashed var(--sw-purple);border-radius:var(--radius);
+    padding:13px 26px;cursor:pointer;transition:background .12s;
+  }
+  .btn-add-child:hover{background:#F6F0FB;}
+  .btn-add-child .plus{font-size:19px;line-height:1;font-weight:800;}
+
+  /* submit / confirmation */
+  .submit-wrap{padding:30px 32px 8px;text-align:center;}
+  .btn-primary{
+    display:inline-block;
+    font-family:var(--display);
+    font-weight:800;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    font-size:16px;
+    color:#fff;
+    background:var(--sw-ember);
+    border:none;
+    border-radius:var(--radius);
+    padding:15px 44px;
+    cursor:pointer;
+  }
+  .btn-primary:disabled{opacity:.55;cursor:default;}
+  .submit-note{
+    font-family:var(--body);font-size:13px;font-style:italic;
+    color:#8A919B;margin:14px 0 0;
+  }
+  .submit-error{
+    font-family:var(--display);font-weight:700;letter-spacing:.5px;text-transform:uppercase;
+    font-size:12.5px;color:var(--sw-red);margin:14px 0 0;display:none;
+  }
+  .submit-error.show{display:block;}
+
+  .confirm-panel{
+    margin:14px 32px 36px;
+    background:var(--sw-spark);
+    border-radius:var(--radius);
+    padding:30px 28px;
+    text-align:center;
+    display:none;
+  }
+  .confirm-panel.show{display:block;}
+  .confirm-panel .ckicker{
+    font-family:var(--display);font-weight:700;letter-spacing:2px;
+    text-transform:uppercase;font-size:12px;color:rgba(255,255,255,0.6);margin-bottom:10px;
+  }
+  .confirm-panel h3{
+    font-family:var(--display);font-weight:800;letter-spacing:.5px;
+    font-size:26px;color:#FFFFFF;margin:0 0 10px;
+  }
+  .confirm-panel p{
+    font-family:var(--body);font-size:15.5px;
+    color:rgba(255,255,255,0.85);margin:0 auto;max-width:52ch;line-height:1.6;
+  }
+
+  /* footer */
+  .site-footer{
+    background:var(--sw-spark);
+    padding:22px 28px;
+  }
+  .site-footer-inner{
+    max-width:var(--maxw);margin:0 auto;
+    display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;
+  }
+  .site-footer .fmark{
+    font-family:var(--display);font-weight:800;letter-spacing:3px;font-size:15px;
+  }
+  .site-footer .fmark .spark{color:#fff;}
+  .site-footer .fmark .works{color:var(--sw-ember);}
+  .site-footer .ftag{
+    font-family:var(--body);font-style:italic;font-size:13px;color:rgba(255,255,255,0.6);
+  }
+
+  @media (max-width:680px){
+    .hero-title{font-size:34px;}
+    .sheet-pad,.q-pad{padding-left:20px;padding-right:20px;}
+    .section-band,.section-help,.conf-callout,.section-help-band,.part-band{padding-left:20px;padding-right:20px;}
+    .child-block{margin-left:18px;margin-right:18px;}
+    .add-child-wrap{padding-left:18px;padding-right:18px;}
+    .scale-pt .num{font-size:13px;}
+    .scale-labels{font-size:10.5px;}
+    table.pricegrid th,table.pricegrid td{padding:10px 5px;font-size:13px;}
+    table.pricegrid tbody td:first-child{font-size:16px;padding-left:12px;}
+    .rank-row{flex-wrap:wrap;}
+    .rank-na{order:5;margin-left:42px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-inner">
+    <div class="wordmark"><span class="spark">SPARK</span><span class="works">WORKS</span></div>
+    <div class="hero-eyebrow">Founding Sparks · Parent Survey</div>
+    <h1 class="hero-title">How did Sparkworks go for your family?</h1>
+    <p class="hero-sub">A short, candid read on Season 1 — from one of the founding families who shaped it.</p>
+  </div>
+</header>
+
+<main class="sheet">
+
+  <!-- INTRO -->
+  <div class="sheet-pad">
+    <p class="intro-quote">You're one of our <b>founding families</b> — the very first group through Sparkworks — so your answers carry real weight. Please be blunt; critical feedback helps us most. Your pricing answers stay strictly between us.</p>
+    <p class="req-key"><span class="req-star">✱</span> = required question</p>
+  </div>
+
+  <!-- ============================================================= -->
+  <!-- ====================  PART 1  ================================= -->
+  <!-- ============================================================= -->
+  <div class="part-band">
+    <div class="part-kicker">Part 1 of 2</div>
+    <h2 class="part-title">About your family &amp; the program</h2>
+    <p class="part-sub">Answer this part once for your household.</p>
+  </div>
+
+  <!-- ---------- IDENTITY (0a) ---------- -->
+  <div class="section-band" style="--band:var(--sw-spark);">
+    <span class="sec-letter">★</span><span class="sec-name">About you</span>
+  </div>
+  <div class="q-pad" style="--band:var(--sw-spark);">
+    <div class="q" data-q="0a" data-req>
+      <div class="q-num">0a</div>
+      <p class="q-text">Your name<span class="req-star">✱</span></p>
+      <input type="text" class="sw-text" data-field="name" placeholder="Your answer">
+      <p class="q-err-msg">Please answer this question.</p>
+    </div>
+  </div>
+
+  <!-- ---------- A. WHY YOU ENROLLED ---------- -->
+  <div class="section-band" style="--band:var(--sw-purple);">
+    <span class="sec-letter">A</span><span class="sec-name">Why you enrolled</span>
+  </div>
+  <div class="q-pad" style="--band:var(--sw-purple);">
+    <div class="q" data-q="A1" data-req>
+      <div class="q-num">A1</div>
+      <p class="q-text">What made you sign your child up for Sparkworks — what were you hoping it would do for them?<span class="req-star">✱</span></p>
+      <textarea class="sw-area" data-field="A1" placeholder="Your answer"></textarea>
+      <p class="q-err-msg">Please answer this question.</p>
+    </div>
+    <div class="q" data-q="A2" data-req>
+      <div class="q-num">A2</div>
+      <p class="q-text">If Sparkworks hadn't existed, what would you most likely have done instead?<span class="req-star">✱</span></p>
+      <div class="choices" data-choice="A2">
+        <label class="choice"><input type="radio" name="A2" value="A different educational program"><span class="dot"></span>A different educational program</label>
+        <label class="choice"><input type="radio" name="A2" value="Private tutoring"><span class="dot"></span>Private tutoring</label>
+        <label class="choice"><input type="radio" name="A2" value="Sports-related activity"><span class="dot"></span>Sports-related activity</label>
+        <label class="choice"><input type="radio" name="A2" value="Free time"><span class="dot"></span>Free time</label>
+        <label class="choice"><input type="radio" name="A2" value="Other"><span class="dot"></span>Other:&nbsp;<input class="other-blank" type="text" data-other></label>
+      </div>
+      <p class="q-err-msg">Please answer this question.</p>
+    </div>
+  </div>
+
+  <!-- ---------- B. LOGISTICS & SCHEDULE ---------- -->
+  <div class="section-band" style="--band:var(--sw-teal);">
+    <span class="sec-letter">B</span><span class="sec-name">Logistics &amp; schedule</span>
+  </div>
+  <div class="q-pad" style="--band:var(--sw-teal);">
+    <div class="q" data-q="B1" data-req>
+      <div class="q-num">B1</div>
+      <p class="q-text">The class was 60 minutes. Would you still have enrolled if it were…?<span class="req-star">✱</span></p>
+      <div class="grid-wrap">
+        <table class="pricegrid" data-grid="B1">
+          <thead>
+            <tr><th class="colhead-blank">&nbsp;</th><th>Yes</th><th>Maybe</th><th>No</th></tr>
+          </thead>
+          <tbody>
+            <tr data-row="75 minutes">
+              <td>75 minutes</td>
+              <td data-col="Yes"><button type="button" class="gcell" aria-label="75 minutes — Yes"><span class="gdot"></span></button></td>
+              <td data-col="Maybe"><button type="button" class="gcell" aria-label="75 minutes — Maybe"><span class="gdot"></span></button></td>
+              <td data-col="No"><button type="button" class="gcell" aria-label="75 minutes — No"><span class="gdot"></span></button></td>
+            </tr>
+            <tr data-row="90 minutes">
+              <td>90 minutes</td>
+              <td data-col="Yes"><button type="button" class="gcell" aria-label="90 minutes — Yes"><span class="gdot"></span></button></td>
+              <td data-col="Maybe"><button type="button" class="gcell" aria-label="90 minutes — Maybe"><span class="gdot"></span></button></td>
+              <td data-col="No"><button type="button" class="gcell" aria-label="90 minutes — No"><span class="gdot"></span></button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="q-err-msg">Please answer both rows.</p>
+    </div>
+    <div class="q" data-q="B2" data-req>
+      <div class="q-num">B2</div>
+      <p class="q-text">How was the overall program length (8 sessions)?<span class="req-star">✱</span></p>
+      <div class="choices" data-choice="B2">
+        <label class="choice"><input type="radio" name="B2" value="Too few"><span class="dot"></span>Too few</label>
+        <label class="choice"><input type="radio" name="B2" value="About right"><span class="dot"></span>About right</label>
+        <label class="choice"><input type="radio" name="B2" value="Too many"><span class="dot"></span>Too many</label>
+      </div>
+      <p class="q-err-msg">Please answer this question.</p>
+    </div>
+    <div class="q" data-q="B3" data-req>
+      <div class="q-num">B3</div>
+      <p class="q-text">How far would you be willing to drive <b>each way</b> for a class like this?<span class="req-star">✱</span></p>
+      <div class="choices" data-choice="B3">
+        <label class="choice"><input type="radio" name="B3" value="Under 10 min"><span class="dot"></span>Under 10 min</label>
+        <label class="choice"><input type="radio" name="B3" value="10–20 min"><span class="dot"></span>10–20 min</label>
+        <label class="choice"><input type="radio" name="B3" value="20–30 min"><span class="dot"></span>20–30 min</label>
+        <label class="choice"><input type="radio" name="B3" value="30+ min"><span class="dot"></span>30+ min</label>
+      </div>
+      <p class="q-err-msg">Please answer this question.</p>
+    </div>
+    <div class="q" data-q="B4" id="q-B4" style="display:none;">
+      <div class="q-num">B4 <span class="q-condflag">Conditional</span></div>
+      <p class="q-text">If the Ember and Blaze classes were at different times, would you have…
+        <span style="display:block;font-weight:400;font-style:italic;font-size:13.5px;color:#7A828D;margin-top:4px;">(shown only to families with children in both tracks)</span>
+      </p>
+      <div class="choices" data-choice="B4">
+        <label class="choice"><input type="radio" name="B4" value="Still enrolled both kids (as long as the times worked)"><span class="dot"></span>Still enrolled both kids (as long as the times worked)</label>
+        <label class="choice"><input type="radio" name="B4" value="Enrolled only one of your kids"><span class="dot"></span>Enrolled only one of your kids</label>
+        <label class="choice"><input type="radio" name="B4" value="Not enrolled"><span class="dot"></span>Not enrolled</label>
+      </div>
+    </div>
+  </div>
+
+  <!-- ---------- C. COMMUNICATION ---------- -->
+  <div class="section-band" style="--band:var(--sw-secblue);">
+    <span class="sec-letter">C</span><span class="sec-name">Communication</span>
+  </div>
+  <div class="q-pad" style="--band:var(--sw-secblue);">
+    <div class="q" data-q="C1" data-req>
+      <div class="q-num">C1</div>
+      <p class="q-text">The recap email after each session — did you read them?<span class="req-star">✱</span></p>
+      <div class="choices" data-choice="C1">
+        <label class="choice"><input type="radio" name="C1" value="Read all/most"><span class="dot"></span>Read all/most</label>
+        <label class="choice"><input type="radio" name="C1" value="Some"><span class="dot"></span>Some</label>
+        <label class="choice"><input type="radio" name="C1" value="Rarely"><span class="dot"></span>Rarely</label>
+        <label class="choice"><input type="radio" name="C1" value="Didn't really see them"><span class="dot"></span>Didn't really see them</label>
+      </div>
+      <p class="q-err-msg">Please answer this question.</p>
+    </div>
+    <div class="q" data-q="C2" data-req>
+      <div class="q-num">C2</div>
+      <p class="q-text">How useful were the recap emails?<span class="req-star">✱</span></p>
+      <div class="choices" data-choice="C2">
+        <label class="choice"><input type="radio" name="C2" value="1 — Not useful"><span class="dot"></span>1 — Not useful</label>
+        <label class="choice"><input type="radio" name="C2" value="2"><span class="dot"></span>2</label>
+        <label class="choice"><input type="radio" name="C2" value="3"><span class="dot"></span>3</label>
+        <label class="choice"><input type="radio" name="C2" value="4"><span class="dot"></span>4</label>
+        <label class="choice"><input type="radio" name="C2" value="5 — Very useful"><span class="dot"></span>5 — Very useful</label>
+        <label class="choice"><input type="radio" name="C2" value="N/A"><span class="dot"></span>N/A</label>
+      </div>
+      <p class="q-err-msg">Please answer this question.</p>
+    </div>
+    <div class="q" data-q="C3" data-req>
+      <div class="q-num">C3</div>
+      <p class="q-text">How well did you know what your child was doing and learning each week?<span class="req-star">✱</span></p>
+      <div class="scale" data-scale="C3" data-min="1">
+        <div class="scale-row">
+          <button type="button" class="scale-pt" data-val="1"><div class="dot"></div><div class="num">1</div></button>
+          <button type="button" class="scale-pt" data-val="2"><div class="dot"></div><div class="num">2</div></button>
+          <button type="button" class="scale-pt" data-val="3"><div class="dot"></div><div class="num">3</div></button>
+          <button type="button" class="scale-pt" data-val="4"><div class="dot"></div><div class="num">4</div></button>
+          <button type="button" class="scale-pt" data-val="5"><div class="dot"></div><div class="num">5</div></button>
+        </div>
+        <div class="scale-labels"><span class="lo">Not at all</span><span class="hi">Very well</span></div>
+      </div>
+      <p class="q-err-msg">Please answer this question.</p>
+    </div>
+    <div class="q" data-q="C4">
+      <div class="q-num">C4 <span class="q-opt">Optional</span></div>
+      <p class="q-text">Did you try any of the "do this at home" prompts from the recap emails with your child?</p>
+      <div class="choices" data-choice="C4">
+        <label class="choice"><input type="radio" name="C4" value="Yes, several"><span class="dot"></span>Yes, several</label>
+        <label class="choice"><input type="radio" name="C4" value="Once or twice"><span class="dot"></span>Once or twice</label>
+        <label class="choice"><input type="radio" name="C4" value="No"><span class="dot"></span>No</label>
+      </div>
+    </div>
+    <div class="q" data-q="C5">
+      <div class="q-num">C5 <span class="q-opt">Optional</span></div>
+      <p class="q-text">Any other comments on communication?</p>
+      <textarea class="sw-area" data-field="C5" placeholder="Your answer"></textarea>
+    </div>
+  </div>
+
+  <!-- ---------- D. WHERE SPARKWORKS FITS ---------- -->
+  <div class="section-band" style="--band:var(--sw-ember);">
+    <span class="sec-letter">D</span><span class="sec-name">Where Sparkworks fits (your child's time)</span>
+  </div>
+  <div class="q-pad" style="--band:var(--sw-ember);">
+    <div class="q" data-q="D1" data-req>
+      <div class="q-num">D1</div>
+      <p class="q-text">Rank your child's activities by how much you'd protect their time for each — highest priority at the top. Use the ▲ / ▼ buttons (or drag) to reorder. Each row has a <b>"we don't do this"</b> toggle that removes it from the ranking.<span class="req-star">✱</span></p>
+      <p class="rank-help">Use the up/down buttons to move a row, or drag it. Toggle "we don't do this" for anything that doesn't apply.</p>
+      <ul class="rank-list" id="rankListD1" data-rank="D1">
+        <li class="rank-row" draggable="true" data-key="sparkworks">
+          <span class="rank-chip">1</span>
+          <span class="rank-handle" aria-hidden="true">⠿</span>
+          <span class="rank-label">Sparkworks</span>
+          <span class="rank-moves"><button type="button" class="move-up" aria-label="Move Sparkworks up">▲</button><button type="button" class="move-down" aria-label="Move Sparkworks down">▼</button></span>
+          <label class="rank-na"><input type="checkbox" class="rank-na-toggle">We don't do this</label>
+        </li>
+        <li class="rank-row" draggable="true" data-key="math">
+          <span class="rank-chip">2</span>
+          <span class="rank-handle" aria-hidden="true">⠿</span>
+          <span class="rank-label">Math program (Mathnasium / Kumon …)</span>
+          <span class="rank-moves"><button type="button" class="move-up" aria-label="Move Math program up">▲</button><button type="button" class="move-down" aria-label="Move Math program down">▼</button></span>
+          <label class="rank-na"><input type="checkbox" class="rank-na-toggle">We don't do this</label>
+        </li>
+        <li class="rank-row" draggable="true" data-key="coding">
+          <span class="rank-chip">3</span>
+          <span class="rank-handle" aria-hidden="true">⠿</span>
+          <span class="rank-label">Coding program (Code Ninjas …)</span>
+          <span class="rank-moves"><button type="button" class="move-up" aria-label="Move Coding program up">▲</button><button type="button" class="move-down" aria-label="Move Coding program down">▼</button></span>
+          <label class="rank-na"><input type="checkbox" class="rank-na-toggle">We don't do this</label>
+        </li>
+        <li class="rank-row" draggable="true" data-key="tutoring">
+          <span class="rank-chip">4</span>
+          <span class="rank-handle" aria-hidden="true">⠿</span>
+          <span class="rank-label">Private tutoring</span>
+          <span class="rank-moves"><button type="button" class="move-up" aria-label="Move Private tutoring up">▲</button><button type="button" class="move-down" aria-label="Move Private tutoring down">▼</button></span>
+          <label class="rank-na"><input type="checkbox" class="rank-na-toggle">We don't do this</label>
+        </li>
+        <li class="rank-row" draggable="true" data-key="sports">
+          <span class="rank-chip">5</span>
+          <span class="rank-handle" aria-hidden="true">⠿</span>
+          <span class="rank-label">Sports</span>
+          <span class="rank-moves"><button type="button" class="move-up" aria-label="Move Sports up">▲</button><button type="button" class="move-down" aria-label="Move Sports down">▼</button></span>
+          <label class="rank-na"><input type="checkbox" class="rank-na-toggle">We don't do this</label>
+        </li>
+        <li class="rank-row" draggable="true" data-key="music">
+          <span class="rank-chip">6</span>
+          <span class="rank-handle" aria-hidden="true">⠿</span>
+          <span class="rank-label">Music or arts</span>
+          <span class="rank-moves"><button type="button" class="move-up" aria-label="Move Music or arts up">▲</button><button type="button" class="move-down" aria-label="Move Music or arts down">▼</button></span>
+          <label class="rank-na"><input type="checkbox" class="rank-na-toggle">We don't do this</label>
+        </li>
+        <li class="rank-row" draggable="true" data-key="other">
+          <span class="rank-chip">7</span>
+          <span class="rank-handle" aria-hidden="true">⠿</span>
+          <span class="rank-label">Other:&nbsp;<input class="rank-other-blank" type="text" data-other placeholder="(name it)"></span>
+          <span class="rank-moves"><button type="button" class="move-up" aria-label="Move Other up">▲</button><button type="button" class="move-down" aria-label="Move Other down">▼</button></span>
+          <label class="rank-na"><input type="checkbox" class="rank-na-toggle">We don't do this</label>
+        </li>
+      </ul>
+    </div>
+    <div class="q" data-q="D2" data-req>
+      <div class="q-num">D2</div>
+      <p class="q-text">If you didn't continue with Sparkworks, the reason would most likely relate to…<span class="req-star">✱</span></p>
+      <div class="choices" data-choice="D2">
+        <label class="choice"><input type="radio" name="D2" value="Content"><span class="dot"></span>Content</label>
+        <label class="choice"><input type="radio" name="D2" value="Price"><span class="dot"></span>Price</label>
+        <label class="choice"><input type="radio" name="D2" value="Time"><span class="dot"></span>Time</label>
+        <label class="choice"><input type="radio" name="D2" value="Something else"><span class="dot"></span>Something else:&nbsp;<input class="other-blank" type="text" data-other></label>
+      </div>
+      <p class="q-err-msg">Please answer this question.</p>
+    </div>
+  </div>
+
+  <!-- ---------- E. GROUP SIZE, VALUE & PRICE ---------- -->
+  <div class="section-band" style="--band:var(--sw-red);">
+    <span class="sec-letter">E</span><span class="sec-name">Group size, value &amp; price</span>
+  </div>
+  <div class="conf-callout">
+    <span class="lock">Confidential</span>
+    <span>Founding families paid $149 as a one-time launch rate. We're setting the ongoing price now and want your honest read — your answers here stay confidential.</span>
+  </div>
+  <div class="q-pad" style="--band:var(--sw-red);">
+    <div class="q" data-q="E1" data-req>
+      <div class="q-num">E1</div>
+      <p class="q-text">This class ran at about <b>8 kids per teacher</b>. How important to you would a <b>smaller group</b> be — say 6 kids per teacher?<span class="req-star">✱</span></p>
+      <div class="scale" data-scale="E1" data-min="1">
+        <div class="scale-row">
+          <button type="button" class="scale-pt" data-val="1"><div class="dot"></div><div class="num">1</div></button>
+          <button type="button" class="scale-pt" data-val="2"><div class="dot"></div><div class="num">2</div></button>
+          <button type="button" class="scale-pt" data-val="3"><div class="dot"></div><div class="num">3</div></button>
+          <button type="button" class="scale-pt" data-val="4"><div class="dot"></div><div class="num">4</div></button>
+          <button type="button" class="scale-pt" data-val="5"><div class="dot"></div><div class="num">5</div></button>
+        </div>
+        <div class="scale-labels three"><span class="lo">1 Irrelevant</span><span class="mid">3 Nice to have</span><span class="hi">5 Extremely important</span></div>
+      </div>
+      <p class="q-err-msg">Please answer this question.</p>
+    </div>
+    <div class="q" data-q="E2" data-req>
+      <div class="q-num">E2</div>
+      <p class="q-text">Roughly what do you currently spend on comparable activities for your kid(s) (tutoring, coding/chess/music…), and on what?<span class="req-star">✱</span></p>
+      <textarea class="sw-area" data-field="E2" placeholder="Your answer"></textarea>
+      <p class="q-err-msg">Please answer this question.</p>
+    </div>
+    <div class="q" data-q="E3" data-req>
+      <div class="q-num">E3</div>
+      <p class="q-text">Overall, how would you rate the value of Sparkworks for what you got?<span class="req-star">✱</span></p>
+      <div class="scale" data-scale="E3" data-min="1">
+        <div class="scale-row">
+          <button type="button" class="scale-pt" data-val="1"><div class="dot"></div><div class="num">1</div></button>
+          <button type="button" class="scale-pt" data-val="2"><div class="dot"></div><div class="num">2</div></button>
+          <button type="button" class="scale-pt" data-val="3"><div class="dot"></div><div class="num">3</div></button>
+          <button type="button" class="scale-pt" data-val="4"><div class="dot"></div><div class="num">4</div></button>
+          <button type="button" class="scale-pt" data-val="5"><div class="dot"></div><div class="num">5</div></button>
+        </div>
+        <div class="scale-labels"><span class="lo">Poor</span><span class="hi">Excellent</span></div>
+      </div>
+      <p class="q-err-msg">Please answer this question.</p>
+    </div>
+    <div class="q" data-q="E4" data-req>
+      <div class="q-num">E4</div>
+      <p class="q-text">Knowing what you know now, what feels like a fair price for the full 8-session program? (a number is fine)<span class="req-star">✱</span></p>
+      <input type="text" class="sw-text" data-field="E4" placeholder="Your answer">
+      <p class="q-err-msg">Please answer this question.</p>
+    </div>
+    <div class="q" data-q="E5" data-req>
+      <div class="q-num">E5</div>
+      <p class="q-text">Would you enroll your child(ren) again at each price?<span class="req-star">✱</span></p>
+      <div class="grid-wrap">
+        <table class="pricegrid" data-grid="E5">
+          <thead>
+            <tr><th class="colhead-blank">&nbsp;</th><th>Yes</th><th>Maybe</th><th>No</th></tr>
+          </thead>
+          <tbody>
+            <tr data-row="$249">
+              <td>$249</td>
+              <td data-col="Yes"><button type="button" class="gcell" aria-label="$249 — Yes"><span class="gdot"></span></button></td>
+              <td data-col="Maybe"><button type="button" class="gcell" aria-label="$249 — Maybe"><span class="gdot"></span></button></td>
+              <td data-col="No"><button type="button" class="gcell" aria-label="$249 — No"><span class="gdot"></span></button></td>
+            </tr>
+            <tr data-row="$349">
+              <td>$349</td>
+              <td data-col="Yes"><button type="button" class="gcell" aria-label="$349 — Yes"><span class="gdot"></span></button></td>
+              <td data-col="Maybe"><button type="button" class="gcell" aria-label="$349 — Maybe"><span class="gdot"></span></button></td>
+              <td data-col="No"><button type="button" class="gcell" aria-label="$349 — No"><span class="gdot"></span></button></td>
+            </tr>
+            <tr data-row="$449">
+              <td>$449</td>
+              <td data-col="Yes"><button type="button" class="gcell" aria-label="$449 — Yes"><span class="gdot"></span></button></td>
+              <td data-col="Maybe"><button type="button" class="gcell" aria-label="$449 — Maybe"><span class="gdot"></span></button></td>
+              <td data-col="No"><button type="button" class="gcell" aria-label="$449 — No"><span class="gdot"></span></button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="q-err-msg">Please answer all three rows.</p>
+    </div>
+    <div class="q" data-q="E6" data-req>
+      <div class="q-num">E6</div>
+      <p class="q-text">How would you feel if Sparkworks were NOT available next season?<span class="req-star">✱</span></p>
+      <div class="choices" data-choice="E6">
+        <label class="choice"><input type="radio" name="E6" value="Very disappointed"><span class="dot"></span>Very disappointed</label>
+        <label class="choice"><input type="radio" name="E6" value="Somewhat disappointed"><span class="dot"></span>Somewhat disappointed</label>
+        <label class="choice"><input type="radio" name="E6" value="Not disappointed"><span class="dot"></span>Not disappointed</label>
+      </div>
+      <p class="q-err-msg">Please answer this question.</p>
+    </div>
+    <div class="q" data-q="E7" data-req>
+      <div class="q-num">E7</div>
+      <p class="q-text">How likely are you to recommend Sparkworks to another family?<span class="req-star">✱</span></p>
+      <div class="scale" data-scale="E7" data-min="0">
+        <div class="scale-row">
+          <button type="button" class="scale-pt" data-val="0"><div class="dot"></div><div class="num">0</div></button>
+          <button type="button" class="scale-pt" data-val="1"><div class="dot"></div><div class="num">1</div></button>
+          <button type="button" class="scale-pt" data-val="2"><div class="dot"></div><div class="num">2</div></button>
+          <button type="button" class="scale-pt" data-val="3"><div class="dot"></div><div class="num">3</div></button>
+          <button type="button" class="scale-pt" data-val="4"><div class="dot"></div><div class="num">4</div></button>
+          <button type="button" class="scale-pt" data-val="5"><div class="dot"></div><div class="num">5</div></button>
+          <button type="button" class="scale-pt" data-val="6"><div class="dot"></div><div class="num">6</div></button>
+          <button type="button" class="scale-pt" data-val="7"><div class="dot"></div><div class="num">7</div></button>
+          <button type="button" class="scale-pt" data-val="8"><div class="dot"></div><div class="num">8</div></button>
+          <button type="button" class="scale-pt" data-val="9"><div class="dot"></div><div class="num">9</div></button>
+          <button type="button" class="scale-pt" data-val="10"><div class="dot"></div><div class="num">10</div></button>
+        </div>
+        <div class="scale-labels"><span class="lo">Not at all likely</span><span class="hi">Extremely likely</span></div>
+      </div>
+      <p class="q-err-msg">Please answer this question.</p>
+    </div>
+    <div class="q" data-q="E8" data-req>
+      <div class="q-num">E8</div>
+      <p class="q-text">What's the main reason for that score?<span class="req-star">✱</span></p>
+      <textarea class="sw-area" data-field="E8" placeholder="Your answer"></textarea>
+      <p class="q-err-msg">Please answer this question.</p>
+    </div>
+    <div class="q" data-q="E9">
+      <div class="q-num">E9 <span class="q-opt">Optional</span></div>
+      <p class="q-text">If you were going to recommend Sparkworks, how would you describe it to another family?</p>
+      <textarea class="sw-area" data-field="E9" placeholder="Your answer"></textarea>
+    </div>
+    <div class="q" data-q="E10">
+      <div class="q-num">E10 <span class="q-opt">Optional</span></div>
+      <p class="q-text">And what caveats would you add — the "it's a great fit if…" conditions? (e.g., "if your kid already likes puzzles," or "if your child is comfortable being challenged")</p>
+      <textarea class="sw-area" data-field="E10" placeholder="Your answer"></textarea>
+    </div>
+  </div>
+
+  <!-- ---------- F. YOUR KIDS AT HOME ---------- -->
+  <div class="section-band" style="--band:var(--sw-purple);">
+    <span class="sec-letter">F</span><span class="sec-name">Your kids at home</span>
+  </div>
+  <div class="section-help-band" style="--band:var(--sw-purple);">Answered once, across all your children.</div>
+  <div class="q-pad" style="--band:var(--sw-purple);">
+    <div class="q" data-q="F1">
+      <div class="q-num">F1 <span class="q-opt">Optional</span></div>
+      <p class="q-text">How often did your child(ren) talk about Sparkworks at home, unprompted?</p>
+      <div class="choices" data-choice="F1">
+        <label class="choice"><input type="radio" name="F1" value="Never"><span class="dot"></span>Never</label>
+        <label class="choice"><input type="radio" name="F1" value="Rarely"><span class="dot"></span>Rarely</label>
+        <label class="choice"><input type="radio" name="F1" value="Sometimes"><span class="dot"></span>Sometimes</label>
+        <label class="choice"><input type="radio" name="F1" value="Often"><span class="dot"></span>Often</label>
+      </div>
+    </div>
+    <div class="q" data-q="F2">
+      <div class="q-num">F2 <span class="q-opt">Optional</span></div>
+      <p class="q-text">Anything else to share — something that stood out, fell flat, or examples of improvements you saw in your kids' thinking?</p>
+      <textarea class="sw-area" data-field="F2" placeholder="Your answer"></textarea>
+    </div>
+  </div>
+
+  <!-- ---------- G. WRAP-UP ---------- -->
+  <div class="section-band" style="--band:var(--sw-teal);">
+    <span class="sec-letter">G</span><span class="sec-name">Wrap-up</span>
+  </div>
+  <div class="q-pad" style="--band:var(--sw-teal);">
+    <div class="q" data-q="G1">
+      <div class="q-num">G1 <span class="q-opt">Optional</span></div>
+      <p class="q-text">What was the single best thing about Sparkworks?</p>
+      <textarea class="sw-area" data-field="G1" placeholder="Your answer"></textarea>
+    </div>
+    <div class="q" data-q="G2">
+      <div class="q-num">G2 <span class="q-opt">Optional</span></div>
+      <p class="q-text">If you could change ONE thing, what would it be?</p>
+      <textarea class="sw-area" data-field="G2" placeholder="Your answer"></textarea>
+    </div>
+    <div class="q" data-q="G3" data-req>
+      <div class="q-num">G3</div>
+      <p class="q-text">May we quote your feedback?<span class="req-star">✱</span></p>
+      <div class="choices" data-choice="G3">
+        <label class="choice"><input type="radio" name="G3" value="Yes with my name"><span class="dot"></span>Yes with my name</label>
+        <label class="choice"><input type="radio" name="G3" value="Yes anonymously"><span class="dot"></span>Yes anonymously</label>
+        <label class="choice"><input type="radio" name="G3" value="No"><span class="dot"></span>No</label>
+      </div>
+      <p class="q-err-msg">Please answer this question.</p>
+    </div>
+  </div>
+
+  <!-- ============================================================= -->
+  <!-- ====================  PART 2 (REPEATER)  ===================== -->
+  <!-- ============================================================= -->
+  <div class="part-band">
+    <div class="part-kicker">Part 2 of 2</div>
+    <h2 class="part-title">About each child</h2>
+    <p class="part-sub">Fill out one block per child who attended. Use "+ Add another child" if more than one of your kids took part.</p>
+  </div>
+
+  <!-- container holds all child blocks -->
+  <div id="childContainer">
+    <!-- First child block (always present, not removable) -->
+    <div class="child-block" data-child>
+      <div class="child-head">
+        <div class="child-tag"><span class="cnum">1</span><span class="cname-label">Child 1</span></div>
+      </div>
+      <div class="q-pad" style="--band:var(--sw-purple);">
+        <div class="q" data-q="K1" data-req>
+          <div class="q-num">K1</div>
+          <p class="q-text">Child's name + track (Ember / Blaze)<span class="req-star">✱</span></p>
+          <input type="text" class="sw-text" data-field="K1" placeholder="e.g. Maya — Blaze">
+          <p class="q-err-msg">Please answer this question.</p>
+        </div>
+        <div class="q" data-q="K2" data-req>
+          <div class="q-num">K2</div>
+          <p class="q-text">Overall, how much did this child enjoy Sparkworks?<span class="req-star">✱</span></p>
+          <div class="scale" data-scale="K2" data-min="1">
+            <div class="scale-row">
+              <button type="button" class="scale-pt" data-val="1"><div class="dot"></div><div class="num">1</div></button>
+              <button type="button" class="scale-pt" data-val="2"><div class="dot"></div><div class="num">2</div></button>
+              <button type="button" class="scale-pt" data-val="3"><div class="dot"></div><div class="num">3</div></button>
+              <button type="button" class="scale-pt" data-val="4"><div class="dot"></div><div class="num">4</div></button>
+              <button type="button" class="scale-pt" data-val="5"><div class="dot"></div><div class="num">5</div></button>
+            </div>
+            <div class="scale-labels"><span class="lo">Didn't enjoy it</span><span class="hi">Loved it</span></div>
+          </div>
+          <p class="q-err-msg">Please answer this question.</p>
+        </div>
+        <div class="q" data-q="K3" data-req>
+          <div class="q-num">K3</div>
+          <p class="q-text">We design the class to challenge kids and build their comfort with struggling through new, hard problems. With that in mind, the difficulty for <b>this child</b> was…<span class="req-star">✱</span></p>
+          <div class="choices" data-choice="K3">
+            <label class="choice"><input type="radio" value="Much too easy"><span class="dot"></span>Much too easy</label>
+            <label class="choice"><input type="radio" value="A bit easy"><span class="dot"></span>A bit easy</label>
+            <label class="choice"><input type="radio" value="About right"><span class="dot"></span>About right</label>
+            <label class="choice"><input type="radio" value="A bit hard"><span class="dot"></span>A bit hard</label>
+            <label class="choice"><input type="radio" value="Much too hard"><span class="dot"></span>Much too hard</label>
+          </div>
+          <p class="q-err-msg">Please answer this question.</p>
+        </div>
+        <div class="q" data-q="K4" data-req>
+          <div class="q-num">K4</div>
+          <p class="q-text">Did you notice a change in how <b>this child</b> thinks through or approaches problems?<span class="req-star">✱</span></p>
+          <div class="choices" data-choice="K4">
+            <label class="choice"><input type="radio" value="1 — No change"><span class="dot"></span>1 — No change</label>
+            <label class="choice"><input type="radio" value="2"><span class="dot"></span>2</label>
+            <label class="choice"><input type="radio" value="3 — Some change"><span class="dot"></span>3 — Some change</label>
+            <label class="choice"><input type="radio" value="4"><span class="dot"></span>4</label>
+            <label class="choice"><input type="radio" value="5 — A clear change"><span class="dot"></span>5 — A clear change</label>
+            <label class="choice"><input type="radio" value="Too early to tell"><span class="dot"></span>Too early to tell</label>
+          </div>
+          <p class="q-err-msg">Please answer this question.</p>
+        </div>
+        <div class="q" data-q="K5">
+          <div class="q-num">K5 <span class="q-opt">Optional</span></div>
+          <p class="q-text">Did this child use a Sparkworks <b>way of thinking</b> in real life — pausing before reacting, ruling options out, estimating, thinking about what someone else will do?</p>
+          <div class="choices" data-choice="K5">
+            <label class="choice"><input type="radio" value="Yes clearly"><span class="dot"></span>Yes clearly</label>
+            <label class="choice"><input type="radio" value="Maybe once or twice"><span class="dot"></span>Maybe once or twice</label>
+            <label class="choice"><input type="radio" value="Not that I saw"><span class="dot"></span>Not that I saw</label>
+            <label class="choice"><input type="radio" value="Not sure"><span class="dot"></span>Not sure</label>
+          </div>
+        </div>
+        <div class="q" data-q="K6">
+          <div class="q-num">K6 <span class="q-opt">Optional</span></div>
+          <p class="q-text">Did this child <b>show off a skill</b> (like spotting patterns) or ask to <b>replay the games/exercises</b> at home?</p>
+          <div class="choices" data-choice="K6">
+            <label class="choice"><input type="radio" value="Yes, more than once"><span class="dot"></span>Yes, more than once</label>
+            <label class="choice"><input type="radio" value="Once or twice"><span class="dot"></span>Once or twice</label>
+            <label class="choice"><input type="radio" value="No"><span class="dot"></span>No</label>
+          </div>
+        </div>
+        <div class="q" data-q="K7" data-req>
+          <div class="q-num">K7</div>
+          <p class="q-text">Rank this child's favorite parts of the class, most → least favorite. Use the ▲ / ▼ buttons (or drag) to reorder.<span class="req-star">✱</span></p>
+          <ul class="rank-list" data-rank="K7">
+            <li class="rank-row" draggable="true" data-key="ignite">
+              <span class="rank-chip">1</span>
+              <span class="rank-handle" aria-hidden="true">⠿</span>
+              <span class="rank-label">Ignite (warm-up games)</span>
+              <span class="rank-moves"><button type="button" class="move-up" aria-label="Move Ignite up">▲</button><button type="button" class="move-down" aria-label="Move Ignite down">▼</button></span>
+            </li>
+            <li class="rank-row" draggable="true" data-key="sharpen">
+              <span class="rank-chip">2</span>
+              <span class="rank-handle" aria-hidden="true">⠿</span>
+              <span class="rank-label">Sharpen (new skill + the real-world story)</span>
+              <span class="rank-moves"><button type="button" class="move-up" aria-label="Move Sharpen up">▲</button><button type="button" class="move-down" aria-label="Move Sharpen down">▼</button></span>
+            </li>
+            <li class="rank-row" draggable="true" data-key="engage">
+              <span class="rank-chip">3</span>
+              <span class="rank-handle" aria-hidden="true">⠿</span>
+              <span class="rank-label">Engage (main game)</span>
+              <span class="rank-moves"><button type="button" class="move-up" aria-label="Move Engage up">▲</button><button type="button" class="move-down" aria-label="Move Engage down">▼</button></span>
+            </li>
+          </ul>
+        </div>
+        <div class="q" data-q="K8" data-req>
+          <div class="q-num">K8</div>
+          <p class="q-text">Would this child want to keep going with Sparkworks if it's offered again?<span class="req-star">✱</span></p>
+          <div class="choices" data-choice="K8">
+            <label class="choice"><input type="radio" value="Yes"><span class="dot"></span>Yes</label>
+            <label class="choice"><input type="radio" value="Maybe"><span class="dot"></span>Maybe</label>
+            <label class="choice"><input type="radio" value="No"><span class="dot"></span>No</label>
+            <label class="choice"><input type="radio" value="Not sure"><span class="dot"></span>Not sure</label>
+          </div>
+          <p class="q-err-msg">Please answer this question.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="add-child-wrap">
+    <button type="button" class="btn-add-child" id="addChildBtn"><span class="plus">+</span> Add another child</button>
+  </div>
+
+  <!-- SUBMIT -->
+  <div class="submit-wrap">
+    <button type="button" class="btn-primary" id="submitBtn">Submit</button>
+    <p class="submit-error" id="submitError"></p>
+    <p class="submit-note">Your answers go straight to the Sparkworks team. Pricing responses stay confidential.</p>
+  </div>
+
+  <!-- CONFIRMATION PANEL (shown after a successful submit) -->
+  <section class="confirm-panel" id="confirm">
+    <div class="ckicker">Thank you</div>
+    <h3>Thank you — truly.</h3>
+    <p>You helped build Sparkworks from the ground up. Every answer here goes straight into how we shape what comes next. Your pricing responses stay confidential to us.</p>
+  </section>
+
+</main>
+
+<!-- SITE FOOTER -->
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <div class="fmark"><span class="spark">SPARK</span><span class="works">WORKS</span></div>
+    <div class="ftag">Think through anything.</div>
+  </div>
+</footer>
+
+<script>
+// ============================================================
+//  CHOICE (single-select) — visual + value tracking
+//  The native radios drive value/keyboard; we mirror selection
+//  into a .sel class for the styled dot. Per-child choice groups
+//  have no shared `name`, so we enforce single-select in JS.
+// ============================================================
+document.addEventListener('change', function(e){
+  var radio = e.target.closest('.choice input[type="radio"]');
+  if(!radio) return;
+  var group = radio.closest('[data-choice]');
+  if(!group) return;
+  group.querySelectorAll('.choice').forEach(function(c){ c.classList.remove('sel'); });
+  var lbl = radio.closest('.choice');
+  if(lbl) lbl.classList.add('sel');
+  // single-select within this group even when radios share no name (cloned blocks)
+  group.querySelectorAll('.choice input[type="radio"]').forEach(function(r){
+    if(r !== radio) r.checked = false;
+  });
+  clearError(group.closest('.q'));
+  maybeToggleB4();
+});
+
+// ============================================================
+//  SCALE (Likert / NPS) — button-based, click + keyboard
+// ============================================================
+document.addEventListener('click', function(e){
+  var pt = e.target.closest('.scale-pt');
+  if(!pt) return;
+  var scale = pt.closest('[data-scale]');
+  scale.querySelectorAll('.scale-pt').forEach(function(p){ p.classList.remove('sel'); });
+  pt.classList.add('sel');
+  scale.dataset.value = pt.dataset.val;
+  clearError(scale.closest('.q'));
+});
+
+// ============================================================
+//  GRID (B1 length, E5 price) — one selection per row
+// ============================================================
+document.addEventListener('click', function(e){
+  var cell = e.target.closest('.pricegrid .gcell');
+  if(!cell) return;
+  var td = cell.closest('td');
+  var row = cell.closest('tr');
+  row.querySelectorAll('td[data-col]').forEach(function(c){ c.classList.remove('sel'); });
+  td.classList.add('sel');
+  clearError(cell.closest('.q'));
+});
+
+// ============================================================
+//  DRAG-TO-REORDER RANK WIDGET (with optional per-row N/A toggle)
+//  Up/down buttons are the primary, touch/keyboard-friendly control;
+//  drag is an enhancement. initRankList() is idempotent per element.
+// ============================================================
+function initRankList(list){
+  if(!list || list.dataset.rankInit === '1') return;
+  list.dataset.rankInit = '1';
+
+  function renumber(){
+    var active = [];
+    list.querySelectorAll('.rank-row').forEach(function(row){
+      if(row.classList.contains('excluded')){
+        row.querySelector('.rank-chip').textContent = '—';
+      } else {
+        active.push(row);
+      }
+    });
+    active.forEach(function(row, i){
+      row.querySelector('.rank-chip').textContent = (i + 1);
+      var up = row.querySelector('.move-up'), dn = row.querySelector('.move-down');
+      if(up) up.disabled = (i === 0);
+      if(dn) dn.disabled = (i === active.length - 1);
+    });
+  }
+
+  // ----- HTML5 drag-and-drop -----
+  var dragEl = null;
+
+  list.addEventListener('dragstart', function(e){
+    var row = e.target.closest('.rank-row');
+    if(!row || row.classList.contains('excluded')) { e.preventDefault(); return; }
+    dragEl = row;
+    row.classList.add('dragging');
+    e.dataTransfer.effectAllowed = 'move';
+    try { e.dataTransfer.setData('text/plain', row.dataset.key || ''); } catch(err){}
+  });
+
+  list.addEventListener('dragend', function(){
+    if(dragEl) dragEl.classList.remove('dragging');
+    list.querySelectorAll('.drop-target').forEach(function(r){ r.classList.remove('drop-target'); });
+    dragEl = null;
+    renumber();
+  });
+
+  list.addEventListener('dragover', function(e){
+    if(!dragEl) return;
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    var over = e.target.closest('.rank-row');
+    list.querySelectorAll('.drop-target').forEach(function(r){ if(r!==over) r.classList.remove('drop-target'); });
+    if(!over || over === dragEl || over.classList.contains('excluded')) return;
+    over.classList.add('drop-target');
+    var rect = over.getBoundingClientRect();
+    var after = (e.clientY - rect.top) > rect.height / 2;
+    if(after){
+      over.parentNode.insertBefore(dragEl, over.nextSibling);
+    } else {
+      over.parentNode.insertBefore(dragEl, over);
+    }
+    renumber();
+  });
+
+  list.addEventListener('drop', function(e){
+    e.preventDefault();
+    list.querySelectorAll('.drop-target').forEach(function(r){ r.classList.remove('drop-target'); });
+  });
+
+  // ----- Up / down button control (touch & keyboard) -----
+  list.addEventListener('click', function(e){
+    var btn = e.target.closest('.move-up, .move-down');
+    if(!btn) return;
+    var row = btn.closest('.rank-row');
+    if(!row || row.classList.contains('excluded')) return;
+
+    function prevActive(el){ el = el.previousElementSibling; while(el && el.classList.contains('excluded')) el = el.previousElementSibling; return el; }
+    function nextActive(el){ el = el.nextElementSibling; while(el && el.classList.contains('excluded')) el = el.nextElementSibling; return el; }
+
+    var goingUp = btn.classList.contains('move-up');
+    if(goingUp){
+      var p = prevActive(row);
+      if(p) list.insertBefore(row, p);
+    } else {
+      var n = nextActive(row);
+      if(n) list.insertBefore(n, row);
+    }
+    renumber();
+    // keep keyboard focus on the same logical button after the move
+    var sameBtn = row.querySelector(goingUp ? '.move-up' : '.move-down');
+    if(sameBtn && !sameBtn.disabled){ sameBtn.focus(); }
+    else { row.querySelector(goingUp ? '.move-down' : '.move-up').focus(); }
+  });
+
+  // ----- Per-row "we don't do this" toggle -----
+  list.addEventListener('change', function(e){
+    var cb = e.target.closest('.rank-na-toggle');
+    if(!cb) return;
+    var row = cb.closest('.rank-row');
+    if(!row) return;
+    if(cb.checked){
+      row.classList.add('excluded');
+      row.setAttribute('draggable','false');
+      list.appendChild(row);
+    } else {
+      row.classList.remove('excluded');
+      row.setAttribute('draggable','true');
+      var firstExcluded = list.querySelector('.rank-row.excluded');
+      if(firstExcluded && firstExcluded !== row){
+        list.insertBefore(row, firstExcluded);
+      }
+    }
+    renumber();
+  });
+
+  renumber();
+}
+
+function initAllRankLists(scope){
+  (scope || document).querySelectorAll('[data-rank]').forEach(initRankList);
+}
+initAllRankLists();
+
+// ============================================================
+//  PER-CHILD REPEATER  ("+ Add another child")
+// ============================================================
+var childContainer = document.getElementById('childContainer');
+(function(){
+  var container = childContainer;
+  var addBtn    = document.getElementById('addChildBtn');
+  var template  = container.querySelector('.child-block');
+
+  function relabelChildren(){
+    var blocks = container.querySelectorAll('.child-block');
+    blocks.forEach(function(b, i){
+      var n = i + 1;
+      var num = b.querySelector('.cnum');
+      var lbl = b.querySelector('.cname-label');
+      if(num) num.textContent = n;
+      if(lbl) lbl.textContent = 'Child ' + n;
+    });
+  }
+
+  addBtn.addEventListener('click', function(){
+    var clone = template.cloneNode(true);
+
+    // Reset cloned answers: clear text, deselect scales/choices, restore K7 default order.
+    clone.querySelectorAll('input.sw-text, textarea.sw-area, .other-blank, .rank-other-blank').forEach(function(el){ el.value = ''; });
+    clone.querySelectorAll('.choice').forEach(function(c){ c.classList.remove('sel'); });
+    clone.querySelectorAll('.choice input[type="radio"]').forEach(function(r){ r.checked = false; });
+    clone.querySelectorAll('.scale-pt').forEach(function(p){ p.classList.remove('sel'); });
+    clone.querySelectorAll('[data-scale]').forEach(function(s){ delete s.dataset.value; });
+    clone.querySelectorAll('.q-error').forEach(function(q){ q.classList.remove('q-error'); });
+
+    var rankLists = clone.querySelectorAll('[data-rank]');
+    rankLists.forEach(function(rl){
+      rl.removeAttribute('data-rank-init');
+      delete rl.dataset.rankInit;
+      var order = ['ignite','sharpen','engage'];
+      order.forEach(function(key){
+        var row = rl.querySelector('.rank-row[data-key="'+key+'"]');
+        if(row){
+          row.classList.remove('excluded','dragging','drop-target');
+          row.setAttribute('draggable','true');
+          var na = row.querySelector('.rank-na-toggle');
+          if(na) na.checked = false;
+          rl.appendChild(row);
+        }
+      });
+    });
+
+    var head = clone.querySelector('.child-head');
+    var rm = document.createElement('button');
+    rm.type = 'button';
+    rm.className = 'child-remove';
+    rm.textContent = 'Remove';
+    rm.addEventListener('click', function(){
+      clone.parentNode.removeChild(clone);
+      relabelChildren();
+      maybeToggleB4();
+    });
+    head.appendChild(rm);
+
+    container.appendChild(clone);
+    initAllRankLists(clone);
+    relabelChildren();
+    clone.scrollIntoView({behavior:'smooth', block:'start'});
+  });
+})();
+
+// ============================================================
+//  B4 CONDITIONAL — show only when the family has kids in BOTH
+//  Ember and Blaze (inferred from each child's K1 "name — track").
+// ============================================================
+function maybeToggleB4(){
+  var both = familyHasBothTracks();
+  var q = document.getElementById('q-B4');
+  if(!q) return;
+  if(both){
+    q.style.display = '';
+  } else {
+    q.style.display = 'none';
+    // clear any selection if it's being hidden
+    var group = q.querySelector('[data-choice]');
+    if(group){
+      group.querySelectorAll('.choice').forEach(function(c){ c.classList.remove('sel'); });
+      group.querySelectorAll('input[type="radio"]').forEach(function(r){ r.checked = false; });
+    }
+  }
+}
+function familyHasBothTracks(){
+  var ember = false, blaze = false;
+  childContainer.querySelectorAll('.child-block input[data-field="K1"]').forEach(function(inp){
+    var v = (inp.value || '').toLowerCase();
+    if(v.indexOf('ember') !== -1) ember = true;
+    if(v.indexOf('blaze') !== -1) blaze = true;
+  });
+  return ember && blaze;
+}
+// recompute B4 visibility as K1 fields are typed
+document.addEventListener('input', function(e){
+  if(e.target.closest('input[data-field="K1"]')) maybeToggleB4();
+});
+
+// ============================================================
+//  ERROR HELPERS
+// ============================================================
+function clearError(q){ if(q) q.classList.remove('q-error'); }
+function flagError(q){ if(q) q.classList.add('q-error'); }
+
+// ============================================================
+//  SERIALIZE + SUBMIT
+// ============================================================
+function readChoice(scope, name){
+  var group = scope.querySelector('[data-choice="'+name+'"]');
+  if(!group) return null;
+  var checked = group.querySelector('input[type="radio"]:checked');
+  if(!checked) return null;
+  var val = checked.value;
+  if(val === 'Other' || val === 'Something else'){
+    var other = checked.closest('.choice').querySelector('[data-other]');
+    var txt = other && other.value.trim();
+    return txt ? val + ': ' + txt : val;
+  }
+  return val;
+}
+function readText(scope, field){
+  var el = scope.querySelector('[data-field="'+field+'"]');
+  return el ? el.value.trim() : '';
+}
+function readScale(scope, name){
+  var s = scope.querySelector('[data-scale="'+name+'"]');
+  return (s && s.dataset.value !== undefined) ? s.dataset.value : null;
+}
+function readGrid(scope, name){
+  var g = scope.querySelector('[data-grid="'+name+'"]');
+  if(!g) return null;
+  var out = {};
+  var complete = true;
+  g.querySelectorAll('tbody tr').forEach(function(tr){
+    var rowName = tr.getAttribute('data-row');
+    var sel = tr.querySelector('td.sel');
+    if(sel){ out[rowName] = sel.getAttribute('data-col'); }
+    else { complete = false; out[rowName] = null; }
+  });
+  return { values: out, complete: complete };
+}
+function readRank(list){
+  // returns array in DOM order: active rows first (rank 1..n), then excluded.
+  var out = [];
+  var rank = 0;
+  list.querySelectorAll('.rank-row').forEach(function(row){
+    var key = row.dataset.key;
+    var labelEl = row.querySelector('.rank-label');
+    var label = labelEl ? labelEl.textContent.replace(/\s+/g,' ').trim() : key;
+    var excluded = row.classList.contains('excluded');
+    var otherInput = row.querySelector('.rank-other-blank');
+    if(otherInput && otherInput.value.trim()){
+      label = 'Other: ' + otherInput.value.trim();
+    } else if(otherInput){
+      label = label.replace(/Other:\s*/,'Other').trim();
+    }
+    var item = { key: key, label: label, excluded: excluded };
+    if(!excluded){ rank += 1; item.rank = rank; }
+    out.push(item);
+  });
+  return out;
+}
+
+function buildPayload(){
+  var part1 = {};
+  part1.name = readText(document, 'name');
+  part1.A1 = readText(document, 'A1');
+  part1.A2 = readChoice(document, 'A2');
+
+  var b1 = readGrid(document, 'B1');
+  part1.B1 = b1 ? b1.values : null;
+  part1.B2 = readChoice(document, 'B2');
+  part1.B3 = readChoice(document, 'B3');
+  var b4q = document.getElementById('q-B4');
+  part1.B4 = (b4q && b4q.style.display !== 'none') ? readChoice(document, 'B4') : null;
+
+  part1.C1 = readChoice(document, 'C1');
+  part1.C2 = readChoice(document, 'C2');
+  part1.C3 = readScale(document, 'C3');
+  part1.C4 = readChoice(document, 'C4');
+  part1.C5 = readText(document, 'C5');
+
+  part1.D1 = readRank(document.getElementById('rankListD1'));
+  part1.D2 = readChoice(document, 'D2');
+
+  part1.E1 = readScale(document, 'E1');
+  part1.E2 = readText(document, 'E2');
+  part1.E3 = readScale(document, 'E3');
+  part1.E4 = readText(document, 'E4');
+  var e5 = readGrid(document, 'E5');
+  part1.E5 = e5 ? e5.values : null;
+  part1.E6 = readChoice(document, 'E6');
+  part1.E7 = readScale(document, 'E7');
+  part1.E8 = readText(document, 'E8');
+  part1.E9 = readText(document, 'E9');
+  part1.E10 = readText(document, 'E10');
+
+  part1.F1 = readChoice(document, 'F1');
+  part1.F2 = readText(document, 'F2');
+  part1.G1 = readText(document, 'G1');
+  part1.G2 = readText(document, 'G2');
+  part1.G3 = readChoice(document, 'G3');
+
+  var children = [];
+  childContainer.querySelectorAll('.child-block').forEach(function(block){
+    var c = {};
+    c.K1 = readText(block, 'K1');
+    c.K2 = readScale(block, 'K2');
+    c.K3 = readChoice(block, 'K3');
+    c.K4 = readChoice(block, 'K4');
+    c.K5 = readChoice(block, 'K5');
+    c.K6 = readChoice(block, 'K6');
+    c.K7 = readRank(block.querySelector('[data-rank="K7"]'));
+    c.K8 = readChoice(block, 'K8');
+    // derive a track tag for server-side Both-Tracks detection
+    var k1l = (c.K1 || '').toLowerCase();
+    c.track = (k1l.indexOf('ember') !== -1 ? 'Ember' : '') + (k1l.indexOf('blaze') !== -1 ? 'Blaze' : '');
+    children.push(c);
+  });
+
+  return { source: 'founding-sparks-survey', part1: part1, children: children };
+}
+
+function validate(){
+  var firstBad = null;
+  // clear prior errors
+  document.querySelectorAll('.q-error').forEach(function(q){ q.classList.remove('q-error'); });
+
+  document.querySelectorAll('.q[data-req]').forEach(function(q){
+    // skip hidden conditional questions (B4)
+    if(q.offsetParent === null && q.id) return;
+    var ok = true;
+    var scale = q.querySelector('[data-scale]');
+    var choice = q.querySelector('[data-choice]');
+    var grid = q.querySelector('[data-grid]');
+    var rank = q.querySelector('[data-rank]');
+    var field = q.querySelector('[data-field]');
+
+    if(grid){
+      var g = readGrid(q, grid.getAttribute('data-grid'));
+      ok = g && g.complete;
+    } else if(scale){
+      ok = scale.dataset.value !== undefined;
+    } else if(choice){
+      ok = !!choice.querySelector('input[type="radio"]:checked');
+    } else if(rank){
+      ok = true; // rank always has a default order; required just means "present"
+    } else if(field){
+      ok = field.value.trim().length > 0;
+    }
+
+    if(!ok){
+      flagError(q);
+      if(!firstBad) firstBad = q;
+    }
+  });
+
+  return firstBad;
+}
+
+var submitBtn = document.getElementById('submitBtn');
+var submitError = document.getElementById('submitError');
+
+submitBtn.addEventListener('click', async function(){
+  submitError.classList.remove('show');
+  submitError.textContent = '';
+
+  var firstBad = validate();
+  if(firstBad){
+    submitError.textContent = 'Please complete the highlighted questions.';
+    submitError.classList.add('show');
+    firstBad.scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
+
+  var payload = buildPayload();
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Sending…';
+
+  try {
+    var res = await fetch('/api/survey', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    if(!res.ok){
+      var body = await res.json().catch(function(){ return {}; });
+      throw new Error(body.error || 'Submission failed');
+    }
+    // success — reveal confirmation, hide the form controls
+    document.querySelector('.submit-wrap').style.display = 'none';
+    document.getElementById('confirm').classList.add('show');
+    document.getElementById('confirm').scrollIntoView({behavior:'smooth', block:'start'});
+  } catch(err){
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Submit';
+    submitError.textContent = (err && err.message) ? err.message : 'Something went wrong. Please try again.';
+    submitError.classList.add('show');
+  }
+});
+</script>
+
+</body>
+</html>
