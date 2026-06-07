@@ -1481,6 +1481,37 @@ document.addEventListener('input', function(e){
 });
 
 // ============================================================
+//  PRE-FILL FROM PER-FAMILY LINK  (?fid=<token>)
+//  Looks up the family in the Registration DB (via /api/survey-prefill)
+//  and pre-populates the parent name + one child block per kid (name + track),
+//  all editable. Stores fid for submit. No fid -> page stays blank/manual.
+// ============================================================
+(function(){
+  var fid = (new URLSearchParams(location.search).get('fid') || '').trim();
+  window.__fid = fid || null;
+  if(!fid) return;
+  fetch('/api/survey-prefill?fid=' + encodeURIComponent(fid))
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      if(!d || !d.found) return;
+      var nameInput = document.querySelector('input[data-field="name"]');
+      if(nameInput && d.parentName) nameInput.value = d.parentName;
+      var kids = Array.isArray(d.children) ? d.children : [];
+      var addBtn = document.getElementById('addChildBtn');
+      kids.forEach(function(kid, i){
+        if(i > 0 && addBtn) addBtn.click(); // spawn a block (reuses handler -> inits its rank widget)
+        var blocks = childContainer.querySelectorAll('.child-block');
+        var block = blocks[i];
+        if(!block) return;
+        var k1 = block.querySelector('input[data-field="K1"]');
+        if(k1) k1.value = kid.name + (kid.track ? ' — ' + kid.track : '');
+      });
+      maybeToggleB4();
+    })
+    .catch(function(){ /* fail silent — page still works manually */ });
+})();
+
+// ============================================================
 //  ERROR HELPERS
 // ============================================================
 function clearError(q){ if(q) q.classList.remove('q-error'); }
@@ -1602,7 +1633,7 @@ function buildPayload(){
     children.push(c);
   });
 
-  return { source: 'founding-sparks-survey', part1: part1, children: children };
+  return { source: 'founding-sparks-survey', fid: (window.__fid || null), part1: part1, children: children };
 }
 
 function validate(){

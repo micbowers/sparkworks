@@ -171,6 +171,7 @@ export async function POST(request) {
   if (nps !== null) properties["NPS (E7)"] = { number: nps };
   if (part1.E4) properties["Fair Price (E4)"] = { rich_text: [{ text: { content: String(part1.E4).slice(0, 1900) } }] };
   if (part1.G3) properties["Quote Permission (G3)"] = { select: { name: String(part1.G3) } };
+  if (data.fid) properties["Family ID"] = { rich_text: [{ text: { content: String(data.fid).slice(0, 200) } }] };
 
   try {
     const response = await fetch("https://api.notion.com/v1/pages", {
