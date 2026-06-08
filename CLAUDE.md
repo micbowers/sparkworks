@@ -50,7 +50,7 @@ Brand decisions live in the **canonical Sparkworks brand-guidelines folder** at 
 | Pre-publish code / build / form-schema review | **QA — Development** (`cairn-dev-qa`) | `g:\My Drive\Family Drive\.Claude\shared\agents\cairn-dev-qa.md` |
 | Program content for new program pages | **Sparkworks Program Creation** | Don't author your own program copy |
 | Registration / interest-list data inquiries | (You own the Notion DBs) | Other agents read; you serve |
-| Block Code or Find The Alien marketing integration | **Block Code Tabletop / Find The Alien** | Coordinate via Mike when adding cross-product surfaces |
+| Block Code or Sparkworks Web Games marketing integration | **Block Code Tabletop / Sparkworks Web Games** (umbrella for Find The Alien + Knights Tour) | Coordinate via Mike when adding cross-product surfaces |
 
 Per the cross-agent task rule in `interaction-protocol.md`, cross-agent tasks live on the executing agent's list, not yours.
 
@@ -164,6 +164,16 @@ A few non-Next pages live in `public/` and are served at their own paths. They'r
 
 You're a **Project Handbook** archetype agent. This file is your project context: stack, locked decisions, conventions, common tasks. No `workflows/` or `tools/` directories — code lives in standard Next.js layout (`app/`, `public/`, etc.).
 
+## Action items for Mike → Google Tasks, with details inline [REPEAT — load-bearing]
+
+If a session surfaces anything Mike (or Tina) needs to **do** — a decision, an approval, a credential or value to supply, a call/email to send, a file to drop, a purchase, a setting to flip — it MUST become a Google Task **in that same session**, with the details to act written into the task itself, not just a pointer to a doc. Mike works from his task list: **if it's not a task, it won't get done.** Saying it in chat or burying it in a doc doesn't count. Title carries this agent's `[Prefix]` (per `conventions.md` Rule 4); notes lead with the actionable detail (what to do + any values / links / context needed), then a doc path for fuller context. See `conventions.md` Rule 11.
+
+## Update STATUS.md at session end [REPEAT — load-bearing]
+
+Before closing a session that produced meaningful work, update this agent's `STATUS.md` at the root of its own folder. At minimum: refresh **Current focus** if it changed, append a dated entry to **Recently completed**, update **Blocked / waiting on** if dependencies shifted, refresh KPI lines if numbers moved. Skip only if the session was a one-line answer or a trivial lookup — judgment call.
+
+**Why this is load-bearing.** Master Control reads STATUS at brief time. Unupdated STATUS = invisible work at the next brief, unsurfaced blockers MC can't route around, and stale-cadence triggers that force MC to live-invoke you. **Do not duplicate Tasks into STATUS** (per Rule 7 / Rule 11) — the "Open items needing Mike" section references Tasks by `[Prefix]` query, never restates them. See `conventions.md` Rule 7.
+
 ## Durable memory rule [REPEAT — load-bearing]
 
 Anything you learn that you'll need later goes in a Drive doc, **not** auto-memory. New design conventions go in `Brand guidelines/`; project-specific quirks go in this CLAUDE.md or a `lessons-learned.md` in this folder.
@@ -179,9 +189,16 @@ When making changes, surface analytics gaps without being asked. Examples:
 - Any new conversion funnel step (e.g., card expand, scroll past hero, /practice item visible) → propose if useful
 
 Vercel Analytics stack already wired in `app/layout.js`: `@vercel/analytics` for events, `@vercel/speed-insights` for Web Vitals. Custom events fire via `import { track } from "@vercel/analytics"` (browser context only — requires `"use client"` on the component). Existing custom events:
+- `register_submit` — `InterestForm.jsx` (properties: `cohort`, `source`, `child_count`)
 - `subscribe_submit` — `SubscribeForm.jsx` (properties: `source`, `interests`)
 - `amazon_click` — `AmazonButton.jsx` (properties: `product`, `manufacturer`, `price`, `rating`, `source`)
-- enrollment event — `InterestForm.jsx`
+- `cta_click` — top-of-funnel nav CTAs via `TrackedLink`/`ProductCard` (properties: `source`, `destination`). Sources: `home-hero`, `home-program`, `home-program-details`, `home-practice`, `program-hero`.
+- `game_play_click` — "Play free" outbound links to game subdomains, `practice/page.js` via `TrackedAnchor` (properties: `game`, `source`)
+- `practice_card_expand` — `/practice` ExpandableCard open (properties: `slug`). Fires on open only, not collapse.
+- `games_cta_click` — `/program` → `/practice` link via `TrackedLink` (properties: `source`)
+- `spark_poster_expand` / `spark_poster_download` — `SparkOfHistory.jsx` (properties: `figure`, `source`)
+
+Reusable click-tracking infra: `TrackedLink.jsx` (internal next/link) and `TrackedAnchor.jsx` (external/outbound `<a>`) — both take `event` + `eventProps` and fire `track()` on click. `ProductCard` cta/secondary action objects accept `event`/`eventProps` and route through these automatically. **Naming convention going forward: `surface_action` / `noun_verb`** (`games_cta_click` predates it; left as-is for data continuity).
 
 Use the `source` property convention to attribute clicks/submits to a specific surface (e.g., `practice-product-block`, `practice-affiliate-book`, `home-launches`, `practice-book-ignite-1`).
 

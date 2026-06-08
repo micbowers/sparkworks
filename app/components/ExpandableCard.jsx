@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { track } from "@vercel/analytics";
 
 /**
  * Entry card for /practice with on-demand detail.
@@ -59,7 +60,14 @@ export function ExpandableCard({
       {hasDetail && (
         <button
           type="button"
-          onClick={() => setOpen((v) => !v)}
+          onClick={() =>
+            setOpen((v) => {
+              const next = !v;
+              // Track opens only (the editorial-detail engagement signal), not collapses.
+              if (next) track("practice_card_expand", { slug });
+              return next;
+            })
+          }
           aria-expanded={open}
           aria-controls={`${slug}-detail`}
           style={{

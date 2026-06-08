@@ -1,10 +1,13 @@
 ---
 agent: Sparkworks Website
-last_updated: 2026-05-27
+last_updated: 2026-06-08
 cadence: weekly (daily during cohort enrollment pushes)
 ---
 
 ## Current focus
+**Analytics funnel-coverage pass (2026-06-08).** Audited instrumentation and closed the three biggest blind spots: top-of-funnel CTA clicks (home + program were untracked — only the final `register_submit` fired), "Play free" outbound game clicks, and the `/practice` card-expand engagement signal. Changes are **local/uncommitted** — not yet pushed/deployed (git not on PATH this session; Mike to commit+push or authorize). See "Recently completed" below.
+
+## Prior focus
 `/practice` shipped today through ~25 iterations of feedback + redesign. Final state is an entry-based vertical list under a tight hero — no skill-section grouping, no "We recommend" section header (Sparkworks-built items hidden for now so there's nothing to distinguish a "recommended" group from). 5 entries in revenue-first order:
 1. Mastermind & Code Breaker (Amazon affiliate, 2 versions)
 2. Shisima & Nine Men's Morris (Amazon affiliate, 2 versions)
@@ -18,7 +21,7 @@ Each entry: tags row → family title → 1-line highlight → prominent **Why w
 - Registrations to date (Founding Sparks + Season 2): _populate next refresh — needs Notion DB query_
 - Subscribers to date (Games / Materials / Program interests): _populate next refresh — needs Notion DB query_
 - Deploy status: green · main @ `eafccc6` deployed to www.sparkworks.kids on 2026-05-27 (Vercel auto-deploy on push)
-- Analytics: Vercel `<Analytics />` + `<SpeedInsights />` mounted in `app/layout.js`. Custom events firing: `subscribe_submit` (SubscribeForm), `amazon_click` (AmazonButton), enrollment event (InterestForm). Mike to confirm Vercel dashboard toggles are ON.
+- Analytics: Vercel `<Analytics />` + `<SpeedInsights />` mounted in `app/layout.js`. Custom events: `register_submit`, `subscribe_submit`, `amazon_click`, `cta_click` (new), `game_play_click` (new), `practice_card_expand` (new), `games_cta_click`, `spark_poster_expand`/`_download`. Full list + properties in CLAUDE.md. Mike to confirm Vercel dashboard toggles are ON.
 
 ## Open items needing Mike (or Tina)
 - See `[SW]` tasks on `Cairn – Sparkworks`
@@ -27,6 +30,14 @@ Each entry: tags row → family title → 1-line highlight → prominent **Why w
 - **Cipher Step** game exists in `Games/Cipher Step/` as PDFs only (no web app). Could surface as a "free print-and-play download" entry later; not added today.
 - **PA-API migration** trigger: switch to Amazon Product Advertising API for live price/rating data once Sparkworks-20 affiliate account has the required qualifying sales (currently ~3 sales/180 days per Amazon). Task filed.
 - **Vercel dashboard toggles**: please verify Analytics + Speed Insights are toggled ON in the project settings — code is wired but data won't flow without the per-project toggle.
+
+## Recently completed (2026-06-08 — analytics funnel-coverage pass)
+- **Top-of-funnel CTA tracking** (`cta_click`): home ribbon "Save my seat" (`home-hero`), Program card primary + "View Program Details" (`home-program`, `home-program-details`), Practice card "See our picks" (`home-practice`), and the `/program` hero "Save my seat" (`program-hero`). Previously only `register_submit` fired, so home→program click-through and /program landing→submit drop-off were both invisible.
+- **`game_play_click`**: "Play free →" outbound links (Find The Alien, Knight's Tour) on `/practice` were untracked outbound clicks — now fire with `{ game, source: "practice-play-free" }`.
+- **`practice_card_expand`**: ExpandableCard open now fires `{ slug }` (open only, not collapse). The "Why we love it" expand is the page's editorial differentiator and had zero usage data; the funnel `amazon_click` documents (views → expand → click) was missing its middle step.
+- **New reusable infra**: `TrackedAnchor.jsx` (outbound `<a>` click tracking, sibling to existing `TrackedLink.jsx`); `ProductCard` cta/secondary action objects now accept `event`/`eventProps` and route through TrackedLink/TrackedAnchor automatically.
+- **Verified** via `next build` (✓ compiled, lint+types pass, 11/11 pages) using the documented webpack-cache-disable workaround for the Drive-mount EINVAL; config restored after.
+- **Deferred** (not done this pass): `register_start` form-abandonment event; standardizing the legacy `games_cta_click` name. Naming convention going forward (`surface_action`) noted in CLAUDE.md.
 
 ## Recently completed (2026-05-27 — single-day session, abbreviated)
 - **`/practice` initial launch** with Mastermind & Code Breaker (`355e05a` → `c81d057`)
@@ -53,6 +64,10 @@ Each entry: tags row → family title → 1-line highlight → prominent **Why w
 - **Ember/Blaze insider terms stripped** from public-facing copy on `/practice` (replaced with plain grade ranges); `[PCr]` task open to author canonical plain-language versions in the endorsements doc.
 
 ## Blocked / waiting on
+- **RBG (Legal) — DONE this round (2026-06-03):** (1) embedded copyright/CMI metadata in the 7 poster images (`97cb91c`); (2) added the RBG-approved proprietary-rights footer line AND shipped the FTC/Amazon affiliate disclosure that was sitting uncommitted/undeployed (`d6bbf4d`). RBG verified the existing ©/™ + affiliate wording as correct (no change).
+- **Email alias — DONE 2026-06-03:** `privacy@sparkworks.kids` → `michael.bowers@gmail.com` is live + tested (ImprovMX + Vercel-CLI DNS: 2 MX + SPF TXT added to the Vercel-hosted zone). Vercel CLI is now authed on this machine as `michaelbowers-4204`. (No agent stores a Vercel token — access = CLI auth per `integrations.md`.)
+- **`/legal` page — SHIPPED as MVP 2026-06-03** (`3804c21` → www.sparkworks.kids/legal). RBG-drafted Terms of Use + Intellectual Property + Trademark + Privacy Policy; "Terms & Privacy" footer link added; poster metadata `WebStatement` backfilled to `/legal#ip`. Privacy section is truthful to actual practice (parent-completed enrollment + email signup → Notion; cookieless Vercel analytics; Amazon affiliate; Google Fonts; minimal child data = first name + grade; generic retention; contact privacy@sparkworks.kids).
+- **RBG (Legal) — still open (post-ship, non-blocking):** (1) **COPPA counsel pass** (~$300) on the live children's-privacy paragraph; if counsel finds CCPA/CPRA applies, add a California-rights block. (2) **Add `app/legal/page.js` to the ™→® swap list** in `SPARKWORKS_TRADEMARK_GUIDANCE.md` (routes through Architect; the page now carries a literal `Sparkworks™`). Both tracked as `[RBG]` tasks on `Cairn – Ops`.
 - **Design** — original hero + family-card visual brief still open on `Cairn – Products` ([task](https://tasks.google.com/task/iibgX-Bzn07lGKm-?sa=6)). Page currently uses self-styled compact cards; Design hasn't returned visuals yet.
 - **PCr** — multiple open tasks: reconcile S6/S7 session-number mapping (Mastermind appears at S6 in endorsements doc but program page shows S7); populate workbook section more broadly; author canonical plain-language versions of `whereWeUseIt` / per-version `why` (drop "Ember track" / "Blaze track" insider terms); author canonical 1-line `shelf_claim` field for each endorsement.
 - **Architect** — two open AR tasks: update `sparkworks-designer` + `cairn-dev-qa` checklists with the lessons from today's iteration loop; bump Designer quality bar with reference designs (Cascadia/Wingspan, Aesop, Apple) and explicit "clean modern sophisticated" target.
@@ -65,7 +80,7 @@ Each entry: tags row → family title → 1-line highlight → prominent **Why w
 - **Proactive analytics**: any new outbound link / form / conversion step gets a `track()` proposal (per Mike's directive, recorded in CLAUDE.md).
 
 ## Known issues
-- Local `next build` and `next dev` cache writes fail intermittently with `EINVAL` / `ENOENT` / `EPERM` on the Google Drive virtual filesystem (`G:\My Drive\…`). Dev server still serves; Vercel's Linux build env is the source of truth for production validation. Filed `[QD]` task to document the workaround.
+- Local `next build` and `next dev` cache writes fail intermittently with `EINVAL` / `ENOENT` / `EPERM` / `EBADF` on the Google Drive virtual filesystem (`G:\My Drive\…`). Dev server still serves; Vercel's Linux build env is the source of truth for production validation. **Concrete workarounds (build cache toggle, npm-install-on-local-disk, git-not-on-PATH path, exiftool/Vercel-CLI notes, commit-scope discipline) are now documented in [`lessons-learned.md`](lessons-learned.md)** — read it at session start alongside this file. Filed `[QD]` task to document the workaround.
 - Block Code + Perfectly Logical entries show review counts that the scraper returned as 1 and 5849 respectively. The 1 for Nine Men's Morris and 2 for Shisima look like parser-matching mistakes (caught a different counter in the HTML) — `reviewCount: null` set on those two so the count hides until manually verified in the next refresh cycle.
 - Storefront-hero SVG for Block Code (`/practice/block-code-creative.svg`) is in `public/practice/` but not referenced (kept around since Block Code may return).
 - Dev server is currently DOWN at session end (port 3000 not listening). Next session will need to restart it. Use the polling pattern, not ScheduleWakeup.

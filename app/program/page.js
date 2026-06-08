@@ -228,9 +228,15 @@ export default function ProgramPage() {
                 $449 for all 8 sessions · No payment required to hold a seat.
               </p>
             </div>
-            <Link className="sw-btn sw-btn-primary" href="#interest" style={{ whiteSpace: "nowrap" }}>
+            <TrackedLink
+              className="sw-btn sw-btn-primary"
+              href="#interest"
+              style={{ whiteSpace: "nowrap" }}
+              event="cta_click"
+              eventProps={{ source: "program-hero", destination: "#interest" }}
+            >
               Save my seat
-            </Link>
+            </TrackedLink>
           </div>
         </section>
 

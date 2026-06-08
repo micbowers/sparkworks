@@ -5,6 +5,7 @@ import { SubscribeForm } from "../components/SubscribeForm";
 import { ProTip } from "../components/ProTip";
 import { ExpandableCard } from "../components/ExpandableCard";
 import { AmazonButton } from "../components/AmazonButton";
+import { TrackedAnchor } from "../components/TrackedAnchor";
 
 export const metadata = {
   title: "Practice at home · Sparkworks",
@@ -169,6 +170,7 @@ const FAMILIES = [
         image: "/practice/mastermind-goliath.jpg",
         // Amazon snapshot 2026-05-27 — refresh task filed for periodic update.
         price: "$39.05",
+        priceUpdated: "2026-06-01",
         rating: 4.5,
         reviewCount: 489,
         why:
@@ -182,6 +184,7 @@ const FAMILIES = [
         fitHint: "Grades 4–6 and up · fun for adults too",
         image: "/practice/code-breaker-kidami.jpg",
         price: "$15.99",
+        priceUpdated: "2026-06-01",
         rating: 4.6,
         reviewCount: 164,
         why:
@@ -209,7 +212,7 @@ const FAMILIES = [
     whyWeRecommend:
       "These are two-player games with no hidden information — both players see everything. That structure forces a specific kind of thinking: every move you consider, you also have to think about your opponent's response to it, and the response to their response. That's the same reasoning at the heart of game theory, one of the thinking skills our Sparkworks program teaches directly.",
     whereWeUseIt:
-      "During the game theory session (week 7) of our 8-session Sparkworks program. With kids in grades 4–6 we play Nine Men's Morris. With kids in grades 2–3 we play a smaller three-piece version — Three Men's Morris in class, but Shisima (below) is the version we'd recommend for home play because it's actually purchasable as a standalone product. Same lesson, different scale.",
+      "During the game theory session (week 7) of our 8-session Sparkworks program. We played Nine Men's Morris with both age groups and it worked well across the board. Shisima is a simpler, faster cousin — fewer pieces, shorter games — and some younger kids may take to it more readily. Same underlying lesson, different pace.",
     proTips: [
       {
         title: "Play the person, not the board",
@@ -230,6 +233,7 @@ const FAMILIES = [
         // Amazon snapshot 2026-05-27. Parser returned 2 ratings — likely correct given the small
         // listing; reviewCount hidden until verified higher-confidence.
         price: "$16.95",
+        priceUpdated: "2026-06-01",
         rating: 4.7,
         reviewCount: null,
         why:
@@ -240,11 +244,12 @@ const FAMILIES = [
         name: "Nine Men's Morris",
         manufacturer: "WE Games",
         specs: "Wooden board · 9 pieces per player · 24 board positions",
-        fitHint: "Grades 4–6 and up · fun for adults too · also great for younger kids once they outgrow Shisima",
+        fitHint: "Grades 2 and up · fun for adults too",
         image: "/practice/nine-mens-morris-wegames.jpg",
         // Amazon snapshot 2026-05-27 — review-count parser returned 1, may have caught a different
         // counter; worth manual verification in next refresh cycle.
         price: "$15.99",
+        priceUpdated: "2026-06-01",
         rating: 4.7,
         reviewCount: null, // hidden until verified
         why:
@@ -270,8 +275,9 @@ const FAMILIES = [
     specs: "100 puzzles · 10 chapters · paperback",
     fitHint: "Grades 3 and up · fun for adults too",
     image: "/practice/perfectly-logical-rockridge.jpg",
-    // Amazon snapshot 2026-05-27
+    // Amazon snapshot 2026-05-27; manually re-verified 2026-06-01 (Mike).
     price: "$12.99",
+    priceUpdated: "2026-06-01",
     rating: 4.7,
     reviewCount: 5849,
     body:
@@ -447,7 +453,7 @@ function RatingLine({ rating, reviewCount, price }) {
   );
 }
 
-function ProductBlock({ name, manufacturer, specs, fitHint, href, image, price, rating, reviewCount, source }) {
+function ProductBlock({ name, manufacturer, specs, fitHint, href, image, price, priceUpdated, rating, reviewCount, source }) {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
       <div
@@ -486,6 +492,7 @@ function ProductBlock({ name, manufacturer, specs, fitHint, href, image, price, 
       {specs && <div className="ts-caption" style={{ color: "var(--sw-steel)" }}>{specs}</div>}
       {fitHint && <div className="ts-caption" style={{ fontStyle: "italic" }}>{fitHint}</div>}
       <RatingLine rating={rating} reviewCount={reviewCount} price={price} />
+      {priceUpdated && <PriceUpdatedLine date={priceUpdated} />}
       <AmazonButton
         href={href}
         product={name}
@@ -494,6 +501,17 @@ function ProductBlock({ name, manufacturer, specs, fitHint, href, image, price, 
         rating={rating}
         source="practice-product-block"
       />
+    </div>
+  );
+}
+
+// Per-entry "Price updated: YYYY-MM-DD" caption. Amazon Associates Operating Agreement requires
+// disclosing when displayed prices were captured, since live-API price isn't wired up yet.
+// Small, italic, muted — sits between the rating/price line and the Buy button.
+function PriceUpdatedLine({ date }) {
+  return (
+    <div className="ts-caption" style={{ color: "var(--sw-steel)", fontStyle: "italic", fontSize: "0.6875rem", opacity: 0.75 }}>
+      Price updated: {date}
     </div>
   );
 }
@@ -545,15 +563,17 @@ function CompactFooter({ family }) {
       {isFreePlay && (
         <>
           <CompactCover image={family.image} alt={family.imageAlt || `${family.title} cover`} />
-          <a
+          <TrackedAnchor
             className="sw-btn sw-btn-success"
             href={family.href}
             target="_blank"
             rel="noopener noreferrer"
             style={{ alignSelf: "flex-start" }}
+            event="game_play_click"
+            eventProps={{ game: family.slug, source: "practice-play-free" }}
           >
             Play free →
-          </a>
+          </TrackedAnchor>
         </>
       )}
 
@@ -660,6 +680,7 @@ function CompactFooter({ family }) {
           {family.specs && <div className="ts-caption" style={{ color: "var(--sw-steel)" }}>{family.specs}</div>}
           {family.fitHint && <div className="ts-caption" style={{ fontStyle: "italic" }}>{family.fitHint}</div>}
           <RatingLine rating={family.rating} reviewCount={family.reviewCount} price={family.price} />
+          {family.priceUpdated && <PriceUpdatedLine date={family.priceUpdated} />}
           <AmazonButton
             href={family.href}
             product={family.title}
@@ -887,7 +908,7 @@ export default function PracticePage() {
 
         <section className="sw-section">
           <p className="ts-caption" style={{ fontStyle: "italic" }}>
-            Some links on this page are affiliate links. Sparkworks is an Amazon Associate; we earn from qualifying purchases at no extra cost to you. Price and rating data shown is as of 2026-05-27 and may have changed — check Amazon for the latest.
+            Some links on this page are affiliate links. Sparkworks is an Amazon Associate; we earn from qualifying purchases at no extra cost to you. Prices and ratings shown were captured on the dates noted under each product and may have changed — check Amazon for the latest.
           </p>
         </section>
       </main>

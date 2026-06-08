@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { TrackedLink } from "./components/TrackedLink";
 import { Hero } from "./components/Hero";
 import { Footer } from "./components/Footer";
 import { ProductCard } from "./components/ProductCard";
@@ -42,9 +42,15 @@ export default function Home() {
             </p>
           </div>
           {/* Ember demotion 2026-05-27: ribbon CTA was sw-btn-primary; the Program card primary CTA below carries the same href, and Designer flagged 3-Ember-CTAs in the upper fold as over the rationing budget. Ribbon now serves as supporting context (kicker + body + outlined button), Program card carries the filled-Ember enrollment action. */}
-          <Link className="sw-btn" href="/program?source=home-hero#interest" style={{ whiteSpace: "nowrap" }}>
+          <TrackedLink
+            className="sw-btn"
+            href="/program?source=home-hero#interest"
+            style={{ whiteSpace: "nowrap" }}
+            event="cta_click"
+            eventProps={{ source: "home-hero", destination: "/program" }}
+          >
             Save my seat
-          </Link>
+          </TrackedLink>
         </div>
       </div>
 
@@ -74,8 +80,8 @@ export default function Home() {
               kicker="The Program"
               title="Sparkworks · 8-session class"
               body="The flagship. Two grade-calibrated tracks — Ember (grades 2–3) and Blaze (grades 4–6), each kept deliberately small with a dedicated instructor. Eight sessions, eight thinking skills, taught through hands-on activities and real-world examples of how great critical thinkers used these same skills to solve some of history's most important challenges. Founding Sparks filled before we listed it. Season 2 is filling now."
-              cta={{ label: "Save my seat — Season 2", href: "/program?source=home-program#interest", primary: true }}
-              secondary={{ label: "View Program Details", href: "/program" }}
+              cta={{ label: "Save my seat — Season 2", href: "/program?source=home-program#interest", primary: true, event: "cta_click", eventProps: { source: "home-program", destination: "/program" } }}
+              secondary={{ label: "View Program Details", href: "/program", event: "cta_click", eventProps: { source: "home-program-details", destination: "/program" } }}
             />
             {/* TM-2026 entry 12: Games + Materials cards consolidated into this single merged Practice card.
                  - Prior Games card kicker (entry 4a): "The Games"
@@ -88,7 +94,7 @@ export default function Home() {
               kicker="Practice at home"
               title="The way kids build the skills"
               body="Critical thinking grows with practice. We point parents toward the same activities, games, and class materials we use in class — organized by the skills they build."
-              cta={{ href: "/practice", label: "See our picks", primary: true }}
+              cta={{ href: "/practice", label: "See our picks", primary: true, event: "cta_click", eventProps: { source: "home-practice", destination: "/practice" } }}
             />
             {/* TM-2026 entry 12: previously standalone "Stay in the loop" section at #launches; promoted into card-grid slot 3 to balance the row and bring email capture above the fold. Slot 3 uses Section Blue accent (not Teal) to differentiate from the adjacent merged Practice card per Designer flag #7. */}
             <ProductCard
