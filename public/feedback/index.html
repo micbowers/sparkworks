@@ -133,6 +133,13 @@
     margin:18px 0 0;
   }
   .req-key .req-star{color:var(--sw-ember);font-size:14px;}
+  .save-note{
+    font-family:var(--body);
+    font-style:italic;
+    font-size:13.5px;
+    color:#5A6573;
+    margin:6px 0 0;
+  }
 
   /* ---------- SECTION BANDS ---------- */
   .section-band{
@@ -629,6 +636,7 @@
   <div class="sheet-pad">
     <p class="intro-quote">You're one of our <b>founding families</b> — the very first group through Sparkworks — so your answers carry real weight. Please be blunt; critical feedback helps us most. Your pricing answers stay strictly between us.</p>
     <p class="req-key"><span class="req-star">✱</span> Every question is required — it's short, and each answer genuinely helps.</p>
+    <p class="save-note">Your answers save automatically on this device — feel free to close this and finish later (just reopen the same link).</p>
   </div>
 
   <!-- ============================================================= -->
@@ -1294,6 +1302,8 @@ function initRankList(list){
     });
   }
 
+  list._renumber = renumber; // exposed so save/restore can re-number chips after rehydrating order
+
   // ----- HTML5 drag-and-drop -----
   var dragEl = null;
 
@@ -1481,37 +1491,202 @@ document.addEventListener('input', function(e){
 });
 
 // ============================================================
+//  SAVE & RESTORE — same-device autosave (localStorage, per-family key)
+//  The full form state is serialized via buildPayload() and stored under
+//  sw_survey_<fid>; restored on return; cleared on successful submit. No
+//  backend. Limitation: per-device/browser (incognito / cleared data lose it).
+// ============================================================
+function STORAGE_KEY(){ return 'sw_survey_' + (window.__fid || 'nofid'); }
+
+var __saveTimer = null;
+function scheduleSave(){
+  if(__saveTimer) clearTimeout(__saveTimer);
+  __saveTimer = setTimeout(saveState, 400);
+}
+function saveState(){
+  if(window.__submitted) return;
+  try { localStorage.setItem(STORAGE_KEY(), JSON.stringify(buildPayload())); } catch(e){ /* disabled/quota — ignore */ }
+}
+
+// ----- rehydration setters (mirror the read* helpers) -----
+function setText(scope, field, val){
+  if(val === undefined || val === null) return;
+  var el = scope.querySelector('[data-field="'+field+'"]');
+  if(el) el.value = val;
+}
+function setChoice(scope, name, val){
+  if(val === undefined || val === null || val === '') return;
+  var group = scope.querySelector('[data-choice="'+name+'"]');
+  if(!group) return;
+  var radios = group.querySelectorAll('input[type="radio"]');
+  var match = null, otherText = null;
+  radios.forEach(function(r){ if(r.value === val) match = r; });
+  if(!match){ // "Other: free text" / "Something else: free text"
+    var idx = val.indexOf(': ');
+    if(idx > -1){
+      var pre = val.slice(0, idx), post = val.slice(idx + 2);
+      radios.forEach(function(r){ if(r.value === pre){ match = r; otherText = post; } });
+    }
+  }
+  if(!match) return;
+  match.checked = true;
+  if(otherText){
+    var ob = match.closest('.choice').querySelector('[data-other]');
+    if(ob) ob.value = otherText;
+  }
+  match.dispatchEvent(new Event('change', { bubbles: true })); // reuse the .sel / single-select handler
+}
+function setScale(scope, name, val){
+  if(val === undefined || val === null || val === '') return;
+  var scale = scope.querySelector('[data-scale="'+name+'"]');
+  if(!scale) return;
+  var pt = scale.querySelector('.scale-pt[data-val="'+val+'"]');
+  if(!pt) return;
+  scale.querySelectorAll('.scale-pt').forEach(function(p){ p.classList.remove('sel'); });
+  pt.classList.add('sel');
+  scale.dataset.value = String(val);
+}
+function setGrid(scope, name, values){
+  if(!values) return;
+  var g = scope.querySelector('[data-grid="'+name+'"]');
+  if(!g) return;
+  Object.keys(values).forEach(function(rowName){
+    var col = values[rowName];
+    if(!col) return;
+    var tr = g.querySelector('tbody tr[data-row="'+rowName+'"]');
+    if(!tr) return;
+    tr.querySelectorAll('td[data-col]').forEach(function(c){ c.classList.remove('sel'); });
+    var td = tr.querySelector('td[data-col="'+col+'"]');
+    if(td) td.classList.add('sel');
+  });
+}
+function setRank(list, saved){
+  if(!list || !Array.isArray(saved)) return;
+  saved.forEach(function(item){
+    var row = list.querySelector('.rank-row[data-key="'+item.key+'"]');
+    if(!row) return;
+    if(item.key === 'other'){
+      var ob = row.querySelector('.rank-other-blank');
+      if(ob && item.label){
+        var t = item.label.replace(/^Other:\s*/, '');
+        if(t && t !== 'Other') ob.value = t;
+      }
+    }
+    var na = row.querySelector('.rank-na-toggle');
+    if(item.excluded){
+      if(na) na.checked = true;
+      row.classList.add('excluded');
+      row.setAttribute('draggable', 'false');
+    } else {
+      if(na) na.checked = false;
+      row.classList.remove('excluded');
+      row.setAttribute('draggable', 'true');
+    }
+    list.appendChild(row); // reorder rows into the saved sequence (active first, excluded last)
+  });
+  if(typeof list._renumber === 'function') list._renumber();
+}
+
+function restoreState(){
+  var raw;
+  try { raw = localStorage.getItem(STORAGE_KEY()); } catch(e){ return; }
+  if(!raw) return;
+  var d;
+  try { d = JSON.parse(raw); } catch(e){ return; }
+  if(!d) return;
+  var p = d.part1 || {};
+  setText(document, 'name', p.name);
+  setText(document, 'A1', p.A1);
+  setChoice(document, 'A2', p.A2);
+  setGrid(document, 'B1', p.B1);
+  setChoice(document, 'B2', p.B2);
+  setChoice(document, 'B3', p.B3);
+  setChoice(document, 'C1', p.C1);
+  setChoice(document, 'C2', p.C2);
+  setScale(document, 'C3', p.C3);
+  setChoice(document, 'C4', p.C4);
+  setText(document, 'C5', p.C5);
+  setRank(document.getElementById('rankListD1'), p.D1);
+  setChoice(document, 'D2', p.D2);
+  setScale(document, 'E1', p.E1);
+  setText(document, 'E2', p.E2);
+  setScale(document, 'E3', p.E3);
+  setText(document, 'E4', p.E4);
+  setGrid(document, 'E5', p.E5);
+  setChoice(document, 'E6', p.E6);
+  setScale(document, 'E7', p.E7);
+  setText(document, 'E8', p.E8);
+  setText(document, 'E9', p.E9);
+  setText(document, 'E10', p.E10);
+  setChoice(document, 'F1', p.F1);
+  setText(document, 'F2', p.F2);
+  setText(document, 'G1', p.G1);
+  setText(document, 'G2', p.G2);
+  setChoice(document, 'G3', p.G3);
+
+  var kids = Array.isArray(d.children) ? d.children : [];
+  var blocks = childContainer.querySelectorAll('.child-block');
+  kids.forEach(function(c, i){
+    var block = blocks[i];
+    if(!block) return;
+    setText(block, 'K1', c.K1);
+    setScale(block, 'K2', c.K2);
+    setChoice(block, 'K3', c.K3);
+    setChoice(block, 'K4', c.K4);
+    setChoice(block, 'K5', c.K5);
+    setChoice(block, 'K6', c.K6);
+    setRank(block.querySelector('[data-rank="K7"]'), c.K7);
+    setChoice(block, 'K8', c.K8);
+  });
+
+  maybeToggleB4();               // recompute B4 visibility from restored K1 tracks
+  if(p.B4) setChoice(document, 'B4', p.B4); // then restore its answer (only saved when it was shown)
+}
+
+function afterPrefillInit(){
+  if(window.__inited) return;
+  window.__inited = true;
+  try { restoreState(); } catch(e){}
+  // attach autosave AFTER restore so rehydration doesn't clobber saved state
+  document.addEventListener('input', scheduleSave);
+  document.addEventListener('change', scheduleSave);
+  document.addEventListener('click', scheduleSave);
+  window.addEventListener('beforeunload', saveState);
+}
+
+// ============================================================
 //  PRE-FILL FROM PER-FAMILY LINK  (?fid=<token>)
 //  Looks up the family in the Registration DB (via /api/survey-prefill)
 //  and pre-populates the parent name + one child block per kid (name + track),
-//  all editable. Stores fid for submit. No fid -> page stays blank/manual.
+//  all editable. Then restores any saved draft + starts autosave (afterPrefillInit).
 // ============================================================
 (function(){
   var fid = (new URLSearchParams(location.search).get('fid') || '').trim();
   window.__fid = fid || null;
-  if(!fid) return;
+  if(!fid){ afterPrefillInit(); return; }
   fetch('/api/survey-prefill?fid=' + encodeURIComponent(fid))
     .then(function(r){ return r.json(); })
     .then(function(d){
-      if(!d || !d.found) return;
-      var nameInput = document.querySelector('input[data-field="name"]');
-      if(nameInput && d.parentName) nameInput.value = d.parentName;
-      var kids = Array.isArray(d.children) ? d.children : [];
-      var addBtn = document.getElementById('addChildBtn');
-      window.__prefilling = true; // suppress the add-child auto-scroll while we spawn blocks
-      kids.forEach(function(kid, i){
-        if(i > 0 && addBtn) addBtn.click(); // spawn a block (reuses handler -> inits its rank widget)
-        var blocks = childContainer.querySelectorAll('.child-block');
-        var block = blocks[i];
-        if(!block) return;
-        var k1 = block.querySelector('input[data-field="K1"]');
-        if(k1) k1.value = kid.name + (kid.track ? ' — ' + kid.track : '');
-      });
-      window.__prefilling = false;
-      maybeToggleB4();
-      window.scrollTo(0, 0); // land the visitor at the top, not on the last child block
+      if(d && d.found){
+        var nameInput = document.querySelector('input[data-field="name"]');
+        if(nameInput && d.parentName) nameInput.value = d.parentName;
+        var kids = Array.isArray(d.children) ? d.children : [];
+        var addBtn = document.getElementById('addChildBtn');
+        window.__prefilling = true; // suppress the add-child auto-scroll while we spawn blocks
+        kids.forEach(function(kid, i){
+          if(i > 0 && addBtn) addBtn.click(); // spawn a block (reuses handler -> inits its rank widget)
+          var blocks = childContainer.querySelectorAll('.child-block');
+          var block = blocks[i];
+          if(!block) return;
+          var k1 = block.querySelector('input[data-field="K1"]');
+          if(k1) k1.value = kid.name + (kid.track ? ' — ' + kid.track : '');
+        });
+        window.__prefilling = false;
+        maybeToggleB4();
+      }
     })
-    .catch(function(){ /* fail silent — page still works manually */ });
+    .catch(function(){ /* fail silent — page still works manually */ })
+    .then(function(){ afterPrefillInit(); window.scrollTo(0, 0); }); // restore + autosave run in all cases
 })();
 
 // ============================================================
@@ -1705,8 +1880,10 @@ submitBtn.addEventListener('click', async function(){
       var body = await res.json().catch(function(){ return {}; });
       throw new Error(body.error || 'Submission failed');
     }
-    // success — submission is final: replace the entire form with the thank-you panel
-    // so nothing stays editable and the survey can't be re-submitted.
+    // success — submission is final: clear the saved draft, then replace the entire
+    // form with the thank-you panel so nothing stays editable / re-submittable.
+    window.__submitted = true;
+    try { localStorage.removeItem(STORAGE_KEY()); } catch(e){}
     var sheet = document.querySelector('.sheet');
     Array.prototype.forEach.call(sheet.children, function(ch){
       if(ch.id !== 'confirm') ch.style.display = 'none';
