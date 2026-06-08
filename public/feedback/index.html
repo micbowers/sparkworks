@@ -141,6 +141,28 @@
     margin:6px 0 0;
   }
 
+  /* ---------- PROGRESS BAR (fixed; % complete + autosave status) ---------- */
+  .progress-bar{
+    position:fixed; top:0; left:0; right:0; z-index:60;
+    background:var(--sw-steel);
+    box-shadow:0 2px 10px rgba(30,37,48,0.22);
+  }
+  .progress-track{ height:6px; width:100%; background:rgba(255,255,255,0.16); }
+  .progress-fill{ height:100%; width:0%; background:var(--sw-teal); transition:width .25s ease; }
+  .progress-meta{
+    max-width:var(--maxw); margin:0 auto;
+    display:flex; justify-content:space-between; align-items:center; gap:12px;
+    padding:5px 20px 6px;
+    font-family:var(--display); font-weight:700; letter-spacing:.6px; text-transform:uppercase;
+    font-size:11.5px; color:rgba(255,255,255,0.92);
+  }
+  .progress-meta .save-status{
+    font-weight:600; color:rgba(255,255,255,0.55);
+    text-transform:none; letter-spacing:.3px;
+  }
+  .progress-meta .save-status.saved{ color:var(--sw-teal); }
+  .progress-meta .save-status.saving{ color:var(--sw-yellow); }
+
   /* ---------- SECTION BANDS ---------- */
   .section-band{
     background:var(--sw-steel);
@@ -619,6 +641,15 @@
 </style>
 </head>
 <body>
+
+<!-- PROGRESS BAR (fixed; shows % complete + autosave status) -->
+<div class="progress-bar" id="progressBar">
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="progress-meta">
+    <span id="progressPct">0% complete</span>
+    <span id="saveStatus" class="save-status">Auto-saves as you go</span>
+  </div>
+</div>
 
 <!-- HERO -->
 <header class="hero">
@@ -1500,13 +1531,57 @@ function STORAGE_KEY(){ return 'sw_survey_' + (window.__fid || 'nofid'); }
 
 var __saveTimer = null;
 function scheduleSave(){
+  setSaveStatus('saving');
   if(__saveTimer) clearTimeout(__saveTimer);
   __saveTimer = setTimeout(saveState, 400);
 }
 function saveState(){
   if(window.__submitted) return;
-  try { localStorage.setItem(STORAGE_KEY(), JSON.stringify(buildPayload())); } catch(e){ /* disabled/quota — ignore */ }
+  try {
+    localStorage.setItem(STORAGE_KEY(), JSON.stringify(buildPayload()));
+    setSaveStatus('saved');
+  } catch(e){ setSaveStatus('error'); }
 }
+
+// ----- progress bar + save indicator -----
+function setSaveStatus(state){
+  var el = document.getElementById('saveStatus');
+  if(!el) return;
+  el.classList.remove('saving', 'saved');
+  if(state === 'saving'){ el.textContent = 'Saving…'; el.classList.add('saving'); }
+  else if(state === 'saved'){ el.textContent = '✓ Saved on this device'; el.classList.add('saved'); }
+  else if(state === 'error'){ el.textContent = "Couldn't save on this device"; }
+  else { el.textContent = 'Auto-saves as you go'; }
+}
+function countProgress(){
+  var total = 0, done = 0;
+  document.querySelectorAll('.q[data-req]').forEach(function(q){
+    if(q.offsetParent === null && q.id) return; // skip hidden conditional (B4)
+    total++;
+    var scale = q.querySelector('[data-scale]');
+    var choice = q.querySelector('[data-choice]');
+    var grid = q.querySelector('[data-grid]');
+    var rank = q.querySelector('[data-rank]');
+    var field = q.querySelector('[data-field]');
+    var ok = false;
+    if(grid){ var g = readGrid(q, grid.getAttribute('data-grid')); ok = !!(g && g.complete); }
+    else if(scale){ ok = scale.dataset.value !== undefined; }
+    else if(choice){ ok = !!choice.querySelector('input[type="radio"]:checked'); }
+    else if(rank){ ok = true; } // ranks have a default order; "answered" by definition
+    else if(field){ ok = field.value.trim().length > 0; }
+    if(ok) done++;
+  });
+  return { done: done, total: total, pct: total ? Math.round(done / total * 100) : 0 };
+}
+function updateProgress(){
+  var fill = document.getElementById('progressFill');
+  var label = document.getElementById('progressPct');
+  if(!fill || !label) return;
+  var p = countProgress();
+  fill.style.width = p.pct + '%';
+  label.textContent = p.pct + '% complete';
+}
+function onInteract(){ updateProgress(); scheduleSave(); }
 
 // ----- rehydration setters (mirror the read* helpers) -----
 function setText(scope, field, val){
@@ -1647,11 +1722,15 @@ function afterPrefillInit(){
   if(window.__inited) return;
   window.__inited = true;
   try { restoreState(); } catch(e){}
-  // attach autosave AFTER restore so rehydration doesn't clobber saved state
-  document.addEventListener('input', scheduleSave);
-  document.addEventListener('change', scheduleSave);
-  document.addEventListener('click', scheduleSave);
+  // attach autosave + progress AFTER restore so rehydration doesn't clobber saved state
+  document.addEventListener('input', onInteract);
+  document.addEventListener('change', onInteract);
+  document.addEventListener('click', onInteract);
   window.addEventListener('beforeunload', saveState);
+  updateProgress();
+  var hasSaved = false;
+  try { hasSaved = !!localStorage.getItem(STORAGE_KEY()); } catch(e){}
+  setSaveStatus(hasSaved ? 'saved' : 'idle');
 }
 
 // ============================================================
@@ -1884,6 +1963,8 @@ submitBtn.addEventListener('click', async function(){
     // form with the thank-you panel so nothing stays editable / re-submittable.
     window.__submitted = true;
     try { localStorage.removeItem(STORAGE_KEY()); } catch(e){}
+    var pbar = document.getElementById('progressBar');
+    if(pbar) pbar.style.display = 'none';
     var sheet = document.querySelector('.sheet');
     Array.prototype.forEach.call(sheet.children, function(ch){
       if(ch.id !== 'confirm') ch.style.display = 'none';
