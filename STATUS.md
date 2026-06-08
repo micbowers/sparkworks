@@ -5,7 +5,7 @@ cadence: weekly (daily during cohort enrollment pushes)
 ---
 
 ## Current focus
-**Analytics funnel-coverage pass (2026-06-08).** Audited instrumentation and closed the three biggest blind spots: top-of-funnel CTA clicks (home + program were untracked — only the final `register_submit` fired), "Play free" outbound game clicks, and the `/practice` card-expand engagement signal. Changes are **local/uncommitted** — not yet pushed/deployed (git not on PATH this session; Mike to commit+push or authorize). See "Recently completed" below.
+**Analytics funnel-coverage pass (2026-06-08) — SHIPPED LIVE.** Closed the three biggest blind spots: top-of-funnel CTA clicks (`cta_click`), "Play free" outbound clicks (`game_play_click`), `/practice` card-expand (`practice_card_expand`). Committed (`5a1b96d`) + on GitHub main; **deployed to production via Vercel CLI** (`dpl_2J5wJjj...`, aliased to www.sparkworks.kids, verified 200). See "Recently completed" below. **Two infra problems surfaced this session — see Known issues + open Mike tasks:** (1) `git push` did NOT auto-deploy; (2) Google Drive is corrupting `.git`.
 
 ## Prior focus
 `/practice` shipped today through ~25 iterations of feedback + redesign. Final state is an entry-based vertical list under a tight hero — no skill-section grouping, no "We recommend" section header (Sparkworks-built items hidden for now so there's nothing to distinguish a "recommended" group from). 5 entries in revenue-first order:
@@ -20,7 +20,7 @@ Each entry: tags row → family title → 1-line highlight → prominent **Why w
 ## KPIs
 - Registrations to date (Founding Sparks + Season 2): _populate next refresh — needs Notion DB query_
 - Subscribers to date (Games / Materials / Program interests): _populate next refresh — needs Notion DB query_
-- Deploy status: green · main @ `eafccc6` deployed to www.sparkworks.kids on 2026-05-27 (Vercel auto-deploy on push)
+- Deploy status: green · production = `dpl_2J5wJjj42WT8FxefsHHwf4zpSmea` (built from main @ `fc074df`, incl. analytics `5a1b96d` + survey work), deployed via **Vercel CLI** 2026-06-08, aliased to www.sparkworks.kids (200 verified). ⚠️ Auto-deploy-on-push is NOT firing — deploy via `npx vercel --prod --yes` (after confirming the dir is linked to project `sparkworks`, not `sparkworks-site`). See Known issues.
 - Analytics: Vercel `<Analytics />` + `<SpeedInsights />` mounted in `app/layout.js`. Custom events: `register_submit`, `subscribe_submit`, `amazon_click`, `cta_click` (new), `game_play_click` (new), `practice_card_expand` (new), `games_cta_click`, `spark_poster_expand`/`_download`. Full list + properties in CLAUDE.md. Mike to confirm Vercel dashboard toggles are ON.
 
 ## Open items needing Mike (or Tina)
@@ -37,6 +37,9 @@ Each entry: tags row → family title → 1-line highlight → prominent **Why w
 - **`practice_card_expand`**: ExpandableCard open now fires `{ slug }` (open only, not collapse). The "Why we love it" expand is the page's editorial differentiator and had zero usage data; the funnel `amazon_click` documents (views → expand → click) was missing its middle step.
 - **New reusable infra**: `TrackedAnchor.jsx` (outbound `<a>` click tracking, sibling to existing `TrackedLink.jsx`); `ProductCard` cta/secondary action objects now accept `event`/`eventProps` and route through TrackedLink/TrackedAnchor automatically.
 - **Verified** via `next build` (✓ compiled, lint+types pass, 11/11 pages) using the documented webpack-cache-disable workaround for the Drive-mount EINVAL; config restored after.
+- **Committed** `5a1b96d` (8 files, staged individually to avoid the noisy working tree) → pushed to GitHub main. Found git not on PATH; used the GitHub-Desktop-bundled git at `C:\Users\BaoClan\AppData\Local\GitHubDesktop\app-*\resources\app\git\cmd\git.exe`.
+- **Deployed to production via Vercel CLI** after discovering `git push` did NOT auto-deploy (production was 3 commits stale). Misfired once to a wrong auto-created `sparkworks-site` project (folder-name default), removed it, re-linked to the real `sparkworks` project, redeployed (`dpl_2J5wJjj...`), confirmed www.sparkworks.kids alias + 200.
+- **Fixed (partial) Drive `.git` corruption**: removed 236 `desktop.ini` files Drive had injected into `.git` (5 were broken refs in `.git/refs/` blocking `git fetch`). Will recur until repo moves off Drive.
 - **Deferred** (not done this pass): `register_start` form-abandonment event; standardizing the legacy `games_cta_click` name. Naming convention going forward (`surface_action`) noted in CLAUDE.md.
 
 ## Recently completed (2026-05-27 — single-day session, abbreviated)
@@ -80,6 +83,9 @@ Each entry: tags row → family title → 1-line highlight → prominent **Why w
 - **Proactive analytics**: any new outbound link / form / conversion step gets a `track()` proposal (per Mike's directive, recorded in CLAUDE.md).
 
 ## Known issues
+- **🔴 Auto-deploy on push is BROKEN (2026-06-08).** Pushing to GitHub main did not trigger a Vercel build on the `sparkworks` project; production sat 3 commits stale. CLAUDE.md's "git push → auto-deploys" is currently false. Workaround in use: `npx vercel --prod --yes` (CLI is authed). **Root-cause fix needs Mike** (Vercel dashboard → `sparkworks` → Settings → Git: reconnect/re-enable the GitHub integration). `[SW]` task filed.
+- **🔴 Google Drive corrupts `.git` (2026-06-08).** Drive injects `desktop.ini` into `.git/` including `.git/refs/`, producing `bad object refs/desktop.ini` that breaks `git fetch`/`push`. Removed 236 today; it WILL recur. Real fix = move the working clone off the Drive mount to local disk (Drive can hold a non-git copy, but `.git` should not be Drive-synced). **Needs Mike decision.** `[SW]` task filed. Quick unblock if it recurs: `Get-ChildItem .git -Recurse -Filter desktop.ini -Force | Remove-Item -Force`.
+- **Vercel project footgun:** account has both `sparkworks` (real site, www.sparkworks.kids) and — until today — a stray `sparkworks-site` (auto-created by a bare `vercel --prod` defaulting to the folder name; removed). Same pattern as `logixdojo`/`logixdojo-site`. Always confirm `.vercel/repo.json` → `sparkworks` before CLI-deploying.
 - Local `next build` and `next dev` cache writes fail intermittently with `EINVAL` / `ENOENT` / `EPERM` / `EBADF` on the Google Drive virtual filesystem (`G:\My Drive\…`). Dev server still serves; Vercel's Linux build env is the source of truth for production validation. **Concrete workarounds (build cache toggle, npm-install-on-local-disk, git-not-on-PATH path, exiftool/Vercel-CLI notes, commit-scope discipline) are now documented in [`lessons-learned.md`](lessons-learned.md)** — read it at session start alongside this file. Filed `[QD]` task to document the workaround.
 - Block Code + Perfectly Logical entries show review counts that the scraper returned as 1 and 5849 respectively. The 1 for Nine Men's Morris and 2 for Shisima look like parser-matching mistakes (caught a different counter in the HTML) — `reviewCount: null` set on those two so the count hides until manually verified in the next refresh cycle.
 - Storefront-hero SVG for Block Code (`/practice/block-code-creative.svg`) is in `public/practice/` but not referenced (kept around since Block Code may return).

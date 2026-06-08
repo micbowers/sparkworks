@@ -128,13 +128,24 @@ Email subscribers for game and materials launches. Separate from the Founding Sp
 
 ## Deployment
 
-`git push origin main` → Vercel auto-deploys. The site auto-publishes to [www.sparkworks.kids](https://www.sparkworks.kids).
+**⚠️ Reality check (2026-06-08): `git push origin main` did NOT trigger a Vercel deploy** — a push landed cleanly on GitHub but no build fired, and production sat 3 commits stale. The GitHub→Vercel auto-deploy on the `sparkworks` project appears disconnected/paused (Mike to verify in Vercel dashboard → `sparkworks` → Settings → Git). Until that's fixed, **deploy via the Vercel CLI** (it's authed on this machine as `michaelbowers-4204`):
 
-Before pushing:
-1. `npm run build` — must succeed.
+```
+npx vercel --prod --yes      # builds working tree, deploys to production, aliases www.sparkworks.kids
+```
+
+**Two footguns the CLI deploy hit (both now documented so you don't repeat them):**
+1. **Wrong project.** The real site is the Vercel project **`sparkworks`** (`prj_Ym2h1VGUAN7fjM4PzfpXMYO4RUJh`), which owns www.sparkworks.kids. A bare `vercel --prod --yes` in an unlinked dir defaults to a project named after the **folder** (`sparkworks-site`) and deploys to the wrong place (cf. the parallel `logixdojo` / `logixdojo-site` pair). **Before deploying, confirm `.vercel/repo.json` (or `project.json`) points to `sparkworks`**; if not: `npx vercel link --project sparkworks --yes`.
+2. **Google Drive corrupts `.git`.** This repo lives on a Drive mount; Drive injects `desktop.ini` files *inside* `.git/refs/`, which makes `git fetch`/`git push` fail with `bad object refs/desktop.ini`. Fix: remove them — `Get-ChildItem .git -Recurse -Filter desktop.ini -Force | Remove-Item -Force` (236 found on 2026-06-08). This WILL recur until the working repo is moved off Drive. See `lessons-learned.md`.
+
+After deploying, verify: `npx vercel inspect <deployment-url>` should list `www.sparkworks.kids` under Aliases, and `curl https://www.sparkworks.kids` should return 200.
+
+Before deploying:
+1. `npm run build` — must succeed. (On the Drive mount, `next build` itself throws `EINVAL` on the webpack cache; temporarily set `config.cache = false` in `next.config.js`, build, then revert — see `lessons-learned.md`.)
 2. Walk both pages in `npm run dev` — homepage shows three product cards; `/program` shows curriculum + form.
 3. Run the brand audit checklist from `SPARKWORKS_MARKETING_GUIDELINES.md`.
 4. If you changed the form schema, verify the Notion DB has the matching properties.
+5. **Stage only your own files** (`git add <files>`, not `git add -A`) — the working tree carries unrelated noise (desktop.ini, dev logs, a concurrent survey workstream, deleted `docs/` duplicates).
 
 ## Don'ts (from the brand voice doc)
 
