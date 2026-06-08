@@ -3,3 +3,17 @@ node_modules/
 .env
 .env.local
 .vercel
+
+# Windows / Google Drive folder-metadata junk. Drive stamps desktop.ini into folders
+# across this Drive-synced repo; ignoring them keeps `git status` clean and stops a stray
+# `git add -A` from staging them. NOTE: this does NOT stop Drive writing desktop.ini into
+# .git internals (git never applies .gitignore inside .git) — that can still break refs.
+# See CLAUDE.md "Deployment" for the cleanup one-liner and the move-off-Drive plan.
+desktop.ini
+Thumbs.db
+
+# Local dev / scratch artifacts
+dev.log
+dev-test.log
+*.tmp
+.commitmsg.tmp
