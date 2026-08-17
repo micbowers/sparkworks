@@ -145,26 +145,36 @@ export default function LegalPage() {
             <p className="ts-body">
               This Privacy Policy explains what personal information Cairn Partners, LLC collects
               through www.sparkworks.kids, how we use it, and who we share it with. We collect only the
-              information we need to respond to families interested in Sparkworks and to place children
-              in the right class.
+              information we need to respond to families interested in Sparkworks.
             </p>
+            {/* ENROLLMENT PAUSED 2026-08-16: the registration form (parent name + up to 3 children
+                with first name, grade and track → /api/register) was removed from the Site, so this
+                section previously described collection that no longer happens and stated "no payment
+                is required to hold a seat." Rewritten to describe what the Site collects TODAY, while
+                still disclosing what was collected previously and how to request its deletion —
+                deleting the disclosure outright would be worse than leaving it stale.
+                Prior text preserved in SPARKWORKS_TRADEMARK_GUIDANCE.md entry A2 for the restore path.
+                RBG owns this page — this edit was made at Mike's explicit direction 2026-08-16 to
+                avoid shipping a live contradiction, and is pending RBG review under the open task. */}
             <p className="ts-body">
               <strong>Information we collect.</strong> We collect personal information only when you
-              choose to give it to us through one of our two forms:
+              choose to give it to us through our email sign-up forms:
             </p>
             <p className="ts-body">
-              <em>Enrollment and interest form (completed by a parent or guardian).</em> When a parent
-              or guardian fills out our enrollment or interest form, we collect: the parent&rsquo;s or
-              guardian&rsquo;s name and email address; for each child being enrolled (up to three), the
-              child&rsquo;s first name, grade, and track (Ember for grades 2&ndash;3 or Blaze for grades
-              4&ndash;6); and the program cohort of interest. No child interacts with the form &mdash;
-              it is always completed by an adult. We do not collect payment information on the Site, and
-              no payment is required to hold a seat.
-            </p>
-            <p className="ts-body">
-              <em>Email sign-up form.</em> When you sign up to hear from us, we collect your email
+              <em>Email sign-up (always completed by an adult).</em> When you sign up to hear from us
+              &mdash; including to register interest in the program &mdash; we collect your email
               address, the interest categories you select (Games, Materials, or Program), and which
-              page on our Site the sign-up came from.
+              page on our Site the sign-up came from. No child interacts with these forms.
+            </p>
+            <p className="ts-body">
+              <em>We are not currently enrolling.</em> The Site does not collect any information about
+              children. When enrollment was open, our registration form also collected the parent&rsquo;s
+              or guardian&rsquo;s name and, for each child being enrolled (up to three), the child&rsquo;s
+              first name, grade, and track (Ember for grades 2&ndash;3 or Blaze for grades 4&ndash;6),
+              along with the program cohort of interest. That form is no longer offered on the Site.
+              Information previously collected through it is retained and handled as described in this
+              policy; to request its deletion, email privacy@sparkworks.kids. We do not collect payment
+              information on the Site.
             </p>
             <p className="ts-body">
               We do not collect passwords, we do not create user accounts, we do not collect payment
@@ -172,10 +182,10 @@ export default function LegalPage() {
             </p>
             <p className="ts-body">
               <strong>How we use your information.</strong> We use the information you provide to:
-              respond to your inquiry and follow up about Sparkworks programs; place a child in the
-              appropriate class and track; contact the parent or guardian about enrollment, scheduling,
-              and program updates; and send you the launch and program updates you signed up to receive.
-              We do not sell your personal information.
+              respond to your inquiry and follow up about Sparkworks programs; contact you about
+              scheduling and program updates; and send you the launch and program updates you signed up
+              to receive. If enrollment reopens, we would also use enrollment information to place a
+              child in the appropriate class and track. We do not sell your personal information.
             </p>
             <p className="ts-body">
               <strong>Who we share it with.</strong> We do not sell or rent your personal information.

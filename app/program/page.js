@@ -4,7 +4,9 @@ import { SiteHeader } from "../components/SiteHeader";
 import { Footer } from "../components/Footer";
 import { CurriculumSection } from "../components/CurriculumSection";
 import { Callout } from "../components/Callout";
-import { InterestForm } from "../components/InterestForm";
+// InterestForm import removed 2026-08-16 while enrollment is paused — see the #interest section
+// below for the restore path. The component itself is intentionally kept in the tree.
+import { SubscribeForm } from "../components/SubscribeForm";
 import { SparkOfHistory } from "../components/SparkOfHistory";
 import { TrackedLink } from "../components/TrackedLink";
 
@@ -186,9 +188,23 @@ const FAQS = [
     q: "Is it tutoring?",
     a: "No — it's closer to training. We don't help with school subjects. We teach how to approach a problem you've never seen before. That skill transfers to everything.",
   },
+  // ENROLLMENT PAUSED 2026-08-16 (Mike). Answer reframed from the Season-2 enrollment version:
+  // "Season 2 — Fall 2026 is $449 for all 8 sessions (both tracks, same price), starting the week
+  // of September 7. No payment required to hold a seat — slots are offered in order of registration,
+  // and we'll be in touch with payment details once Season 2 is locked."
+  // Both figures below are the CLAUDE.md-approved prices ($149 pilot / $449 full season).
   {
     q: "What does it cost?",
-    a: "Season 2 — Fall 2026 is $449 for all 8 sessions (both tracks, same price), starting the week of September 7. No payment required to hold a seat — slots are offered in order of registration, and we'll be in touch with payment details once Season 2 is locked.",
+    // QA M2/M3 2026-08-16: trimmed. Prior answer added "We're not enrolling at the moment — when we
+    // set dates for the next season, everyone on the interest list hears first," which duplicated the
+    // "When does the next season run?" answer directly below and made the page state the negative
+    // four times. Also "a full season IS $449" asserted a live price for an unscheduled season;
+    // "is priced at" is the accurate framing ($449 was announced but never actually charged).
+    a: "The Founding Sparks pilot ran at $149 for all 8 sessions; a full 8-session season is priced at $449 (both tracks, same price). Everyone on the interest list hears first when the next season opens.",
+  },
+  {
+    q: "When does the next season run?",
+    a: "Dates aren't set yet. The program runs as eight 60-minute sessions, one per week. Add your email below and we'll let you know as soon as we schedule the next one.",
   },
 ];
 
@@ -199,7 +215,7 @@ export default function ProgramPage() {
       {/* TM-2026: Hero title was "An 8-session program that teaches kids to think through hard problems — through games, not lectures." */}
       <Hero
         wordmarkSize="xl"
-        eyebrow="The Program · Season 2"
+        eyebrow="The Program"
         title="An 8-session program that teaches kids to think through hard problems — through hands-on problem solving, not lectures."
         tagline="Two grade-calibrated tracks: Ember (grades 2–3) and Blaze (grades 4–6). Each kept deliberately small, with a dedicated instructor and 60-minute sessions."
       />
@@ -220,12 +236,23 @@ export default function ProgramPage() {
             }}
           >
             <div>
+              {/* ENROLLMENT PAUSED 2026-08-16 (Mike). Prior enrollment ribbon read:
+                  label "Season 2 · Fall 2026"; body "Founding Sparks filled before we listed it.
+                  Season 2 is filling now. $449 for all 8 sessions · No payment required to hold a
+                  seat."; CTA "Save my seat" → #interest.
+                  Season 2 is not scheduled and we are not taking sign-ups, so the urgency framing
+                  ("filling now", "hold a seat") was removed as no longer truthful. The program
+                  itself still presents in full below — only the enrollment ask changed. */}
+              {/* QA M1 2026-08-16: label was "Next season", which set up an announcement the body
+                  immediately withdraws, and duplicated the #interest card's eyebrow further down.
+                  Matches the homepage ribbon label + hero eyebrow instead. */}
               <div className="ts-label" style={{ color: "var(--sw-ember)", fontSize: "0.75rem", marginBottom: 4 }}>
-                Season 2 · Fall 2026
+                The Program
               </div>
               <p className="ts-body" style={{ margin: 0 }}>
-                <strong>Founding Sparks filled before we listed it. Season 2 is filling now.</strong>{" "}
-                $449 for all 8 sessions · No payment required to hold a seat.
+                <strong>Founding Sparks filled before we listed it.</strong>{" "}
+                Dates for the next season aren&rsquo;t set yet — tell us you&rsquo;re interested and
+                we&rsquo;ll let you know first.
               </p>
             </div>
             <TrackedLink
@@ -235,7 +262,10 @@ export default function ProgramPage() {
               event="cta_click"
               eventProps={{ source: "program-hero", destination: "#interest" }}
             >
-              Save my seat
+              {/* QA M4 2026-08-16: label was "Keep me posted", identical to the SubscribeForm submit
+                  it jumps to — a parent could reasonably think this click already signed them up.
+                  This one is a jump link; only the form button below actually submits. */}
+              Tell us you&rsquo;re interested
             </TrackedLink>
           </div>
         </section>
@@ -409,8 +439,37 @@ export default function ProgramPage() {
           </div>
         </section>
 
+        {/* ENROLLMENT PAUSED 2026-08-16 (Mike): the next season isn't scheduled and Tina's
+            availability to teach it again is uncertain, so we stopped taking sign-ups. This slot
+            used to render <InterestForm /> — the full registration form (parent + up to 3 children
+            with names, grades and track assignments) posting to /api/register.
+
+            TO RESTORE ENROLLMENT: re-import InterestForm at the top of this file and swap this
+            whole section back to `<InterestForm />`. The component, the /api/register route and the
+            Notion registration DB are all untouched and still wired — nothing was deleted.
+
+            Until then we capture interest only: email-only SubscribeForm → /api/subscribe → the
+            Subscribers DB, tagged with the existing `Program` interest. No child data is collected
+            while enrollment is paused. Analytics: `register_submit` stops firing; this surface now
+            reports as `subscribe_submit` with source `program-interest`. */}
         <section className="sw-section" id="interest">
-          <InterestForm />
+          <div className="sw-card" style={{ borderTop: "4px solid var(--sw-ember)" }}>
+            <div className="ts-eyebrow" style={{ color: "var(--sw-ember)" }}>Next season</div>
+            <h3 className="ts-h2" style={{ marginTop: 8, marginBottom: 8 }}>
+              Interested in a future season?
+            </h3>
+            <p className="ts-body" style={{ marginBottom: 8 }}>
+              We&rsquo;re not enrolling right now — dates for the next season aren&rsquo;t set. Leave
+              your email and we&rsquo;ll be in touch as soon as they are. No commitment, and nothing
+              to pay.
+            </p>
+            <SubscribeForm
+              interests={["Program"]}
+              source="program-interest"
+              ctaLabel="Keep me posted"
+              successMessage="Thanks — you&rsquo;re on the list. We&rsquo;ll email you when we set dates for the next season."
+            />
+          </div>
         </section>
       </main>
 

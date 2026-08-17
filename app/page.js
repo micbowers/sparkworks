@@ -33,23 +33,38 @@ export default function Home() {
           }}
         >
           <div>
+            {/* ENROLLMENT PAUSED 2026-08-16 (Mike). Prior enrollment ribbon read:
+                label "Season 2 · Fall 2026"; body "Founding Sparks filled before we listed it.
+                Season 2 is filling now. Sessions start the week of September 7 · No payment
+                required to hold a seat."
+                Season 2 is not scheduled and we are not taking sign-ups, so the dated start and
+                the "filling now" / "hold a seat" urgency were removed as no longer truthful. */}
             <div className="ts-label" style={{ color: "var(--sw-ember)", fontSize: "0.75rem", marginBottom: 4 }}>
-              Season 2 · Fall 2026
+              The Program
             </div>
             <p className="ts-body" style={{ margin: 0 }}>
-              <strong>Founding Sparks filled before we listed it. Season 2 is filling now.</strong>{" "}
-              Sessions start the week of September 7 · No payment required to hold a seat.
+              <strong>Founding Sparks filled before we listed it.</strong>{" "}
+              Dates for the next season aren&rsquo;t set yet — tell us you&rsquo;re interested and
+              we&rsquo;ll let you know first.
             </p>
           </div>
           {/* Ember demotion 2026-05-27: ribbon CTA was sw-btn-primary; the Program card primary CTA below carries the same href, and Designer flagged 3-Ember-CTAs in the upper fold as over the rationing budget. Ribbon now serves as supporting context (kicker + body + outlined button), Program card carries the filled-Ember enrollment action. */}
+          {/* SUPERSEDED 2026-08-16: the #interest href now sits on the Program card's SECONDARY
+              action, not its primary (which points at /program), and there is no longer a
+              filled-Ember enrollment action on this page — enrollment is paused. */}
+          {/* QA M5 2026-08-16: dropped the inert `?source=home-hero` query param. InterestForm used to
+              read ?source off the URL and fold it into `register_submit`; SubscribeForm takes no such
+              prop and the /program interest card hardcodes source="program-interest", so the param
+              did nothing. Entry-point attribution lives on the `cta_click` event below, which already
+              distinguishes home-hero from home-program-interest. */}
           <TrackedLink
             className="sw-btn"
-            href="/program?source=home-hero#interest"
+            href="/program#interest"
             style={{ whiteSpace: "nowrap" }}
             event="cta_click"
-            eventProps={{ source: "home-hero", destination: "/program" }}
+            eventProps={{ source: "home-hero", destination: "/program#interest" }}
           >
-            Save my seat
+            Keep me posted
           </TrackedLink>
         </div>
       </div>
@@ -75,13 +90,17 @@ export default function Home() {
           <div className="sw-grid-3">
             {/* TM-2026: Program card body reframed. Original: "The flagship. Two grade-calibrated tracks — Ember (grades 2–3) and Blaze (grades 4–6), 6 students each. Eight sessions, eight thinking skills, taught through real games and Sparks of History — historical figures who used the same principles to change something that mattered. Founding Sparks filled before we listed it. Season 2 is filling now." */}
             {/* ACCURACY-2026-06-07 (non-TM): per-track group-size number dropped from this card's live copy ("6 students each" → "each kept deliberately small with a dedicated instructor"). Season-1 pilot ran ~8:1, real Season-2 cap is pending. Do NOT restore the "6 students each" figure when the TM swap above is unwound. See SPARKWORKS_BRAND_REF.md (Structure line) and TRADEMARK_GUIDANCE swap-log accuracy note. */}
+            {/* ENROLLMENT PAUSED 2026-08-16 (Mike): body previously closed "Founding Sparks filled
+                before we listed it. Season 2 is filling now." — the second sentence is dropped.
+                Primary CTA was "Save my seat — Season 2" → /program#interest; the card now leads
+                with the program itself and keeps the interest ask as the secondary action. */}
             <ProductCard
               accent="purple"
               kicker="The Program"
               title="Sparkworks · 8-session class"
-              body="The flagship. Two grade-calibrated tracks — Ember (grades 2–3) and Blaze (grades 4–6), each kept deliberately small with a dedicated instructor. Eight sessions, eight thinking skills, taught through hands-on activities and real-world examples of how great critical thinkers used these same skills to solve some of history's most important challenges. Founding Sparks filled before we listed it. Season 2 is filling now."
-              cta={{ label: "Save my seat — Season 2", href: "/program?source=home-program#interest", primary: true, event: "cta_click", eventProps: { source: "home-program", destination: "/program" } }}
-              secondary={{ label: "View Program Details", href: "/program", event: "cta_click", eventProps: { source: "home-program-details", destination: "/program" } }}
+              body="The flagship. Two grade-calibrated tracks — Ember (grades 2–3) and Blaze (grades 4–6), each kept deliberately small with a dedicated instructor. Eight sessions, eight thinking skills, taught through hands-on activities and real-world examples of how great critical thinkers used these same skills to solve some of history's most important challenges. Founding Sparks filled before we listed it."
+              cta={{ label: "See the program", href: "/program", primary: true, event: "cta_click", eventProps: { source: "home-program", destination: "/program" } }}
+              secondary={{ label: "Keep me posted", href: "/program#interest", event: "cta_click", eventProps: { source: "home-program-interest", destination: "/program#interest" } }}
             />
             {/* TM-2026 entry 12: Games + Materials cards consolidated into this single merged Practice card.
                  - Prior Games card kicker (entry 4a): "The Games"

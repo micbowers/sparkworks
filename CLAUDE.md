@@ -11,6 +11,15 @@ You're part of the Cairn agent architecture. Read these once before starting wor
 - `g:\My Drive\Family Drive\.Claude\shared\conventions.md` — org-wide rules. **Rule #1: write load-bearing facts to Drive docs, not auto-memory** (Mike uses multiple machines; auto-memory doesn't sync).
 - `g:\My Drive\Family Drive\.Claude\shared\interaction-protocol.md` — how to call Design, QA, and other agents
 - `g:\My Drive\Family Drive\.Claude\shared\tools-manifest.md` — MCPs, skills, sub-agents you can invoke
+
+> 📎 **Gmail attachments — pull them yourself. Never ask Mike to save an attachment manually.** The `mcp__claude_ai_Gmail__*` connector returns attachment **metadata only** (filename, mimeType, and an `attachmentId` it gives you no tool to redeem) — it *cannot* download bytes. The **only** path to a file on disk is the direct-API helper:
+> ```
+> $env:PYTHONUTF8="1"; python "G:\My Drive\Family Drive\Cairn\Tech and Tools\ClaudeCode\Cairn_Master_Control\tools\gmail_helper.py" save-attachments <messageId> "<outDir>"
+> ```
+> Use `attachments <messageId>` first to list without downloading. Inline signature images are filtered out, so "0 attachments" on a signed business email is the right answer, not a failure.
+>
+> ⚠️ **And `search_threads` is NOT a census of a thread.** It returned **5 of 11 messages** on a live client thread on 2026-08-15, silently hiding two messages carrying 7 files — and Architect reported to Mike that the client had gone quiet. **Use `get_thread` (or `gmail_helper.py thread <threadId>`) whenever completeness matters, and never assert "nothing arrived" / "no reply" from a search result.** Full detail: `.Claude/shared/tools-manifest.md`.
+
 - `g:\My Drive\Family Drive\.Claude\shared\affiliate-links.md` — Amazon Associates standards. Read before adding any product link or product-card with affiliate intent. Long-form link format (with explicit `tag=sparkworks-20`) is preferred on the website; SiteStripe short links acceptable. Site-footer disclosure required on any page containing affiliate links.
 
 Your Google Tasks list: `Cairn – Sparkworks` with `[SW]` prefix on task titles. See `.Claude/shared/google-tasks-lists.md` for the consolidated-list mapping.
@@ -75,7 +84,7 @@ Recurring layout pieces are already components — reuse them rather than rebuil
 - [app/components/Callout.jsx](app/components/Callout.jsx) — Pattern D, with `accent` prop for the left-border color.
 - [app/components/ProductCard.jsx](app/components/ProductCard.jsx) — homepage product cards.
 - [app/components/CurriculumSection.jsx](app/components/CurriculumSection.jsx) — sprint section card with two sessions.
-- [app/components/InterestForm.jsx](app/components/InterestForm.jsx) — Season 2 enrollment form. Posts to `/api/register` with `cohort: "Season 2 — Fall 2026"`. No payment required to hold a seat.
+- [app/components/InterestForm.jsx](app/components/InterestForm.jsx) — full registration form (parent + up to 3 children with names, grades, tracks) posting to `/api/register`. **⚠️ NOT CURRENTLY RENDERED — enrollment paused 2026-08-16.** Kept intact in the tree for restore; `/program` now uses an email-only `SubscribeForm` tagged with the `Program` interest. Restore path documented inline at the `app/program/page.js` `#interest` section and in `SPARKWORKS_TRADEMARK_GUIDANCE.md` entry A2.
 - [app/components/SubscribeForm.jsx](app/components/SubscribeForm.jsx) — inline email-only capture used on the homepage Games and Materials cards. Posts to `/api/subscribe`.
 - [app/components/SiteHeader.jsx](app/components/SiteHeader.jsx) — wordmark-only top header used on inner pages.
 - [app/components/Wordmark.jsx](app/components/Wordmark.jsx) — SPARK + WORKS, sized + on-dark variants.
@@ -99,6 +108,8 @@ Always test in a browser before pushing — UI bugs don't show up in build logs.
 
 ## Notion registration
 
+**⚠️ Dormant since 2026-08-16 — enrollment is paused and `/program` no longer renders the registration form.** The route, the component and the Notion DB are all intact and still wired; this section describes them for the restore path. Live interest capture now goes through `SubscribeForm` → `/api/subscribe` (Subscribers DB, `Program` interest) and collects **no child data**.
+
 The registration form on `/program` posts to [app/api/register/route.js](app/api/register/route.js), which creates a page in the Notion DB.
 
 - DB id: `8c3a6c4a5bb745eea4f247cbe27d77bb` (hardcoded in the route)
@@ -120,11 +131,15 @@ Email subscribers for game and materials launches. Separate from the Founding Sp
   - `Status` (select: `Active`, `Unsubscribed`)
 - API route is **upsert by email**.
 
-## Cohort + pricing facts (April 2026)
+## Cohort + pricing facts (April 2026 — ⚠️ ENROLLMENT PAUSED 2026-08-16)
 
-- **Founding Sparks** (Season 1 pilot, completed): $149 for all 8 sessions. Oversubscribed before public listing — use as social proof.
-- **Season 2 — Fall 2026**: starts week of **September 7, 2026**. **$449 for all 8 sessions** (flat, not monthly). Supersedes older "$349/month" or "Season 1 — Fall 2026" framing in stale docs.
-- Founding Sparks WAS Season 1 — call the upcoming cohort Season 2, never Season 1.
+> **🔴 READ THIS BEFORE USING ANY DATE BELOW. Season 2 was never scheduled and the September 7, 2026 start date is DEAD.** No day, time or location was ever locked, and instructor availability became uncertain. Mike paused enrollment on 2026-08-16: the site keeps presenting the program as a real, active offering but **takes no sign-ups**.
+>
+> **While enrollment is paused, public copy must NOT state or imply:** a start date · that a season is filling · that seats or slots are being held or offered in order of registration · that payment details are forthcoming. $149 and $449 remain the only quotable figures. Full change log + restore procedure: `SPARKWORKS_TRADEMARK_GUIDANCE.md` **entry A2**.
+
+- **Founding Sparks** (Season 1 pilot, completed): $149 for all 8 sessions. Oversubscribed before public listing — use as social proof. This is the only price ever actually charged.
+- **Season 2 — Fall 2026**: **never ran.** $449 for all 8 sessions (flat, not monthly) was the announced price and is still quotable as what a full season is priced at — but never as a live, bookable offer. Supersedes older "$349/month" or "Season 1 — Fall 2026" framing in stale docs.
+- Founding Sparks WAS Season 1 — call any future cohort Season 2, never Season 1.
 
 ## Deployment
 
@@ -140,7 +155,7 @@ Get-ChildItem .git -Recurse -Filter desktop.ini -Force | Remove-Item -Force   # 
 
 Before pushing:
 1. `npm run build` — must succeed. (On the Drive mount, `next build` itself throws `EINVAL` on the webpack cache; temporarily set `config.cache = false` in `next.config.js`, build, then revert — see `lessons-learned.md`.)
-2. Walk both pages in `npm run dev` — homepage shows three product cards; `/program` shows curriculum + form.
+2. Walk both pages in `npm run dev` — homepage shows three product cards; `/program` shows curriculum + the interest-capture card (NOT the registration form — enrollment paused 2026-08-16).
 3. Run the brand audit checklist from `SPARKWORKS_MARKETING_GUIDELINES.md`.
 4. If you changed the form schema, verify the Notion DB has the matching properties.
 5. **Stage only your own files** (`git add <files>`, not `git add -A`) — the working tree carries unrelated noise (desktop.ini, dev logs, deleted `docs/` duplicates) and there may be a concurrent workstream (e.g. the `/feedback` survey page) committing in parallel.
@@ -160,7 +175,7 @@ Before pushing:
 A few non-Next pages live in `public/` and are served at their own paths. They're standalone HTML — don't rebuild them unless asked.
 
 - [public/blockcode.html](public/blockcode.html) — **Block Code**, a live online game ("Pattern Detection & Elimination"). Linked from the homepage Games card. Uses an older inline palette; preserve as-is unless the user asks for a refresh.
-- [public/cairnpartners/](public/cairnpartners/) — Cairn Partners landing page at `/cairnpartners/`. Preserve as-is.
+- [public/cairnpartners/](public/cairnpartners/) — Cairn Partners landing page at `/cairnpartners/`, rebuilt 2026-08-16 on the Cairn brand system (charcoal `#2B2E33` / iron-rust `#B5552D` / warm white `#FAF7F2`), **not** the Sparkworks palette — don't "fix" it to match Sparkworks. Copy is governed by `Cairn/Marketing and Website/cairn-brand-dna.md` + `cairn-company-brief-for-website.md`, and the brief's §6 publication gates are hard rules (never name the health-AI venture; no advisory client; "sale of a strategic stake to East West Bank" is the ceiling; two acquisitions, never three). **Cairn now owns `cairnpartners.llc`** — the canonical copy of this site lives at `Cairn/Marketing and Website/site/` for standalone Vercel deploy; this folder is the legacy location pending migration/redirect.
 - **Find The Alien** is hosted at the `findthealien.sparkworks.kids` subdomain (separate deployment, not this repo). Linked from the homepage but not served here.
 
 ## What's not yet built
@@ -187,6 +202,14 @@ Before closing a session that produced meaningful work, update this agent's `STA
 
 Anything you learn that you'll need later goes in a Drive doc, **not** auto-memory. New design conventions go in `Brand guidelines/`; project-specific quirks go in this CLAUDE.md or a `lessons-learned.md` in this folder.
 
+## QA pass required before any external-facing document ships [REPEAT — load-bearing]
+
+**No document you produce that will leave Mike's hands is "ready" until an independent agent has QA'd it and every Critical finding is fixed and re-verified.** Hard gate. (Instated org-wide by Mike 2026-06-09 after an LFG QA pass caught a stale figure and a depreciation double-count that had overstated a partner-facing IRR by ~10 points.) Full rule: `conventions.md` Rule 12.
+
+**External-facing** = anything destined for a party outside Mike — a client / customer, partner, lender, advisor, counterparty, vendor, or the public (proposals, decks, briefs, financial summaries, marketing / web copy, published content, contract-support materials). A document written purely for Mike's own use, or for internal agent-to-agent context, is exempt. **When in doubt, treat it as external and QA it.**
+
+**Never self-review.** Spawn a *separate* agent: prefer the dedicated QA sub-agent in your spawn set (**QA — Content Creation** for documents / content / copy, **QA — Development** for code / technical artifacts); if none is deployed to your project, use an independent **`general-purpose`** agent. Give the reviewer the canonical source facts to check against (the model / data / spec the document draws from) so it verifies ties and contradictions, not just prose. It outputs structured findings (Critical / Minor / Nits); **every Critical MUST be fixed and re-verified before you call the document ready.** Handing Mike a clearly-labeled pre-QA *draft for his internal review* is fine — but run QA before it goes external, and never tell Mike a document is "ready" / "ready to send" / "client- or partner-ready" without a completed pass. Record the QA pass in a dated STATUS entry when it materially shaped the document.
+
 ## Standing instruction: proactively assess for analytics opportunities
 
 Mike directive 2026-05-27: *"please always be assessing for better analytics opportunities with the site."*
@@ -198,7 +221,7 @@ When making changes, surface analytics gaps without being asked. Examples:
 - Any new conversion funnel step (e.g., card expand, scroll past hero, /practice item visible) → propose if useful
 
 Vercel Analytics stack already wired in `app/layout.js`: `@vercel/analytics` for events, `@vercel/speed-insights` for Web Vitals. Custom events fire via `import { track } from "@vercel/analytics"` (browser context only — requires `"use client"` on the component). Existing custom events:
-- `register_submit` — `InterestForm.jsx` (properties: `cohort`, `source`, `child_count`)
+- `register_submit` — `InterestForm.jsx` (properties: `cohort`, `source`, `child_count`). **DORMANT since 2026-08-16** — InterestForm is not rendered while enrollment is paused, so this event no longer fires. The `/program` interest surface now reports as `subscribe_submit` with a constant `source: "program-interest"`; entry-point attribution comes from the upstream `cta_click` (`home-hero` / `home-program-interest` / `program-hero`).
 - `subscribe_submit` — `SubscribeForm.jsx` (properties: `source`, `interests`)
 - `amazon_click` — `AmazonButton.jsx` (properties: `product`, `manufacturer`, `price`, `rating`, `source`)
 - `cta_click` — top-of-funnel nav CTAs via `TrackedLink`/`ProductCard` (properties: `source`, `destination`). Sources: `home-hero`, `home-program`, `home-program-details`, `home-practice`, `program-hero`.
