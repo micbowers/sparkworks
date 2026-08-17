@@ -7,9 +7,11 @@ cadence: weekly (enrollment-push cadence suspended — see Current focus)
 ## Current focus
 **🔴 ENROLLMENT PAUSED (2026-08-16, Mike's call) — sign-ups removed from the site.** Season 2 was never scheduled (no day/time/location ever locked) and Tina's availability to teach it again has lessened. Mike's decision: **keep the program presenting as a real, active offering, but stop taking sign-ups** — replaced with a lightweight "tell us you're interested" email capture. All dated and urgency claims are gone from public copy (no "Season 2 is filling now", no September 7 start, no "hold a seat", no "slots offered in order of registration"). The curriculum, tracks, four-phase structure, Spark Challenge and Sparks of History sections are all untouched. **Nothing was deleted** — `InterestForm.jsx`, `/api/register` and the Notion registration DB are intact and unreferenced; restore path is documented inline at the `app/program/page.js` `#interest` section and in `SPARKWORKS_TRADEMARK_GUIDANCE.md` entry A2.
 
-**⚠️ Built and verified but NOT YET PUSHED** pending Mike's copy review + the required independent QA pass (per CLAUDE.md Rule 12, external-facing copy cannot ship without one, and I must not self-review). The Amazon refresh below IS live.
+**✅ SHIPPED LIVE** (`b83b4b8`) after an independent QA pass (Rule 12) and Mike's sign-off. Deploy confirmed on prod by polling `/`, `/program` and `/legal` — new copy present, zero stale enrollment copy on any page.
 
-**Also shipped today: quarterly Amazon snapshot refresh — LIVE** (`50c952e`, deploy confirmed on prod in ~20s). Prices were 76 days stale and one was actively wrong. Details in Recently completed.
+**Also shipped today: quarterly Amazon snapshot refresh — LIVE** (`50c952e`, deploy confirmed in ~20s). Prices were 76 days stale and one was actively wrong. Details in Recently completed.
+
+**`/legal` was updated in the same push** to stop describing child-data collection that no longer happens. RBG owns that page — edited at Mike's explicit direction to avoid shipping a live contradiction, and **still pending RBG review** under the open `[RBG]` task.
 
 ## Prior focus (pre-2026-08-16 — superseded; kept for context)
 **Analytics funnel-coverage pass (2026-06-08) — SHIPPED LIVE.** Closed the three biggest blind spots: `cta_click`, `game_play_click`, `practice_card_expand`. Committed (`5a1b96d`), live, auto-deploy verified working (~47s).
