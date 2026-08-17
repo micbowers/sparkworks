@@ -42,11 +42,35 @@ foreach($c in 'node','npm','git','python','npx'){ "$c :: $((Get-Command $c -Erro
 ```
 Neither machine has a `.env.local`, so local Notion REST access is unavailable on both.
 
-## The project's own QA / Design sub-agents may not be spawnable
+## Sub-agents (QA / Design / RBG) don't register — diagnosed + fixed 2026-08-16
 
-`sparkworks-program-qa`, `cairn-dev-qa` and `sparkworks-designer` are defined in **`sparkworks-site/.claude/agents/`**. If a session is opened at the **parent** folder (`Sparkworks Website`), that directory is one level below the working dir and **the agents never register** — they won't appear in the available agent types and can't be spawned by name. Confirmed 2026-08-16.
+**Symptom.** `sparkworks-program-qa`, `cairn-dev-qa`, `sparkworks-designer`, `cairn-legal-rbg` etc. are not in the available agent types and can't be spawned. Spawning by name returns:
+`Agent type 'sparkworks-program-qa' not found. Available agents: claude, claude-code-guide, Explore, general-purpose, Plan, statusline-setup`
 
-**Fallback (per CLAUDE.md Rule 12):** spawn an independent `general-purpose` agent and brief it by pointing at the QA agent's own definition file plus the canonical brand docs to check against. That worked well — it caught two Criticals the producing agent had missed, both *outside* the diff. **Real fix:** move or duplicate `.claude/agents/` up to the `Sparkworks Website` folder, or always open sessions at `sparkworks-site/`.
+CLAUDE.md's interaction table tells the agent to call them, so the call just silently isn't possible — and Rule 12's QA gate can't be met the intended way.
+
+**Root cause.** Claude Code discovers sub-agents from exactly two places: `<session root>/.claude/agents/` and `~/.claude/agents/`. Neither existed.
+- The session root is usually **`Sparkworks Website`** (the parent), which has **no `.claude` at all**.
+- The agent definitions live one level *below*, in **`sparkworks-site/.claude/agents/`** — never scanned.
+- `C:\Users\<you>\.claude\` existed but had **no `agents/` subdirectory**.
+- The canonical org library at **`g:\My Drive\Family Drive\.Claude\shared\agents\`** (13 files) is just a Drive folder — **not** a path Claude Code reads. CLAUDE.md's interaction table points there, which reads like a live wiring but isn't.
+
+**Also confirmed: additional working directories do NOT contribute agents.** `BlockcodeTableTop/.claude/agents/` holds 6 agents and is an additional working dir for these sessions; none of them registered either. Don't expect `--add-dir` to solve this.
+
+**The fix (applied 2026-08-16, one-time per machine).** Junction the user-level agents dir at the canonical Drive library — single source of truth, no copies, no drift, works in **every** session on the machine regardless of which folder is opened:
+```powershell
+New-Item -ItemType Junction -Path "$env:USERPROFILE\.claude\agents" `
+         -Target "G:\My Drive\Family Drive\.Claude\shared\agents"
+```
+Use **Junction**, not SymbolicLink — a symlink needs admin ("Administrator privilege required"); a junction doesn't. (Note the earlier `.next` junction attempt failed only because the *link* was being created **on** the Drive FS; creating a link on `C:` that *points at* Drive works fine.)
+
+**Gotchas:**
+- **Requires a session restart** — agents are registered at session start and do NOT hot-load.
+- **Per-machine.** The link lives on `C:`, so run it once on each machine, and only where Drive is mounted at `G:`.
+- All 12 real definitions carry valid frontmatter and their `name:` matches their filename. The library's own `README.md` sits in that folder with no frontmatter — harmless (skipped), but it isn't an agent.
+- The copies in `sparkworks-site/.claude/agents/` were byte-identical to the shared originals when checked. They're now redundant (project-level wins over user-level) and are a **drift risk** — but they're also the only fallback on a machine without the junction. If you keep them, re-verify them against the shared library periodically.
+
+**Fallback if the agents still aren't available** (per CLAUDE.md Rule 12): spawn an independent `general-purpose` agent and brief it by pointing at the QA agent's own definition file plus the canonical brand docs to check against. That worked well on 2026-08-16 — it caught two Critical findings the producing agent had missed, both *outside* the diff.
 
 ## Commit-scope discipline (important)
 
