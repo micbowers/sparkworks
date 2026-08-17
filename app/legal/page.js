@@ -4,7 +4,7 @@ import { Footer } from "../components/Footer";
 export const metadata = {
   title: "Terms & Privacy — Sparkworks",
   description:
-    "Terms of Use, intellectual-property and trademark notices, and the Privacy Policy for www.sparkworks.kids, operated by Cairn Partners, LLC.",
+    "Terms of Use, refund and cancellation policies, intellectual-property and trademark notices, and the Privacy Policy for www.sparkworks.kids, operated by Cairn Partners, LLC.",
 };
 
 const mail = { color: "var(--sw-spark)", textDecoration: "underline", textUnderlineOffset: 3 };
@@ -27,13 +27,13 @@ export default function LegalPage() {
         <section className="sw-section" style={{ marginTop: 0 }}>
           <h1 className="ts-h1" style={{ marginBottom: 8 }}>Terms &amp; Privacy</h1>
           <div className="ts-caption" style={{ color: "var(--sw-steel)", marginBottom: 16 }}>
-            Last updated: June 3, 2026
+            Last updated: August 17, 2026
           </div>
           <p className="ts-lead" style={{ maxWidth: 760 }}>
             Sparkworks is operated by Cairn Partners, LLC. We&rsquo;ve written these policies in plain
             language so they&rsquo;re easy to understand. This page covers how you may use our website,
-            who owns the content and brand, and how we handle the limited personal information we
-            collect. If you have any questions, email us at <Email />.
+            our refund and cancellation policies, who owns the content and brand, and how we handle the
+            limited personal information we collect. If you have any questions, email us at <Email />.
           </p>
         </section>
 
@@ -98,6 +98,28 @@ export default function LegalPage() {
             </p>
             <p className="ts-body">
               <strong>Contact.</strong> Questions about these Terms of Use can be sent to <Email />.
+            </p>
+          </div>
+        </section>
+
+        <section className="sw-section" id="refunds" style={sectionStyle}>
+          <h2 className="ts-h2" style={{ marginBottom: 14 }}>Refunds &amp; Cancellations</h2>
+          <div style={stack}>
+            <p className="ts-body">
+              Program and session fees are collected by Cairn Partners, LLC, which operates Sparkworks.
+            </p>
+            <p className="ts-body">
+              <strong>Refunds and disputes.</strong> If you are unsatisfied with a service or believe a
+              charge was made in error, please contact us within 30 days of payment. We will review your
+              request and issue a full or partial refund at our discretion. Disputes should be directed
+              to <Email /> before initiating a chargeback with your financial institution.
+            </p>
+            <p className="ts-body">
+              <strong>Cancellations.</strong> Cancellations for program sessions or services must be
+              submitted in writing at least 7 days prior to the scheduled start date for a full refund.
+              Cancellations made within 7 days of the start date may be eligible for a partial refund or
+              credit toward a future session, at our discretion. No refunds will be issued after a
+              program has begun.
             </p>
           </div>
         </section>
