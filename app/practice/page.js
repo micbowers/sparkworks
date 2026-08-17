@@ -168,11 +168,12 @@ const FAMILIES = [
         specs: "6 colors · 4-peg code · 10 guesses",
         fitHint: "Grades 2–3 and up · fun for adults too",
         image: "/practice/mastermind-goliath.jpg",
-        // Amazon snapshot 2026-05-27 — refresh task filed for periodic update.
-        price: "$39.05",
-        priceUpdated: "2026-06-01",
-        rating: 4.5,
-        reviewCount: 489,
+        // Amazon snapshot 2026-08-16 (was $39.05 / 4.5 / 489 on 2026-06-01).
+        // Price rose 25.5% — Amazon is the seller of record, listing In Stock. Flagged to Mike.
+        price: "$48.99",
+        priceUpdated: "2026-08-16",
+        rating: 4.6,
+        reviewCount: 592,
         why:
           "The classic and simplest. Six colors and a 4-peg code keep the whole game inside what a younger kid can hold in their head — they can focus on the thinking, not on tracking pieces. The right on-ramp for kids in grades 2–3 or any family new to Mastermind-style puzzles. Once a kid is solving it confidently in a handful of guesses, they’re ready to step up to Code Breaker.",
         href: "https://amzn.to/4fQkfO2",
@@ -183,10 +184,11 @@ const FAMILIES = [
         specs: "8 colors · 5-peg code · 10 guesses",
         fitHint: "Grades 4–6 and up · fun for adults too",
         image: "/practice/code-breaker-kidami.jpg",
+        // Amazon snapshot 2026-08-16 (price held; rating 4.6 → 4.4, count 164 → 165).
         price: "$15.99",
-        priceUpdated: "2026-06-01",
-        rating: 4.6,
-        reviewCount: 164,
+        priceUpdated: "2026-08-16",
+        rating: 4.4,
+        reviewCount: 165,
         why:
           "Same game, sized up. Two more colors and a longer code push the puzzle past what a kid can hold in their head — they have to write things down, or organize their unused colors on the side of the board. That’s the strategy lesson made physical — the board does the remembering so the kid can do the thinking. This is the version we play with kids in grades 4–6 during the Sparkworks strategy session.",
         href: "https://amzn.to/4dINIH5",
@@ -230,12 +232,14 @@ const FAMILIES = [
         specs: "Octagonal board · 8 outer points + 1 center · 3 pieces per player · ages 6 and up",
         fitHint: "Grades 2–3 and up · fun for adults too",
         image: "/practice/shisima-froebel.jpg",
-        // Amazon snapshot 2026-05-27. Parser returned 2 ratings — likely correct given the small
-        // listing; reviewCount hidden until verified higher-confidence.
+        // Amazon snapshot 2026-08-16. The "2 reviews" read is CONFIRMED REAL, not a parser error —
+        // two independent fetches both returned acrCustomerReviewText "(2)" on a genuinely small
+        // listing, so the count is now surfaced. Rating corrected 4.7 → 4.5 (authoritative
+        // acrPopover value; the old 4.7 came from a mis-matched module on the page).
         price: "$16.95",
-        priceUpdated: "2026-06-01",
-        rating: 4.7,
-        reviewCount: null,
+        priceUpdated: "2026-08-16",
+        rating: 4.5,
+        reviewCount: 2,
         why:
           "A Kenyan strategy game from the Tiriki tradition, played on an octagonal star with a central point called “shisima” — meaning “body of water.” Three pieces per player, simple movement along the lines, but the same game-theoretic challenge as its bigger Morris cousins: every move sets up or blocks a three-in-a-row, and the smart move depends on what your opponent is about to do. The small board and fast games make this the right pick for kids in grades 2–3 — or any family that wants an accessible introduction to this kind of game before stepping up to Nine Men's Morris.",
         href: "https://amzn.to/49rnF6d",
@@ -246,12 +250,12 @@ const FAMILIES = [
         specs: "Wooden board · 9 pieces per player · 24 board positions",
         fitHint: "Grades 2 and up · fun for adults too",
         image: "/practice/nine-mens-morris-wegames.jpg",
-        // Amazon snapshot 2026-05-27 — review-count parser returned 1, may have caught a different
-        // counter; worth manual verification in next refresh cycle.
+        // Amazon snapshot 2026-08-16. The earlier "1 review" WAS a parser error, as suspected —
+        // the authoritative acrCustomerReviewText reads 78. Count now surfaced; rating holds at 4.7.
         price: "$15.99",
-        priceUpdated: "2026-06-01",
+        priceUpdated: "2026-08-16",
         rating: 4.7,
-        reviewCount: null, // hidden until verified
+        reviewCount: 78,
         why:
           "The classic nine-piece, three-squares-nested board is where the strategy gets real — kids have to manage their own developing mills AND track the threat of their opponent's near-mills, sometimes both in the same turn. WE Games' wooden edition is the kind of board that lives on a shelf for years and gets pulled out for rainy Saturdays. This is the version we play with kids in grades 4–6 during the game theory session of the Sparkworks program.",
         href: "https://amzn.to/4x11gH1",
@@ -275,11 +279,20 @@ const FAMILIES = [
     specs: "100 puzzles · 10 chapters · paperback",
     fitHint: "Grades 3 and up · fun for adults too",
     image: "/practice/perfectly-logical-rockridge.jpg",
-    // Amazon snapshot 2026-05-27; manually re-verified 2026-06-01 (Mike).
-    price: "$12.99",
-    priceUpdated: "2026-06-01",
-    rating: 4.7,
-    reviewCount: 5849,
+    // ⚠️ Amazon check 2026-08-16 — NO NEW COPIES CURRENTLY OFFERED. The buybox is a USED - Good
+    // offer ($6.16, "Only 1 left in stock", ships from third-party reseller Gulf Coast Books LLC);
+    // the page renders only a `usedAccordionRow` with no `newAccordionRow` at all. The old $12.99
+    // new-copy price is therefore both stale AND unpurchasable, and $6.16 is a used price we must
+    // not present as the product price next to a "Buy on Amazon" affiliate CTA.
+    // → price/priceUpdated set to null so no price renders (RatingLine + PriceUpdatedLine both
+    //   no-op on null). Rating + review count still render and are accurate.
+    // → Whether to keep recommending a book with no new supply is Mike's editorial call; [SW] task filed.
+    price: null,
+    priceUpdated: null,
+    // reviewCount was 5849 — that WAS a parser error (STATUS 2026-06-09 flagged it as suspect).
+    // Authoritative acrCustomerReviewText = 4,419; acrPopover rating = 4.6 (was showing 4.7).
+    rating: 4.6,
+    reviewCount: 4419,
     body:
       "100 puzzles across 10 chapters of increasing difficulty — logic grids, cryptograms, secret codes, and Sudoku — from elementary teacher Jenn Larson (20+ years in the classroom). Three of the thinking skills our Sparkworks program teaches show up directly: elimination (the logic grids drill the same reasoning as our second session), hidden-rule hunting (the cryptograms map to our fourth session), and constraint navigation (Sudoku is the same skill as our third). A good solo-practice companion for kids who love the games we play in class — workable between sessions, or after a kid has wrapped the program.",
     href: "https://amzn.to/4e5VEnc",
