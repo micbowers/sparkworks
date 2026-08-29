@@ -263,6 +263,96 @@ const FAMILIES = [
     ],
   },
 
+  // -------- Game family: Rummikub --------
+  // Added 2026-08-28 (Mike supplied both affiliate links). Not used in a class session, so no
+  // sessionPill / whereWeUseIt — the grade guidance lives in each version's fitHint and `why`.
+  // Canonical copy: SPARKWORKS_ENDORSEMENTS.md → "Rummikub — the classic rummy tile game".
+  {
+    type: "game-family",
+    slug: "rummikub",
+    title: "Rummikub",
+    subtitle: "Pressman · classic & six-player",
+    headlineImage: "/practice/rummikub-original-pressman.jpg",
+    highlight: "The tile game where the whole table is yours to rearrange.",
+    skills: [
+      { label: "Pattern Detection", color: "purple" },
+      { label: "Constraints", color: "blue" },
+      { label: "Strategy", color: "teal" },
+    ],
+    whatItIs:
+      "Each player starts with a rack of numbered tiles in four colors. Your first play of the round has to total at least 30 points, using only tiles from your own rack. After that you lay down runs (three or more consecutive numbers in a single color) and groups (the same number in three or four different colors) — and here is the twist that makes it a thinking game: once tiles are on the table they belong to everybody. On your turn you may split, borrow from, and rebuild anything already played, as long as every set on the table is legal again when you take your hands away. First player to empty their rack wins the round.",
+    whyWeRecommend: (
+      <>
+        Rummikub is one of the few family games where the puzzle gets <em>harder</em> as the game goes on, and where the best move is almost never the first one you see. Three of the thinking skills our Sparkworks program teaches show up on every single turn: <strong>pattern detection</strong> (finding the run or group hiding inside a rack of loose tiles), <strong>constraints</strong> (you may move anything on the table, provided every set is legal again when you&rsquo;re done — the rule doesn&rsquo;t block the play, it points to it), and <strong>strategy</strong> (holding a tile you <em>could</em> play because it&rsquo;s worth more to you two turns from now). It also produces one of the best pause-think-act moments in tabletop games: the turn where a kid stops staring at their own rack, looks at the whole table instead, and finds the rearrangement that lets them unload six tiles at once. Grade 3 and up can hold a rack of their own at a family table; younger kids do well playing a shared rack with a grown-up for the first few rounds.
+      </>
+    ),
+    proTips: [
+      {
+        title: "Play the table, not your rack",
+        body: (
+          <>
+            <p style={{ margin: 0 }}>
+              New players treat their rack as the whole puzzle. It isn&rsquo;t — the tiles already on the table are just as much yours to use. Three habits that follow from that:
+            </p>
+            <ol style={{ margin: "12px 0", paddingLeft: "1.5rem" }}>
+              <li style={{ marginBottom: 12 }}>
+                <strong>Read the table before you read your rack.</strong> Every turn — once you&rsquo;ve made your opening play — look at what&rsquo;s already down <em>first</em>. Those tiles are yours to rearrange — a run of five can be split, a group of three can take a fourth color. Most turns that look like &ldquo;I have no play&rdquo; have one hiding on the table.
+              </li>
+              <li style={{ marginBottom: 12 }}>
+                <strong>Hunt for the missing color.</strong> A group on the table with three colors will accept the fourth. It&rsquo;s the cheapest play in the game, and new players walk straight past it every time.
+              </li>
+              <li>
+                <strong>Don&rsquo;t play a tile just because you can.</strong> The tile that fits somewhere right now may be the one tile that unlocks four tiles later. Ask &ldquo;what does this cost me?&rdquo; before you let it go. Late in a round, one held tile is often worth more than three played ones.
+              </li>
+            </ol>
+          </>
+        ),
+      },
+    ],
+    versions: [
+      {
+        name: "Rummikub",
+        manufacturer: "Pressman",
+        specs: "106 tiles · 4 racks · 2–4 players",
+        fitHint: "Grades 3 and up · fun for adults too",
+        image: "/practice/rummikub-original-pressman.jpg",
+        // ⚠️ Amazon check 2026-08-28 — NO NEW COPIES CURRENTLY OFFERED. The buybox is a
+        // USED - Very Good offer ($19.90, "Only 1 left in stock", sold by Amazon Resale); the
+        // condition tab reads "Used (18)" and the page renders no new-offer row at all.
+        // Same failure mode as Perfectly Logical! (2026-08-16), so the same treatment:
+        // → price set to null so no price renders. A used price must never sit beside a
+        //   "Buy on Amazon" CTA. Rating + review count are accurate and still render, and
+        //   priceUpdated stays set so the "Amazon data updated" caption still stamps them.
+        // → The `why` copy also stops saying "buy this one" while stock is used-only (QA HIGH-2).
+        // This is an in-print mass-market game, so new stock will likely return — re-check at
+        // the next quarterly refresh (due 2026-11-14). [Web] SPK task filed.
+        price: null,
+        priceUpdated: "2026-08-28",
+        rating: 4.8,
+        reviewCount: 35011,
+        why:
+          "The default edition, and the one most families mean when they say Rummikub — 106 tiles, four racks, two to four players. If your table is four or fewer, this is the one to look for: same rules and the same tiles as the bigger set, just fewer of them, and the smaller tile pool keeps rounds moving. Worth counting your regular players first, though — it caps at four, and Rummikub is at its best with a full table. New copies come and go on Amazon; if the listing is showing used only, the six-player edition here plays the identical game.",
+        href: "https://amzn.to/3UK2Huy",
+      },
+      {
+        name: "Rummikub Six Player Edition",
+        manufacturer: "Pressman",
+        specs: "160 tiles · 6 racks · 2–6 players",
+        fitHint: "Grades 3 and up · fun for adults too",
+        image: "/practice/rummikub-six-player-pressman.jpg",
+        // Amazon snapshot 2026-08-28. New-condition buybox, In Stock, ships from and sold by
+        // Amazon.com — clean listing.
+        price: "$32.99",
+        priceUpdated: "2026-08-28",
+        rating: 4.8,
+        reviewCount: 7134,
+        why:
+          "The same game with room for two more chairs — 160 tiles and six racks instead of 106 and four. Buy this one if a fifth player turns up with any regularity: a cousin, a grandparent, a friend after school. It still plays anywhere from two to six, so it isn’t a specialty set you break out twice a year — it’s the classic game with the ceiling raised. More tiles on the table also means more of the rearranging that makes Rummikub a thinking exercise rather than a card game with tiles.",
+        href: "https://amzn.to/4zOvY7G",
+      },
+    ],
+  },
+
   // -------- Third-party workbook (Type B — practice-book-affiliate) --------
   {
     type: "practice-book-affiliate",
@@ -284,11 +374,14 @@ const FAMILIES = [
     // the page renders only a `usedAccordionRow` with no `newAccordionRow` at all. The old $12.99
     // new-copy price is therefore both stale AND unpurchasable, and $6.16 is a used price we must
     // not present as the product price next to a "Buy on Amazon" affiliate CTA.
-    // → price/priceUpdated set to null so no price renders (RatingLine + PriceUpdatedLine both
-    //   no-op on null). Rating + review count still render and are accurate.
+    // → price set to null so no price renders (RatingLine no-ops on a null price).
+    //   Rating + review count still render and are accurate.
+    // → priceUpdated RESTORED 2026-08-28 (QA HIGH-1): it was nulled alongside price on 2026-08-16,
+    //   which left a ★4.6 (4,419) on the card with no capture date while the page footer claimed
+    //   ratings carry one. The caption now reads "Amazon data updated" and covers the rating too.
     // → Whether to keep recommending a book with no new supply is Mike's editorial call; [SW] task filed.
     price: null,
-    priceUpdated: null,
+    priceUpdated: "2026-08-16",
     // reviewCount was 5849 — that WAS a parser error (STATUS 2026-06-09 flagged it as suspect).
     // Authoritative acrCustomerReviewText = 4,419; acrPopover rating = 4.6 (was showing 4.7).
     rating: 4.6,
@@ -518,13 +611,20 @@ function ProductBlock({ name, manufacturer, specs, fitHint, href, image, price, 
   );
 }
 
-// Per-entry "Price updated: YYYY-MM-DD" caption. Amazon Associates Operating Agreement requires
-// disclosing when displayed prices were captured, since live-API price isn't wired up yet.
+// Per-entry "Amazon data updated: YYYY-MM-DD" caption. The Amazon Associates Operating Agreement
+// requires disclosing when displayed data was captured, since live-API pricing isn't wired up yet —
+// and it covers RATINGS AND REVIEW COUNTS, not just price. Renamed from "Price updated" 2026-08-28
+// (QA — Content Creation, HIGH-1): two products (Perfectly Logical!, Rummikub Classic) have their
+// price suppressed because Amazon shows no new copies, but still display a ★ rating. Under the old
+// price-only label those cards rendered a rating with no date at all, which contradicted the
+// page-footer disclosure ("Prices AND RATINGS shown were captured on the dates noted under each
+// product"). The date is now about the Amazon snapshot as a whole, so it renders whenever there is
+// any Amazon data on the card. Set `priceUpdated` on every product, price or no price.
 // Small, italic, muted — sits between the rating/price line and the Buy button.
 function PriceUpdatedLine({ date }) {
   return (
     <div className="ts-caption" style={{ color: "var(--sw-steel)", fontStyle: "italic", fontSize: "0.6875rem", opacity: 0.75 }}>
-      Price updated: {date}
+      Amazon data updated: {date}
     </div>
   );
 }
