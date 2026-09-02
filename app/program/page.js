@@ -7,8 +7,25 @@ import { CurriculumSection } from "../components/CurriculumSection";
 import { TrackedLink } from "../components/TrackedLink";
 import { QuoteCarousel } from "../components/QuoteCarousel";
 
+// ⚠ TWO DIFFERENT PEOPLE ARE NAMED TINA. Do not conflate them.
+//   • Tina Ling — survey respondent, ordinary paying customer (two kids, surname Galante). Her
+//     quote is the one beside the sign-up ribbon. Fine to publish.
+//   • The program instructor, also Tina — NOT a survey respondent and NOT in this file. Verified
+//     2026-09-01 against the survey DB: none of the ten respondents is the instructor.
+// Why this matters: publishing the instructor's own words as a parent testimonial would violate
+// 16 CFR §465.5(b)(1) (insider consumer testimonials) — a penalty-bearing FTC RULE, not the
+// non-binding Guides, up to $53,088 per violation. §465.5(b)(1) is NOT limited to third-party
+// platforms; it reaches our own site. Note the definitions split: §465.1(d) "consumer review"
+// requires a review-hosting surface (so the review sections don't reach /program), but §465.1(f)
+// "consumer testimonial" covers any promotional message (so the testimonial sections DO).
+// Checking only the review sections gives the wrong answer.
+// If any future quote comes from anyone connected to the business, it needs a clear and
+// conspicuous disclosure of the relationship — or it doesn't run.
+//
 // Drawn from the Founding Sparks exit survey — lightly edited, not verbatim; each edit is noted
-// inline below and the on-page disclosure must keep matching them. Permission per family via G3 —
+// inline below and the on-page disclosure must keep matching them. Pronoun substitutions are
+// UNBRACKETED throughout — pick one convention and keep it; the page-level disclosure covers them.
+// Permission per family via G3 —
 // see the #reviews section comment before changing anything here.
 // ONE QUOTE PER FAMILY. Never run two under the same "Founding Sparks parent" attribution — it reads
 // as two independent families and inflates apparent breadth.
@@ -24,7 +41,7 @@ const REVIEWS = [
   // Emily Brandon, F2 — child's name → pronoun, closing exclamation → period, second sentence
   // trimmed. REPLACES her E8 quote ("He left each class enthusiastic to share what he learned") —
   // one quote per family, and this one is concrete evidence of transfer rather than enthusiasm.
-  "I did notice [him] playing with his toy soldiers a bit more recently, and wonder if setting up his pretend battle strategy was at all inspired by this.",
+  "I did notice him playing with his toy soldiers a bit more recently, and wonder if setting up his pretend battle strategy was at all inspired by this.",
   // Lisa Avalos, G1 — opening "I think for us," trimmed
   "The program offered a new skill — a skill that is not necessarily learned in school.",
   // Xiaonan Zhu, E9 — child's name → pronoun, run-on split
@@ -36,7 +53,7 @@ const REVIEWS = [
   // "...and didn't mind the hour after school on a Friday." That was true of the 60-minute Season 1
   // pilot, but Season 2 runs 75 minutes, so on this page it read as a statement of class length.
   // The clause also combined [she] + Friday, which narrowed to one identifiable pilot child.
-  "Despite it being at the end of a very busy weekly schedule, [she] seemed to have fun at every session.",
+  "Despite it being at the end of a very busy weekly schedule, she seemed to have fun at every session.",
   // Emily Brandon, E8 — child's name → pronoun. This is a SECOND quote from the same family as the
   // toy-soldiers line above. Pulled at the 2026-09-01 pre-launch QA, then RESTORED the same day at
   // Mike's explicit direction after he was told why it had been pulled.
@@ -406,7 +423,14 @@ export default function ProgramPage() {
         <section className="sw-section" id="reviews">
           <div className="ts-eyebrow">What families said</div>
           <h2 className="ts-h2" style={{ marginTop: 8, marginBottom: 16 }}>
-            All founding families answered. Here&rsquo;s what they actually said.
+            {/* "some of" added 2026-09-01 per RBG. "Here's what they actually said" reads back to
+                "all founding families" and so promises a census — but 8 of the 10 are represented,
+                and the missing one with an on-record view is the lowest scorer (NPS 7, declined
+                quote permission). Excluding her is correct; promising completeness is not.
+                RBG's version also made the denominator explicit ("All ten founding families"), which
+                is NOT used here because Mike removed the word "ten" on 2026-08-31. That option is
+                still open and is the stronger fix if he wants it. */}
+            All founding families answered. Here&rsquo;s some of what they actually said.
           </h2>
           <p className="ts-lead" style={{ marginBottom: 24 }}>
             We asked our first cohort what actually landed — and what didn&rsquo;t. These are their
