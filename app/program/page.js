@@ -1,20 +1,54 @@
 import Link from "next/link";
 import { Hero } from "../components/Hero";
-import { SiteHeader } from "../components/SiteHeader";
 import { Footer } from "../components/Footer";
 import { CurriculumSection } from "../components/CurriculumSection";
-import { Callout } from "../components/Callout";
 // InterestForm import removed 2026-08-16 while enrollment is paused — see the #interest section
 // below for the restore path. The component itself is intentionally kept in the tree.
-import { SubscribeForm } from "../components/SubscribeForm";
-import { SparkOfHistory } from "../components/SparkOfHistory";
 import { TrackedLink } from "../components/TrackedLink";
+import { QuoteCarousel } from "../components/QuoteCarousel";
+
+// Drawn from the Founding Sparks exit survey — lightly edited, not verbatim; each edit is noted
+// inline below and the on-page disclosure must keep matching them. Permission per family via G3 —
+// see the #reviews section comment before changing anything here.
+// ONE QUOTE PER FAMILY. Never run two under the same "Founding Sparks parent" attribution — it reads
+// as two independent families and inflates apparent breadth.
+// Never stitch two survey answers into one quote.
+const REVIEWS = [
+  // NOTE: Tina Ling's quote is NOT in this array — it sits beside the sign-up ribbon at the top of
+  // the page. Don't add it back here or it appears twice.
+  // Wallace Huang, E9 — verbatim
+  "Sparkworks focuses on skills that are often overlooked in school, but I feel are essential. In particular: solving problems that don't always have a clear right answer.",
+  // Adriana Mejia, E9 — "Thus"→"This" typo fixed, "your kid"→"kids", "ideas/solutions" spelled out.
+  // Voice kept in her original third person.
+  "This class encouraged kids to use critical thinking rather than memorization or facts. They go to a class to learn and feel uncomfortable for a while in order to come up with ideas and solutions. It challenges them.",
+  // Emily Brandon, F2 — child's name → pronoun, closing exclamation → period, second sentence
+  // trimmed. REPLACES her E8 quote ("He left each class enthusiastic to share what he learned") —
+  // one quote per family, and this one is concrete evidence of transfer rather than enthusiasm.
+  "I did notice [him] playing with his toy soldiers a bit more recently, and wonder if setting up his pretend battle strategy was at all inspired by this.",
+  // Lisa Avalos, G1 — opening "I think for us," trimmed
+  "The program offered a new skill — a skill that is not necessarily learned in school.",
+  // Xiaonan Zhu, E9 — child's name → pronoun, run-on split
+  "Very well designed curriculum, great communication. He had lots of fun resolving problems with friends.",
+  // Jennifer Ing, E8 — verbatim apart from a leading "The"
+  "The kids enjoyed the classes and were excited to share what they had learned.",
+  // Chris Mangandi, G1 — consent is "yes WITH MY NAME"; anonymised only because Mike asked for
+  // anonymous throughout. Trimmed 2026-09-01 (pre-launch QA, Critical #2): the original closed
+  // "...and didn't mind the hour after school on a Friday." That was true of the 60-minute Season 1
+  // pilot, but Season 2 runs 75 minutes, so on this page it read as a statement of class length.
+  // The clause also combined [she] + Friday, which narrowed to one identifiable pilot child.
+  "Despite it being at the end of a very busy weekly schedule, [she] seemed to have fun at every session.",
+  // REMOVED 2026-09-01 (pre-launch QA, Critical #1): a SECOND Emily Brandon quote sat here —
+  // "He left each class enthusiastic to share what he learned, and we greatly value building this
+  // kind of skill in our kids." It ran under the same "Founding Sparks parent" attribution as her
+  // toy-soldiers line above, so eight cards read as eight families when they were seven.
+  // Of the three families not represented here, one declined (G3 = No) and one has no usable line
+  // (her F2 is the "asked us questions" quote Mike cut). Seven is the honest count.
+];
 
 const SECTIONS = [
   {
     accent: "purple",
     kicker: "See What Others Miss",
-    title: "Pattern Detection · Elimination",
     sessions: [
       {
         name: "Pattern Detection",
@@ -31,7 +65,6 @@ const SECTIONS = [
   {
     accent: "teal",
     kicker: "Understand the System",
-    title: "Constraints · Hidden Rules",
     sessions: [
       {
         name: "Constraints",
@@ -48,7 +81,6 @@ const SECTIONS = [
   {
     accent: "ember",
     kicker: "Decide Without All the Facts",
-    title: "Estimation",
     sessions: [
       {
         name: "Estimation",
@@ -60,7 +92,6 @@ const SECTIONS = [
   {
     accent: "blue",
     kicker: "Think Beyond What You Control",
-    title: "Strategy · Game Theory",
     sessions: [
       {
         name: "Strategy",
@@ -76,89 +107,21 @@ const SECTIONS = [
   },
 ];
 
-const SPARKS = [
-  {
-    name: "Ignaz Semmelweis",
-    sessionLabel: "Pattern Detection",
-    skill: "Spotting the pattern others missed.",
-    blurb:
-      "In the 1840s, doctors believed disease came from “bad air.” In Vienna, Dr. Ignaz Semmelweis noticed five times more mothers died in the doctors’ ward than the midwives’ ward. The difference? Doctors did autopsies, then delivered babies without washing their hands. Semmelweis made them wash. Deaths dropped overnight. He was fired — and it took 20 years for the world to accept he was right.",
-    image: "/sparks/semmelweis.jpg",
-    accent: "purple",
-  },
-  {
-    name: "Dr. John Snow",
-    sessionLabel: "Elimination",
-    skill: "Ruling out every alternative until one remained.",
-    blurb:
-      "London, 1854. A cholera outbreak killed hundreds in ten days, and everyone blamed “bad air.” Dr. John Snow didn’t. He mapped every death and ruled out bad air, contaminated food, and person-to-person contact. One thing was left: the water pump on Broad Street. He removed the handle and the outbreak ended. Snow didn’t find the answer — he eliminated everything that wasn’t.",
-    image: "/sparks/snow.jpg",
-    accent: "purple",
-  },
-  {
-    name: "Apollo 13",
-    sessionLabel: "Constraints",
-    skill: "Finding the advantage inside the limits.",
-    blurb:
-      "Three astronauts. An exploded oxygen tank. Square CO₂ filters that wouldn’t fit round sockets. Engineers had to save the crew using only what was already on the spacecraft — duct tape, a sock, cardboard, and a hose. The constraint didn’t block the rescue. It pointed to it.",
-    image: "/sparks/apollo13.jpg",
-    accent: "teal",
-  },
-  {
-    name: "Alexander Fleming",
-    sessionLabel: "Hidden Rules",
-    skill: "Refusing to dismiss a surprise.",
-    blurb:
-      "London, 1928. Antibiotics didn’t exist. Alexander Fleming came back from vacation to find his bacteria dishes contaminated with mold, and was about to throw them out — then noticed something strange on one dish. Instead of ignoring it, he stopped and asked why. That single moment of not dismissing a surprise became penicillin: the first antibiotic, and an estimated 200 million lives saved.",
-    image: "/sparks/fleming.jpg",
-    accent: "teal",
-  },
-  {
-    name: "Enrico Fermi",
-    sessionLabel: "Estimation",
-    skill: "Making a smart estimate with almost no data.",
-    blurb:
-      "July 16, 1945. Fermi stood in a bunker ten miles from the world’s first atomic bomb. When the shockwave hit, he dropped scraps of paper from his hand, watched them blow sideways, paced off the distance, and wrote down a number: 10 kilotons. The precision instruments took three days to deliver their answer: 18 kilotons. Fermi was off by less than half — in seconds, with nothing but paper.",
-    image: "/sparks/fermi.jpg",
-    accent: "ember",
-  },
-  {
-    name: "Amundsen vs. Scott",
-    sessionLabel: "Strategy",
-    skill: "Planning before the game even starts.",
-    blurb:
-      "Two expeditions raced to be first to the South Pole. Scott — a Royal Navy captain with fame, money, and experience — was the favorite. Amundsen was the Norwegian underdog. Amundsen reached the Pole on December 14, 1911, 34 days ahead, and all his men walked home healthy. Scott arrived to find Amundsen’s flag waiting, and died with his party on the return — eleven miles from a food depot. The race was decided a year earlier, by preparation.",
-    image: "/sparks/amundsen.jpg",
-    accent: "blue",
-  },
-  {
-    name: "Winston Churchill",
-    sessionLabel: "Game Theory",
-    skill: "The smart move depends on how others react.",
-    blurb:
-      "June 1940. France has fallen, and its navy — the fourth largest in the world — could fall into Hitler’s hands. Churchill doesn’t trust the promise that it won’t. On July 3, the Royal Navy fires on its former ally’s fleet at Mers-el-Kébir. The world is horrified — but in Washington, Roosevelt updates his read: Britain will do whatever it takes to win. A year later, Lend-Lease begins.",
-    image: "/sparks/churchill.jpg",
-    accent: "blue",
-  },
-];
 
+// Per-phase timings are INTERNAL instructor guidance and are never published (Mike, 2026-08-31).
+// Public copy says "75-minute sessions" and may describe the phases qualitatively, but must not
+// state how long any phase takes — a published breakdown removes the flexibility the format depends
+// on and invites a parent to hold us to a clock. See SPARKWORKS_BRAND_REF.md.
 const PHASES = [
-  { name: "Ignite", time: "8–10 min", body: "High-energy warm-up. Activates before concept." },
-  { name: "Sharpen", time: "8–10 min", body: "One concept introduced. A Spark of History — a real person who used the same principle. The AHA moment." },
-  { name: "Engage", time: "30–40 min", body: "The game. Kids work the problem. Instructor circulates and questions, doesn't solve." },
-  { name: "Reinforce", time: "5–10 min", body: "Reflect, connect to the real world. Closes with the closing question." },
-];
-
-// The program-wide thinking loop. Verbatim from SPARKWORKS_PROGRAM_AND_MESSAGING.md §3
-// and the S7 designer brief's PAUSE > THINK > ACT band.
-const LOOP = [
-  { step: "Pause", question: "What’s going on?", phrase: "Stop and take a breath." },
-  { step: "Think", question: "Why? Am I sure? What are my options?", phrase: "What’s the bigger goal?" },
-  { step: "Act", question: "What am I going to do about it?", phrase: "Make the move that gets you there." },
+  { name: "Ignite", body: "Warm-up. Wakes up the thinking." },
+  { name: "Sharpen", body: "One concept, one real story, one moment it clicks." },
+  { name: "Engage", body: "The game. Instructor circulates, asks, never solves." },
+  { name: "Reinforce", body: "Reflect, connect, close." },
 ];
 
 const OUTCOMES = [
   "Figuring things out without being told",
+  "Breaking a big problem into smaller ones they can actually start on",
   "Working through problems step-by-step",
   "Noticing when something doesn't make sense",
   "Explaining how they got an answer",
@@ -178,7 +141,7 @@ const FAQS = [
   },
   {
     q: "What will my kid actually do?",
-    a: "Solve logic grids, crack pattern sequences, find hidden rules in systems, estimate quantities using real engineering methods, catch AI mistakes, and present their reasoning in a capstone challenge.",
+    a: "Solve logic grids, crack pattern sequences, find hidden rules in systems, estimate quantities using real engineering methods, and present their reasoning in a capstone challenge.",
   },
   {
     q: "How is it different?",
@@ -188,97 +151,129 @@ const FAQS = [
     q: "Is it tutoring?",
     a: "No — it's closer to training. We don't help with school subjects. We teach how to approach a problem you've never seen before. That skill transfers to everything.",
   },
-  // ENROLLMENT PAUSED 2026-08-16 (Mike). Answer reframed from the Season-2 enrollment version:
-  // "Season 2 — Fall 2026 is $449 for all 8 sessions (both tracks, same price), starting the week
-  // of September 7. No payment required to hold a seat — slots are offered in order of registration,
-  // and we'll be in touch with payment details once Season 2 is locked."
-  // Both figures below are the CLAUDE.md-approved prices ($149 pilot / $449 full season).
+  // PRICING SUPERSEDED 2026-08-28: $449 was announced for Season 2 but never charged. After the
+  // Founding Sparks exit survey (E5 re-enrollment grid) and a competitive scan, Mike set Season 2 at
+  // $319 + $25 early bird + 15% sibling. $449 is dead everywhere except the TRADEMARK_GUIDANCE A2
+  // change log, which is history and stays. Do not reintroduce it here.
   {
     q: "What does it cost?",
-    // QA M2/M3 2026-08-16: trimmed. Prior answer added "We're not enrolling at the moment — when we
-    // set dates for the next season, everyone on the interest list hears first," which duplicated the
-    // "When does the next season run?" answer directly below and made the page state the negative
-    // four times. Also "a full season IS $449" asserted a live price for an unscheduled season;
-    // "is priced at" is the accurate framing ($449 was announced but never actually charged).
-    a: "The Founding Sparks pilot ran at $149 for all 8 sessions; a full 8-session season is priced at $449 (both tracks, same price). Everyone on the interest list hears first when the next season opens.",
+    a: "Season 2 tuition is $319 per child for all 8 sessions — both tracks, same price. There's a $25 early-bird discount when your sign-up is in by September 13, and 15% off each additional child. No registration fee; tuition is all-in.",
   },
   {
     q: "When does the next season run?",
-    a: "Dates aren't set yet. The program runs as eight 60-minute sessions, one per week. Add your email below and we'll let you know as soon as we schedule the next one.",
+    a: "Season 2 starts the week of September 21, 2026 — eight weekly sessions of 75 minutes each, at our home studio in South Pasadena. Sign up below and tell us which times could work for your family; we set the schedule around the families who join.",
   },
 ];
+
+// /program is the destination of every visit to the root (app/page.js redirects here), so it needs
+// its own metadata rather than inheriting the site-wide defaults from layout.js.
+export const metadata = {
+  title: "Sparkworks — after-school critical thinking classes for grades 2–6",
+  description:
+    "An 8-session after-school program teaching kids in grades 2–6 to think through hard problems. Eight weekly 75-minute sessions in South Pasadena. Season 2 starts the week of September 21, 2026.",
+};
 
 export default function ProgramPage() {
   return (
     <>
-      <SiteHeader />
-      {/* TM-2026: Hero title was "An 8-session program that teaches kids to think through hard problems — through games, not lectures." */}
+      {/* SiteHeader dropped 2026-08-31 — the bar and its hairline rule were chrome competing with the
+          page. The hero wordmark carries the brand and links home in its place. */}
+      {/* TM-2026 (supersedes swap-log entry 5, whose "original" string is now stale):
+          Mike rewrote this H1 on 2026-08-31 to "An 8-session program teaching kids critical thinking
+          — through games, not lectures.", reintroducing the exact phrase entry 5 had already removed.
+          He did not have the constraint in hand. RBG re-ruled 2026-09-01: the phrase may not ship in
+          an H1 at all, per TRADEMARK_GUIDANCE §1 (a SPARKWORKS games company exists and we are
+          applying for the educational-services mark). Swapped to the canonical §1 replacement.
+          Pre-swap text, for the revert-on-grant path:
+            "An 8-session program teaching kids critical thinking — through games, not lectures." */}
       <Hero
+        tight
+        homeLink
         wordmarkSize="xl"
-        eyebrow="The Program"
-        title="An 8-session program that teaches kids to think through hard problems — through hands-on problem solving, not lectures."
-        tagline="Two grade-calibrated tracks: Ember (grades 2–3) and Blaze (grades 4–6). Each kept deliberately small, with a dedicated instructor and 60-minute sessions."
+        title="An 8-session program teaching kids critical thinking — through hands-on problem solving, not lectures."
+        tagline="Two grade-calibrated tracks: Ember (grades 2–3) and Blaze (grades 4–6). Each kept deliberately small, in 75-minute sessions."
       />
 
       <main className="sw-page sw-body">
+        {/* Ribbon and the standout quote sit side by side. The quote is Tina Ling's — it used to be
+            the featured first slide of the carousel and has been pulled out of REVIEWS so it isn't
+            on the page twice. */}
         <section className="sw-section" style={{ marginTop: 0 }}>
-          <div
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              gap: 18,
-              alignItems: "center",
-              justifyContent: "space-between",
-              padding: "20px 24px",
-              background: "var(--sw-bone)",
-              borderRadius: "var(--sw-radius-md)",
-              borderLeft: "4px solid var(--sw-ember)",
-            }}
-          >
-            <div>
-              {/* ENROLLMENT PAUSED 2026-08-16 (Mike). Prior enrollment ribbon read:
-                  label "Season 2 · Fall 2026"; body "Founding Sparks filled before we listed it.
-                  Season 2 is filling now. $449 for all 8 sessions · No payment required to hold a
-                  seat."; CTA "Save my seat" → #interest.
-                  Season 2 is not scheduled and we are not taking sign-ups, so the urgency framing
-                  ("filling now", "hold a seat") was removed as no longer truthful. The program
-                  itself still presents in full below — only the enrollment ask changed. */}
-              {/* QA M1 2026-08-16: label was "Next season", which set up an announcement the body
-                  immediately withdraws, and duplicated the #interest card's eyebrow further down.
-                  Matches the homepage ribbon label + hero eyebrow instead. */}
-              <div className="ts-label" style={{ color: "var(--sw-ember)", fontSize: "0.75rem", marginBottom: 4 }}>
-                The Program
-              </div>
-              <p className="ts-body" style={{ margin: 0 }}>
-                <strong>Founding Sparks filled before we listed it.</strong>{" "}
-                Dates for the next season aren&rsquo;t set yet — tell us you&rsquo;re interested and
-                we&rsquo;ll let you know first.
-              </p>
-            </div>
-            <TrackedLink
-              className="sw-btn sw-btn-primary"
-              href="#interest"
-              style={{ whiteSpace: "nowrap" }}
-              event="cta_click"
-              eventProps={{ source: "program-hero", destination: "#interest" }}
+          <div className="sw-grid-2-1">
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: 20,
+                alignItems: "center",
+                padding: "22px 24px",
+                background: "var(--sw-bone)",
+                borderRadius: "var(--sw-radius-md)",
+                borderLeft: "4px solid var(--sw-ember)",
+              }}
             >
-              {/* QA M4 2026-08-16: label was "Keep me posted", identical to the SubscribeForm submit
-                  it jumps to — a parent could reasonably think this click already signed them up.
-                  This one is a jump link; only the form button below actually submits. */}
-              Tell us you&rsquo;re interested
-            </TrackedLink>
+              <TrackedLink
+                className="sw-btn sw-btn-primary"
+                href="/signup"
+                style={{ whiteSpace: "nowrap" }}
+                event="cta_click"
+                eventProps={{ source: "program-hero", destination: "/signup" }}
+              >
+                Sign up for Season 2
+              </TrackedLink>
+              <div style={{ flex: "1 1 240px", minWidth: 0 }}>
+                <div className="ts-label" style={{ color: "var(--sw-ember)", marginBottom: 4 }}>
+                  Season 2 · Fall 2026
+                </div>
+                {/* REMOVED 2026-09-01 (pre-launch QA): this opened "Founding Sparks filled before we
+                    listed it." — a scarcity claim sitting directly beside the primary CTA that
+                    nothing in the survey data or the registration DB substantiates. Restore it only
+                    if Mike confirms it is literally true; it is a strong line if it is. */}
+                <p className="ts-body" style={{ margin: 0 }}>
+                  <strong>Classes are kept small — four to start one, eight at most.</strong>{" "}
+                  Season 2 starts the week of September 21 — eight weekly sessions of 75 minutes.
+                  Tell us which times could work and we&rsquo;ll build the schedule around it.
+                </p>
+              </div>
+            </div>
+
+            <figure className="sw-quote sw-quote-lg">
+              <blockquote className="sw-quote-text">
+                The kids were so excited to go every week. When we had conflicts with other things,
+                they hands-down wanted to do Sparkworks.
+              </blockquote>
+              <figcaption className="sw-quote-who">Founding Sparks parent</figcaption>
+            </figure>
           </div>
+        </section>
+
+        {/* Lifted from the old homepage 2026-09-01 when /program became the main page. Full previous
+            homepage is preserved at /home-archive.
+            TM-2026 (analogous to swap-log entry 2b): closing clause was "— through games, not
+            lectures." Swapped 2026-09-01 per RBG's re-ruling; see the Hero comment above for the
+            full reasoning and the revert-on-grant path. */}
+        <section className="sw-section">
+          <div className="ts-eyebrow">What we offer</div>
+          <h2 className="ts-h2" style={{ marginTop: 8, marginBottom: 16 }}>
+            How kids build the skill AI can&rsquo;t replace.
+          </h2>
+          <p className="ts-lead">
+            Critical thinking is the most important skill in the AI age. One skill per session: we
+            introduce it, show someone who used it when it counted, then hand kids a problem that
+            makes them use it too — through hands-on problem solving, not lectures.
+          </p>
         </section>
 
         <section className="sw-section">
           <div className="ts-eyebrow">What kids learn</div>
-          <h2 className="ts-h1" style={{ marginTop: 8, marginBottom: 16, maxWidth: 760 }}>
-            Each session teaches one real thinking skill — the kind that transfers everywhere.
+          <h2 className="ts-h2" style={{ marginTop: 8, marginBottom: 24 }}>
+            Each session teaches one critical thinking skill — the kind that transfers everywhere.
           </h2>
-          <p className="ts-lead" style={{ maxWidth: 760, marginBottom: 24 }}>
-            Pattern detection, elimination, constraint navigation, estimation under uncertainty, and
-            strategy — grouped into four ways of thinking. It all comes together in the Spark
-            Challenge, the final session.
+          {/* Closes the 7-vs-8 gap: seven skills are shown below, and the eighth session is the
+              capstone. Without this clause a parent who counts the grid finds one session missing. */}
+          <p className="ts-lead" style={{ marginTop: -8, marginBottom: 24 }}>
+            Seven skills across the first seven sessions. The eighth brings them together in a final
+            challenge.
           </p>
 
           <div className="sw-grid-2" style={{ gap: 24 }}>
@@ -287,126 +282,77 @@ export default function ProgramPage() {
             ))}
           </div>
 
-          <div style={{ marginTop: 28 }}>
-            <p className="ts-body" style={{ maxWidth: 760, marginBottom: 12 }}>
-              These skills are built through hands-on games and activities. Want to keep them going
-              between sessions? We point families to the same games and materials we use &mdash;
-              organized by the skill each one builds.
-            </p>
-            <TrackedLink
-              className="sw-btn"
-              href="/practice?source=program-games"
-              event="games_cta_click"
-              eventProps={{ source: "program-curriculum" }}
-            >
-              See the games we recommend &rarr;
-            </TrackedLink>
-          </div>
         </section>
 
-        <section className="sw-section">
-          <div className="ts-eyebrow">How kids learn to think</div>
-          <h2 className="ts-h2" style={{ marginTop: 8, marginBottom: 12 }}>
-            Pause <span style={{ color: "var(--sw-spark)" }}>→</span> Think{" "}
-            <span style={{ color: "var(--sw-spark)" }}>→</span> Act
-          </h2>
-          <p className="ts-lead" style={{ maxWidth: 760, marginBottom: 24 }}>
-            Every skill we teach runs on the same loop. It&rsquo;s the through-line that turns the
-            sessions into one program rather than a pile of unrelated lessons — and the habit kids
-            carry into any problem they&rsquo;ve never seen before.
-          </p>
-          <div className="sw-grid-3">
-            {LOOP.map((l) => (
-              <div key={l.step} className="sw-card" style={{ borderTop: "4px solid var(--sw-spark)", display: "flex", flexDirection: "column", gap: 8 }}>
-                <div className="ts-label" style={{ color: "var(--sw-spark)", fontSize: "1rem" }}>{l.step}</div>
-                <p className="ts-body" style={{ marginBottom: 0, fontWeight: 700 }}>{l.question}</p>
-                <p className="ts-caption" style={{ marginBottom: 0, color: "var(--sw-steel)" }}>{l.phrase}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+        {/* PAUSE > THINK > ACT archived 2026-08-31 (Mike) — it sat beside the four session phases
+            and the two sequences read as one. Moved intact to /sparks-archive; data in
+            app/data/loop.js. */}
 
-        <section className="sw-section">
-          <div className="ts-eyebrow" style={{ color: "var(--sw-red)" }}>The finale · Spark Challenge</div>
-          <h2 className="ts-h2" style={{ marginTop: 8, marginBottom: 16, maxWidth: 760 }}>
-            The last session pulls everything together.
-          </h2>
-          <p className="ts-lead" style={{ maxWidth: 760, marginBottom: 20 }}>
-            There&rsquo;s no new lesson and no new game. Instead, kids run a seven-station Spark
-            Trail — part scavenger hunt, part escape room. Each station calls back one skill from the
-            program: spot a pattern, rule things out, work within a constraint, uncover a hidden rule,
-            estimate, plan a strategy, and read an opponent.
-          </p>
-          <Callout accent="red" label="Seven sessions. One thinker.">
-            <p className="ts-body" style={{ marginBottom: 0 }}>
-              When it counts, every skill shows up at once — and the only way through is to use them
-              together. The Spark Challenge is the first time kids see the loop named on the board:{" "}
-              <strong>Pause → Think → Act</strong>.
-            </p>
-          </Callout>
-        </section>
+        {/* Spark Challenge section removed 2026-08-31 (Mike). The capstone is now referenced only in
+            the FAQ — the "What kids learn" lead no longer mentions it, so the grid shows 7 skills
+            against a page that says 8 sessions. The lead below closes that gap in one clause; don't
+            remove it without restoring the reference somewhere else. */}
 
         <section className="sw-section">
           <div className="ts-eyebrow">What every session looks like</div>
-          <h2 className="ts-h2" style={{ marginTop: 8, marginBottom: 16 }}>
-            Four phases. 60 minutes. Same every time.
+          <h2 className="ts-h2" style={{ marginTop: 8, marginBottom: 24 }}>
+            Four phases. Same order. Every week.
           </h2>
-          <div className="sw-grid-2">
+          {/* Card layout mirrors the "Two tracks" section below — same grid, same card, same blue
+              top rule — so the page has one card language instead of a separate treatment per
+              section. Ember triangles replace the ordinals; the heading still carries "same order". */}
+          <div className="sw-grid-4">
             {PHASES.map((p) => (
-              <div key={p.name} className="sw-card" style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                <div className="ts-label" style={{ color: "var(--sw-steel)" }}>{p.name}</div>
-                <div className="ts-caption">{p.time}</div>
-                <p className="ts-body">{p.body}</p>
+              <div
+                key={p.name}
+                className="sw-card"
+                style={{ borderTop: "4px solid var(--sw-blue)", padding: "22px 22px 24px" }}
+              >
+                <h3
+                  className="ts-h2"
+                  style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}
+                >
+                  <span className="sw-tri" aria-hidden="true" />
+                  {p.name}
+                </h3>
+                <p className="ts-body" style={{ marginBottom: 0 }}>{p.body}</p>
               </div>
             ))}
           </div>
         </section>
 
-        <section className="sw-section">
-          <div className="ts-eyebrow">Sparks of History · stories of the great thinkers</div>
-          <h2 className="ts-h2" style={{ marginTop: 8, marginBottom: 12 }}>
-            A real person who used the same thinking principle to change something that mattered.
-          </h2>
-          <p className="ts-body" style={{ maxWidth: 720, marginBottom: 24 }}>
-            A Spark of History is a small but pivotal moment in each session — just a few minutes
-            during the Sharpen phase. It&rsquo;s where the skill kids are about to practice gets tied
-            to a real person who used it to change something that mattered. We don&rsquo;t just teach
-            careful thinking — we show its real-world impact, made concrete. We make a poster for
-            each Spark; they hang in the classroom, and you can grab them below.
-          </p>
-          <div className="sw-grid-2">
-            {SPARKS.map((s) => (
-              <SparkOfHistory key={s.name} {...s} />
-            ))}
-          </div>
-          <p className="ts-caption" style={{ marginTop: 18, fontStyle: "italic" }}>
-            More on the way as we run more sessions.
-          </p>
-        </section>
+        {/* Sparks of History section archived 2026-08-31 (Mike) — each Spark is the Eureka moment of
+            its session, and a parent reading the story beforehand can spoil it. Moved intact to
+            /sparks-archive (noindex, unlinked). Data lives in app/data/sparks.js. */}
 
         <section className="sw-section">
+          {/* Heading was "Grade-calibrated, never undifferentiated" — an internal brand rule, not
+              something a parent needs. The two cards were the same sentence with one word changed;
+              the shared half now sits above them. */}
           <div className="ts-eyebrow">Two tracks</div>
-          <h2 className="ts-h2" style={{ marginTop: 8, marginBottom: 16 }}>
-            Grade-calibrated, never undifferentiated.
+          <h2 className="ts-h2" style={{ marginTop: 8, marginBottom: 24 }}>
+            Two tracks, calibrated by grade.
           </h2>
           <div className="sw-grid-2">
             <div className="sw-card" style={{ borderTop: "4px solid var(--sw-blue)" }}>
               <div className="ts-eyebrow" style={{ color: "var(--sw-blue)" }}>Ember Track</div>
               <h3 className="ts-h2" style={{ marginTop: 6, marginBottom: 10 }}>Grades 2–3</h3>
-              <p className="ts-body">Kept deliberately small · dedicated instructor · same 8-session arc, calibrated to younger reasoners.</p>
+              <p className="ts-body">Calibrated to younger reasoners.</p>
             </div>
             <div className="sw-card" style={{ borderTop: "4px solid var(--sw-blue)" }}>
               <div className="ts-eyebrow" style={{ color: "var(--sw-blue)" }}>Blaze Track</div>
               <h3 className="ts-h2" style={{ marginTop: 6, marginBottom: 10 }}>Grades 4–6</h3>
-              <p className="ts-body">Kept deliberately small · dedicated instructor · same 8-session arc, calibrated to older reasoners.</p>
+              <p className="ts-body">Calibrated to older reasoners.</p>
             </div>
           </div>
         </section>
 
         <section className="sw-section">
+          {/* Eyebrow and heading said the same thing. The heading now carries the timeframe the
+              eyebrow can't. */}
           <div className="ts-eyebrow">What your child walks away with</div>
           <h2 className="ts-h2" style={{ marginTop: 8, marginBottom: 16 }}>
-            After 8 sessions, your child will be better at:
+            After eight sessions, they&rsquo;ll be better at:
           </h2>
           <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 10 }}>
             {OUTCOMES.map((o) => (
@@ -426,9 +372,49 @@ export default function ProgramPage() {
           </ul>
         </section>
 
+        {/* Reviews — drawn from the Founding Sparks exit survey (10 of 10 families responded).
+            NOT verbatim: see the per-quote notes on the REVIEWS array. Edits go beyond length and
+            child names (a typo fix, a second-person→plural change, a run-on split, trimmed closers),
+            which is why the on-page disclosure below says "for length and clarity."
+            CONSENT IS PER FAMILY, from survey question G3. Christina Paraiso answered "No" and is
+            NOT quoted. Two families gave permission to use their names (Chris Mangandi, Tina Ling);
+            Mike asked for anonymous, so all are attributed "Founding Sparks parent."
+            Child names removed and replaced with he/she — no child is identifiable.
+            DO NOT add, swap or edit a quote without re-checking G3 in the survey DB. */}
+        <section className="sw-section" id="reviews">
+          <div className="ts-eyebrow">What families said</div>
+          <h2 className="ts-h2" style={{ marginTop: 8, marginBottom: 16 }}>
+            All founding families answered. Here&rsquo;s what they actually said.
+          </h2>
+          <p className="ts-lead" style={{ marginBottom: 24 }}>
+            We asked our first cohort what actually landed — and what didn&rsquo;t. These are their
+            words, lightly edited for length and clarity, and to remove children&rsquo;s names.
+          </p>
+
+          <QuoteCarousel quotes={REVIEWS} />
+        </section>
+
+        {/* Moved out of the curriculum section 2026-09-01 — it reads better as a step on the way out
+            than as a footnote to the eight topics. */}
+        <section className="sw-section">
+          <p className="ts-body" style={{ marginBottom: 12 }}>
+            Want to keep it going between sessions? We point families to the same materials we
+            use, organized by the skill each one builds.
+          </p>
+          <TrackedLink
+            className="sw-btn"
+            href="/practice?source=program-games"
+            event="games_cta_click"
+            eventProps={{ source: "program-curriculum" }}
+          >
+            See the games we recommend &rarr;
+          </TrackedLink>
+        </section>
+
+        {/* Moved below the reviews 2026-08-31 — social proof reads better before objection-handling. */}
         <section className="sw-section">
           <div className="ts-eyebrow">Questions parents ask</div>
-          <h2 className="ts-h2" style={{ marginTop: 8, marginBottom: 16 }}>FAQ</h2>
+          <h2 className="ts-h2" style={{ marginTop: 8, marginBottom: 16 }}>FAQs</h2>
           <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
             {FAQS.map((f) => (
               <div key={f.q}>
@@ -439,36 +425,26 @@ export default function ProgramPage() {
           </div>
         </section>
 
-        {/* ENROLLMENT PAUSED 2026-08-16 (Mike): the next season isn't scheduled and Tina's
-            availability to teach it again is uncertain, so we stopped taking sign-ups. This slot
-            used to render <InterestForm /> — the full registration form (parent + up to 3 children
-            with names, grades and track assignments) posting to /api/register.
-
-            TO RESTORE ENROLLMENT: re-import InterestForm at the top of this file and swap this
-            whole section back to `<InterestForm />`. The component, the /api/register route and the
-            Notion registration DB are all untouched and still wired — nothing was deleted.
-
-            Until then we capture interest only: email-only SubscribeForm → /api/subscribe → the
-            Subscribers DB, tagged with the existing `Program` interest. No child data is collected
-            while enrollment is paused. Analytics: `register_submit` stops firing; this surface now
-            reports as `subscribe_submit` with source `program-interest`. */}
         <section className="sw-section" id="interest">
           <div className="sw-card" style={{ borderTop: "4px solid var(--sw-ember)" }}>
-            <div className="ts-eyebrow" style={{ color: "var(--sw-ember)" }}>Next season</div>
+            <div className="ts-eyebrow" style={{ color: "var(--sw-ember)" }}>Season 2 · Fall 2026</div>
             <h3 className="ts-h2" style={{ marginTop: 8, marginBottom: 8 }}>
-              Interested in a future season?
+              Sign up for Season 2
             </h3>
-            <p className="ts-body" style={{ marginBottom: 8 }}>
-              We&rsquo;re not enrolling right now — dates for the next season aren&rsquo;t set. Leave
-              your email and we&rsquo;ll be in touch as soon as they are. No commitment, and nothing
-              to pay.
+            <p className="ts-body" style={{ marginBottom: 16 }}>
+              Eight weekly sessions of 75 minutes, starting the week of September 21, at our home
+              studio in South Pasadena. $319 per child, with $25 off if your sign-up is in by
+              September 13, and 15% off each additional child. Tell us which times could work for your family and
+              we&rsquo;ll build the schedule around it. No payment today.
             </p>
-            <SubscribeForm
-              interests={["Program"]}
-              source="program-interest"
-              ctaLabel="Keep me posted"
-              successMessage="Thanks — you&rsquo;re on the list. We&rsquo;ll email you when we set dates for the next season."
-            />
+            <TrackedLink
+              className="sw-btn sw-btn-primary"
+              href="/signup"
+              event="cta_click"
+              eventProps={{ source: "program-interest", destination: "/signup" }}
+            >
+              Sign up for Season 2
+            </TrackedLink>
           </div>
         </section>
       </main>

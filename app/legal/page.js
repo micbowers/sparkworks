@@ -27,7 +27,7 @@ export default function LegalPage() {
         <section className="sw-section" style={{ marginTop: 0 }}>
           <h1 className="ts-h1" style={{ marginBottom: 8 }}>Terms &amp; Privacy</h1>
           <div className="ts-caption" style={{ color: "var(--sw-steel)", marginBottom: 16 }}>
-            Last updated: August 17, 2026
+            Last updated: September 1, 2026
           </div>
           <p className="ts-lead" style={{ maxWidth: 760 }}>
             Sparkworks is operated by Cairn Partners, LLC. We&rsquo;ve written these policies in plain
@@ -47,11 +47,13 @@ export default function LegalPage() {
               please do not use the Site.
             </p>
             <p className="ts-body">
-              <strong>The Site is informational.</strong> This Site exists to share information about
-              Sparkworks, our after-school critical-thinking classes for students in grades 2&ndash;6.
-              It is not a contract for services. Enrolling a child in a Sparkworks program is handled
-              separately, and any enrollment is governed by the terms presented to you at the time you
-              enroll &mdash; not by this page.
+              <strong>The Site is informational, with one exception.</strong> This Site exists to
+              share information about Sparkworks, our after-school critical-thinking classes for
+              students in grades 2&ndash;6. Nothing on the Site is a contract for services. You can
+              sign up for a season here, but a sign-up is a request, not an enrollment and not a
+              charge: it does not reserve a place, it does not obligate you to pay, and it does not
+              obligate us to offer a place. Enrollment is confirmed separately, and any enrollment
+              is governed by the terms presented to you at that time &mdash; not by this page.
             </p>
             <p className="ts-body">
               <strong>Acceptable use.</strong> You agree to use the Site only for lawful purposes. You
@@ -109,6 +111,19 @@ export default function LegalPage() {
               Program and session fees are collected by Cairn Partners, LLC, which operates Sparkworks.
             </p>
             <p className="ts-body">
+              <strong>Signing up costs nothing.</strong> We do not collect payment when you sign up.
+              Once we have confirmed your child&rsquo;s day and time, we send an invoice for tuition.
+              Any discount described on the sign-up page &mdash; such as an early-bird or sibling
+              discount &mdash; is applied to that invoice based on the date we received your sign-up,
+              not the date you pay.
+            </p>
+            <p className="ts-body">
+              <strong>If a class does not run.</strong> Each class needs a minimum number of children
+              to run. If we cannot place your child, or we cancel a class or a session we are unable
+              to reschedule, you owe nothing &mdash; and if you have already paid, we refund that
+              amount in full.
+            </p>
+            <p className="ts-body">
               <strong>Refunds and disputes.</strong> If you are unsatisfied with a service or believe a
               charge was made in error, please contact us within 30 days of payment. We will review your
               request and issue a full or partial refund at our discretion. Disputes should be directed
@@ -118,8 +133,9 @@ export default function LegalPage() {
               <strong>Cancellations.</strong> Cancellations for program sessions or services must be
               submitted in writing at least 7 days prior to the scheduled start date for a full refund.
               Cancellations made within 7 days of the start date may be eligible for a partial refund or
-              credit toward a future session, at our discretion. No refunds will be issued after a
-              program has begun.
+              credit toward a future session, at our discretion. Except as described above &mdash; if
+              we cannot place your child, or we cancel a class or a session we are unable to
+              reschedule &mdash; no refunds will be issued after a program has begun.
             </p>
           </div>
         </section>
@@ -167,20 +183,19 @@ export default function LegalPage() {
             <p className="ts-body">
               This Privacy Policy explains what personal information Cairn Partners, LLC collects
               through www.sparkworks.kids, how we use it, and who we share it with. We collect only the
-              information we need to respond to families interested in Sparkworks.
+              information we need to respond to families interested in Sparkworks and to place children
+              in classes.
             </p>
-            {/* ENROLLMENT PAUSED 2026-08-16: the registration form (parent name + up to 3 children
-                with first name, grade and track → /api/register) was removed from the Site, so this
-                section previously described collection that no longer happens and stated "no payment
-                is required to hold a seat." Rewritten to describe what the Site collects TODAY, while
-                still disclosing what was collected previously and how to request its deletion —
-                deleting the disclosure outright would be worse than leaving it stale.
-                Prior text preserved in SPARKWORKS_TRADEMARK_GUIDANCE.md entry A2 for the restore path.
-                RBG owns this page — this edit was made at Mike's explicit direction 2026-08-16 to
-                avoid shipping a live contradiction, and is pending RBG review under the open task. */}
+            {/* Copy in this section is owned by Cairn Legal (RBG) and was rewritten by them on
+                2026-09-01 for the launch of /signup. It describes what the Site collects TODAY and
+                separately preserves the disclosure for what the retired /api/register form collected,
+                so Season 1 families keep a stated deletion path. If the sign-up form's fields change,
+                this section changes with it — go back to RBG, don't patch it here. */}
             <p className="ts-body">
               <strong>Information we collect.</strong> We collect personal information only when you
-              choose to give it to us through our email sign-up forms:
+              choose to give it to us, through one of two kinds of form on the Site &mdash; our
+              email sign-up forms and our season sign-up form. Both are completed by a parent or
+              another adult; children do not interact with either one.
             </p>
             <p className="ts-body">
               <em>Email sign-up (always completed by an adult).</em> When you sign up to hear from us
@@ -189,14 +204,26 @@ export default function LegalPage() {
               page on our Site the sign-up came from. No child interacts with these forms.
             </p>
             <p className="ts-body">
-              <em>We are not currently enrolling.</em> The Site does not collect any information about
-              children. When enrollment was open, our registration form also collected the parent&rsquo;s
-              or guardian&rsquo;s name and, for each child being enrolled (up to three), the child&rsquo;s
-              first name, grade, and track (Ember for grades 2&ndash;3 or Blaze for grades 4&ndash;6),
-              along with the program cohort of interest. That form is no longer offered on the Site.
-              Information previously collected through it is retained and handled as described in this
-              policy; to request its deletion, email privacy@sparkworks.kids. We do not collect payment
-              information on the Site.
+              <em>Season sign-up (always completed by a parent or guardian).</em> When you sign a
+              child up for a season, we collect your name and email address, and &mdash; if you
+              choose to give them &mdash; your mobile number, a second parent&rsquo;s or
+              guardian&rsquo;s name, how you heard about Sparkworks, the name of any family who
+              referred you, and anything you write in the notes field. For each child you sign up
+              (up to three), we collect the child&rsquo;s <strong>first name only</strong>, the
+              child&rsquo;s grade, the weekly time slots the child could attend, and a preferred
+              slot if you pick one. From the grade we note the track that goes with it &mdash;
+              Ember for grades 2&ndash;3, Blaze for grades 4&ndash;6 &mdash; along with the season
+              being signed up for. We use all of this to build the schedule and place your child.
+              The form does not ask for a child&rsquo;s last name, and it does not ask for payment
+              information: nothing is charged at sign-up, and we invoice separately once your
+              child&rsquo;s day and time are confirmed.
+            </p>
+            <p className="ts-body">
+              <em>Information collected earlier.</em> A previous version of our registration form
+              collected the parent&rsquo;s or guardian&rsquo;s name and, for each child, the
+              child&rsquo;s first name, grade, track, and the program cohort of interest.
+              Information collected through it is retained and handled as described in this policy;
+              to request its deletion, email <Email />.
             </p>
             <p className="ts-body">
               We do not collect passwords, we do not create user accounts, we do not collect payment
@@ -206,8 +233,9 @@ export default function LegalPage() {
               <strong>How we use your information.</strong> We use the information you provide to:
               respond to your inquiry and follow up about Sparkworks programs; contact you about
               scheduling and program updates; and send you the launch and program updates you signed up
-              to receive. If enrollment reopens, we would also use enrollment information to place a
-              child in the appropriate class and track. We do not sell your personal information.
+              to receive. We use sign-up information to build the class schedule, place each child in
+              the appropriate class and track, and reach you about your child&rsquo;s confirmed day and
+              time. We do not sell your personal information.
             </p>
             <p className="ts-body">
               <strong>Who we share it with.</strong> We do not sell or rent your personal information.
@@ -247,10 +275,11 @@ export default function LegalPage() {
               <strong>Children&rsquo;s information.</strong> Sparkworks serves children in grades
               2&ndash;6, but our Site and forms are designed for parents and guardians, not for
               children. Children do not interact with our Site or submit information themselves. The
-              only information we hold about a child is what a parent or guardian provides on the
-              enrollment or interest form &mdash; the child&rsquo;s first name, grade, and track &mdash;
-              and we use it solely to place the child in the right class and to communicate with the
-              parent or guardian. We do not collect a child&rsquo;s last name, contact information,
+              only information we hold about a child is what a parent or guardian gives us on our
+              sign-up form &mdash; the child&rsquo;s first name, grade, the weekly time slots the
+              child could attend, any preferred slot, and the track that goes with the grade &mdash;
+              and we use it solely to build the schedule, to place the child in the right class, and
+              to communicate with the parent or guardian. We do not collect a child&rsquo;s last name, contact information,
               photo, or any other detail beyond what is described here, and we do not collect
               information directly from children. If you are a parent or guardian and would like to
               review or delete the information we hold about your child, email <Email />.

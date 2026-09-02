@@ -8,6 +8,11 @@
   --sw-display: "Barlow Condensed", Arial, sans-serif;
   --sw-body: "Merriweather", Georgia, serif;
 
+  /* Secondary ink + hairline. Added 2026-08-31 — both were referenced by components before they
+     existed, so "muted" text silently rendered at full weight. */
+  --sw-muted: #6B7280;
+  --sw-rule:  #d8d4ca;
+
   /* Anchors — dark surfaces */
   --sw-steel: #1E2530;     /* Default text & headings — almost-black workhorse */
   --sw-spark: #1A5C82;     /* Primary identity — wordmark hero, footer, primary CTAs */
@@ -64,67 +69,79 @@ a { color: inherit; }
   letter-spacing: -1px;
   color: var(--sw-steel);
 }
+/* SCALE REBUILT 2026-08-31. The previous scale put body at 15px, lead at 17px, eyebrow and label at
+   19px, and h2 at 22px — five styles inside 7px, with the two loudest (uppercase, letterspaced)
+   being chrome rather than content. Nothing could stand out because everything was the same size and
+   the wayfinding shouted over the writing. Content now gets the range; chrome gets quiet.
+   Body/lead sizes set by Mike 2026-08-31. */
 .ts-h1 {
   font-family: var(--sw-display);
-  font-size: 2.25rem;
+  font-size: 2.75rem;
   font-weight: 800;
-  line-height: 1.1;
+  line-height: 1.05;
   letter-spacing: -0.5px;
   color: var(--sw-steel);
 }
 .ts-h2 {
   font-family: var(--sw-display);
-  font-size: 1.375rem;
-  font-weight: 700;
-  line-height: 1.2;
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.15;
   color: var(--sw-steel);
 }
+/* Eyebrow and label are WAYFINDING — above or beside the thing they name.
+   NOTE: the eyebrow (2rem) is currently LARGER than .ts-h2 (1.5rem), and .ts-label (1.2rem) is
+   larger than .ts-body. Mike set both values explicitly on 2026-08-31 and signed off on the
+   rendered result, so this is a deliberate inversion, not the drift the note above describes.
+   Flagged at pre-launch QA 2026-09-01 and left as set. Don't "fix" it silently — ask him. */
 .ts-eyebrow {
   font-family: var(--sw-display);
-  font-size: 1.1875rem;
-  font-weight: 700;
-  line-height: 1.4;
-  letter-spacing: 2.5px;
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: 2px;
   text-transform: uppercase;
   color: var(--sw-ember);
 }
+/* Labels and captions sit in full Steel Black (Mike, 2026-08-31). --sw-muted is reserved for
+   genuine de-emphasis — legal/administrative footnotes — not for anything a parent needs to read. */
+.ts-label {
+  font-family: var(--sw-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--sw-steel);
+}
 .ts-body {
   font-family: var(--sw-body);
-  font-size: 0.9375rem;
+  font-size: 0.9rem;
   font-weight: 400;
   line-height: 1.7;
   color: var(--sw-steel);
 }
 .ts-lead {
   font-family: var(--sw-body);
-  font-size: 1.0625rem;
+  font-size: 1rem;
   font-weight: 400;
-  line-height: 1.5;
+  line-height: 1.6;
   color: var(--sw-steel);
 }
 .ts-quote {
   font-family: var(--sw-body);
-  font-size: 1.0625rem;
+  font-size: 1.25rem;
   font-weight: 400;
-  line-height: 1.5;
+  line-height: 1.55;
   font-style: italic;
-  color: var(--sw-steel);
-}
-.ts-label {
-  font-family: var(--sw-display);
-  font-size: 1.1875rem;
-  font-weight: 700;
-  line-height: 1.3;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
   color: var(--sw-steel);
 }
 .ts-caption {
   font-family: var(--sw-body);
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   font-weight: 400;
   line-height: 1.5;
-  color: #888888;
+  color: var(--sw-steel);
 }
 
 /* ============================================================
@@ -141,9 +158,15 @@ a { color: inherit; }
 
 .sw-hero {
   background: var(--sw-spark);
-  padding: 56px 40px 48px;
+  /* vertical longhand only — horizontal padding lives on .sw-page */
+  padding-top: 56px;
+  padding-bottom: 48px;
   color: var(--sw-text-on-dark);
 }
+/* For pages that drop SiteHeader and let the hero start the page. Without the header bar above it,
+   56px of blue before the wordmark reads as dead space rather than breathing room. Trims the bottom
+   too — on a page whose job is the form below, the blue band shouldn't hold the fold. */
+.sw-hero-tight { padding-top: 24px; padding-bottom: 26px; }
 .sw-hero-mark {
   font-family: var(--sw-display);
   font-size: 1.375rem;
@@ -160,7 +183,9 @@ a { color: inherit; }
 
 .sw-foot {
   background: var(--sw-spark);
-  padding: 18px 40px;
+  /* vertical longhand only — horizontal padding lives on .sw-page */
+  padding-top: 18px;
+  padding-bottom: 18px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -243,7 +268,7 @@ a { color: inherit; }
 .sw-btn {
   display: inline-block;
   font-family: var(--sw-display);
-  font-size: 0.9375rem;
+  font-size: 1.6rem;
   font-weight: 800;
   letter-spacing: 1.5px;
   text-transform: uppercase;
@@ -289,9 +314,277 @@ a { color: inherit; }
    LAYOUT HELPERS
    ============================================================ */
 
-.sw-page  { max-width: 1100px; margin: 0 auto; }
-.sw-body  { padding: 56px 40px; }
-.sw-section + .sw-section { margin-top: 56px; }
+/* ALIGNMENT RULE (fixed 2026-08-31): horizontal padding lives on .sw-page and NOWHERE ELSE.
+   Band elements (.sw-hero, .sw-body, .sw-foot) set vertical padding only.
+
+   Previously the hero and footer nested .sw-page INSIDE their own 40px padding, while <main> put
+   both classes on one element — so main's text sat 40px further in than the hero above it and the
+   footer below it. Every band now resolves to the same 1100px content column, whichever way it's
+   nested. Don't add horizontal padding to a band element.
+
+   USE PADDING LONGHAND ON BAND ELEMENTS. `padding: 44px 0` is a shorthand that also sets
+   padding-left/right to 0 — and because <main> carries BOTH .sw-page and .sw-body, that shorthand
+   silently wiped .sw-page's 40px side padding and pulled main 40px left of the hero. */
+.sw-page  { max-width: 1180px; margin: 0 auto; padding-left: 40px; padding-right: 40px; }
+.sw-body  { padding-top: 44px; padding-bottom: 44px; }
+.sw-section + .sw-section { margin-top: 44px; }
+
+/* ---- PAUSE → THINK → ACT ------------------------------------------------------------------
+   TWO OPTIONS. Default is the light "track" treatment below. To use the blue chevron band
+   instead, add `sw-loop--chevron` to the .sw-loop container — nothing else changes.
+   -------------------------------------------------------------------------------------------- */
+
+/* OPTION A (default) — a track: each step marked by a node on a connecting rule. Quiet, airy, and
+   doesn't compete with the hero for weight. The line does the sequencing. */
+.sw-loop {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 26px 0;
+}
+.sw-loop-step {
+  flex: 1 1 240px;
+  min-width: 0;
+  padding-right: 30px;
+}
+.sw-loop-track {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.sw-loop-node {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--sw-spark);
+  flex-shrink: 0;
+}
+.sw-loop-line {
+  flex: 1;
+  height: 2px;
+  margin-left: 7px;
+  background: var(--sw-bone);
+}
+.sw-loop-name {
+  font-family: var(--sw-display);
+  font-weight: 800;
+  font-size: 1.5rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  line-height: 1;
+  color: var(--sw-spark);
+  margin-bottom: 9px;
+}
+.sw-loop-q {
+  font-family: var(--sw-body);
+  font-size: 1rem;
+  line-height: 1.45;
+  color: var(--sw-steel);
+  margin-bottom: 5px;
+}
+.sw-loop-p {
+  font-family: var(--sw-body);
+  font-style: italic;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--sw-steel);
+}
+
+/* OPTION B — interlocking Spark Blue chevrons. Heavier; the shape carries the sequence. */
+.sw-loop--chevron { gap: 5px; }
+.sw-loop--chevron .sw-loop-track { display: none; }
+.sw-loop--chevron .sw-loop-step {
+  flex: 1 1 250px;
+  background: var(--sw-spark);
+  color: var(--sw-text-on-dark);
+  padding: 24px 40px 24px 38px;
+  clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 50%, calc(100% - 22px) 100%, 0 100%, 22px 50%);
+}
+.sw-loop--chevron .sw-loop-step:first-child {
+  padding-left: 30px;
+  clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 50%, calc(100% - 22px) 100%, 0 100%);
+}
+.sw-loop--chevron .sw-loop-step:last-child {
+  padding-right: 30px;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 22px 50%);
+}
+.sw-loop--chevron .sw-loop-name { color: var(--sw-text-on-dark-full); }
+.sw-loop--chevron .sw-loop-q    { color: var(--sw-text-on-dark-full); }
+.sw-loop--chevron .sw-loop-p    { color: var(--sw-text-on-dark); }
+
+@media (max-width: 800px) {
+  /* Stacked, sideways chevrons point into nothing — square them off and let vertical order
+     carry the sequence. The track option needs no change; its line simply wraps. */
+  .sw-loop--chevron .sw-loop-step,
+  .sw-loop--chevron .sw-loop-step:first-child,
+  .sw-loop--chevron .sw-loop-step:last-child {
+    clip-path: none;
+    padding: 20px 24px;
+    border-left: 4px solid var(--sw-ember);
+  }
+}
+
+/* FOUR PHASES.
+   No shapes, no step numbers, no arrows — left-to-right order already carries the sequence, and
+   stacking a numeral and a chevron on top of that was three devices doing one job. The display face
+   at scale does the work instead; it's the strongest thing in the identity and nothing else on this
+   page uses it big. Monochrome Spark Blue: the four section accents already mean the four thinking
+   areas, and colour-coding the phases too would read as a second taxonomy. */
+/* Testimonial card — filled Spark Blue, reversed text, oversized quotation marks, attribution
+   centred beneath a hairline. No avatars: the quotes are anonymous by consent, so a stock face
+   would be inventing a person. */
+.sw-quote {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--sw-spark);
+  border-radius: 16px;
+  padding: 44px 28px 24px;
+  overflow: hidden;
+}
+.sw-quote::before,
+.sw-quote::after {
+  position: absolute;
+  font-family: var(--sw-display);
+  font-weight: 800;
+  line-height: 1;
+  pointer-events: none;
+}
+.sw-quote::before {
+  content: "\201C";
+  top: 12px;
+  left: 22px;
+  font-size: 4rem;
+  color: rgba(255, 255, 255, 0.34);
+}
+.sw-quote::after {
+  content: "\201D";
+  right: 20px;
+  bottom: -14px;
+  font-size: 4rem;
+  color: rgba(255, 255, 255, 0.16);
+}
+.sw-quote-text {
+  flex: 1;
+  font-family: var(--sw-body);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: var(--sw-text-on-dark);
+}
+.sw-quote-who {
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.22);
+  font-family: var(--sw-display);
+  font-weight: 700;
+  font-size: 0.8125rem;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--sw-text-on-dark-full);
+}
+/* Carousel — three cards visible on desktop, two on tablet, one on phone. How many fit is set by
+   flex-basis alone; the buttons scroll by one track width, so nothing needs a JS breakpoint. */
+.sw-carousel-track {
+  display: flex;
+  gap: 22px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding-bottom: 2px;
+}
+.sw-carousel-track::-webkit-scrollbar { display: none; }
+.sw-carousel-track:focus-visible { outline: 3px solid var(--sw-ember); outline-offset: 4px; }
+.sw-carousel-item {
+  flex: 0 0 calc((100% - 44px) / 3);
+  scroll-snap-align: start;
+  min-width: 0;
+}
+/* Arrows flank the track rather than sitting under it. The track flexes, so the cards give up the
+   button width instead of overflowing. */
+.sw-carousel-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.sw-carousel-row .sw-carousel-track {
+  flex: 1;
+  min-width: 0;
+}
+.sw-carousel-btn {
+  flex-shrink: 0;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  border: 2px solid var(--sw-spark);
+  background: transparent;
+  color: var(--sw-spark);
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.15s, opacity 0.15s;
+}
+.sw-carousel-btn:hover:not(:disabled) { background: var(--sw-bone); }
+.sw-carousel-btn:disabled { opacity: 0.28; cursor: default; }
+.sw-carousel-btn:focus-visible { outline: 3px solid var(--sw-ember); outline-offset: 2px; }
+.sw-carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 9px;
+  margin-top: 22px;
+}
+.sw-carousel-dot {
+  width: 9px;
+  height: 9px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  /* Was --sw-bone (#F2EFE8) — near-invisible on the white page, so the carousel read as having a
+     single page. --sw-rule is the hairline token and is the quietest thing that still reads. */
+  background: var(--sw-rule);
+  cursor: pointer;
+}
+.sw-carousel-dot.is-active { background: var(--sw-ember); }
+.sw-carousel-dot:focus-visible { outline: 3px solid var(--sw-ember); outline-offset: 3px; }
+@media (max-width: 900px) {
+  .sw-carousel-item { flex-basis: calc((100% - 22px) / 2); }
+}
+@media (max-width: 620px) {
+  .sw-carousel-item { flex-basis: 100%; }
+  /* One card visible — two 54px buttons would eat a third of it. Swipe and the dots carry it. */
+  .sw-carousel-btn { display: none; }
+  .sw-carousel-row { gap: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sw-carousel-track { scroll-behavior: auto; }
+}
+
+/* Featured quote. Every card now shares the same 17px text (Mike, 2026-09-01), so the only thing
+   left distinguishing this one is a slightly larger opening quote mark. Kept as a hook rather than
+   deleted — it's how the first slide gets emphasis back if that's wanted. */
+.sw-quote-lg {
+  padding: 48px 30px 24px;
+}
+.sw-quote-lg::before { font-size: 4.75rem; top: 8px; }
+
+/* Ember triangle marker. Border trick rather than a glyph so it takes the brand hex exactly and
+   stays crisp at any size. Same device as the topic bullets in the curriculum cards. */
+.sw-tri {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-left: 9px solid var(--sw-ember);
+  flex-shrink: 0;
+}
+
+/* Reading / form column. 1100px is right for a card grid and far too wide for prose or a form —
+   at full width a "First name" field is ~530px, which reads as empty space rather than generosity.
+   Wrap any single-column run of text or fields in this. */
+.sw-measure { max-width: 680px; }
 
 .sw-card {
   background: var(--sw-white);
@@ -300,15 +593,72 @@ a { color: inherit; }
   padding: 28px 32px;
 }
 
+/* Borderless facts list (tuition, dates, etc.). Label and value run INLINE on one line, and long
+   values wrap to the full width beneath rather than into a reserved column — which is both shorter
+   vertically and identical on mobile, so no stacking breakpoint is needed. */
+.sw-facts {
+  display: block;
+}
+/* Label carries Ember so it separates from the value on the same line. Colour does the work a
+   bullet was doing, without the extra mark. Sized up from .ts-label so it leads the line it shares
+   with the value rather than sitting under it. */
+.sw-facts dt {
+  display: inline;
+  white-space: nowrap;
+  margin-right: 8px;
+  color: var(--sw-ember);
+  font-size: 1rem;
+}
+.sw-facts dd {
+  display: inline;
+  margin: 0;
+}
+/* Block pseudo-element ends each pair and carries the row spacing — inline elements can't take
+   vertical margin. */
+.sw-facts dd::after {
+  content: "";
+  display: block;
+  margin-bottom: 9px;
+}
+.sw-facts dd:last-of-type::after {
+  margin-bottom: 0;
+}
+
 .sw-grid-3 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
   gap: 20px;
 }
 .sw-grid-2 {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  grid-gap: 20px;
   gap: 20px;
+}
+/* Two-thirds / one-third. Collapses at 860px — below that the narrow column is too tight to hold
+   anything but a line or two. */
+.sw-grid-2-1 {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-gap: 22px;
+  gap: 22px;
+  align-items: stretch;
+}
+@media (max-width: 860px) {
+  .sw-grid-2-1 { grid-template-columns: 1fr; }
+}
+
+/* Four across. Collapses to two at 900px rather than waiting for the 760px breakpoint the other
+   grids use — four columns get uncomfortably narrow well before then. */
+.sw-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 18px;
+  gap: 18px;
+}
+@media (max-width: 900px) {
+  .sw-grid-4 { grid-template-columns: repeat(2, 1fr); }
 }
 
 /* Form fields */
@@ -345,14 +695,29 @@ a { color: inherit; }
 
 /* Responsive — collapse grids on small screens */
 @media (max-width: 760px) {
-  .sw-grid-3, .sw-grid-2 { grid-template-columns: 1fr; }
-  .sw-body { padding: 36px 22px; }
-  .sw-hero { padding: 40px 22px 36px; }
-  .sw-foot { padding: 18px 22px; }
+  .sw-grid-3, .sw-grid-2, .sw-grid-4 { grid-template-columns: 1fr; }
+  .sw-page { padding-left: 22px; padding-right: 22px; }
+  .sw-body { padding-top: 36px; padding-bottom: 36px; }
+  .sw-hero { padding-top: 40px; padding-bottom: 36px; }
+  .sw-foot { padding-top: 18px; padding-bottom: 18px; }
 }
 
 /* Image lightbox (ImageLightbox.jsx) */
 @keyframes sw-lightbox-fade {
   from { opacity: 0; }
   to   { opacity: 1; }
+}
+
+/* Screen-reader-only. Added 2026-08-31: SignupForm referenced .sw-visually-hidden before it
+   existed, so its table caption and the "not offered" cell labels rendered as visible text. */
+.sw-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
 }
