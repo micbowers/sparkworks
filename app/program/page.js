@@ -31,8 +31,13 @@ import { QuoteCarousel } from "../components/QuoteCarousel";
 // as two independent families and inflates apparent breadth.
 // Never stitch two survey answers into one quote.
 const REVIEWS = [
-  // NOTE: Tina Ling's quote is NOT in this array — it sits beside the sign-up ribbon at the top of
-  // the page. Don't add it back here or it appears twice.
+  // Tina Ling, E8 — "conflicts with other things they" → comma added. This is the SAME quote that
+  // runs beside the sign-up ribbon at the top of the page. It appears twice ON PURPOSE (Mike,
+  // 2026-09-01) and must stay first in this array. An earlier comment here said not to duplicate
+  // it — that instruction is void. If the ribbon quote is ever changed, change this one with it.
+  // Her G3 is "Yes with my name"; she runs anonymous only because Mike asked for anonymous
+  // throughout. See the open task about naming her and Chris Mangandi.
+  "The kids were so excited to go every week. When we had conflicts with other things, they hands-down wanted to do Sparkworks.",
   // Wallace Huang, E9 — verbatim
   "Sparkworks focuses on skills that are often overlooked in school, but I feel are essential. In particular: solving problems that don't always have a clear right answer.",
   // Adriana Mejia, E9 — "Thus"→"This" typo fixed, "your kid"→"kids", "ideas/solutions" spelled out.
