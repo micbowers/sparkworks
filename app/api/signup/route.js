@@ -7,6 +7,16 @@
 //   The Kids table holds LEADS AND REGISTERED CHILDREN ALIKE, told apart by Status. Do not add a
 //   separate leads table: converting a lead would then mean moving a row, which destroys the
 //   "when did this family first show interest" answer this whole structure exists to give.
+//
+// ⚠ APPEND-ONLY. RULE SET BY TINA, 2026-09-02. This route must never overwrite existing data.
+//   A family who is interested season after season and never enrols is exactly the signal worth
+//   keeping, and it only survives if every submission ADDS.
+//     · First Interest      written once at creation. NEVER updated. Not even if it looks wrong.
+//     · Existing field      filled ONLY if currently empty. A differing value is logged, not written.
+//     · History             append a dated line every time a known family comes back.
+//     · Kids rows           always created, never updated in place and never reused across seasons.
+//   If you add a field here, decide its append behaviour before you ship it. The default answer
+//   is "fill if empty, otherwise log to History".
 // A returning family gets ONE family row and NEW enrollment rows each season. That is what makes
 // "when did this parent first show interest / did they ever register / for which cohort" answerable
 // — First Interest lives on the family and is written once, never updated.
@@ -53,6 +63,20 @@ function rateLimited(ip) {
 
 const text = (v) => (typeof v === "string" ? v.trim() : "");
 const rt = (v) => [{ text: { content: String(v).slice(0, 1900) } }];
+
+// Notion rich_text caps at 2000 chars per block. History accumulates forever, so cap the STORED
+// value by dropping the OLDEST lines — losing ancient log lines beats losing the write entirely.
+const HISTORY_MAX = 1900;
+const plain = (prop) =>
+  (prop?.rich_text || prop?.title || []).map((x) => x.plain_text).join("");
+
+function appendHistory(existing, line) {
+  const next = existing ? `${existing}\n${line}` : line;
+  if (next.length <= HISTORY_MAX) return next;
+  const lines = next.split("\n");
+  while (lines.length > 1 && lines.join("\n").length > HISTORY_MAX) lines.shift();
+  return lines.join("\n").slice(-HISTORY_MAX);
+}
 
 function trackFromGrade(grade) {
   const g = text(grade).toLowerCase();
@@ -124,6 +148,7 @@ export async function POST(request) {
     // Email is the household key. Notion's email filter is case-sensitive, so we also scan the
     // returned rows case-insensitively rather than trusting a single equals match.
     let familyId = null;
+    let familyRow = null;
     const found = await api(`/databases/${FAMILIES_DB}/query`, {
       filter: { property: "Parent 1 Email", email: { equals: parentEmail } },
       page_size: 10,
@@ -134,7 +159,10 @@ export async function POST(request) {
       const match = (body.results || []).find(
         (r) => (r.properties?.["Parent 1 Email"]?.email || "").toLowerCase() === wanted
       );
-      if (match) familyId = match.id;
+      if (match) {
+        familyId = match.id;
+        familyRow = match;
+      }
     }
 
     if (!familyId) {
@@ -164,16 +192,52 @@ export async function POST(request) {
       }
       familyId = body.id;
     } else {
-      // Returning family. Append this season's notes rather than overwriting anything, and leave
-      // First Interest alone.
-      const notes = text(data.notes);
-      if (notes) {
-        await api(
-          `/pages/${familyId}`,
-          { properties: { "Questions or Comments": { rich_text: rt(notes) } } },
-          "PATCH"
-        );
+      // ---- RETURNING FAMILY — APPEND ONLY ------------------------------------------------
+      // Nothing here may replace a value that already exists. First Interest is never touched.
+      // A field is filled only if it is currently EMPTY; anything that would have CHANGED an
+      // existing value is recorded as a dated line in History instead, so we can still see what
+      // they told us this time without destroying what they told us last time.
+      const existing = familyRow?.properties || {};
+      const props = {};
+      const logLines = [];
+
+      const maybeFill = (field, incoming, wrap) => {
+        if (!incoming) return;
+        const current =
+          existing[field]?.email ??
+          existing[field]?.phone_number ??
+          plain(existing[field]);
+        if (!current) {
+          props[field] = wrap(incoming);
+        } else if (String(current).trim() !== incoming) {
+          logLines.push(`${field}: "${incoming}" (on file: "${current}")`);
+        }
+      };
+
+      maybeFill("Parent 1 Phone", text(data.parentPhone), (v) => ({ phone_number: v }));
+      maybeFill("Parent 2 Name", text(data.parent2Name), (v) => ({ rich_text: rt(v) }));
+      maybeFill("Referred By", text(data.referredBy), (v) => ({ rich_text: rt(v) }));
+      const heard = text(data.howHeard);
+      if (heard && HEARD.includes(heard)) {
+        const cur = existing["How Heard"]?.select?.name || "";
+        if (!cur) props["How Heard"] = { select: { name: heard } };
+        else if (cur !== heard) logLines.push(`How Heard: "${heard}" (on file: "${cur}")`);
       }
+
+      // Notes are free text and every season's are worth keeping, so these always append.
+      const notes = text(data.notes);
+      if (notes) logLines.push(`Note: ${notes}`);
+
+      const kidNames = children.map((c) => text(c.firstName)).filter(Boolean).join(", ");
+      logLines.unshift(`Signed up for ${COHORT}${kidNames ? ` — ${kidNames}` : ""}`);
+
+      props.History = {
+        rich_text: rt(
+          appendHistory(plain(existing.History), `${today} · ${logLines.join(" · ")}`)
+        ),
+      };
+
+      await api(`/pages/${familyId}`, { properties: props }, "PATCH");
     }
 
     // ---- one enrollment per child --------------------------------------------------------
