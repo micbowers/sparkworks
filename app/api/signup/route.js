@@ -1,4 +1,6 @@
-// Season 2 sign-up intake -> Founding Sparks Registration DB.
+// Season 2 sign-up intake -> the "Sparkworks Registrations" Notion DB.
+// (Renamed from "Founding Sparks Registration" on 2026-09-01 — it holds every cohort, not just the
+// pilot. The id below is unchanged and is what actually addresses it.)
 //
 // Same pattern as app/api/register/route.js and app/api/survey/route.js: plain fetch to the Notion
 // REST API, no SDK, DB id hardcoded, NOTION_API_KEY from the environment.
