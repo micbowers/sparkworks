@@ -1,21 +1,21 @@
-// Season 2 sign-up intake -> the "Sparkworks Registrations" Notion DB.
-// (Renamed from "Founding Sparks Registration" on 2026-09-01 — it holds every cohort, not just the
-// pilot. The id below is unchanged and is what actually addresses it.)
+// Season 2 sign-up intake -> "Sparkworks Families" + "Sparkworks Enrollments" in Notion.
 //
-// Same pattern as app/api/register/route.js and app/api/survey/route.js: plain fetch to the Notion
-// REST API, no SDK, DB id hardcoded, NOTION_API_KEY from the environment.
+// THE GRAIN, because it is the whole point of this route:
+//   Families    one row per HOUSEHOLD, keyed by lowercased Parent 1 Email.
+//   Enrollments one row per CHILD per COHORT.
+// A returning family gets ONE family row and NEW enrollment rows each season. That is what makes
+// "when did this parent first show interest / did they ever register / for which cohort" answerable
+// — First Interest lives on the family and is written once, never updated.
 //
-// SCHEMA NOTES (enumerated property-by-property against the live DB 2026-09-01):
-//   Child 1-3 have Name / Grade / Track / Availability / Preferred Slot.
-//   `Child 3 Track` did not exist and was added on 2026-09-01 so third children aren't silently
-//   written without a track — do not remove it.
-//   Child 4 has ONLY Availability + Preferred Slot — no Name/Grade/Track — so the form caps at 3.
-//   `Child N Track` options are still age-labelled ("Ember (8-9)" / "Blaze (10-12)") even though the
-//   program is now grade-based. We derive from grade and write the existing option strings rather
-//   than adding new ones, so this doesn't fork the vocabulary mid-season.
-//   `Cohort` currently has a duplicate corrupted option; we write the em-dash one explicitly.
+// This replaced a single flat table that had drifted into two incompatible shapes at once: some
+// rows were one-per-family with Child 1..4 columns, others were one-per-child with the parent
+// repeated. Don't reintroduce Child N columns here.
+//
+// Same plain-fetch pattern as the other routes. NOTION_API_KEY is a placeholder in .env.local and
+// real on Vercel, so these paths only work against production — see lessons-learned.md.
 
-const REGISTRATION_DB_ID = "8c3a6c4a5bb745eea4f247cbe27d77bb";
+const FAMILIES_DB = "3cff075b-cf19-8148-bf7e-eb7ef45db0c5";
+const ENROLLMENTS_DB = "3cff075b-cf19-81c3-ab02-eb2b6c2759d0";
 const NOTION_VERSION = "2022-06-28";
 const COHORT = "Season 2 — Fall 2026";
 
@@ -29,11 +29,8 @@ const HEARD = [
   "Other",
 ];
 
-// This is an unauthenticated public write into the DB we build the season's schedule from, so it
-// carries a honeypot and a per-IP rate limit. The limiter is in-memory and therefore per-instance —
-// it stops casual scripted abuse, not a distributed flood. If this ever gets seriously targeted,
-// move to a durable store; for a home-studio program taking a few dozen sign-ups, this is the right
-// amount of machinery.
+// Unauthenticated public write: honeypot + per-IP limit. In-memory, so per-instance — enough to
+// stop casual scripted abuse, not a distributed flood.
 const RATE_LIMIT = 5;
 const RATE_WINDOW_MS = 10 * 60 * 1000;
 const hits = new Map();
@@ -53,12 +50,24 @@ function rateLimited(ip) {
 const text = (v) => (typeof v === "string" ? v.trim() : "");
 const rt = (v) => [{ text: { content: String(v).slice(0, 1900) } }];
 
-// Ember = grades 2-3, Blaze = grades 4-6. Anything else stays blank for manual triage.
 function trackFromGrade(grade) {
   const g = text(grade).toLowerCase();
-  if (g.startsWith("2") || g.startsWith("3")) return "Ember (8-9)";
-  if (g.startsWith("4") || g.startsWith("5") || g.startsWith("6")) return "Blaze (10-12)";
+  if (g.startsWith("2") || g.startsWith("3")) return "Ember";
+  if (g.startsWith("4") || g.startsWith("5") || g.startsWith("6")) return "Blaze";
   return null;
+}
+
+function notion(key) {
+  return (path, body, method = "POST") =>
+    fetch(`https://api.notion.com/v1${path}`, {
+      method,
+      headers: {
+        Authorization: `Bearer ${key}`,
+        "Notion-Version": NOTION_VERSION,
+        "Content-Type": "application/json",
+      },
+      ...(body ? { body: JSON.stringify(body) } : {}),
+    });
 }
 
 export async function POST(request) {
@@ -67,6 +76,7 @@ export async function POST(request) {
     console.error("signup: NOTION_API_KEY missing");
     return Response.json({ error: "Server configuration error" }, { status: 500 });
   }
+  const api = notion(NOTION_KEY);
 
   const ip =
     request.headers.get("x-forwarded-for")?.split(",")[0].trim() ||
@@ -86,15 +96,12 @@ export async function POST(request) {
     return Response.json({ error: "Invalid JSON" }, { status: 400 });
   }
 
-  // Honeypot: a field no human sees and no real browser fills. Answer 200 so a bot can't tell it
-  // was caught, but write nothing.
-  if (text(data.website)) {
-    return Response.json({ success: true });
-  }
+  // Honeypot — 200 so a bot can't tell, but nothing is written.
+  if (text(data.website)) return Response.json({ success: true });
 
   const parentName = text(data.parentName);
   const parentEmail = text(data.parentEmail);
-  const children = Array.isArray(data.children) ? data.children.slice(0, 3) : [];
+  const children = Array.isArray(data.children) ? data.children.slice(0, 6) : [];
 
   if (!parentName || !parentEmail) {
     return Response.json({ error: "Name and email are required" }, { status: 400 });
@@ -102,73 +109,108 @@ export async function POST(request) {
   if (children.length === 0) {
     return Response.json({ error: "At least one child is required" }, { status: 400 });
   }
-  // Availability is the whole point of the form — refuse a submission that can't be scheduled.
   if (children.some((c) => !Array.isArray(c.slots) || c.slots.length === 0)) {
     return Response.json({ error: "Each child needs at least one available time" }, { status: 400 });
   }
 
-  const properties = {
-    "Parent 1 Name": { title: rt(parentName) },
-    "Parent 1 Email": { email: parentEmail },
-    Cohort: { select: { name: COHORT } },
-    Status: { select: { name: "New" } },
-    Source: { rich_text: rt("season-2-signup") },
-  };
-
-  const phone = text(data.parentPhone);
-  if (phone) properties["Parent 1 Phone"] = { phone_number: phone };
-
-  const parent2 = text(data.parent2Name);
-  if (parent2) properties["Parent 2 Name"] = { rich_text: rt(parent2) };
-
-  const notes = text(data.notes);
-  if (notes) properties["Questions or Comments"] = { rich_text: rt(notes) };
-
-  const heard = text(data.howHeard);
-  if (heard && HEARD.includes(heard)) properties["How Heard"] = { select: { name: heard } };
-
-  const referredBy = text(data.referredBy);
-  if (referredBy) properties["Referred By"] = { rich_text: rt(referredBy) };
-
-  children.forEach((c, i) => {
-    const n = i + 1;
-    const name = text(c.firstName);
-    if (name) properties[`Child ${n} Name`] = { rich_text: rt(name) };
-
-    const grade = text(c.grade);
-    if (grade) properties[`Child ${n} Grade`] = { rich_text: rt(grade) };
-
-    const track = trackFromGrade(grade);
-    if (track) properties[`Child ${n} Track`] = { select: { name: track } };
-
-    const slots = (Array.isArray(c.slots) ? c.slots : []).filter((s) => SLOTS.includes(s));
-    if (slots.length) {
-      properties[`Child ${n} Availability`] = { multi_select: slots.map((s) => ({ name: s })) };
-    }
-
-    const preferred = text(c.preferred);
-    if (preferred && SLOTS.includes(preferred)) {
-      properties[`Child ${n} Preferred Slot`] = { select: { name: preferred } };
-    }
-  });
+  const today = new Date().toISOString().slice(0, 10);
 
   try {
-    const res = await fetch("https://api.notion.com/v1/pages", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${NOTION_KEY}`,
-        "Notion-Version": NOTION_VERSION,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ parent: { database_id: REGISTRATION_DB_ID }, properties }),
+    // ---- find or create the family -------------------------------------------------------
+    // Email is the household key. Notion's email filter is case-sensitive, so we also scan the
+    // returned rows case-insensitively rather than trusting a single equals match.
+    let familyId = null;
+    const found = await api(`/databases/${FAMILIES_DB}/query`, {
+      filter: { property: "Parent 1 Email", email: { equals: parentEmail } },
+      page_size: 10,
     });
-
-    const result = await res.json();
-    if (!res.ok) {
-      console.error("Notion API error (signup):", result);
-      return Response.json({ error: "Failed to save sign-up" }, { status: 500 });
+    if (found.ok) {
+      const body = await found.json();
+      const wanted = parentEmail.toLowerCase();
+      const match = (body.results || []).find(
+        (r) => (r.properties?.["Parent 1 Email"]?.email || "").toLowerCase() === wanted
+      );
+      if (match) familyId = match.id;
     }
-    return Response.json({ success: true, id: result.id });
+
+    if (!familyId) {
+      const props = {
+        "Parent 1 Name": { title: rt(parentName) },
+        "Parent 1 Email": { email: parentEmail },
+        // Written ONCE, on creation. A returning family keeps their original date — that is the
+        // "when did they first show interest" answer and it must not drift forward.
+        "First Interest": { date: { start: today } },
+      };
+      const phone = text(data.parentPhone);
+      if (phone) props["Parent 1 Phone"] = { phone_number: phone };
+      const parent2 = text(data.parent2Name);
+      if (parent2) props["Parent 2 Name"] = { rich_text: rt(parent2) };
+      const notes = text(data.notes);
+      if (notes) props["Questions or Comments"] = { rich_text: rt(notes) };
+      const heard = text(data.howHeard);
+      if (heard && HEARD.includes(heard)) props["How Heard"] = { select: { name: heard } };
+      const referredBy = text(data.referredBy);
+      if (referredBy) props["Referred By"] = { rich_text: rt(referredBy) };
+
+      const res = await api("/pages", { parent: { database_id: FAMILIES_DB }, properties: props });
+      const body = await res.json();
+      if (!res.ok) {
+        console.error("Notion error creating family:", body);
+        return Response.json({ error: "Failed to save sign-up" }, { status: 500 });
+      }
+      familyId = body.id;
+    } else {
+      // Returning family. Append this season's notes rather than overwriting anything, and leave
+      // First Interest alone.
+      const notes = text(data.notes);
+      if (notes) {
+        await api(
+          `/pages/${familyId}`,
+          { properties: { "Questions or Comments": { rich_text: rt(notes) } } },
+          "PATCH"
+        );
+      }
+    }
+
+    // ---- one enrollment per child --------------------------------------------------------
+    const created = [];
+    for (const c of children) {
+      const name = text(c.firstName);
+      const grade = text(c.grade);
+      const props = {
+        Child: { title: rt(name || "(unnamed child)") },
+        Family: { relation: [{ id: familyId }] },
+        Cohort: { select: { name: COHORT } },
+        Status: { select: { name: "New" } },
+        "Signed Up": { date: { start: today } },
+        Source: { rich_text: rt("season-2-signup") },
+      };
+      if (grade) props.Grade = { rich_text: rt(grade) };
+      const track = trackFromGrade(grade);
+      if (track) props.Track = { select: { name: track } };
+
+      const slots = (Array.isArray(c.slots) ? c.slots : []).filter((s) => SLOTS.includes(s));
+      if (slots.length) props.Availability = { multi_select: slots.map((s) => ({ name: s })) };
+      const preferred = text(c.preferred);
+      if (preferred && SLOTS.includes(preferred)) {
+        props["Preferred Slot"] = { select: { name: preferred } };
+      }
+
+      const res = await api("/pages", { parent: { database_id: ENROLLMENTS_DB }, properties: props });
+      const body = await res.json();
+      if (!res.ok) {
+        // The family row is already saved, so a partial failure still leaves us a contactable
+        // lead. Log loudly and tell the parent, rather than pretending it worked.
+        console.error("Notion error creating enrollment:", body);
+        return Response.json(
+          { error: "We saved your details but hit a problem with one child. Please email us." },
+          { status: 500 }
+        );
+      }
+      created.push(body.id);
+    }
+
+    return Response.json({ success: true, familyId, enrollments: created.length });
   } catch (err) {
     console.error("Signup submission error:", err);
     return Response.json({ error: "Server error" }, { status: 500 });

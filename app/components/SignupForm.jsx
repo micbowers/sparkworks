@@ -38,10 +38,10 @@ const HEARD = [
   "Other",
 ];
 
-// The Registration DB has Name/Grade/Track for children 1-3 only (Child 4 has Availability and
-// Preferred Slot but no identity fields), so the form caps at 3 rather than silently dropping a
-// fourth child's details on submit.
-const MAX_CHILDREN = 3;
+// Each child becomes its own row in the Enrollments DB, so there is no schema reason to cap this.
+// Four is a practical limit for one household signing up at once. (It used to be 3, because the old
+// flat table only had Child 1-3 identity columns — that constraint is gone.)
+const MAX_CHILDREN = 4;
 
 // FIRST NAME ONLY — deliberately. Collecting children's surnames is a materially heavier privacy
 // posture for a form filled in by parents about minors, and it buys us nothing: the parent's own
