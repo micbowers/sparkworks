@@ -37,12 +37,19 @@ const REVIEWS = [
   // pilot, but Season 2 runs 75 minutes, so on this page it read as a statement of class length.
   // The clause also combined [she] + Friday, which narrowed to one identifiable pilot child.
   "Despite it being at the end of a very busy weekly schedule, [she] seemed to have fun at every session.",
-  // REMOVED 2026-09-01 (pre-launch QA, Critical #1): a SECOND Emily Brandon quote sat here —
-  // "He left each class enthusiastic to share what he learned, and we greatly value building this
-  // kind of skill in our kids." It ran under the same "Founding Sparks parent" attribution as her
-  // toy-soldiers line above, so eight cards read as eight families when they were seven.
-  // Of the three families not represented here, one declined (G3 = No) and one has no usable line
-  // (her F2 is the "asked us questions" quote Mike cut). Seven is the honest count.
+  // Emily Brandon, E8 — child's name → pronoun. This is a SECOND quote from the same family as the
+  // toy-soldiers line above. Pulled at the 2026-09-01 pre-launch QA, then RESTORED the same day at
+  // Mike's explicit direction after he was told why it had been pulled.
+  //
+  // Why it was pulled: it runs under the same "Founding Sparks parent" attribution as her other
+  // quote, so eight cards read as eight independent families when they are seven — beside a heading
+  // that says "All founding families answered." That is an FTC endorsement-guides consideration
+  // (independence/number of endorsers), not just a style preference. Mike's call, made knowingly.
+  //
+  // If this ever needs to be made clean without dropping the quote, the fix is the attribution, not
+  // the text — differentiate the two cards so they don't both read as "a parent." Don't merge them
+  // into one card; stitching two survey answers together is its own problem.
+  "He left each class enthusiastic to share what he learned, and we greatly value building this kind of skill in our kids.",
 ];
 
 const SECTIONS = [
