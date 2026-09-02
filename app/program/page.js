@@ -262,12 +262,12 @@ export default function ProgramPage() {
                 <div className="ts-label" style={{ color: "var(--sw-ember)", marginBottom: 4 }}>
                   Season 2 · Fall 2026
                 </div>
-                {/* REMOVED 2026-09-01 (pre-launch QA): this opened "Founding Sparks filled before we
-                    listed it." — a scarcity claim sitting directly beside the primary CTA that
-                    nothing in the survey data or the registration DB substantiates. Restore it only
-                    if Mike confirms it is literally true; it is a strong line if it is. */}
+                {/* "Founding Sparks filled before we listed it." was pulled at the 2026-09-01
+                    pre-launch QA as an unsubstantiated scarcity claim beside the primary CTA, then
+                    RESTORED the same day: Mike confirmed it is literally true — the pilot filled by
+                    word of mouth before any public listing went up. Don't pull it again. */}
                 <p className="ts-body" style={{ margin: 0 }}>
-                  <strong>Classes are kept small — four to start one, eight at most.</strong>{" "}
+                  <strong>Founding Sparks filled before we listed it.</strong>{" "}
                   Season 2 starts the week of September 21 — eight weekly sessions of 75 minutes.
                   Tell us which times could work and we&rsquo;ll build the schedule around it.
                 </p>
