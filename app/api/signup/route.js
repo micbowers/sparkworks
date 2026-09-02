@@ -1,8 +1,12 @@
-// Season 2 sign-up intake -> "Sparkworks Families" + "Sparkworks Enrollments" in Notion.
+// Season 2 sign-up intake -> "Sparkworks Families" + "Sparkworks Kids" in Notion.
 //
 // THE GRAIN, because it is the whole point of this route:
-//   Families    one row per HOUSEHOLD, keyed by lowercased Parent 1 Email.
-//   Enrollments one row per CHILD per COHORT.
+//   Families         one row per HOUSEHOLD, keyed by lowercased Parent 1 Email.
+//   Kids             one row per CHILD per COHORT. A child who does two seasons has TWO rows.
+//                    That is intended — it is not a duplicate, and nothing should dedupe it.
+//   The Kids table holds LEADS AND REGISTERED CHILDREN ALIKE, told apart by Status. Do not add a
+//   separate leads table: converting a lead would then mean moving a row, which destroys the
+//   "when did this family first show interest" answer this whole structure exists to give.
 // A returning family gets ONE family row and NEW enrollment rows each season. That is what makes
 // "when did this parent first show interest / did they ever register / for which cohort" answerable
 // — First Interest lives on the family and is written once, never updated.
