@@ -4,7 +4,9 @@ import { useEffect, useState } from "react";
 import { track } from "@vercel/analytics";
 
 const EMPTY_CHILD = { name: "", grade: "" };
-const GRADES = ["2", "3", "4", "5", "6"];
+// Not currently rendered anywhere — superseded by SignupForm. Kept for the restore path, so it is
+// updated alongside the live form rather than left to rot into a wrong-grade landmine.
+const GRADES = ["2", "3", "4", "5", "6", "7"];
 
 export function InterestForm() {
   const [source, setSource] = useState("direct");
@@ -109,7 +111,7 @@ export function InterestForm() {
         Save my seat — $449 for all 8 sessions.
       </h3>
       <p className="ts-body" style={{ marginBottom: 8 }}>
-        Two tracks: Ember (grades 2–3) and Blaze (grades 4–6), each kept deliberately small with a
+        Two tracks: Ember (grades 2–3) and Blaze (grades 4–7), each kept deliberately small with a
         dedicated instructor. Sessions start the
         week of September 7. <strong>No payment required to hold a spot</strong> — slots will be
         offered in order of registration. We&rsquo;ll be in touch with schedule options and payment

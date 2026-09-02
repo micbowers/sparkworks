@@ -49,7 +49,7 @@ export default function LegalPage() {
             <p className="ts-body">
               <strong>The Site is informational, with one exception.</strong> This Site exists to
               share information about Sparkworks, our after-school critical-thinking classes for
-              students in grades 2&ndash;6. Nothing on the Site is a contract for services. You can
+              students in grades 2&ndash;7. Nothing on the Site is a contract for services. You can
               sign up for a season here, but a sign-up is a request, not an enrollment and not a
               charge: it does not reserve a place, it does not obligate you to pay, and it does not
               obligate us to offer a place. Enrollment is confirmed separately, and any enrollment
@@ -212,7 +212,7 @@ export default function LegalPage() {
               (up to three), we collect the child&rsquo;s <strong>first name only</strong>, the
               child&rsquo;s grade, the weekly time slots the child could attend, and a preferred
               slot if you pick one. From the grade we note the track that goes with it &mdash;
-              Ember for grades 2&ndash;3, Blaze for grades 4&ndash;6 &mdash; along with the season
+              Ember for grades 2&ndash;3, Blaze for grades 4&ndash;7 &mdash; along with the season
               being signed up for. We use all of this to build the schedule and place your child.
               The form does not ask for a child&rsquo;s last name, and it does not ask for payment
               information: nothing is charged at sign-up, and we invoice separately once your
@@ -273,7 +273,7 @@ export default function LegalPage() {
             </p>
             <p className="ts-body">
               <strong>Children&rsquo;s information.</strong> Sparkworks serves children in grades
-              2&ndash;6, but our Site and forms are designed for parents and guardians, not for
+              2&ndash;7, but our Site and forms are designed for parents and guardians, not for
               children. Children do not interact with our Site or submit information themselves. The
               only information we hold about a child is what a parent or guardian gives us on our
               sign-up form &mdash; the child&rsquo;s first name, grade, the weekly time slots the

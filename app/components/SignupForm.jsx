@@ -28,7 +28,10 @@ const SLOT_OPTIONS = [
   { value: "Thu 3:15", label: "Thursday 3:15 – 4:30" },
   { value: "Fri 3:15", label: "Friday 3:15 – 4:30" },
 ];
-const GRADES = ["2nd", "3rd", "4th", "5th", "6th", "Other"];
+// 7th added 2026-09-02 — Blaze now runs grades 4-7. Keep this in sync with trackFromGrade() in
+// app/api/signup/route.js: a grade listed here that the route doesn't recognise lands in the DB
+// with no Track, which then needs manual triage before the schedule can be built.
+const GRADES = ["2nd", "3rd", "4th", "5th", "6th", "7th", "Other"];
 const HEARD = [
   "A Sparkworks family told us",
   "A friend or neighbor",

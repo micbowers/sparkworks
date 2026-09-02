@@ -166,7 +166,7 @@ const FAQS = [
   },
   {
     q: "Who is it for?",
-    a: "Kids in grades 2–6 across two tracks: Ember (grades 2–3) and Blaze (grades 4–6). Kids who like puzzles, ask 'why?', and get bored when problems are too easy.",
+    a: "Kids in grades 2–7 across two tracks: Ember (grades 2–3) and Blaze (grades 4–7). Kids who like puzzles, ask 'why?', and get bored when problems are too easy.",
   },
   {
     q: "What will my kid actually do?",
@@ -197,9 +197,9 @@ const FAQS = [
 // /program is the destination of every visit to the root (app/page.js redirects here), so it needs
 // its own metadata rather than inheriting the site-wide defaults from layout.js.
 export const metadata = {
-  title: "Sparkworks — after-school critical thinking classes for grades 2–6",
+  title: "Sparkworks — after-school critical thinking classes for grades 2–7",
   description:
-    "An 8-session after-school program teaching kids in grades 2–6 to think through hard problems. Eight weekly 75-minute sessions in South Pasadena. Season 2 starts the week of September 21, 2026.",
+    "An 8-session after-school program teaching kids in grades 2–7 to think through hard problems. Eight weekly 75-minute sessions in South Pasadena. Season 2 starts the week of September 21, 2026.",
 };
 
 export default function ProgramPage() {
@@ -233,7 +233,7 @@ export default function ProgramPage() {
         homeLink
         wordmarkSize="xl"
         title="An 8-session class where kids build critical thinking by playing games and solving problems, not by sitting through lectures."
-        tagline="Two grade-calibrated tracks: Ember (grades 2–3) and Blaze (grades 4–6). Each kept deliberately small, in 75-minute sessions."
+        tagline="Two grade-calibrated tracks: Ember (grades 2–3) and Blaze (grades 4–7). Each kept deliberately small, in 75-minute sessions."
       />
 
       <main className="sw-page sw-body">
@@ -388,7 +388,7 @@ export default function ProgramPage() {
             </div>
             <div className="sw-card" style={{ borderTop: "4px solid var(--sw-blue)" }}>
               <h3 className="ts-h2" style={{ color: "var(--sw-blue)" }}>Blaze Track</h3>
-              <div className="ts-label" style={{ color: "var(--sw-blue)", marginTop: 6, marginBottom: 6 }}>Grades 4–6</div>
+              <div className="ts-label" style={{ color: "var(--sw-blue)", marginTop: 6, marginBottom: 6 }}>Grades 4–7</div>
               <p className="ts-body">Calibrated to older reasoners.</p>
             </div>
           </div>

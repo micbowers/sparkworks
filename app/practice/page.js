@@ -84,7 +84,7 @@ const FAMILIES = [
     whatItIs:
       "One player is the Code Keeper and knows a secret rule about which block structures are “valid.” The other players are Code Breakers — they take turns building structures and either Test them (safe — get a free YES / NO) or Showdown them (risky — everyone votes first; correct voters earn Code Tokens). Spend a Code Token to make an official guess at the rule. The first player to correctly state the secret rule wins the game.",
     whereWeUseIt:
-      "During the pattern-detection session (week 1) of our 8-session Sparkworks program, with kids in grades 4–6. The first activity of the program — kids practice forming, testing, and refining ideas under a hidden rule.",
+      "During the pattern-detection session (week 1) of our 8-session Sparkworks program, with kids in grades 4–7. The first activity of the program — kids practice forming, testing, and refining ideas under a hidden rule.",
     sessionPill: "Used in our pattern-detection session",
   },
 
@@ -139,7 +139,7 @@ const FAMILIES = [
     // travel better. Canonical PCr text in SPARKWORKS_ENDORSEMENTS.md retains the original phrasing;
     // a [PCr] task is open to author plain-language versions for non-instructor surfaces.
     whereWeUseIt:
-      "During the strategy session (week 6) of our 8-session Sparkworks program, with kids in grades 4–6. The smaller version below plays just as well at home with younger kids in grades 2–3.",
+      "During the strategy session (week 6) of our 8-session Sparkworks program, with kids in grades 4–7. The smaller version below plays just as well at home with younger kids in grades 2–3.",
     proTips: [
       {
         title: "Three strategies we teach in class",
@@ -208,7 +208,7 @@ const FAMILIES = [
         name: "Code Breaker",
         manufacturer: "KIDAMI",
         specs: "8 colors · 5-peg code · 10 guesses",
-        fitHint: "Grades 4–6 and up · fun for adults too",
+        fitHint: "grades 4–7 and up · fun for adults too",
         image: "/practice/code-breaker-kidami.jpg",
         // Amazon snapshot 2026-09-01. In Stock, ships from Amazon. New-condition buybox.
         // Unchanged since 08-16 on every field.
@@ -217,7 +217,7 @@ const FAMILIES = [
         rating: 4.4,
         reviewCount: 165,
         why:
-          "Same game, sized up. Two more colors and a longer code push the puzzle past what a kid can hold in their head — they have to write things down, or organize their unused colors on the side of the board. That’s the strategy lesson made physical — the board does the remembering so the kid can do the thinking. This is the version we play with kids in grades 4–6 during the Sparkworks strategy session.",
+          "Same game, sized up. Two more colors and a longer code push the puzzle past what a kid can hold in their head — they have to write things down, or organize their unused colors on the side of the board. That’s the strategy lesson made physical — the board does the remembering so the kid can do the thinking. This is the version we play with kids in grades 4–7 during the Sparkworks strategy session.",
         href: "https://amzn.to/4dINIH5",
       },
     ],
@@ -290,7 +290,7 @@ const FAMILIES = [
         rating: 4.7,
         reviewCount: 77,
         why:
-          "The classic nine-piece, three-squares-nested board is where the strategy gets real — kids have to manage their own developing mills AND track the threat of their opponent's near-mills, sometimes both in the same turn. WE Games' wooden edition is the kind of board that lives on a shelf for years and gets pulled out for rainy Saturdays. This is the version we play with kids in grades 4–6 during the game theory session of the Sparkworks program.",
+          "The classic nine-piece, three-squares-nested board is where the strategy gets real — kids have to manage their own developing mills AND track the threat of their opponent's near-mills, sometimes both in the same turn. WE Games' wooden edition is the kind of board that lives on a shelf for years and gets pulled out for rainy Saturdays. This is the version we play with kids in grades 4–7 during the game theory session of the Sparkworks program.",
         href: "https://amzn.to/4x11gH1",
       },
     ],

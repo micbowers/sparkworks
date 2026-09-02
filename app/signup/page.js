@@ -19,7 +19,7 @@ export default function SignupPage() {
         wordmarkSize="xl"
         eyebrow="Season 2 · Fall 2026"
         eyebrowSize="1.1875rem"
-        tagline="Eight weekly sessions of 75 minutes, starting the week of September 21, 2026. Two grade-calibrated tracks — Ember (grades 2–3) and Blaze (grades 4–6) — each kept deliberately small."
+        tagline="Eight weekly sessions of 75 minutes, starting the week of September 21, 2026. Two grade-calibrated tracks — Ember (grades 2–3) and Blaze (grades 4–7) — each kept deliberately small."
       />
 
       <main className="sw-page sw-body">

@@ -78,10 +78,16 @@ function appendHistory(existing, line) {
   return lines.join("\n").slice(-HISTORY_MAX);
 }
 
+// Ember = grades 2-3, Blaze = grades 4-7 (7th added 2026-09-02). Must stay in sync with the GRADES
+// list in SignupForm.jsx. Anything unrecognised — including "Other" — returns null deliberately: a
+// blank Track is a visible prompt for manual triage, which is safer than guessing a child into the
+// wrong classroom.
 function trackFromGrade(grade) {
   const g = text(grade).toLowerCase();
   if (g.startsWith("2") || g.startsWith("3")) return "Ember";
-  if (g.startsWith("4") || g.startsWith("5") || g.startsWith("6")) return "Blaze";
+  if (g.startsWith("4") || g.startsWith("5") || g.startsWith("6") || g.startsWith("7")) {
+    return "Blaze";
+  }
   return null;
 }
 

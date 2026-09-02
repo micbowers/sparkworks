@@ -56,7 +56,9 @@ export async function POST(request) {
         };
       }
       // Assign track per child based on grade.
-      // Ember = grades 2-3, Blaze = grades 4-6.
+      // Ember = grades 2-3, Blaze = grades 4-7 (7th added 2026-09-02).
+      // NOTE: this route is SUPERSEDED — it still writes to the frozen archive table. Live
+      // sign-ups go through /api/signup. Kept only so old links don't 404.
       // Notion DB option names are still age-based ("Ember (8-9)" / "Blaze (10-12)") for
       // historical reasons — labels can be renamed via the Notion UI without breaking refs.
       if (child.grade) {
