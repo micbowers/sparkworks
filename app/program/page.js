@@ -374,13 +374,16 @@ export default function ProgramPage() {
           </h2>
           <div className="sw-grid-2">
             <div className="sw-card" style={{ borderTop: "4px solid var(--sw-blue)" }}>
-              <div className="ts-eyebrow" style={{ color: "var(--sw-blue)" }}>Ember Track</div>
-              <h3 className="ts-h2" style={{ marginTop: 6, marginBottom: 10 }}>Grades 2–3</h3>
+              {/* Matches the curriculum cards exactly (see CurriculumSection): accent-coloured
+                  ts-h2 for the name, ts-label beneath, ts-body last. The name was previously a
+                  ts-eyebrow, which rendered it larger than every heading on the page. */}
+              <h3 className="ts-h2" style={{ color: "var(--sw-blue)" }}>Ember Track</h3>
+              <div className="ts-label" style={{ color: "var(--sw-blue)", marginTop: 6, marginBottom: 6 }}>Grades 2–3</div>
               <p className="ts-body">Calibrated to younger reasoners.</p>
             </div>
             <div className="sw-card" style={{ borderTop: "4px solid var(--sw-blue)" }}>
-              <div className="ts-eyebrow" style={{ color: "var(--sw-blue)" }}>Blaze Track</div>
-              <h3 className="ts-h2" style={{ marginTop: 6, marginBottom: 10 }}>Grades 4–6</h3>
+              <h3 className="ts-h2" style={{ color: "var(--sw-blue)" }}>Blaze Track</h3>
+              <div className="ts-label" style={{ color: "var(--sw-blue)", marginTop: 6, marginBottom: 6 }}>Grades 4–6</div>
               <p className="ts-body">Calibrated to older reasoners.</p>
             </div>
           </div>
@@ -423,14 +426,17 @@ export default function ProgramPage() {
         <section className="sw-section" id="reviews">
           <div className="ts-eyebrow">What families said</div>
           <h2 className="ts-h2" style={{ marginTop: 8, marginBottom: 16 }}>
-            {/* "some of" added 2026-09-01 per RBG. "Here's what they actually said" reads back to
-                "all founding families" and so promises a census — but 8 of the 10 are represented,
-                and the missing one with an on-record view is the lowest scorer (NPS 7, declined
-                quote permission). Excluding her is correct; promising completeness is not.
-                RBG's version also made the denominator explicit ("All ten founding families"), which
-                is NOT used here because Mike removed the word "ten" on 2026-08-31. That option is
-                still open and is the stronger fix if he wants it. */}
-            All founding families answered. Here&rsquo;s some of what they actually said.
+            {/* Two constraints on this line, both load-bearing:
+                1. "some of" (RBG, 2026-09-01) — without it, "here's what they said" reads back to
+                   "every founding family" and promises a census. Only 8 of the 10 are represented,
+                   and the missing family with an on-record view is the lowest scorer, who declined
+                   quote permission. Excluding her is correct; promising completeness is not.
+                2. The 100% response rate is the strongest true fact in this section and is worth
+                   more than generic warmth ("Hear what parents are saying" was the alternative
+                   Mike floated) — a full-cohort response is unusual and signals nothing was
+                   cherry-picked. Naming the exit survey also stops the third repetition of "said"
+                   after the eyebrow above. */}
+            Every founding family answered our exit survey. Here&rsquo;s some of what they told us.
           </h2>
           <p className="ts-lead" style={{ marginBottom: 24 }}>
             We asked our first cohort what actually landed — and what didn&rsquo;t. These are their
@@ -459,8 +465,10 @@ export default function ProgramPage() {
 
         {/* Moved below the reviews 2026-08-31 — social proof reads better before objection-handling. */}
         <section className="sw-section">
-          <div className="ts-eyebrow">Questions parents ask</div>
-          <h2 className="ts-h2" style={{ marginTop: 8, marginBottom: 16 }}>FAQs</h2>
+          {/* One line, not two. This was the eyebrow "Questions parents ask" above an h2 "FAQs" —
+              the same thing said twice, with the small label rendering larger than the heading it
+              labelled. "FAQs" now IS the eyebrow, and carries the section's <h2> for the outline. */}
+          <h2 className="ts-eyebrow" style={{ marginBottom: 16 }}>FAQs</h2>
           <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
             {FAQS.map((f) => (
               <div key={f.q}>
