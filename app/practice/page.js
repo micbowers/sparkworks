@@ -10,8 +10,34 @@ import { TrackedAnchor } from "../components/TrackedAnchor";
 export const metadata = {
   title: "Practice at home · Sparkworks",
   description:
-    "Activities, games, and class materials the Sparkworks program uses to teach critical thinking — organized by the skills they build, and recommended for practice between sessions.",
+    "Games, books, and class materials the Sparkworks program plays and recommends — tagged by the thinking skills they build, for practice between sessions.",
 };
+
+// ============================================================
+// AMAZON DATA DISPLAY — OFF. Do not flip without reading this.
+// ============================================================
+// Every product below carries a real price / rating / reviewCount captured 2026-09-01 and verified
+// independently. The data is accurate. It is NOT DISPLAYED, and that is deliberate.
+//
+// Amazon Associates Operating Agreement §5 requires displayed price, availability, rating and review
+// count to be refreshed at least every 24 hours, or served live from PA-API. `affiliate-links.md`
+// rule 1 states the default plainly: "Don't display price or availability unless you have a daily
+// refresh mechanism in place... If PA-API isn't wired up and there's no scheduled refresh, the
+// default is don't show the price." Rule 4 adds that a manual daily commitment counts only if it is
+// actually kept, and treats a missed day as a ship-blocking incident.
+//
+// We have no such mechanism yet. The refresh job ([Web] SPK, trigger.dev) is unbuilt and PA-API is
+// gated on qualifying sales. Publishing accurate-today data with nothing keeping it accurate
+// tomorrow converts "16 days stale" into "stale by morning" — better, but still a violation, and
+// Section 5 is the most common cause of Associates account termination. Losing the account costs the
+// entire affiliate revenue stream; showing no price costs a little conversion.
+//
+// The captured values are kept in the file rather than deleted so that flipping this flag is the
+// whole job once a refresh mechanism exists.
+//
+// FLIP TO true ONLY WHEN: PA-API is wired, OR a scheduled job refreshes these values daily. Not when
+// someone intends to run tools/amazon_refresh.ps1 by hand.
+const SHOW_AMAZON_DATA = false;
 
 // Skills are TAGS — they appear as chips on each card so parents can see at a glance
 // what each pick builds, but they do NOT determine where the card sits on the page.
@@ -168,12 +194,12 @@ const FAMILIES = [
         specs: "6 colors · 4-peg code · 10 guesses",
         fitHint: "Grades 2–3 and up · fun for adults too",
         image: "/practice/mastermind-goliath.jpg",
-        // Amazon snapshot 2026-08-16 (was $39.05 / 4.5 / 489 on 2026-06-01).
-        // Price rose 25.5% — Amazon is the seller of record, listing In Stock. Flagged to Mike.
-        price: "$48.99",
-        priceUpdated: "2026-08-16",
+        // Amazon snapshot 2026-09-01. In Stock, ships from Amazon. New-condition buybox.
+        // Price history: $39.05 (06-01) → $48.99 (08-16) → $47.99 now. Still ~23% above June.
+        price: "$47.99",
+        priceUpdated: "2026-09-01",
         rating: 4.6,
-        reviewCount: 592,
+        reviewCount: 603,
         why:
           "The classic and simplest. Six colors and a 4-peg code keep the whole game inside what a younger kid can hold in their head — they can focus on the thinking, not on tracking pieces. The right on-ramp for kids in grades 2–3 or any family new to Mastermind-style puzzles. Once a kid is solving it confidently in a handful of guesses, they’re ready to step up to Code Breaker.",
         href: "https://amzn.to/4fQkfO2",
@@ -184,9 +210,10 @@ const FAMILIES = [
         specs: "8 colors · 5-peg code · 10 guesses",
         fitHint: "Grades 4–6 and up · fun for adults too",
         image: "/practice/code-breaker-kidami.jpg",
-        // Amazon snapshot 2026-08-16 (price held; rating 4.6 → 4.4, count 164 → 165).
+        // Amazon snapshot 2026-09-01. In Stock, ships from Amazon. New-condition buybox.
+        // Unchanged since 08-16 on every field.
         price: "$15.99",
-        priceUpdated: "2026-08-16",
+        priceUpdated: "2026-09-01",
         rating: 4.4,
         reviewCount: 165,
         why:
@@ -236,8 +263,12 @@ const FAMILIES = [
         // two independent fetches both returned acrCustomerReviewText "(2)" on a genuinely small
         // listing, so the count is now surfaced. Rating corrected 4.7 → 4.5 (authoritative
         // acrPopover value; the old 4.7 came from a mis-matched module on the page).
+        // Amazon snapshot 2026-09-01. New-condition buybox, price and rating unchanged — but stock is
+        // thin and the seller has changed: "Only 1 left in stock", ships from and sold by Red Hen Books
+        // & Toys, a third-party seller, not Amazon. Not a compliance problem (the offer is new), but
+        // this is the listing most likely to go unavailable next. Watch it.
         price: "$16.95",
-        priceUpdated: "2026-08-16",
+        priceUpdated: "2026-09-01",
         rating: 4.5,
         reviewCount: 2,
         why:
@@ -252,10 +283,12 @@ const FAMILIES = [
         image: "/practice/nine-mens-morris-wegames.jpg",
         // Amazon snapshot 2026-08-16. The earlier "1 review" WAS a parser error, as suspected —
         // the authoritative acrCustomerReviewText reads 78. Count now surfaced; rating holds at 4.7.
+        // Amazon snapshot 2026-09-01. In Stock, ships from Amazon. New-condition buybox.
+        // Price and rating held; review count 78 → 77.
         price: "$15.99",
-        priceUpdated: "2026-08-16",
+        priceUpdated: "2026-09-01",
         rating: 4.7,
-        reviewCount: 78,
+        reviewCount: 77,
         why:
           "The classic nine-piece, three-squares-nested board is where the strategy gets real — kids have to manage their own developing mills AND track the threat of their opponent's near-mills, sometimes both in the same turn. WE Games' wooden edition is the kind of board that lives on a shelf for years and gets pulled out for rainy Saturdays. This is the version we play with kids in grades 4–6 during the game theory session of the Sparkworks program.",
         href: "https://amzn.to/4x11gH1",
@@ -325,11 +358,26 @@ const FAMILIES = [
         //   priceUpdated stays set so the "Amazon data updated" caption still stamps them.
         // → The `why` copy also stops saying "buy this one" while stock is used-only (QA HIGH-2).
         // This is an in-print mass-market game, so new stock will likely return — re-check at
-        // the next quarterly refresh (due 2026-11-14). [Web] SPK task filed.
+        // the next refresh. NOTE: the old "quarterly (due 2026-11-14)" cadence is superseded — a
+        // quarterly cadence cannot satisfy the 24-hour rule, which is why Amazon data is currently
+        // not displayed at all (see SHOW_AMAZON_DATA at the top). Re-check when the daily refresh
+        // job lands. [Web] SPK task filed.
+        // Re-checked 2026-09-01. DECISION UNCHANGED — price stays null — but the earlier reasoning
+        // here was wrong and is corrected (QA pass 2):
+        // ✗ This listing is NOT structurally absent. It returns availability "In Stock" and ships
+        //   from Amazon.com, so it looks clean and would PASS the no-buybox test in
+        //   tools/amazon_refresh.ps1. It is not the Perfectly Logical! / Logic Land signature.
+        // ✗ "Currently unavailable" appearing in the page source is NOT evidence — that string also
+        //   matches on the Clue mirror edition, which has a perfectly good new buybox.
+        // ✓ The actual evidence is the price itself: $19.90 is the exact Used - Very Good Amazon
+        //   Resale figure recorded on 2026-08-28. Amazon Resale fulfils from Amazon.com and shows
+        //   In Stock, which is precisely why a used buybox reads as clean here.
+        // Lesson: an Amazon-fulfilled USED buybox defeats the structural test. Condition has to be
+        // read directly. Rating and review count are live and refresh normally.
         price: null,
-        priceUpdated: "2026-08-28",
+        priceUpdated: "2026-09-01",
         rating: 4.8,
-        reviewCount: 35011,
+        reviewCount: 35015,
         why:
           "The default edition, and the one most families mean when they say Rummikub — 106 tiles, four racks, two to four players. If your table is four or fewer, this is the one to look for: same rules and the same tiles as the bigger set, just fewer of them, and the smaller tile pool keeps rounds moving. Worth counting your regular players first, though — it caps at four, and Rummikub is at its best with a full table. New copies come and go on Amazon; if the listing is showing used only, the six-player edition here plays the identical game.",
         href: "https://amzn.to/3UK2Huy",
@@ -340,15 +388,384 @@ const FAMILIES = [
         specs: "160 tiles · 6 racks · 2–6 players",
         fitHint: "Grades 3 and up · fun for adults too",
         image: "/practice/rummikub-six-player-pressman.jpg",
-        // Amazon snapshot 2026-08-28. New-condition buybox, In Stock, ships from and sold by
-        // Amazon.com — clean listing.
+        // Amazon snapshot 2026-09-01. New-condition buybox, In Stock, ships from and sold by
+        // Amazon.com — clean listing. Price held; review count 7,134 → 7,132.
         price: "$32.99",
-        priceUpdated: "2026-08-28",
+        priceUpdated: "2026-09-01",
         rating: 4.8,
-        reviewCount: 7134,
+        reviewCount: 7132,
         why:
           "The same game with room for two more chairs — 160 tiles and six racks instead of 106 and four. Buy this one if a fifth player turns up with any regularity: a cousin, a grandparent, a friend after school. It still plays anywhere from two to six, so it isn’t a specialty set you break out twice a year — it’s the classic game with the ceiling raised. More tiles on the table also means more of the rearranging that makes Rummikub a thinking exercise rather than a card game with tiles.",
         href: "https://amzn.to/4zOvY7G",
+      },
+    ],
+  },
+
+  // -------- Game family: SKYJO --------
+  // Added 2026-09-01 (Mike supplied the affiliate link; verified to resolve to B06XZ9K244 carrying
+  // tag=sparkworks-20). Not used in a class session, so no sessionPill / whereWeUseIt — the grade
+  // guidance lives in whyWeRecommend and the version fitHint, same treatment as Rummikub.
+  // Canonical copy: SPARKWORKS_ENDORSEMENTS.md → "SKYJO — the lowest-score card game".
+  //
+  // Product image saved 2026-09-01 (Amazon listing image for this ASIN, same treatment as the
+  // other product shots in /public/practice). Box art confirms 8+ / 2-8 players / 30 min.
+  //
+  // ℹ️ FIRST USE OF AN EMBER SKILL CHIP. The six skills tagged so far map purple (S1/S2), blue
+  //    (S3/S4), teal (S6/S7); Estimation (S5) had no color because no endorsement carried the tag
+  //    until now. Ember is the semantically correct pick — globals.css assigns it to Section 3,
+  //    "Decide Without All the Facts," which is Estimation. But Ember is a rationed brand color and
+  //    this chip sits in the always-visible compact header, unlike the Pro Tip callouts which are
+  //    behind an expand. Flagged to Design for a ruling; swap to blue if the ration budget says no.
+  {
+    type: "game-family",
+    slug: "skyjo",
+    title: "SKYJO",
+    subtitle: "magilano",
+    headlineImage: "/practice/skyjo-magilano.jpg",
+    highlight: "Half your hand is face down — and that's the whole game.",
+    skills: [
+      { label: "Estimation", color: "ember" },
+      { label: "Strategy", color: "teal" },
+      { label: "Game Theory", color: "teal" },
+    ],
+    whatItIs:
+      "Each player gets twelve cards laid face down in a grid — three rows of four — and turns two of them face up to start. The cards run from -2 to 12, and the goal is the reverse of most card games: you want the lowest total. On your turn you either take the face-up card off the discard pile and swap it into your grid, or draw a fresh card from the deck — and if you draw, you can either swap it in or throw it away and flip one of your own face-down cards instead. Any column where all three cards match is pulled out of the game and scores nothing at all. The round ends the moment one player has their whole grid face up; everyone else takes one last turn, then all cards are turned over and totalled. But the player who ended the round has to finish with the lowest score of anyone at the table — miss, and their points for that round are doubled. Play continues round after round until somebody crosses 100 points, and the player with the fewest points wins.",
+    whyWeRecommend: (
+      <>
+        Most family card games ask a kid to play the cards they can see. SKYJO asks them to reason about the ones they can&rsquo;t. Half the grid is face down at any moment, and nearly every turn is a bet on what&rsquo;s underneath — which makes it the clearest example we&rsquo;ve found of <strong>estimation</strong>, the calibrated-reasoning-under-uncertainty skill our fifth session teaches. Two more skills sit alongside it. <strong>Strategy</strong>: a matched column vanishes from your score entirely, so strong players aren&rsquo;t shaving one point off one card at a time — they&rsquo;re building toward something three turns out and passing up small gains to get there. And <strong>game theory</strong>: because closing the round backfires if you aren&rsquo;t actually ahead, deciding when to end it is never a read on your own grid alone. It&rsquo;s a read on the player across the table. Kids in grades 3 and up hold their own at a family table. Grade 2 works well playing alongside a grown-up — the thinking lands early, but the scoring is real arithmetic across twelve cards including negatives, and that part takes a while to come.
+      </>
+    ),
+    proTips: [
+      {
+        title: "A face-down card is worth about 5",
+        body: (
+          <>
+            <p style={{ margin: 0 }}>
+              Add up every card in the SKYJO deck and divide by 150 and you land just a hair over 5. That single number turns most of the game&rsquo;s decisions from guesswork into arithmetic — because you always <em>see</em> the card coming in, so the only real question is what you give up for it.
+            </p>
+            <ol style={{ margin: "12px 0", paddingLeft: "1.5rem" }}>
+              <li style={{ marginBottom: 12 }}>
+                <strong>Five is the break-even line.</strong> Drew a 2? Put it over a face-down card. You&rsquo;re trading something that averages 5 for a known 2, and you come out about three points ahead. Drew a 9 from the deck? Don&rsquo;t put it over a face-down card — either drop it on a high card you already have showing, or discard it and flip instead. The instinct runs the other way, and it costs points every time.
+              </li>
+              <li style={{ marginBottom: 12 }}>
+                <strong>Count what&rsquo;s already gone.</strong> The discard pile is face up and anyone may read it. Once the -2s and -1s have been played, &ldquo;about 5&rdquo; drifts closer to 6, and the break-even line moves with it. Adjusting your estimate as the evidence comes in is the whole skill — the starting number is only where you begin.
+              </li>
+              <li>
+                <strong>Ending the round is a bet, not a victory lap.</strong> Flipping your last card ends the round for everyone — but finish without the lowest score and your points for that round double. Before you close, look at what everybody else is showing. Closing while you&rsquo;re sitting on a 12 because you&rsquo;re impatient is how a won round turns into a lost one.
+              </li>
+            </ol>
+          </>
+        ),
+      },
+    ],
+    versions: [
+      {
+        name: "SKYJO",
+        manufacturer: "magilano",
+        specs: "150 cards · values -2 to 12 · 2–8 players",
+        fitHint: "Grades 3 and up · fun for adults too",
+        image: "/practice/skyjo-magilano.jpg",
+        // Amazon snapshot 2026-09-01. In Stock, ships from Amazon, sold by magilano. New-condition
+        // buybox — no used-offer row on the page.
+        price: "$19.95",
+        priceUpdated: "2026-09-01",
+        rating: 4.8,
+        reviewCount: 75893,
+        why:
+          "The original, and the one to start with. It’s a deck of cards and a scorepad in a small box, which makes it the rare thinking game that travels — a restaurant table, a car trip, a cabin with no wifi. It also scales further than most: two players works, and so does eight, which is unusual for a game with this much decision-making in it. magilano also publishes a companion game, SKYJO Action, which adds action cards to the same core; we’d point families at the plain version first. The estimation work is cleanest without them, and the extra chaos makes it harder for a kid to tell that a good round came from good judgment rather than good luck.",
+        href: "https://amzn.to/4xRd7HL",
+      },
+    ],
+  },
+
+  // -------- Game family: SET --------
+  // Added 2026-09-01. Link verified → B00000IV34 with tag=sparkworks-20.
+  // Canonical copy: SPARKWORKS_ENDORSEMENTS.md → "SET — the visual pattern game".
+  // Product image saved 2026-09-01. The box art resolves two open questions: it reads "6-99" and
+  // "20 MINS", so 6+ is the manufacturer's own rating and the duration is 20 minutes, not the ~15
+  // our 2026-04-30 Block Code audit had. Copy corrected to 20.
+  // ✅ Age SETTLED by Mike 2026-09-01: use 6+, do not change it to match the listing. The box reads
+  //    6-99 and PlayMonster/Wikipedia agree; this Amazon listing's title says "For Ages 8+". A parent
+  //    clicking through sees 8+ — that mismatch is known and accepted. The box is the product.
+  // ⚠️ Mike: SET is the "price-floor anchor" in Block Code's competitive audit. Endorsing a
+  //    same-category game at a fifth of Block Code's price is defensible and arguably builds trust,
+  //    but it's a commercial call that belongs to you. See the note in SPARKWORKS_ENDORSEMENTS.md.
+  {
+    type: "game-family",
+    slug: "set",
+    title: "SET",
+    subtitle: "SET Enterprises",
+    headlineImage: "/practice/set-setenterprises.jpg",
+    highlight: "Eighty-one cards, no two alike. Everyone plays at once.",
+    skills: [
+      { label: "Pattern Detection", color: "purple" },
+      { label: "Constraints", color: "blue" },
+    ],
+    whatItIs:
+      "Eighty-one cards, no two alike. Every card shows one, two, or three shapes; the shapes are diamonds, squiggles, or ovals; each is solid, striped, or open; and each is red, green, or purple. Four features, three options apiece — which is exactly 81 combinations, one card each. Twelve cards go face up and everyone plays at once, hunting for a “set”: three cards where each of the four features is either the same across all three or different across all three. All three red, or one of each color — never two-and-one. Spot one, say so, take the cards, and three more fill the gap. If nobody can find a set among the twelve, three more come down. When the deck runs out, whoever collected the most sets wins. There are no turns and no waiting — everyone is looking at the same twelve cards the entire game. The game came out of genetics research: Marsha Jean Falco was studying whether epilepsy was inherited in German Shepherds, and rather than rewriting her data she drew symbols on file cards to represent each dog's combination of genes. Explaining the patterns to the veterinarians, she noticed people kept wanting to hunt for combinations for the fun of it. That was 1974; the deck reached shelves in 1991.",
+    whyWeRecommend: (
+      <>
+        SET trains the half of <strong>pattern detection</strong> that is hardest to practice — the letting go. Its signature failure is the near-miss: three cards that agree on number, on shape, and on shading, and then the colors come out two-and-one. A kid locks on, is certain, calls it, and is wrong. Learning to check the fourth feature before committing, and to drop a pattern you were sure about, is exactly what our first session teaches — and SET produces that moment every few minutes instead of once a game. The second skill is <strong>constraints</strong>. The all-same-or-all-different rule reads like a restriction and is actually the fastest search tool in the game: take any two cards and there is exactly one card in the whole deck that completes a set with them, and you can work out what it looks like feature by feature. A kid who discovers that stops scanning at random and starts asking a question that has one specific answer. It is also among the most accessible things we recommend — no turns, so nobody waits their way out of the game; rated 6 and up, and only Clue Junior at 5+ goes younger; and a full game runs about twenty minutes. For younger kids, deal from the solid-shading cards only: that is 27 cards varying in just number, shape, and color, and every rule still works exactly as written.
+      </>
+    ),
+    proTips: [
+      {
+        title: "Every pair has exactly one partner",
+        body: (
+          <>
+            <p style={{ margin: 0 }}>
+              Eighty-one cards, and one fact about them that changes how you look at the table. The obvious way to hunt is in threes — pick up three cards, check them, put them back — but there are 220 ways to choose three out of twelve, so that search takes a while. There is a much faster question to ask, and it is the whole reason strong players look at the table differently.
+            </p>
+            <ol style={{ margin: "12px 0", paddingLeft: "1.5rem" }}>
+              <li style={{ marginBottom: 12 }}>
+                <strong>Any two cards have exactly one card that completes them.</strong> Take two, go feature by feature. Same number on both? The third has that number too. Two different shapes? The third has the shape neither of them has. Same for shading, same for color. Four small questions and you know precisely what you&rsquo;re looking for — now you&rsquo;re scanning for one specific card instead of testing combinations.
+              </li>
+              <li style={{ marginBottom: 12 }}>
+                <strong>&ldquo;I don&rsquo;t see one&rdquo; almost never means there isn&rsquo;t one.</strong> At the start of a game, the odds that twelve cards hold no set at all are about one in thirty. So when the table goes quiet, the honest read is that everyone is looking wrong, not that the deal is dead. Keep going a little past the point where it feels reasonable.
+              </li>
+              <li>
+                <strong>Name all four features out loud before anyone touches the cards.</strong> Number, shape, shading, color. Nearly every wrong call in SET is three cards that match on three features and break on the fourth — and the fourth is the one nobody checks. Two seconds of saying it aloud saves the argument.
+              </li>
+            </ol>
+          </>
+        ),
+      },
+    ],
+    versions: [
+      {
+        name: "SET",
+        manufacturer: "SET Enterprises",
+        specs: "81 cards · 4 features × 3 values · 1+ players · about 20 min",
+        fitHint: "Ages 6 and up · fun for adults too",
+        image: "/practice/set-setenterprises.jpg",
+        // Amazon snapshot 2026-09-01. In Stock, ships from and sold by Amazon.com. New-condition buybox.
+        price: "$12.99",
+        priceUpdated: "2026-09-01",
+        rating: 4.8,
+        reviewCount: 7041,
+        why:
+          "The standard 81-card deck in the small box — the one to get, and the edition schools and libraries tend to stock. It’s cards only: no board, no timer, no batteries, which is why it works on a tray table at 30,000 feet and why a classroom can run six copies at once. A collector’s tin edition circulates at a higher price with the identical deck inside; the difference is the container, not the game. If a kid can sort by color and count to three, this is where to start.",
+        href: "https://amzn.to/3UvO8Ld",
+      },
+    ],
+  },
+
+  // -------- Game family: Clue & Clue Junior --------
+  // Added 2026-09-01. Both links verified → B07RTZBP93 / B07BMJPPXV, each with tag=sparkworks-20.
+  // Canonical copy: SPARKWORKS_ENDORSEMENTS.md → "Clue & Clue Junior — the deduction classic".
+  // Product images saved 2026-09-01. The Clue box art confirms the copy's two specific claims:
+  // "NOW WITH CARD-REVEALING MIRROR!" and "x3 1.5V AAA ALKALINE BATTERIES REQUIRED" (demo batteries
+  // included). Note the listing title now reads "(Amazon Exclusive)" and doesn't mention the mirror,
+  // but the product image and 30+ mirror references on the page confirm this ASIN is that edition.
+  {
+    type: "game-family",
+    slug: "clue",
+    title: "Clue & Clue Junior",
+    subtitle: "Hasbro Gaming",
+    headlineImage: "/practice/clue-hasbro.jpg",
+    highlight: "The answer is whatever nobody is holding.",
+    skills: [
+      { label: "Elimination", color: "purple" },
+      { label: "Strategy", color: "teal" },
+    ],
+    whatItIs:
+      "Three cards — a person, a weapon, a room — are set aside at the start and nobody sees them. Every other suspect, weapon and room card is dealt out around the table. That is the whole trick: the answer is defined entirely by what is missing from everyone's hands. On your turn you move to a room and make a suggestion — Professor Plum, in the library, with the candlestick — and the players check their hands. The first one who can disprove any part of it shows you a single card, privately, so you learn one thing and the rest of the table only learns that something was shown. Cross it off and move on. Rule out enough and one combination is left standing; then you accuse. The game came out of the Birmingham blackouts: Anthony Pratt, an English musician, spent the WWII air raids at home thinking about the murder-mystery parlour games he'd watched at the private parties he played, and about the detective novels everyone was reading. He and his wife Elva designed it between them. He filed the patent in 1944 and was granted it in 1947, but post-war shortages held the launch until Waddingtons published it in 1949 — as Cluedo, “clue” plus ludo, Latin for “I play.”",
+    whyWeRecommend: (
+      <>
+        Clue is the purest <strong>elimination</strong> game a family can buy, and the one where the skill is most visible. The detective notepad works the way our second session teaches kids to think — you win by ruling things out, and there is no other way to win. No clever gambit and no lucky draw rescues you; you narrow the field until a single answer is left standing. What separates a strong player from a kid crossing off boxes at random is <strong>strategy</strong> in the suggestions: a good suggestion is built to eliminate as much as possible, and the best ones sometimes include a card you are holding yourself — because then whatever you&rsquo;re shown has to be one of the other two. Deliberately asking a question you already partly know the answer to, in order to sharpen what the answer tells you, is the most transferable idea in the game. Clue also does something almost no other family game does: it makes the questions other people ask into free information. When someone makes a suggestion and three players pass before anyone can disprove it, that is a fact about three hands, handed to the whole table at no cost. Half the information in a game of Clue is generated on somebody else&rsquo;s turn, and it is there for anyone willing to write it down.
+      </>
+    ),
+    proTips: [
+      {
+        title: "Ask about a card you're already holding",
+        body: (
+          <>
+            <p style={{ margin: 0 }}>
+              These are for the full game — Clue Junior works differently, since nobody there is answering your questions. Three moves, and the first is the one almost nobody works out unaided.
+            </p>
+            <ol style={{ margin: "12px 0", paddingLeft: "1.5rem" }}>
+              <li style={{ marginBottom: 12 }}>
+                <strong>Put one of your own cards in the suggestion.</strong> If you hold the candlestick, suggest the candlestick. You already know that card, so whatever you get shown has to be the person or the room — you&rsquo;ve doubled what the answer tells you and it cost nothing. It&rsquo;s the least obvious move in the game, which is exactly why it&rsquo;s worth handing a kid outright rather than waiting for them to find it.
+              </li>
+              <li style={{ marginBottom: 12 }}>
+                <strong>Write down everyone&rsquo;s suggestions, not just your own.</strong> Most players record only what they were personally shown and throw away the rest of the table&rsquo;s turns. But a player who suggests the same room three times is telling you they&rsquo;re stuck on it, and every pass around the table is a card somebody does <em>not</em> have.
+              </li>
+              <li>
+                <strong>Make the test &ldquo;what&rsquo;s left?&rdquo;, not &ldquo;what do I think?&rdquo;</strong> An incorrect accusation ends your chance of winning — you stay at the table and keep showing cards, you just can&rsquo;t win. So the only question worth asking beforehand is whether any combination survives that you haven&rsquo;t ruled out. If that question can&rsquo;t be answered off the notepad, the notepad isn&rsquo;t finished, however sure it feels.
+              </li>
+            </ol>
+          </>
+        ),
+      },
+    ],
+    versions: [
+      {
+        name: "Clue Junior",
+        manufacturer: "Hasbro Gaming",
+        specs: "2–6 players · The Case of the Broken Toy",
+        fitHint: "Ages 5 and up · works before a kid reads",
+        image: "/practice/clue-junior-hasbro.jpg",
+        // Amazon snapshot 2026-09-01. In Stock, ships from and sold by Amazon.com. New-condition buybox.
+        price: "$17.99",
+        priceUpdated: "2026-09-01",
+        rating: 4.7,
+        reviewCount: 6115,
+        why:
+          "A different game from its parent, not a smaller one, and the difference is worth knowing before you buy. Kids hunt for clues by looking under the furniture and under the character pawns rather than by questioning each other, so the mystery is three-part — which toy was broken, who broke it, when — and the whole thing is pictures, which means a kid can play it a year or two before they can read a card. What it teaches is real elimination: cross off what you’ve seen, and the answer is whatever survives. What it doesn’t teach is the read-the-other-players half of Clue, because nobody is answering your questions. Buy it for a 5- or 6-year-old who wants in on what an older sibling is playing, and expect to move up around grade 3.",
+        href: "https://amzn.to/4ygj94k",
+      },
+      {
+        name: "Clue (Card-Revealing Mirror edition)",
+        manufacturer: "Hasbro Gaming",
+        // 30 cards total = 21 deduction cards (6 suspects + 6 weapons + 9 rooms) + 9 clue cards.
+        // The old spec line said "30 cards · 6 suspects · 6 weapons · 9 rooms", which reads as a
+        // breakdown of 30 and only sums to 21 (QA M2). Listing the three deduction categories
+        // without a total is accurate and doesn't invite the arithmetic.
+        specs: "2–6 players · ages 8+ · 6 suspects · 6 weapons · 9 rooms · needs 3 AAA batteries",
+        fitHint: "Grades 3 and up · fun for adults too",
+        image: "/practice/clue-hasbro.jpg",
+        // Amazon snapshot 2026-09-01. In Stock, ships from and sold by Amazon.com. New-condition buybox.
+        price: "$24.99",
+        priceUpdated: "2026-09-01",
+        rating: 4.8,
+        reviewCount: 4441,
+        why:
+          "The full game, and the edition currently on shelves. One thing to know going in: this printing replaces the classic sealed envelope with a battery-powered mirror that reveals the three answer cards at the push of a button — it needs three AAA batteries, and it’s a moving part where an envelope was not. The deduction underneath is completely unchanged, so if you find a plain envelope edition secondhand it plays identically and will outlive this one. We’re recommending this version because it’s the one reliably in stock, not because the mirror improves anything. Grade 3 and up can run their own notepad; below that, a kid does better sharing a sheet with a grown-up for a game or two until the grid makes sense.",
+        href: "https://amzn.to/4zRTT5S",
+      },
+    ],
+  },
+
+  // -------- Game family: Logic Land — DECLINED BY MIKE, NOT PUBLISHED (2026-09-01) --------
+  // Mike was shown the availability finding and said "no logic land" on 2026-09-01. This is now a
+  // DECISION, not just a stock hold: do NOT restore this entry automatically if stock returns.
+  // Re-adding it needs Mike's explicit OK, not merely a clean buybox.
+  //
+  // The finding behind that decision: the product cannot currently be bought.
+  //
+  // Gamewright (the publisher) lists Logic Land as "out of print and no longer available", and the
+  // Amazon listing for B07C4KWJHB confirms it from the other side: the page carries "Currently
+  // unavailable" and "Temporarily out of stock", and renders NO buybox seller, NO merchant info and
+  // NO tabular buybox block at all. The $12.99 that appears on the page is a list price with no
+  // purchasable offer behind it. Pointing a "Buy on Amazon" affiliate CTA at that is a dead end for
+  // parents and Section 5 exposure for the Associates account, and the rotation policy in
+  // SPARKWORKS_ENDORSEMENTS.md says leave it out rather than publish and pull.
+  //
+  // Everything else is done: copy written, link verified (tag=sparkworks-20), product image saved at
+  // /public/practice/logic-land-brainwright.jpg. Re-check stock at the next refresh (due 2026-11-14).
+  //
+  // ⚠️ TO RESTORE, four things must happen — not just deleting the /* and */:
+  //   0. MIKE HAS TO SAY YES. He declined it on 2026-09-01. Returning stock is not sufficient.
+  //   1. Confirm a real new-condition buybox exists, then fill the Amazon snapshot fields.
+  //   2. Apply the QA fixes already made to the canonical copy in SPARKWORKS_ENDORSEMENTS.md but NOT
+  //      mirrored here, since this block is inert: the "one character to a room" clause in whatItIs
+  //      (Pro Tip item 2's deduction is invalid without it — VERIFY against the puzzle book first),
+  //      the softened character roster, the "kids test far more freely" observed-behaviour claim, and
+  //      "will hold a grown-up for a few minutes".
+  //   3. Restore `ages 8+` to specs — the page block drops the box rating the doc discloses, which
+  //      would show us recommending a year below the box with no acknowledgement (QA M8).
+  // Canonical copy: SPARKWORKS_ENDORSEMENTS.md → "Logic Land — solo deduction puzzles in a tin".
+  /*
+  {
+    type: "game-family",
+    slug: "logic-land",
+    title: "Logic Land",
+    subtitle: "Brainwright · The Enchanted Castle",
+    headlineImage: "/practice/logic-land-brainwright.jpg",
+    highlight: "Forty deduction puzzles, seven magnets, one tin.",
+    skills: [
+      { label: "Elimination", color: "purple" },
+      { label: "Constraints", color: "blue" },
+    ],
+    whatItIs:
+      "A one-player deduction puzzle that lives in a travel tin. Seven magnetic characters — a king, a queen, a prince, a wizard, a dragon among them — and a self-standing book of 40 puzzles that get harder as they go. Each puzzle gives a set of picture clues about where the characters are inside a seven-room castle: this one is in the library, that one is not in the tower, this one is next to that one, this one is directly above another. You work out the single arrangement that satisfies every clue at once, and place the magnets in the rooms.",
+    whyWeRecommend: (
+      <>
+        This is the cleanest <strong>elimination</strong> practice we&rsquo;ve found in a physical toy. Half the clues are negative — the wizard is <em>not</em> in the tower — and a negative clue is worthless to a kid until they learn to read &ldquo;not here&rdquo; as real information rather than a dead end. That reframing is the point of our second session, and Logic Land makes it concrete: the magnet has to go somewhere, so ruling out a room genuinely narrows the answer in a way a kid can see on the board. The other half of the clues are <strong>constraints</strong> on position — next to, above, diagonal from — and they have to be held together rather than solved one at a time. The good moment is the one where two loose clues suddenly pin each other down. Two things make it unusually good for a kid who bounces off worksheets. It&rsquo;s magnetic and physical, so a wrong guess costs nothing to undo — kids test far more freely when being wrong means sliding a magnet rather than erasing ink. And it&rsquo;s genuinely solo: no opponent, no timer, nobody to lose to, which suits the kid who wants to think quietly for twenty minutes without being watched. It pairs naturally with Perfectly Logical! below — the same reasoning in a different delivery, this one physical and self-contained, the workbook pencil-and-paper and broader in format.
+      </>
+    ),
+    proTips: [
+      {
+        title: "Start with what can't be true",
+        body: (
+          <>
+            <p style={{ margin: 0 }}>
+              The instinct on a deduction puzzle is to hunt for the clue that hands you an answer — &ldquo;the prince is in the library&rdquo; — and place that character first. It feels like progress, and it&rsquo;s the slower road.
+            </p>
+            <ol style={{ margin: "12px 0", paddingLeft: "1.5rem" }}>
+              <li style={{ marginBottom: 12 }}>
+                <strong>Read every clue before you move anything.</strong> The clues are a single system, not a to-do list, and the order they&rsquo;re printed in isn&rsquo;t the order they&rsquo;re useful in. A kid who places a character off clue one often has to undo it at clue five.
+              </li>
+              <li style={{ marginBottom: 12 }}>
+                <strong>Work the negative clues first.</strong> &ldquo;Not in the tower&rdquo; feels like it tells you nothing, and it&rsquo;s often the most valuable line on the card — because seven characters and seven rooms means every room you rule out for one character hands you information about all the others. Ruling out isn&rsquo;t a delay before the real solving. It <em>is</em> the solving.
+              </li>
+              <li>
+                <strong>Stuck means you have a clue you only used once.</strong> Almost every wall in these puzzles comes from treating a clue as spent after it places one character. Go back through them and ask what each one still forbids now that the board has changed. The clue that was vague at the start is usually specific by the middle.
+              </li>
+            </ol>
+          </>
+        ),
+      },
+    ],
+    versions: [
+      {
+        name: "Logic Land — The Enchanted Castle",
+        manufacturer: "Brainwright",
+        specs: "40 puzzles · 7 magnetic characters · 7-room castle · 1 player · tin case",
+        fitHint: "Grades 2 and up · fun for adults too",
+        image: "/practice/logic-land-brainwright.jpg",
+        price: null,
+        priceUpdated: null,
+        rating: null,
+        reviewCount: null,
+        why:
+          "A tin, a magnetic board, and 40 puzzles that climb steadily in difficulty — the format is the reason to pick it. Everything is captive: the characters are magnets, the book stands up on its own, and the whole thing closes and goes in a bag, so it survives a car seat and an airport gate in a way a puzzle book with a pencil does not. It’s also the rare logic product a kid can do alone, entirely, without an adult checking the answer for them. Best for a kid who likes the reasoning but resists anything that looks like a worksheet.",
+        href: "https://amzn.to/4qQ9dfq",
+      },
+    ],
+  },
+  */
+
+  // -------- Game family: Sequence --------
+  // Added 2026-09-01. Link verified → B00000IVAK with tag=sparkworks-20.
+  // Canonical copy: SPARKWORKS_ENDORSEMENTS.md → "Sequence — five in a row, played from a hand of cards".
+  // Product image saved 2026-09-01.
+  // ⚠️ WEAKEST FIT IN THIS BATCH — flagged for PCr and Mike. Real strategic and game-theoretic
+  //    decisions, but a materially higher luck floor than anything else on the page. The copy says so
+  //    plainly rather than overselling. If the endorsement bar goes up, this is the one to cut.
+  {
+    type: "game-family",
+    slug: "sequence",
+    title: "Sequence",
+    subtitle: "Jax",
+    headlineImage: "/practice/sequence-jax.jpg",
+    highlight: "Five in a row — and up to twelve people at the table.",
+    skills: [
+      { label: "Strategy", color: "teal" },
+      { label: "Game Theory", color: "teal" },
+    ],
+    whatItIs:
+      "The board is a 10×10 grid printed with every card from two standard decks except the jacks, so each card appears in two different places, plus four free corner spaces that count for everyone. You hold a hand of cards. On your turn you play one, put a chip on a space showing that card, and draw a replacement. Five chips in a row — across, down, or diagonally — is a sequence. Two players or two teams race to build two of them; with three teams, one is enough to win. The jacks are the wrinkle: a two-eyed jack lets you place a chip anywhere on the board, and a one-eyed jack lets you remove one of your opponent's.",
+    whyWeRecommend: (
+      <>
+        We&rsquo;ll be straight about this one: Sequence is the most luck-dependent game on this page, and if you&rsquo;re choosing a single game to sharpen a kid&rsquo;s thinking, one of the others is a better buy. You play the cards you&rsquo;re dealt, and sometimes the cards decide it. What earns it a place here is the decision it puts in front of a kid on <em>every single turn</em>. You hold a handful of cards — more at a small table, fewer at a big one — and most of them are playable somewhere, so the question is never &ldquo;can I move?&rdquo; It&rsquo;s &ldquo;which of these is worth spending now?&rdquo; And the honest answer usually depends on the other side of the table: do you extend your own line, or block the one your opponent is three chips into? That&rsquo;s <strong>game theory</strong> in its most concrete available form. The entire state of the game is face up, so unlike most games where you have to imagine what your opponent is planning, here a kid can point at it — and still has to judge whether it matters more than their own plan. The <strong>strategy</strong> half is about tempo and saving things for later: the four corners are free for everybody, so lines running through them need fewer chips, and a one-eyed jack is worth far more held for the turn your opponent is one chip from a sequence than spent the moment you draw it. The temptation is always to spend a jack the instant it arrives; the discipline is sitting on it, and the board teaches that lesson without anyone having to say it.
+      </>
+    ),
+    versions: [
+      {
+        name: "SEQUENCE",
+        manufacturer: "Jax",
+        specs: "Folding board · 104 cards · 135 chips · 2–12 players",
+        fitHint: "Ages 7 and up · plays up to 12 in teams",
+        image: "/practice/sequence-jax.jpg",
+        // Amazon snapshot 2026-09-01. In Stock, ships from and sold by Amazon.com. New-condition buybox.
+        price: "$19.97",
+        priceUpdated: "2026-09-01",
+        rating: 4.8,
+        reviewCount: 45632,
+        why:
+          "The original Jax edition with the full-size folding board — the one to get. The whole appeal is the ceiling on players: two to twelve, in up to three teams, which makes it the rare thinking game that works at a full holiday table instead of splitting the room into a game and an audience. Teams are also the reason it suits a mixed-age table — a grade-2 kid partnered with an adult is participating and thinking out loud, not losing politely.",
+        href: "https://amzn.to/4xy7luj",
       },
     ],
   },
@@ -380,12 +797,15 @@ const FAMILIES = [
     //   which left a ★4.6 (4,419) on the card with no capture date while the page footer claimed
     //   ratings carry one. The caption now reads "Amazon data updated" and covers the rating too.
     // → Whether to keep recommending a book with no new supply is Mike's editorial call; [SW] task filed.
+    // Re-checked 2026-09-01: STILL NO CLEAN NEW BUYBOX. The page shows $6.99 but renders no
+    // availability line, no ships-from and no sold-by block — the same structural signature as
+    // Logic Land, which is confirmed unbuyable. Price therefore stays null; a price with no
+    // purchasable new offer behind it must never sit beside a "Buy on Amazon" CTA.
+    // Rating and review count ARE live and refresh normally: 4,419 → 4,425.
     price: null,
-    priceUpdated: "2026-08-16",
-    // reviewCount was 5849 — that WAS a parser error (STATUS 2026-06-09 flagged it as suspect).
-    // Authoritative acrCustomerReviewText = 4,419; acrPopover rating = 4.6 (was showing 4.7).
+    priceUpdated: "2026-09-01",
     rating: 4.6,
-    reviewCount: 4419,
+    reviewCount: 4425,
     body:
       "100 puzzles across 10 chapters of increasing difficulty — logic grids, cryptograms, secret codes, and Sudoku — from elementary teacher Jenn Larson (20+ years in the classroom). Three of the thinking skills our Sparkworks program teaches show up directly: elimination (the logic grids drill the same reasoning as our second session), hidden-rule hunting (the cryptograms map to our fourth session), and constraint navigation (Sudoku is the same skill as our third). A good solo-practice companion for kids who love the games we play in class — workable between sessions, or after a kid has wrapped the program.",
     href: "https://amzn.to/4e5VEnc",
@@ -544,6 +964,8 @@ function CompactCover({ image, alt }) {
 // matches the shopping convention parents already recognize; doesn't conflict with brand-reserved
 // Spark Yellow (Da Vinci Badge use only).
 function RatingLine({ rating, reviewCount, price }) {
+  // Section 5 gate — see the SHOW_AMAZON_DATA block at the top of this file.
+  if (!SHOW_AMAZON_DATA) return null;
   if (rating == null && price == null) return null;
   return (
     <div className="ts-caption" style={{ color: "var(--sw-steel)", display: "flex", flexWrap: "wrap", gap: 8, alignItems: "baseline" }}>
@@ -622,6 +1044,8 @@ function ProductBlock({ name, manufacturer, specs, fitHint, href, image, price, 
 // any Amazon data on the card. Set `priceUpdated` on every product, price or no price.
 // Small, italic, muted — sits between the rating/price line and the Buy button.
 function PriceUpdatedLine({ date }) {
+  // Section 5 gate — nothing to date-stamp while no Amazon data renders. See SHOW_AMAZON_DATA above.
+  if (!SHOW_AMAZON_DATA) return null;
   return (
     <div className="ts-caption" style={{ color: "var(--sw-steel)", fontStyle: "italic", fontSize: "0.6875rem", opacity: 0.75 }}>
       Amazon data updated: {date}
@@ -933,7 +1357,7 @@ export default function PracticePage() {
         showWordmark={false}
         eyebrow="Practice at home"
         title="Practice at home."
-        tagline="Activities, games, and class materials we use in class — recommended for play at home, across grades, and with grown-ups too."
+        tagline="Games, books, and class materials we play and recommend — for practice at home, across grades, and with grown-ups too."
       />
 
       <main className="sw-page sw-body">
@@ -1021,7 +1445,13 @@ export default function PracticePage() {
 
         <section className="sw-section">
           <p className="ts-caption" style={{ fontStyle: "italic" }}>
-            Some links on this page are affiliate links. Sparkworks is an Amazon Associate; we earn from qualifying purchases at no extra cost to you. Prices and ratings shown were captured on the dates noted under each product and may have changed — check Amazon for the latest.
+            {/* FTC boilerplate is verbatim from affiliate-links.md and must not be reworded. The
+                trailing sentence tracks SHOW_AMAZON_DATA — with no prices or ratings on the page,
+                the old "captured on the dates noted under each product" claim would be vacuous. */}
+            Some links on this page are affiliate links. Sparkworks is an Amazon Associate; we earn from qualifying purchases at no extra cost to you.
+            {SHOW_AMAZON_DATA
+              ? " Prices and ratings shown were captured on the dates noted under each product and may have changed — check Amazon for the latest."
+              : " Prices and availability live on Amazon and change often — follow any link for the current price."}
           </p>
         </section>
       </main>
