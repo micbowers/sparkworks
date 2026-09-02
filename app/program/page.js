@@ -192,12 +192,25 @@ export default function ProgramPage() {
           an H1 at all, per TRADEMARK_GUIDANCE §1 (a SPARKWORKS games company exists and we are
           applying for the educational-services mark). Swapped to the canonical §1 replacement.
           Pre-swap text, for the revert-on-grant path:
-            "An 8-session program teaching kids critical thinking — through games, not lectures." */}
+            "An 8-session program teaching kids critical thinking — through games, not lectures."
+
+          2026-09-01, same day: Mike wanted the word "games" kept. RBG cleared this line under §2's
+          context-allowed usage. FOUR properties do that work — preserve every one if it's reworded:
+            · "class" is the head noun, so the sentence's own subject is a service, not a product;
+            · "by playing games" makes games an activity kids DO in the class rather than a category
+              of thing being sold — the verb is what "through" wasn't doing;
+            · the parallel "not by sitting through lectures" frames the whole line as two modes of
+              instruction, which is the class-provider framing the guidance asks for;
+            · games is NEVER the only named method. A binary with games as the sole method reads as a
+              game brand however it's phrased, and it would also contradict PHASES below, where the
+              game is the Engage phase — one of four. The second method is load-bearing, not padding.
+          §1 flags "phrases LIKE 'through games, not lectures'" — it is illustrative, not a blocklist.
+          Don't clear a future rewrite by arguing it isn't the literal flagged string. */}
       <Hero
         tight
         homeLink
         wordmarkSize="xl"
-        title="An 8-session program teaching kids critical thinking — through hands-on problem solving, not lectures."
+        title="An 8-session class where kids build critical thinking by playing games and solving problems, not by sitting through lectures."
         tagline="Two grade-calibrated tracks: Ember (grades 2–3) and Blaze (grades 4–6). Each kept deliberately small, in 75-minute sessions."
       />
 
@@ -257,8 +270,10 @@ export default function ProgramPage() {
         {/* Lifted from the old homepage 2026-09-01 when /program became the main page. Full previous
             homepage is preserved at /home-archive.
             TM-2026 (analogous to swap-log entry 2b): closing clause was "— through games, not
-            lectures." Swapped 2026-09-01 per RBG's re-ruling; see the Hero comment above for the
-            full reasoning and the revert-on-grant path. */}
+            lectures." Swapped 2026-09-01 per RBG's re-ruling; see the Hero comment above.
+            Deliberately kept GAMES-FREE now that the H1 carries the word: the guidance tests a page
+            in aggregate, and an H1 and a lead paragraph both leaning games tips it. This close also
+            avoids echoing the H1's "solving problems" three sentences apart. */}
         <section className="sw-section">
           <div className="ts-eyebrow">What we offer</div>
           <h2 className="ts-h2" style={{ marginTop: 8, marginBottom: 16 }}>
@@ -267,7 +282,7 @@ export default function ProgramPage() {
           <p className="ts-lead">
             Critical thinking is the most important skill in the AI age. One skill per session: we
             introduce it, show someone who used it when it counted, then hand kids a problem that
-            makes them use it too — through hands-on problem solving, not lectures.
+            makes them use it too. We never just explain it.
           </p>
         </section>
 
@@ -414,7 +429,7 @@ export default function ProgramPage() {
             event="games_cta_click"
             eventProps={{ source: "program-curriculum" }}
           >
-            See the games we recommend &rarr;
+            See the activities and games we recommend &rarr;
           </TrackedLink>
         </section>
 
